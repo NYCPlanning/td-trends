@@ -46,7 +46,7 @@
             position: absolute;
             top: 1rem;
             left: 1rem;
-            width: 15rem;
+            width: 23rem;
             height: auto;
             max-height: 90%;
             padding-top: 1rem;
@@ -87,13 +87,6 @@
 
         .itemgroup2 {
             margin-left: 0rem;
-        }
-
-        .item2-input {
-            width: 0.8rem;
-            height: 0.8rem;
-            margin-right: 0.5rem;
-            vertical-align: -0.1rem;
         }
 
         .item2-label {
@@ -183,7 +176,7 @@
     <nav id="legend">
         <div class="container g-0">
             <div class="row g-0 justify-content-between" id="header">
-                <div class="col-auto"> September Weekday Ridership </div>
+                <div class="col-auto"> September Average Weekday Ridership </div>
                 <div class="col-auto">
                     <i class="bi bi-chevron-down" id='chevron'></i>
                 </div>
@@ -269,7 +262,7 @@
                 'layervisibility': 'visible', // visibility of the layer
                 'layercolname': 'Pct20Cat', // category column name
                 'layercat': ['>=60%', '50%~59%', '40%~49%', '30%~39%', '<30%'], // categories
-                'layercolor': ['rgba(127,39,4,1)', 'rgba(223,79,5,1)', 'rgba(253,146,67,1)', 'rgba(254,210,166,1)', 'rgba(255,245,235,1)'], // color for each category; use rgba
+                'layercolor': ['rgba(113,55,0,1)', 'rgba(186,92,4,1)', 'rgba(226,117,15,1)', 'rgba(241,186,135,1)', 'rgba(249,227,207,1)'], // color for each category; use rgba
                 'layeropacity': 1, // circle opacity
                 'layerradius': 3, // circle radius; change size based on zoom level
                 'layeroutlinecolor': 'rgba(255,255,255,0)', // outline color; can only be set to 1px width; to change the outline width, add another line layer
@@ -325,13 +318,15 @@
             // Add click event
             map1.on('click', 'septwkd20', function (e) {
                 var coordinates = e.features[0].geometry.coordinates.slice(); // get point coordinates
-                var description = "<b>Complex ID: </b><span>" + e.features[0].properties.CplxID + "</span><br>"; // description in the popup
-                description += "<b>Borough: </b><span>" + e.features[0].properties.Borough + "</span><br>";
-                description += "<b>Complex Name: </b><span>" + e.features[0].properties.CplxName + "</span><br>";
+                var description = "<b>Complex ID: </b><span>" + e.features[0].properties.CmplxID + "</span><br>"; // description in the popup
+                description += "<b>Borough: </b><span>" + e.features[0].properties.Boro + "</span><br>";
+                description += "<b>Complex Name: </b><span>" + e.features[0].properties.CmplxName + "</span><br>";
                 description += "<b>Routes: </b><span>" + e.features[0].properties.Routes + "</span><br>";
-                description += "<b>Mid April 2021 Subway Ridership: </b><span>" + e.features[0].properties.E202104.toFixed(2) + "</span><br>";
-                description += "<b>Late June 2021 Subway Ridership: </b><span>" + e.features[0].properties.E202106.toFixed(2) + "</span><br>";
-                description += "<b>Late June vs Mid April 2021 Percent Change: </b><span>" + (Number(e.features[0].properties.DiffPct) * 100).toFixed(2) + "%</span><br>";
+                description += "<b>2019 September Weekday Ridership: </b><span>" + e.features[0].properties.Sept2019.toLocaleString() + "</span><br>";
+                description += "<b>2020 September Weekday Ridership: </b><span>" + e.features[0].properties.Sept2020.toLocaleString() + "</span><br>";
+                description += "<b>2021 September Weekday Ridership: </b><span>" + e.features[0].properties.Sept2021.toLocaleString() + "</span><br>";
+                description += "<b>2020 Ridership As Percentage of 2019 Ridership: </b><span>" + (Number(e.features[0].properties.Pct20) * 100).toFixed(2) + "%</span><br>";
+                description += "<b>2021 Ridership As Percentage of 2019 Ridership: </b><span>" + (Number(e.features[0].properties.Pct21) * 100).toFixed(2) + "%</span><br>";
                 popup.setLngLat(coordinates).setHTML(description).addTo(map1); //add popup
             });
             // Add hover events
@@ -371,11 +366,6 @@
                 for (var j = 0; j < layerContentListOrder[i]['layercat'].length; j++) {
                     var item2 = document.createElement('div'); // create level-2 item
                     item2.className = 'item2';
-                    var input2 = document.createElement('input'); // create level-2 checkbox
-                    input2.type = 'checkbox';
-                    input2.className = 'item2-input';
-                    input2.id = layerContentListOrder[i]['layerid'] + '|' + layerContentListOrder[i]['layercolname'] + '|' + layerContentListOrder[i]['layercat'][j];
-                    input2.checked = true;
                     var key2 = document.createElement('span'); // create level-2 key
                     key2.className = 'key-' + layerContentListOrder[i]['layertype'];
                     key2.style.backgroundColor = layerContentListOrder[i]['layercolor'][j];
@@ -386,25 +376,9 @@
                     label2.className = 'item2-label';
                     label2.setAttribute('for', layerContentListOrder[i]['layerid'] + '|' + layerContentListOrder[i]['layercolname'] + '|' + layerContentListOrder[i]['layercat'][j]);
                     label2.textContent = layerContentListOrder[i]['layercat'][j];
-                    item2.appendChild(input2);
                     item2.appendChild(key2);
                     item2.appendChild(label2);
                     itemgroup2.appendChild(item2);
-
-                    // Create legend selector click event
-                    input2.addEventListener('click', function (e) {
-                        var clickedLayer = this.id.split('|')[0];
-                        var clickedLayerColname = this.id.split('|')[1];
-                        var catGroup = document.getElementById(clickedLayer + '-cat').getElementsByClassName('item2-input');
-                        var checkedFilter = ['any'];
-                        for (var k = 0; k < catGroup.length; k++) {
-                            if (catGroup[k]['checked'] === true) {
-                                checkedFilter.push(['==', clickedLayerColname, catGroup[k].id.split('|')[2]]);
-                            };
-                        };
-                        map1.setFilter(clickedLayer, checkedFilter);
-                        map2.setFilter(clickedLayer.replace('am', 'pm'), checkedFilter);
-                    });
                 };
                 itemgroup1.appendChild(itemgroup2);
                 filterLegend.appendChild(itemgroup1);
@@ -444,11 +418,11 @@
                 'sourcedata': 'septwkd.geojson', // data source
                 'layerid': 'septwkd21', // layer id
                 'layertype': 'circle', // symbology type
-                'layername': 'Late June vs Mid April 2021 Subway Ridership Percent Change', // layer name for the legend
+                'layername': 'As Percentage of 2019 Ridership​', // layer name for the legend
                 'layervisibility': 'visible', // visibility of the layer
                 'layercolname': 'Pct21Cat', // category column name
                 'layercat': ['>=60%', '50%~59%', '40%~49%', '30%~39%', '<30%'], // categories
-                'layercolor': ['rgba(127,39,4,1)', 'rgba(223,79,5,1)', 'rgba(253,146,67,1)', 'rgba(254,210,166,1)', 'rgba(255,245,235,1)'], // color for each category; use rgba
+                'layercolor': ['rgba(113,55,0,1)', 'rgba(186,92,4,1)', 'rgba(226,117,15,1)', 'rgba(241,186,135,1)', 'rgba(249,227,207,1)'], // color for each category; use rgba
                 'layeropacity': 1, // circle opacity
                 'layerradius': 3, // circle radius; change size based on zoom level
                 'layeroutlinecolor': 'rgba(255,255,255,0)', // outline color; can only be set to 1px width; to change the outline width, add another line layer
@@ -499,42 +473,26 @@
                 maxWidth: 'none', // max width of the popoup; 'none' to fit to the content                
             });
 
-
-            // Add nontelam popup
-            // Add click event
-            map2.on('click', 'telpm', function (e) {
-                var coordinates = e.lngLat; // get pointer coordinates
-                var description = "<b>NTA Code: </b><span>" + e.features[0].properties.ntacode + "</span><br>"; // description in the popup
-                description += "<b>Telework Capability by Workplace </b><span>" + (Number(e.features[0].properties.telework) * 100).toFixed(2) + "%</span><br>";
-                popup.setLngLat(coordinates).setHTML(description).addTo(map2); //add popup
-            });
-            // Add hover events
-            map2.on('mouseenter', 'telpm', function () {
-                map2.getCanvas().style.cursor = 'pointer'; // mouse becoming pointer
-            });
-            map2.on('mouseleave', 'telpm', function () {
-                map2.getCanvas().style.cursor = '';
-            });
-
-
             // Add cplxpmcp popup
             // Add click event
-            map2.on('click', 'cplxrtopm21', function (e) {
+            map2.on('click', 'septwkd21', function (e) {
                 var coordinates = e.features[0].geometry.coordinates.slice(); // get point coordinates
-                var description = "<b>Complex ID: </b><span>" + e.features[0].properties.CplxID + "</span><br>"; // description in the popup
-                description += "<b>Borough: </b><span>" + e.features[0].properties.Borough + "</span><br>";
-                description += "<b>Complex Name: </b><span>" + e.features[0].properties.CplxName + "</span><br>";
+                var description = "<b>Complex ID: </b><span>" + e.features[0].properties.CmplxID + "</span><br>"; // description in the popup
+                description += "<b>Borough: </b><span>" + e.features[0].properties.Boro + "</span><br>";
+                description += "<b>Complex Name: </b><span>" + e.features[0].properties.CmplxName + "</span><br>";
                 description += "<b>Routes: </b><span>" + e.features[0].properties.Routes + "</span><br>";
-                description += "<b>Mid April 2021 Subway Ridership: </b><span>" + e.features[0].properties.E202104.toFixed(2) + "</span><br>";
-                description += "<b>Late June 2021 Subway Ridership: </b><span>" + e.features[0].properties.E202106.toFixed(2) + "</span><br>";
-                description += "<b>Late June vs Mid April 2021 Percent Change: </b><span>" + (Number(e.features[0].properties.DiffPct) * 100).toFixed(2) + "%</span><br>";
+                description += "<b>2019 September Weekday Ridership: </b><span>" + e.features[0].properties.Sept2019.toLocaleString() + "</span><br>";
+                description += "<b>2020 September Weekday Ridership: </b><span>" + e.features[0].properties.Sept2020.toLocaleString() + "</span><br>";
+                description += "<b>2021 September Weekday Ridership: </b><span>" + e.features[0].properties.Sept2021.toLocaleString() + "</span><br>";
+                description += "<b>2020 Ridership As Percentage of 2019 Ridership: </b><span>" + (Number(e.features[0].properties.Pct20) * 100).toFixed(2) + "%</span><br>";
+                description += "<b>2021 Ridership As Percentage of 2019 Ridership: </b><span>" + (Number(e.features[0].properties.Pct21) * 100).toFixed(2) + "%</span><br>";
                 popup.setLngLat(coordinates).setHTML(description).addTo(map2); //add popup
             });
             // Add hover events
-            map2.on('mouseenter', 'cplxrtopm21', function () {
+            map2.on('mouseenter', 'septwkd21', function () {
                 map2.getCanvas().style.cursor = 'pointer'; // mouse becoming pointer
             });
-            map2.on('mouseleave', 'cplxrtopm21', function () {
+            map2.on('mouseleave', 'septwkd21', function () {
                 map2.getCanvas().style.cursor = '';
             });
 
