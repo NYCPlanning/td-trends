@@ -6,13 +6,13 @@ import plotly.graph_objects as go
 
 pio.renderers.default = "browser"
 pd.set_option('display.max_columns', None)
-path='C:/Users/Y_Ma2/Desktop/GITHUB/td-trends/'
+# path='C:/Users/Y_Ma2/Desktop/GITHUB/td-trends/'
 path='C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/'
 
 
 
 
-df=pd.read_excel(path+'hubbound/Hub Bound Compilation From Regional planning folder.xlsx',sheet_name='SUMMARY')
+df=pd.read_excel(path+'hubbound/hubbound.xlsx',sheet_name='SUMMARY')
 
 fig=go.Figure()
 dfcolors={'PATH':'#729ece',
@@ -70,7 +70,17 @@ fig.update_layout(
     dragmode=False,
     hovermode='x unified',
     )
-fig.write_html(path+'hub bound/hubbound.html',
+fig.add_annotation(
+    text='Data Source: <a href="https://www.nymtc.org/Data-and-Modeling/Transportation-Data-and-Statistics/Publications/Hub-Bound-Travel" target="blank">NYMTC Hub Bound Travel </a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/hubbound/hubbound.xlsx" target="blank">Download Chart Data</a>',
+    font_size=14,
+    showarrow=False,
+    x=1,
+    xanchor='right',
+    xref='paper',
+    y=-0.1,
+    yanchor='top',
+    yref='paper')
+fig.write_html(path+'hubbound/hubbound.html',
                include_plotlyjs='cdn',
                config={'displaylogo':False,'modeBarButtonsToRemove':['select2d','lasso2d']})
 
