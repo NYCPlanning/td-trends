@@ -42,7 +42,7 @@ fig.update_layout(
            'font_size':20,
            'x':0.5,
            'xanchor':'center',
-           'y':0.98,
+           'y':0.95,
            'yanchor':'top'},
     legend={'orientation':'h',
             'title_text':'',
@@ -51,6 +51,8 @@ fig.update_layout(
             'xanchor':'center',
             'y':1,
             'yanchor':'bottom'},
+    margin={'b':100,
+            't':120},
     xaxis={'title':{'text':'<b>Year</b>',
                     'font_size':14},
            'tickfont_size':12,
@@ -77,12 +79,12 @@ fig.add_annotation(
     x=1,
     xanchor='right',
     xref='paper',
-    y=-0.1,
+    y=-0.2,
     yanchor='top',
     yref='paper')
 fig.write_html(path+'hubbound/hubbound.html',
                include_plotlyjs='cdn',
-               config={'displaylogo':False,'modeBarButtonsToRemove':['select2d','lasso2d']})
+               config={'displaylogo':False,'modeBarButtonsToRemove':['toImage','select2d','lasso2d']})
 
 
 
