@@ -73,7 +73,7 @@ fig.update_layout(
     hovermode='x unified',
     )
 fig.add_annotation(
-    text='Data Source: <a href="https://www.nymtc.org/Data-and-Modeling/Transportation-Data-and-Statistics/Publications/Hub-Bound-Travel" target="blank">NYMTC Hub Bound Travel </a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/hubbound/hubbound.xlsx" target="blank">Download Chart Data</a>',
+    text='Data Source: <a href="https://www.nymtc.org/Data-and-Modeling/Transportation-Data-and-Statistics/Publications/Hub-Bound-Travel" target="blank">NYMTC Hub Bound Travel </a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/hubbound/hubbound.xlsx" target="blank" download>Download Chart Data</a>',
     font_size=14,
     showarrow=False,
     x=1,
