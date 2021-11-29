@@ -9,8 +9,9 @@ path='C:/Users/Y_Ma2/Desktop/GITHUB/td-trends/'
 
 
 
-dfop=pd.DataFrame(columns=['id'])
-dfld=pd.DataFrame(columns=['id'])
+# Private Ferry
+pfop=pd.DataFrame(columns=['id'])
+pfld=pd.DataFrame(columns=['id'])
 
 for i in range(2013,2018):
     for j in range(1,13):
@@ -22,9 +23,9 @@ for i in range(2013,2018):
         tpop=tp[tp['id']=='Ridership by Operator'].index[0]
         tpld=tp[tp['id']=='Ridership by Landing'].index[0]
         tpop=tp[tpop+1:tpld].reset_index(drop=True)
-        dfop=pd.merge(dfop,tpop,how='outer',on='id')
+        pfop=pd.merge(pfop,tpop,how='outer',on='id')
         tpld=tp[tpld+1:].reset_index(drop=True)
-        dfld=pd.merge(dfld,tpld,how='outer',on='id')
+        pfld=pd.merge(pfld,tpld,how='outer',on='id')
 
 for i in range(2018,2021):
     for j in range(1,13):
@@ -36,9 +37,9 @@ for i in range(2018,2021):
         tpop=tp[tp['id']=='Ridership by Operator'].index[0]
         tpld=tp[tp['id']=='Ridership by Landing'].index[0]
         tpop=tp[tpop+1:tpld].reset_index(drop=True)
-        dfop=pd.merge(dfop,tpop,how='outer',on='id')
+        pfop=pd.merge(pfop,tpop,how='outer',on='id')
         tpld=tp[tpld+1:].reset_index(drop=True)
-        dfld=pd.merge(dfld,tpld,how='outer',on='id')
+        pfld=pd.merge(pfld,tpld,how='outer',on='id')
 
 for i in range(2021,2022):
     for j in range(1,5):
@@ -50,9 +51,9 @@ for i in range(2021,2022):
         tpop=tp[tp['id']=='Ridership by Operator'].index[0]
         tpld=tp[tp['id']=='Ridership by Landing'].index[0]
         tpop=tp[tpop+1:tpld].reset_index(drop=True)
-        dfop=pd.merge(dfop,tpop,how='outer',on='id')
+        pfop=pd.merge(pfop,tpop,how='outer',on='id')
         tpld=tp[tpld+1:].reset_index(drop=True)
-        dfld=pd.merge(dfld,tpld,how='outer',on='id')
+        pfld=pd.merge(pfld,tpld,how='outer',on='id')
 
 for i in range(2021,2022):
     for j in range(6,8):
@@ -64,9 +65,9 @@ for i in range(2021,2022):
         tpop=tp[tp['id']=='Ridership by Operator'].index[0]
         tpld=tp[tp['id']=='Ridership by Landing'].index[0]
         tpop=tp[tpop+1:tpld].reset_index(drop=True)
-        dfop=pd.merge(dfop,tpop,how='outer',on='id')
+        pfop=pd.merge(pfop,tpop,how='outer',on='id')
         tpld=tp[tpld+1:].reset_index(drop=True)
-        dfld=pd.merge(dfld,tpld,how='outer',on='id')
+        pfld=pd.merge(pfld,tpld,how='outer',on='id')
 
 for i in range(2021,2022):
     for j in range(8,11):
@@ -78,19 +79,99 @@ for i in range(2021,2022):
         tpop=tp[tp['id']=='Ridership by Operator'].index[0]
         tpld=tp[tp['id']=='Ridership by (DOT-Owned) Landing'].index[0]
         tpop=tp[tpop+1:tpld].reset_index(drop=True)
-        dfop=pd.merge(dfop,tpop,how='outer',on='id')
+        pfop=pd.merge(pfop,tpop,how='outer',on='id')
+
+pfop=pfop.sort_values('id').reset_index(drop=True)
+pfop=pfop.transpose().reset_index(drop=False)
+pfop.columns=['yearmonth']+list(pfop.iloc[0,1:])
+pfop=pfop[1:].reset_index(drop=True)
+pfop.to_csv(path+'ferry/pfop.csv',index=False,na_rep=0)
+
+pfld=pfld.sort_values('id').reset_index(drop=True)
+pfld=pfld.transpose().reset_index(drop=False)
+pfld.columns=['yearmonth']+list(pfld.iloc[0,1:])
+pfld=pfld[1:].reset_index(drop=True)
+pfld.to_csv(path+'ferry/pfld.csv',index=False,na_rep=0)
 
 
 
+# Staten Island Ferry
+sif=pd.DataFrame(columns=['id'])
+for i in range(2012,2016):
+    for j in range(1,13):
+        tp=[x for x in os.listdir(path+'ferry/Staten Island Ferry Passenger Counts - by Month/'+str(i)) if x.startswith(str(j).zfill(2))][0]
+        tp=pd.read_excel(path+'ferry/Staten Island Ferry Passenger Counts - by Month/'+str(i)+'/'+tp,sheet_name='TOTALS',skiprows=4)
+        tp=tp.loc[tp['Date']=='TOTALS:',['WHT','STG']].reset_index(drop=True)
+        tp=tp.transpose().reset_index(drop=False)
+        tp.columns=['id',str(i)+str(j).zfill(2)]
+        sif=pd.merge(sif,tp,how='outer',on='id')
 
-dfop=dfop.sort_values('id').reset_index(drop=True)
-dfop=dfop.transpose().reset_index(drop=False)
-dfop.columns=['yearmonth']+list(dfop.iloc[0,1:])
-dfop=dfop[1:].reset_index(drop=True)
-dfop.to_csv(path+'ferry/pfop.csv',index=False,na_rep=0)
+for i in range(2016,2017):
+    for j in list(range(1,8))+list(range(9,13)):
+        tp=[x for x in os.listdir(path+'ferry/Staten Island Ferry Passenger Counts - by Month/'+str(i)) if x.startswith(str(j).zfill(2))][0]
+        tp=pd.read_excel(path+'ferry/Staten Island Ferry Passenger Counts - by Month/'+str(i)+'/'+tp,sheet_name='TOTALS',skiprows=4)
+        tp=tp.loc[tp['Date']=='TOTALS:',['WHT','STG']].reset_index(drop=True)
+        tp=tp.transpose().reset_index(drop=False)
+        tp.columns=['id',str(i)+str(j).zfill(2)]
+        sif=pd.merge(sif,tp,how='outer',on='id')
 
-dfld=dfld.sort_values('id').reset_index(drop=True)
-dfld=dfld.transpose().reset_index(drop=False)
-dfld.columns=['yearmonth']+list(dfld.iloc[0,1:])
-dfld=dfld[1:].reset_index(drop=True)
-dfld.to_csv(path+'ferry/pfld.csv',index=False,na_rep=0)
+for i in range(2017,2019):
+    for j in range(1,13):
+        tp=[x for x in os.listdir(path+'ferry/Staten Island Ferry Passenger Counts - by Month/'+str(i)) if x.startswith(str(j).zfill(2))][0]
+        tp=pd.read_excel(path+'ferry/Staten Island Ferry Passenger Counts - by Month/'+str(i)+'/'+tp,sheet_name='TOTALS',skiprows=4)
+        tp=tp.loc[tp['Date']=='TOTALS:',['WHT','STG']].reset_index(drop=True)
+        tp=tp.transpose().reset_index(drop=False)
+        tp.columns=['id',str(i)+str(j).zfill(2)]
+        sif=pd.merge(sif,tp,how='outer',on='id')
+
+for i in range(2019,2020):
+    for j in range(1,13):
+        tp=[x for x in os.listdir(path+'ferry/Staten Island Ferry Passenger Counts - by Month/'+str(i)) if x.endswith(str(j).zfill(2)+'.xls')][0]
+        tp=pd.read_excel(path+'ferry/Staten Island Ferry Passenger Counts - by Month/'+str(i)+'/'+tp,sheet_name='TOTALS',skiprows=4)
+        tp=tp.loc[tp['Date']=='TOTALS:',['WHT','STG']].reset_index(drop=True)
+        tp=tp.transpose().reset_index(drop=False)
+        tp.columns=['id',str(i)+str(j).zfill(2)]
+        sif=pd.merge(sif,tp,how='outer',on='id')
+
+for i in range(2020,2021):
+    for j in range(1,13):
+        tp=[x for x in os.listdir(path+'ferry/Staten Island Ferry Passenger Counts - by Month/'+str(i)) if x.endswith(str(j).zfill(2)+'.xlsx')][0]
+        tp=pd.read_excel(path+'ferry/Staten Island Ferry Passenger Counts - by Month/'+str(i)+'/'+tp,sheet_name='TOTALS',skiprows=4)
+        tp=tp.loc[tp['Date']=='TOTALS:',['WHT','STG']].reset_index(drop=True)
+        tp=tp.transpose().reset_index(drop=False)
+        tp.columns=['id',str(i)+str(j).zfill(2)]
+        sif=pd.merge(sif,tp,how='outer',on='id')
+
+for i in range(2021,2022):
+    for j in range(1,5):
+        tp=[x for x in os.listdir(path+'ferry/Staten Island Ferry Passenger Counts - by Month/'+str(i)) if x.endswith(str(j).zfill(2)+'.xlsx')][0]
+        tp=pd.read_excel(path+'ferry/Staten Island Ferry Passenger Counts - by Month/'+str(i)+'/'+tp,sheet_name='TOTALS',skiprows=4)
+        tp=tp.loc[tp['Date']=='TOTALS:',['WHT','STG']].reset_index(drop=True)
+        tp=tp.transpose().reset_index(drop=False)
+        tp.columns=['id',str(i)+str(j).zfill(2)]
+        sif=pd.merge(sif,tp,how='outer',on='id')
+
+for i in range(2021,2022):
+    for j in range(5,11):
+        tp=[x for x in os.listdir(path+'ferry/Staten Island Ferry Passenger Counts - by Month/'+str(i)) if x.endswith(str(j).zfill(2)+'.xls')][0]
+        tp=pd.read_excel(path+'ferry/Staten Island Ferry Passenger Counts - by Month/'+str(i)+'/'+tp,sheet_name='TOTALS',skiprows=4)
+        tp=tp.loc[tp['Date']=='TOTALS:',['WHT','STG']].reset_index(drop=True)
+        tp=tp.transpose().reset_index(drop=False)
+        tp.columns=['id',str(i)+str(j).zfill(2)]
+        sif=pd.merge(sif,tp,how='outer',on='id')
+
+sif=sif.sort_values('id').reset_index(drop=True)
+sif=sif.transpose().reset_index(drop=False)
+sif.columns=['yearmonth']+list(sif.iloc[0,1:])
+sif=sif[1:].reset_index(drop=True)
+sif.to_csv(path+'ferry/sif.csv',index=False,na_rep=0)
+
+
+pfop=pd.read_csv(path+'ferry/pfop.csv')
+pfop=pfop.drop(['Total'],axis=1).reset_index(drop=True)
+sif=pd.read_csv(path+'ferry/sif.csv')
+sif['Staten Island Ferry']=sif['STG']+sif['WHT']
+sif=sif[['yearmonth','Staten Island Ferry']].reset_index(drop=True)
+ferryop=pd.merge(pfop,sif,how='left',on='yearmonth')
+ferryop.to_csv(path+'ferry/ferryop.csv',index=False)
+
