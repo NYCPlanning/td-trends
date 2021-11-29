@@ -52,6 +52,8 @@ fig.update_layout(
             'y':1,
             'yanchor':'bottom'},
     margin={'b':120,
+            'l':80,
+            'r':80,
             't':120},
     xaxis={'title':{'text':'<b>Year</b>',
                     'font_size':14},
