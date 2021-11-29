@@ -5,6 +5,7 @@ import os
 
 pd.set_option('display.max_columns', None)
 path='C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/'
+path='C:/Users/Y_Ma2/Desktop/GITHUB/td-trends/'
 
 
 
@@ -67,7 +68,29 @@ for i in range(2021,2022):
         tpld=tp[tpld+1:].reset_index(drop=True)
         dfld=pd.merge(dfld,tpld,how='outer',on='id')
 
+for i in range(2021,2022):
+    for j in range(8,11):
+        tp=[x for x in os.listdir(path+'ferry/Private Ferry Monthly Ridership/'+str(i)) if x.endswith(str(j).zfill(2)+'.xlsx')][0]
+        tp=pd.read_excel(path+'ferry/Private Ferry Monthly Ridership/'+str(i)+'/'+tp,sheet_name='Monthly Totals')
+        tp=tp.iloc[:,1:3].reset_index(drop=True)
+        tp.columns=['id',str(i)+str(j).zfill(2)]
+        tp=tp[pd.notna(tp['id'])].reset_index(drop=True)
+        tpop=tp[tp['id']=='Ridership by Operator'].index[0]
+        tpld=tp[tp['id']=='Ridership by (DOT-Owned) Landing'].index[0]
+        tpop=tp[tpop+1:tpld].reset_index(drop=True)
+        dfop=pd.merge(dfop,tpop,how='outer',on='id')
 
 
 
-dfop.to_csv(path+'ferry/')
+
+dfop=dfop.sort_values('id').reset_index(drop=True)
+dfop=dfop.transpose().reset_index(drop=False)
+dfop.columns=['yearmonth']+list(dfop.iloc[0,1:])
+dfop=dfop[1:].reset_index(drop=True)
+dfop.to_csv(path+'ferry/pfop.csv',index=False,na_rep=0)
+
+dfld=dfld.sort_values('id').reset_index(drop=True)
+dfld=dfld.transpose().reset_index(drop=False)
+dfld.columns=['yearmonth']+list(dfld.iloc[0,1:])
+dfld=dfld[1:].reset_index(drop=True)
+dfld.to_csv(path+'ferry/pfld.csv',index=False,na_rep=0)
