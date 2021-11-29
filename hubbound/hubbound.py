@@ -6,8 +6,8 @@ import plotly.graph_objects as go
 
 pio.renderers.default = "browser"
 pd.set_option('display.max_columns', None)
-# path='C:/Users/Y_Ma2/Desktop/GITHUB/td-trends/'
-path='C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/'
+path='C:/Users/Y_Ma2/Desktop/GITHUB/td-trends/'
+# path='C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/'
 
 
 
@@ -35,7 +35,7 @@ for i in ['PATH','NJT','LIRR','MNR','AMTRAK','NJ BUS']:
                                    y=df[i],
                                    line={'color':dfcolors[i],
                                          'width':2},
-                                   hovertemplate='%{y:,0f}'))
+                                   hovertemplate='%{y:,.0f}'))
 fig.update_layout(
     template='plotly_white',
     title={'text':'<b>Daily Entries to the Manhattan Hub (2000-2019)</b>',
