@@ -2,36 +2,40 @@ library(tidyverse)
 library(plotly)
 
 path='C:/Users/Y_Ma2/Desktop/GITHUB/td-trends/'
+path='C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/'
 
 df=read.csv(paste0(path,'ferry/ferryop.csv'),stringsAsFactors=F,check.names=F)
 df=df %>%
   mutate(Date=as.Date(paste0(yearmonth,'01'),'%Y%m%d')) %>%
   filter(Date>=as.Date('20150101','%Y%m%d'))
 
-dfcolors=c('BillyBey'='#729ece',
-           'Liberty Landing Ferry'='#ff9e4a',
-           'NY Waterway'='#67bf5c',
-           'NYC Ferry'='#ed665d',
-           'New York Water Taxi'='#ad8bc9',
-           'SeaStreak'='#a8786e',
-           'Staten Island Ferry'='#ed97ca')
+dfcolors=c('BillyBey'='rgba(255,158,74,1)',
+           'Liberty Landing Ferry'='rgba(103,191,92,1)',
+           'NY Waterway'='rgba(173,139,201,1)',
+           'NYC Ferry'='rgba(237,102,93,1)',
+           'New York Water Taxi'='rgba(205,204,93,1)',
+           'SeaStreak'='rgba(237,151,202,1)',
+           'Staten Island Ferry'='rgba(114,158,206,1')
 
 p=plot_ly()
-for (i in list('BillyBey','Liberty Landing Ferry','NY Waterway','NYC Ferry','New York Water Taxi','SeaStreak','Staten Island Ferry')){
+for (i in list('Staten Island Ferry','BillyBey','Liberty Landing Ferry','NY Waterway','New York Water Taxi','SeaStreak','NYC Ferry')){
   p=p %>%
     add_trace(name=i,
               type='scatter',
-              mode='lines',
+              mode='none',
               x=df[['Date']],
               y=df[[i]],
-              line=list(color=dfcolors[i],
-                        width=2),
+              stackgroup='one',
+              groupnorm='',
+              orientation='v',
+              fill='tonexty',
+              fillcolor=dfcolors[i],
               hovertemplate='%{y:,.0f}',
-              xhoverformat='<b>%Y-%m</b>')
+              xhoverformat='<b>%b %Y</b>')
 }
-p=p%>%
+p=p %>%
   layout(template='plotly_white',
-         title=list(text=paste0('<b>test</b>'),
+         title=list(text=paste0('<b>Ferry Ridership by Operator</b>'),
                     font=list(size=20),
                     x=0.5,
                     xanchor='center',
@@ -51,7 +55,9 @@ p=p%>%
          xaxis=list(title=list(text='<b>Month</b>',
                                font=list(size=14)),
                     tickfont=list(size=12),
+                    tickformat='%b %Y',
                     dtick='M6',
+                    range=c(min(df[['Date']])-60,max(df[['Date']])+60),
                     fixedrange=T,
                     showgrid=F),
          yaxis=list(title=list(text='<b>Ridership</b>',
@@ -67,14 +73,21 @@ p=p%>%
          font=list(family='Arial',
                    color='black'),
          dragmode=F,
-         hovermode='x unified')
+         hovermode='x unified',
+         annotations=list(text='Data Source: <a href="https://www1.nyc.gov/html/dot/html/about/datafeeds.shtml#ferry" target="blank">NYC DOT</a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/ferry/ferryop.csv" target="blank">Download Chart Data</a>',
+                          font=list(size=14),
+                          showarrow=F,
+                          x=1,
+                          xanchor='right',
+                          xref='paper',
+                          y=-0.2,
+                          yanchor='top',
+                          yref='paper'))
 p
 
 # Remove camera and logo
-# Annotation
-# Title
-# Stack Area
-# Xaxis margin
+
+
 
 htmlwidgets::saveWidget(p,paste0(path,'ferry/ferry.html'))
 
