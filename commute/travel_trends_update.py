@@ -33,7 +33,7 @@ nyc = bronx + brooklyn + manhattan + queens + si
 # COMMUTING FLOWS
 
 nyc_commuters = pums_ny[pums_ny.PUMA.isin(nyc)]
-nyc_commuters = nyc_commuters[nyc_commuters.POWPUMA.notna()]
+nyc_commuters = nyc_commuters[nyc_commuters.POWPUMA.notna()] # github csv
 
 regional_commuters = pd.concat([pums_ny, pums_ct, pums_nj, pums_pa])
 regional_commuters = regional_commuters[~regional_commuters.PUMA.isin(nyc)]
@@ -43,11 +43,16 @@ live_nyc = nyc_commuters['PWGTP'].sum()
 live_work_nyc = nyc_commuters[nyc_commuters.POWPUMA.isin(nyc)]['PWGTP'].sum()
 work_nyc = live_work_nyc + regional_commuters['PWGTP'].sum()
 
-print('Workers Living in NYC: ' + str('{:,}'.format(live_nyc)))
-print('Workers Working in NYC: ' + str('{:,}'.format(work_nyc)))
-print('Workers Living & Working in NYC: ' + str('{:,}'.format(live_work_nyc)))
-print('Workers Living in NYC & Working Elsewhere: ' + str('{:,}'.format(live_nyc - live_work_nyc)))
-print('Workers Living Elsewhere & Working in NYC: ' + str('{:,}'.format(work_nyc - live_work_nyc)))
+print('Workers Living in NYC: ' 
+      + str('{:,}'.format(live_nyc)))
+print('Workers Working in NYC: ' 
+      + str('{:,}'.format(work_nyc)))
+print('Workers Living & Working in NYC: ' 
+      + str('{:,}'.format(live_work_nyc)))
+print('Workers Living in NYC & Working Elsewhere: ' 
+      + str('{:,}'.format(live_nyc - live_work_nyc)))
+print('Workers Living Elsewhere & Working in NYC: '
+      + str('{:,}'.format(work_nyc - live_work_nyc)))
 
 # NYC COMMUTERS: DESTINATION
 
@@ -93,7 +98,9 @@ dest_fig = px.bar(dest,
                   labels = {'RES':'Residence', 
                             'PWGTP':'Number of Workers', 
                             'DEST':'Destination'},
-                  category_orders= {'DEST': ['Same Boro','Other Boro','Region']},
+                  category_orders= {'DEST': ['Same Boro',
+                                             'Other Boro',
+                                             'Region']},
                   title = 'Destination of Work by Borough of Residence for NYC Commuters')
 dest_fig.show()
 
@@ -133,7 +140,13 @@ tm_fig = px.bar(tm,
                 labels = {'RES': '<b>Residence<b>',
                           '% TM': '<b>Percentage<b>',
                           'TM' : '<b>Travel Mode<b>'},
-                category_orders={'TM':['Subway', 'Rail', 'Bus','Drive Alone', 'Carpool', 'Other', 'Work From Home']},
+                category_orders={'TM':['Subway', 
+                                       'Rail', 
+                                       'Bus',
+                                       'Drive Alone', 
+                                       'Carpool', 
+                                       'Other', 
+                                       'Work From Home']},
                 title = '<b>Travel Mode to Work by Borough of Residence for NYC Commuters<b>')
 tm_fig.update_layout(yaxis_tickformat = '.1%')
 tm_fig.show()
@@ -151,8 +164,10 @@ nyc_commuters['MN'] = np.select([nyc_commuters['POW'] == 'Manhattan'],
                                 ['Manhattan Bound'], 
                                 default='Non-Manhattan Bound')
 
-nyc_commuters['TT'] = np.select([nyc_commuters['JWMNP'] < 30, nyc_commuters['JWMNP'] < 60],
-                                ['Less Than 30 Mins', '30 to 60 Mins'],
+nyc_commuters['TT'] = np.select([nyc_commuters['JWMNP'] < 30, 
+                                 nyc_commuters['JWMNP'] < 60],
+                                ['Less Than 30 Mins', 
+                                 '30 to 60 Mins'],
                                 default='More Than 60 Mins')
 
 tt = nyc_commuters[['RES', 'DEST', 'TT', 'PWGTP']].groupby(['RES', 'DEST', 'TT']).sum().reset_index()
@@ -166,8 +181,12 @@ tt_fig = px.bar(tt,
                           'PWGTP':'Number of Workers', 
                           'DEST':'Destination', 
                           'TT':'Travel Time'},
-                category_orders={'TT': ['Less Than 30 Mins','30 to 60 Mins', 'More Than 60 Mins'], 
-                                 'DEST':['Same Boro','Other Boro','Region']},
+                category_orders={'TT': ['Less Than 30 Mins',
+                                        '30 to 60 Mins', 
+                                        'More Than 60 Mins'], 
+                                 'DEST':['Same Boro',
+                                         'Other Boro',
+                                         'Region']},
                 title = 'Travel Time to Destination of Work by Borough of Residence for NYC Commuters')
 tt_fig.show()
 
@@ -183,10 +202,9 @@ tt_mn_fig = px.bar(tt_mn,
                    labels = {'MN': 'Place of Work',
                              '% MN': 'Percentage',
                              'TT': 'Travel Time'},
-                   category_orders={'TT': ['Less Than 30 Mins','30 to 60 Mins', 'More Than 60 Mins']},
+                   category_orders={'TT': ['Less Than 30 Mins',
+                                           '30 to 60 Mins', 
+                                           'More Than 60 Mins']},
                    title = 'Travel Time by Place of Work for NYC Commuters')
 tt_mn_fig.update_layout(yaxis_tickformat = '.1%')
 tt_mn_fig.show()
-
-nyc_commuters.to_csv()
-
