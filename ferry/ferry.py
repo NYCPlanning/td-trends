@@ -175,3 +175,14 @@ sif=sif[['yearmonth','Staten Island Ferry']].reset_index(drop=True)
 ferryop=pd.merge(pfop,sif,how='left',on='yearmonth')
 ferryop.to_csv(path+'ferry/ferryop.csv',index=False)
 
+
+
+
+
+
+
+
+
+
+
+

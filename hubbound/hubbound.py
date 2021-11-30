@@ -11,16 +11,15 @@ path='C:/Users/Y_Ma2/Desktop/GITHUB/td-trends/'
 
 
 
-
 df=pd.read_excel(path+'hubbound/hubbound.xlsx',sheet_name='SUMMARY')
-
-fig=go.Figure()
 dfcolors={'PATH':'#729ece',
           'NJT':'#ff9e4a',
           'LIRR':'#67bf5c',
           'MNR':'#ed665d',
           'AMTRAK':'#a8786e',
           'NJ BUS':'#ad8bc9'}
+
+fig=go.Figure()
 fig=fig.add_trace(go.Scattergl(name='',
                                x=df['YEAR'],
                                y=df['AMTRAK'],
