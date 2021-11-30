@@ -2,8 +2,10 @@ import pandas as pd
 import numpy as np
 import plotly.express as px
 import plotly.io as pio
-pio.renderers.default = 'browser'
+import plotly.graph_objects as go
 
+pio.renderers.default = 'browser'
+pd.set_option('display.max_columns', None)
 path='C:/Users/Y_Ma2/Desktop/GITHUB/td-trends/test/'
 
 # assign puma codes for each boro 
@@ -15,29 +17,9 @@ si = list(range(3900,3904))
 nyc = bronx + brooklyn + manhattan + queens + si
 
 
-nyc_commuters=pd.read_csv()
-
-# COMMUTING FLOWS
-
-
-nyc_commuters = pums_ny[pums_ny.PUMA.isin(nyc)]
-nyc_commuters = nyc_commuters[nyc_commuters.POWPUMA.notna()]
-
-regional_commuters = pd.concat([pums_ny, pums_ct, pums_nj, pums_pa])
-regional_commuters = regional_commuters[~regional_commuters.PUMA.isin(nyc)]
-regional_commuters = regional_commuters[regional_commuters.POWPUMA.isin(nyc)]  
-
-live_nyc = nyc_commuters['PWGTP'].sum()
-live_work_nyc = nyc_commuters[nyc_commuters.POWPUMA.isin(nyc)]['PWGTP'].sum()
-work_nyc = live_work_nyc + regional_commuters['PWGTP'].sum()
-
-print('Workers Living in NYC: ' + str('{:,}'.format(live_nyc)))
-print('Workers Working in NYC: ' + str('{:,}'.format(work_nyc)))
-print('Workers Living & Working in NYC: ' + str('{:,}'.format(live_work_nyc)))
-print('Workers Living in NYC & Working Elsewhere: ' + str('{:,}'.format(live_nyc - live_work_nyc)))
-print('Workers Living Elsewhere & Working in NYC: ' + str('{:,}'.format(work_nyc - live_work_nyc)))
 
 # NYC COMMUTERS: DESTINATION
+nyc_commuters=pd.read_csv(path+'nyc_commuters.csv',dtype=float,converters={'SERIALNO':str})
 
 nyc_commuters['RES'] = np.select([nyc_commuters.PUMA.isin(bronx),
                                   nyc_commuters.PUMA.isin(brooklyn),
@@ -62,17 +44,21 @@ nyc_commuters['POW'] = np.select([nyc_commuters.POWPUMA.isin(bronx),
                                   'Staten Island'],
                                  default = 'Region')
 
-def get_dest(row):
-    if row['POW'] == 'Region':
-        return 'Region'
-    elif row['RES'] == row['POW']:
-        return 'Same Boro'
-    else:
-        return 'Other Boro'
-    
-nyc_commuters['DEST'] = nyc_commuters.apply(get_dest, axis=1)
+nyc_commuters['DEST'] = np.select([nyc_commuters.POW=='Region', 
+                                  nyc_commuters.RES==nyc_commuters.POW],
+                                 ['Region', 
+                                  'Same Boro'],
+                                 default='Other Boro')
+
 dest = nyc_commuters[['RES','DEST','PWGTP']].groupby(['RES', 'DEST']).sum().reset_index()
-dest
+
+
+fig=go.Figure()
+for i in ['Same Boro','Other Boro','Region']:
+    fig=fig.add_trace(go.Bar(x=dest.loc[dest['DEST']==i,'RES'],
+                             y=dest.loc[dest['DEST']==i,'PWGTP']))
+fig=fig.update_layout(barmode='stack')    
+fig
 
 dest_fig = px.bar(dest, 
                   x = 'RES', 
