@@ -50,14 +50,57 @@ nyc_commuters['DEST'] = np.select([nyc_commuters.POW=='Region',
                                   'Same Boro'],
                                  default='Other Boro')
 
+nyc_commuters['MN'] = np.select([nyc_commuters['POW'] == 'Manhattan'],
+                                ['Manhattan Bound'], 
+                                default='Non-Manhattan Bound')
 
-dest = nyc_commuters[['RES','DEST','PWGTP']].groupby(['RES', 'DEST']).sum().reset_index()
-desttotal=dest[['RES','PWGTP']].groupby(['RES']).sum().reset_index()
-desttotal.columns=['RES','TOTAL']
-dest=pd.merge(dest,desttotal,how='inner',on='RES')
-dest['PCT']=dest['PWGTP']/dest['TOTAL']
-dest.to_csv(path+'test.csv',index=False)
-dest['HOVER']='<b>Residence: </b>'+dest['RES']+'<br><b>Workplace: </b>'+dest['DEST']+'<br><b>Commuters: </b>'+dest['PWGTP'].map('{:,.0f}'.format)+'<br><b>Percentage: </b>'+dest['PCT'].map('{:.0%}'.format)
+nyc_commuters['TT'] = np.select([nyc_commuters['JWMNP'] < 30, 
+                                 nyc_commuters['JWMNP'] < 60],
+                                ['Less Than 30 Mins', 
+                                 '30 to 60 Mins'],
+                                default='More Than 60 Mins')
+
+tt = nyc_commuters[['RES', 'DEST', 'TT', 'PWGTP']].groupby(['RES', 'DEST', 'TT']).sum().reset_index()
+tttotal=tt[['RES','DEST','PWGTP']].groupby(['RES','DEST']).sum().reset_index()
+tttotal.columns=['RES','DEST','TOTAL']
+tt=pd.merge(tt,tttotal,how='inner',on=['RES','DEST'])
+tt['PCT']=tt['PWGTP']/tt['TOTAL']
+tt.to_csv(path+'test2.csv',index=False)
+
+tt['HOVER']='<b>Residence: </b>'+dest['RES']+'<br><b>Workplace: </b>'+dest['DEST']+'<br><b>Commuters: </b>'+dest['PWGTP'].map('{:,.0f}'.format)+'<br><b>Percentage: </b>'+dest['PCT'].map('{:.0%}'.format)
+
+
+
+
+
+
+
+tt_fig = px.bar(tt, 
+                x = 'RES', 
+                y = 'PWGTP', 
+                color = 'TT',
+                facet_col = 'DEST',
+                labels = {'RES':'Residence', 
+                          'PWGTP':'Number of Workers', 
+                          'DEST':'Destination', 
+                          'TT':'Travel Time'},
+                category_orders={'TT': ['Less Than 30 Mins',
+                                        '30 to 60 Mins', 
+                                        'More Than 60 Mins'], 
+                                 'DEST':['Same Boro',
+                                         'Other Boro',
+                                         'Region']},
+                title = 'Travel Time to Destination of Work by Borough of Residence for NYC Commuters')
+tt_fig.show()
+
+
+
+
+
+
+
+
+
 
 dfcolors={'Same Boro':'#729ece',
           'Other Boro':'#ff9e4a',
@@ -74,7 +117,6 @@ for i in ['Same Boro','Other Boro','Region']:
                              hovertext=dest.loc[dest['DEST']==i,'HOVER']))
 fig.update_layout(
     barmode='stack',
-    barnorm='percent',
     template='plotly_white',
     title={'text':'<b>Destination of Work by Borough of Residence for NYC Commuters</b>',
            'font_size':20,
