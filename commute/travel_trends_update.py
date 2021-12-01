@@ -7,6 +7,7 @@ Date: November 2021
 """
 import pandas as pd
 import numpy as np
+import plotly.graph_objects as go
 import plotly.express as px
 import plotly.io as pio
 pio.renderers.default = 'browser'
@@ -43,16 +44,16 @@ live_nyc = nyc_commuters['PWGTP'].sum()
 live_work_nyc = nyc_commuters[nyc_commuters.POWPUMA.isin(nyc)]['PWGTP'].sum()
 work_nyc = live_work_nyc + regional_commuters['PWGTP'].sum()
 
-print('Workers Living in NYC: ' 
-      + str('{:,}'.format(live_nyc)))
-print('Workers Working in NYC: ' 
-      + str('{:,}'.format(work_nyc)))
-print('Workers Living & Working in NYC: ' 
-      + str('{:,}'.format(live_work_nyc)))
-print('Workers Living in NYC & Working Elsewhere: ' 
-      + str('{:,}'.format(live_nyc - live_work_nyc)))
-print('Workers Living Elsewhere & Working in NYC: '
-      + str('{:,}'.format(work_nyc - live_work_nyc)))
+# print('Workers Living in NYC: ' 
+#       + str('{:,}'.format(live_nyc)))
+# print('Workers Working in NYC: ' 
+#       + str('{:,}'.format(work_nyc)))
+# print('Workers Living & Working in NYC: ' 
+#       + str('{:,}'.format(live_work_nyc)))
+# print('Workers Living in NYC & Working Elsewhere: ' 
+#       + str('{:,}'.format(live_nyc - live_work_nyc)))
+# print('Workers Living Elsewhere & Working in NYC: '
+#       + str('{:,}'.format(work_nyc - live_work_nyc)))
 
 # NYC COMMUTERS: DESTINATION
 
@@ -79,29 +80,26 @@ nyc_commuters['POW'] = np.select([nyc_commuters.POWPUMA.isin(bronx),
                                   'Staten Island'],
                                  default = 'Region')
 
-def get_dest(row):
-    if row['POW'] == 'Region':
-        return 'Region'
-    elif row['RES'] == row['POW']:
-        return 'Same Boro'
-    else:
-        return 'Other Boro'
-    
-nyc_commuters['DEST'] = nyc_commuters.apply(get_dest, axis=1)
+nyc_commuters['DEST'] = np.select([nyc_commuters['POW'] == 'Region',
+                                   nyc_commuters['RES'] == nyc_commuters['POW']],
+                                  ['Region',
+                                   'Same Boro'],
+                                  default = 'Other Boro')
+
 dest = nyc_commuters[['RES','DEST','PWGTP']].groupby(['RES', 'DEST']).sum().reset_index()
-dest
 
 dest_fig = px.bar(dest, 
                   x = 'RES', 
                   y = 'PWGTP', 
                   color = 'DEST',
-                  labels = {'RES':'Residence', 
-                            'PWGTP':'Number of Workers', 
-                            'DEST':'Destination'},
+                  labels = {'RES':'<b>Residence<b>', 
+                            'PWGTP':'<b>Number of Workers<b>', 
+                            'DEST':'<b>Destination<b>'},
+                  color_discrete_sequence= ['#729ece','#ff9e4a','#67bf5c'],     #EDIT
                   category_orders= {'DEST': ['Same Boro',
                                              'Other Boro',
                                              'Region']},
-                  title = 'Destination of Work by Borough of Residence for NYC Commuters')
+                  title = '<b>Destination of Work by Borough of Residence for NYC Commuters<b>')
 dest_fig.show()
 
 # NYC COMMUTERS: TRAVEL MODE
@@ -127,7 +125,6 @@ def get_mn(row):
         return 'Carpool'
     
 nyc_commuters['TM'] = nyc_commuters.apply(get_mn, axis=1)
-nyc_commuters
 
 tm = nyc_commuters[['RES', 'TM', 'PWGTP']].groupby(['RES', 'TM']).sum()
 tm['% TM'] = tm.div(tm.sum(level=0), level=0) 
@@ -152,11 +149,33 @@ tm_fig.update_layout(yaxis_tickformat = '.1%')
 tm_fig.show()
 
 # determine mode split for commuters not living or working in manhattan
-tm_not_mn = ~nyc_commuters[['RES', 'POW', 'TM', 'PWGTP']].isin('Manhattan')
-tm_not_mn
+tm_not_mn = nyc_commuters[['RES', 'POW', 'TM', 'PWGTP']].groupby(['RES','POW','TM']).sum()
+tm_not_mn = tm_not_mn.drop(index='Manhattan')
+tm_not_mn = tm_not_mn.drop(index='Manhattan', level =1).reset_index()
+tm_not_mn = tm_not_mn.groupby(['TM']).sum().reset_index()
+
+sorter = ['Subway','Rail','Bus','Drive Alone','Carpool', 'Other', 'Work From Home']
+tm_not_mn = tm_not_mn.set_index('TM').loc[sorter].reset_index()
 
 
-tm_not_mn = tm_not_mn.groupby(['TM']).sum() 
+fig = go.Figure()
+
+fig = fig.add_pie(values = tm_not_mn['PWGTP'],
+                  labels = tm_not_mn['TM'],
+                  direction = 'clockwise', 
+                  showlegend = True,
+                  sort = False,
+                  textfont = {'family':'Arial'},
+                  title = 'Mode Split for Commuters Living or Working in the Outer Boroughs')
+fig.show()
+
+tm_not_mn_fig = px.pie(tm_not_mn, 
+                       values = 'PWGTP',
+                       names = 'TM',
+                       labels = {'TM':'Travel Mode', 
+                                 'PWGTP':'Number of Workers'}, 
+                       title = '<b>Mode Split of NYC Commuters Living or Working in the Outer Boroughs<b>')
+tm_not_mn_fig.show()
 
 # NYC COMMUTERS: TRAVEL TIME
 
@@ -208,3 +227,83 @@ tt_mn_fig = px.bar(tt_mn,
                    title = 'Travel Time by Place of Work for NYC Commuters')
 tt_mn_fig.update_layout(yaxis_tickformat = '.1%')
 tt_mn_fig.show()
+
+# REGIONAL IN-COMMUTERS: DESTINATION
+
+regional_commuters['RES'] = np.select([regional_commuters['ST'] == 36,
+                                       regional_commuters['ST'] == 9,
+                                       regional_commuters['ST'] == 34,
+                                       regional_commuters['ST'] == 42],
+                                      ['New York',
+                                       'Connecticut',
+                                       'New Jersey',
+                                       'Pennsylvania'])
+
+regional_commuters['POW'] = np.select([regional_commuters.POWPUMA.isin(bronx),
+                                       regional_commuters.POWPUMA.isin(brooklyn),
+                                       regional_commuters.POWPUMA.isin(manhattan),
+                                       regional_commuters.POWPUMA.isin(si),
+                                       regional_commuters.POWPUMA.isin(queens)],
+                                      ['Bronx',
+                                       'Brooklyn',
+                                       'Manhattan',
+                                       'Staten Island',
+                                       'Queens'])
+
+dest_rc = regional_commuters[['RES','POW', 'PWGTP']].groupby(['RES', 'POW']).sum().reset_index()
+dest_rc 
+
+boro_colors = {'Bronx': '#729ece',
+               'Brooklyn': '#ff9e4a',
+               'Manhattan': '#67bf5c',
+               'Staten Island': '#ed665d',
+               'Queens': '#ad8bc9'}
+
+fig = go.Figure()
+
+for i in ['Bronx', 'Brooklyn', 'Manhattan', 'Staten Island', 'Queens']:
+    fig = fig.add_trace(go.Bar(name = i,
+                               x = '<b>'+ dest_rc.loc[dest_rc['POW'] == i, 'RES']+'<b>',
+                               y = dest_rc.loc[dest_rc['POW'] == i, 'PWGTP'],
+                               marker = {'color': boro_colors[i]},
+                               width = .5))
+
+fig.update_layout(
+    barmode='stack',
+    template='plotly_white',
+    title={'text':'<b>Destination of Work by State for Regional In-Commuters</b>',
+           'font_size':20,
+           'x':0.5,
+           'xanchor':'center',
+           'y':0.95,
+           'yanchor':'top'},
+    legend={'traceorder':'normal',
+            'orientation':'h',
+            'title_text':'',
+            'font_size':16,
+            'x':0.5,
+            'xanchor':'center',
+            'y':1,
+            'yanchor':'bottom'},
+    margin={'b':120,
+            'l':80,
+            'r':80,
+            't':120},
+    xaxis={'categoryorder': 'total descending',
+           'tickfont_size':14,
+           'fixedrange':True,
+           'showgrid':False},
+    yaxis={'tickfont_size':12,
+           'rangemode':'nonnegative',
+           'fixedrange':True,
+           'showgrid':True},
+    hoverlabel={'font_size':14},
+    font={'family':'Arial',
+          'color':'black'},
+    dragmode=False)
+
+fig                 
+                               
+regional_commuters
+
+
