@@ -71,8 +71,7 @@ fig.update_layout(
     font={'family':'Arial',
           'color':'black'},
     dragmode=False,
-    hovermode='x unified',
-    )
+    hovermode='x unified')
 fig.add_annotation(
     text='Data Source: <a href="https://www.nymtc.org/Data-and-Modeling/Transportation-Data-and-Statistics/Publications/Hub-Bound-Travel" target="blank">NYMTC Hub Bound Travel </a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/hubbound/hubbound.csv" target="blank">Download Chart Data</a>',
     font_size=14,
@@ -85,7 +84,7 @@ fig.add_annotation(
     yref='paper')
 fig.write_html(path+'hubbound/hubbound.html',
                include_plotlyjs='cdn',
-               config={'displaylogo':False,'modeBarButtonsToRemove':['toImage','select2d','lasso2d']})
+               config={'displayModeBar':False})
 
 
 

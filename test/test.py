@@ -50,117 +50,73 @@ nyc_commuters['DEST'] = np.select([nyc_commuters.POW=='Region',
                                   'Same Boro'],
                                  default='Other Boro')
 
-dest = nyc_commuters[['RES','DEST','PWGTP']].groupby(['RES', 'DEST']).sum().reset_index()
 
+dest = nyc_commuters[['RES','DEST','PWGTP']].groupby(['RES', 'DEST']).sum().reset_index()
+desttotal=dest[['RES','PWGTP']].groupby(['RES']).sum().reset_index()
+desttotal.columns=['RES','TOTAL']
+dest=pd.merge(dest,desttotal,how='inner',on='RES')
+dest['PCT']=dest['PWGTP']/dest['TOTAL']
+dest.to_csv(path+'test.csv',index=False)
+dest['HOVER']='<b>Residence: </b>'+dest['RES']+'<br><b>Workplace: </b>'+dest['DEST']+'<br><b>Commuters: </b>'+dest['PWGTP'].map('{:,.0f}'.format)+'<br><b>Percentage: </b>'+dest['PCT'].map('{:.0%}'.format)
+
+dfcolors={'Same Boro':'#729ece',
+          'Other Boro':'#ff9e4a',
+          'Region':'#67bf5c'}
 
 fig=go.Figure()
 for i in ['Same Boro','Other Boro','Region']:
-    fig=fig.add_trace(go.Bar(x=dest.loc[dest['DEST']==i,'RES'],
-                             y=dest.loc[dest['DEST']==i,'PWGTP']))
-fig=fig.update_layout(barmode='stack')    
+    fig=fig.add_trace(go.Bar(name=i,
+                             x='<b>'+dest.loc[dest['DEST']==i,'RES']+'</b>',
+                             y=dest.loc[dest['DEST']==i,'PWGTP'],
+                             marker={'color':dfcolors[i]},
+                             width=0.5,
+                             hoverinfo='text',
+                             hovertext=dest.loc[dest['DEST']==i,'HOVER']))
+fig.update_layout(
+    barmode='stack',
+    template='plotly_white',
+    title={'text':'<b>Destination of Work by Borough of Residence for NYC Commuters</b>',
+           'font_size':20,
+           'x':0.5,
+           'xanchor':'center',
+           'y':0.95,
+           'yanchor':'top'},
+    legend={'traceorder':'normal',
+            'orientation':'h',
+            'title_text':'',
+            'font_size':16,
+            'x':0.5,
+            'xanchor':'center',
+            'y':1,
+            'yanchor':'bottom'},
+    margin={'b':120,
+            'l':80,
+            'r':80,
+            't':120},
+    xaxis={'tickfont_size':14,
+           'fixedrange':True,
+           'showgrid':False},
+    yaxis={'tickfont_size':12,
+           'rangemode':'nonnegative',
+           'fixedrange':True,
+           'showgrid':True},
+    hoverlabel={'font_size':14},
+    font={'family':'Arial',
+          'color':'black'},
+    dragmode=False)
+fig.add_annotation(
+    text='Data Source: <a href="https://www.census.gov/programs-surveys/acs/microdata/access.2019.html" target="blank">Census Bureau 2019 ACS 5-Year PUMS</a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/hubbound/hubbound.csv" target="blank">Download Chart Data</a>',
+    font_size=14,
+    showarrow=False,
+    x=1,
+    xanchor='right',
+    xref='paper',
+    y=-0.2,
+    yanchor='top',
+    yref='paper')
 fig
+fig.write_html(path+'test.html',
+               include_plotlyjs='cdn',
+               config={'displayModeBar':False})
 
-dest_fig = px.bar(dest, 
-                  x = 'RES', 
-                  y = 'PWGTP', 
-                  color = 'DEST',
-                  labels = {'RES':'Residence', 
-                            'PWGTP':'Number of Workers', 
-                            'DEST':'Destination'},
-                  category_orders= {'DEST': ['Same Boro','Other Boro','Region']},
-                  title = 'Destination of Work by Borough of Residence for NYC Commuters')
-dest_fig.show()
-
-# NYC COMMUTERS: TRAVEL MODE
-
-di = {2: 'Bus',
-      3: 'Subway', 
-      4: 'Rail',
-      5: 'Rail',
-      6: 'Other',
-      7: 'Other',
-      8: 'Other',
-      9: 'Other',
-      10: 'Other',
-      11: 'Work From Home',
-      12: 'Other'}
-
-def get_mn(row):
-    if np.isnan(row['JWRIP']) == True: 
-        return di[row['JWTRNS']]
-    elif row['JWRIP'] == 1: 
-        return 'Drive Alone'
-    else: 
-        return 'Carpool'
-    
-nyc_commuters['TM'] = nyc_commuters.apply(get_mn, axis=1)
-nyc_commuters
-
-tm = nyc_commuters[['RES', 'TM', 'PWGTP']].groupby(['RES', 'TM']).sum()
-tm['% TM'] = tm.div(tm.sum(level=0), level=0) 
-tm = tm.reset_index()
-
-tm_fig = px.bar(tm,
-                x = 'RES',
-                y = '% TM',
-                color = 'TM',
-                labels = {'RES': '<b>Residence<b>',
-                          '% TM': '<b>Percentage<b>',
-                          'TM' : '<b>Travel Mode<b>'},
-                category_orders={'TM':['Subway', 'Rail', 'Bus','Drive Alone', 'Carpool', 'Other', 'Work From Home']},
-                title = '<b>Travel Mode to Work by Borough of Residence for NYC Commuters<b>')
-tm_fig.update_layout(yaxis_tickformat = '.1%')
-tm_fig.show()
-
-# determine mode split for commuters not living or working in manhattan
-tm_not_mn = ~nyc_commuters[['RES', 'POW', 'TM', 'PWGTP']].isin('Manhattan')
-tm_not_mn
-
-
-tm_not_mn = tm_not_mn.groupby(['TM']).sum() 
-
-# NYC COMMUTERS: TRAVEL TIME
-
-nyc_commuters['MN'] = np.select([nyc_commuters['POW'] == 'Manhattan'],
-                                ['Manhattan Bound'], 
-                                default='Non-Manhattan Bound')
-
-nyc_commuters['TT'] = np.select([nyc_commuters['JWMNP'] < 30, nyc_commuters['JWMNP'] < 60],
-                                ['Less Than 30 Mins', '30 to 60 Mins'],
-                                default='More Than 60 Mins')
-
-tt = nyc_commuters[['RES', 'DEST', 'TT', 'PWGTP']].groupby(['RES', 'DEST', 'TT']).sum().reset_index()
-
-tt_fig = px.bar(tt, 
-                x = 'RES', 
-                y = 'PWGTP', 
-                color = 'TT',
-                facet_col = 'DEST',
-                labels = {'RES':'Residence', 
-                          'PWGTP':'Number of Workers', 
-                          'DEST':'Destination', 
-                          'TT':'Travel Time'},
-                category_orders={'TT': ['Less Than 30 Mins','30 to 60 Mins', 'More Than 60 Mins'], 
-                                 'DEST':['Same Boro','Other Boro','Region']},
-                title = 'Travel Time to Destination of Work by Borough of Residence for NYC Commuters')
-tt_fig.show()
-
-# determine travel time by manhattan or non-manhattan destinations
-tt_mn = nyc_commuters[['MN','TT', 'PWGTP']].groupby(['MN', 'TT']).sum()
-tt_mn['% MN'] = tt_mn.div(tt_mn.sum(level=0), level=0)
-tt_mn = tt_mn.reset_index()
-
-tt_mn_fig = px.bar(tt_mn, 
-                   x='MN', 
-                   y='% MN', 
-                   color='TT', 
-                   labels = {'MN': 'Place of Work',
-                             '% MN': 'Percentage',
-                             'TT': 'Travel Time'},
-                   category_orders={'TT': ['Less Than 30 Mins','30 to 60 Mins', 'More Than 60 Mins']},
-                   title = 'Travel Time by Place of Work for NYC Commuters')
-tt_mn_fig.update_layout(yaxis_tickformat = '.1%')
-tt_mn_fig.show()
-
-nyc_commuters.to_csv()
 

@@ -1,0 +1,46 @@
+RES,DEST,TT,PWGTP
+Bronx,Other Boro,30 to 60 Mins,106785
+Bronx,Other Boro,Less Than 30 Mins,21775
+Bronx,Other Boro,More Than 60 Mins,143703
+Bronx,Region,30 to 60 Mins,24658
+Bronx,Region,Less Than 30 Mins,16203
+Bronx,Region,More Than 60 Mins,18578
+Bronx,Same Boro,30 to 60 Mins,83021
+Bronx,Same Boro,Less Than 30 Mins,103892
+Bronx,Same Boro,More Than 60 Mins,60324
+Brooklyn,Other Boro,30 to 60 Mins,308793
+Brooklyn,Other Boro,Less Than 30 Mins,49384
+Brooklyn,Other Boro,More Than 60 Mins,208437
+Brooklyn,Region,30 to 60 Mins,13976
+Brooklyn,Region,Less Than 30 Mins,6342
+Brooklyn,Region,More Than 60 Mins,25509
+Brooklyn,Same Boro,30 to 60 Mins,225878
+Brooklyn,Same Boro,Less Than 30 Mins,215188
+Brooklyn,Same Boro,More Than 60 Mins,144081
+Manhattan,Other Boro,30 to 60 Mins,44140
+Manhattan,Other Boro,Less Than 30 Mins,12765
+Manhattan,Other Boro,More Than 60 Mins,25357
+Manhattan,Region,30 to 60 Mins,21165
+Manhattan,Region,Less Than 30 Mins,10726
+Manhattan,Region,More Than 60 Mins,20534
+Manhattan,Same Boro,30 to 60 Mins,305518
+Manhattan,Same Boro,Less Than 30 Mins,340108
+Manhattan,Same Boro,More Than 60 Mins,109842
+Queens,Other Boro,30 to 60 Mins,245624
+Queens,Other Boro,Less Than 30 Mins,43707
+Queens,Other Boro,More Than 60 Mins,221960
+Queens,Region,30 to 60 Mins,51187
+Queens,Region,Less Than 30 Mins,26895
+Queens,Region,More Than 60 Mins,37323
+Queens,Same Boro,30 to 60 Mins,169406
+Queens,Same Boro,Less Than 30 Mins,194376
+Queens,Same Boro,More Than 60 Mins,110503
+Staten Island,Other Boro,30 to 60 Mins,24101
+Staten Island,Other Boro,Less Than 30 Mins,7883
+Staten Island,Other Boro,More Than 60 Mins,59087
+Staten Island,Region,30 to 60 Mins,7997
+Staten Island,Region,Less Than 30 Mins,3295
+Staten Island,Region,More Than 60 Mins,5081
+Staten Island,Same Boro,30 to 60 Mins,25233
+Staten Island,Same Boro,Less Than 30 Mins,62812
+Staten Island,Same Boro,More Than 60 Mins,17269
