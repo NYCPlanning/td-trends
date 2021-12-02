@@ -3,10 +3,12 @@ import numpy as np
 import plotly.express as px
 import plotly.io as pio
 import plotly.graph_objects as go
+import plotly.subplots as ps
 
 pio.renderers.default = 'browser'
 pd.set_option('display.max_columns', None)
 path='C:/Users/Y_Ma2/Desktop/GITHUB/td-trends/test/'
+path='C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/test/'
 
 # assign puma codes for each boro 
 bronx = list(range(3700,3711))
@@ -99,7 +101,7 @@ tt_fig.show()
 
 
 
-
+fig=ps.make_subplots(rows=1,cols=3)
 
 
 dfcolors={'Same Boro':'#729ece',
