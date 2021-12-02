@@ -10,7 +10,9 @@ import numpy as np
 import plotly.graph_objects as go
 import plotly.express as px
 import plotly.io as pio
+
 pio.renderers.default = 'browser'
+path = 'C:/Users/M_Free/OneDrive - NYC O365 HOSTED/Data/Travel Trends Update/Dec 2021/'
 
 col_list = ['SERIALNO', 'ST', 'PUMA', 'PWGTP', 'POWPUMA','JWRIP','JWTRNS', 'JWMNP']
 
@@ -86,7 +88,72 @@ nyc_commuters['DEST'] = np.select([nyc_commuters['POW'] == 'Region',
                                    'Same Boro'],
                                   default = 'Other Boro')
 
-dest = nyc_commuters[['RES','DEST','PWGTP']].groupby(['RES', 'DEST']).sum().reset_index()
+dest = nyc_commuters[['RES','DEST','PWGTP']].groupby(['RES', 'DEST']).sum()
+dest['% DEST'] = dest.div(dest.sum(level=0), level=0)
+dest = dest.reset_index()
+
+dest['HOVER']='<b>Residence: </b>'+dest['RES']+'<br><b>Workplace: </b>'+dest['DEST']+'<br><b>Commuters: </b>'+dest['PWGTP'].map('{:,.0f}'.format)+'<br><b>Percentage: </b>'+dest['% DEST'].map('{:.0%}'.format)
+
+dest_colors = {'Same Boro':'#729ece',
+               'Other Boro':'#ff9e4a',
+               'Region':'#67bf5c'}
+
+fig = go.Figure()
+
+for i in ['Same Boro', 'Other Boro', 'Region']:
+    fig = fig.add_trace(go.Bar(name = i,
+                               x = dest.loc[dest['DEST'] == i, 'RES'],
+                               y = dest.loc[dest['DEST'] == i, 'PWGTP'],
+                               marker = {'color': dest_colors[i]},
+                               width = .5,
+                               hoverinfo = 'text',
+                               hovertext = dest.loc[dest['DEST'] == i, 'HOVER']))
+    
+fig.update_layout(barmode = 'stack',
+                  template = 'plotly_white',
+                  title = {'text': '<b>Destination of Work by Borough of Residence for NYC Commuters<b>',
+                           'font_size': 20,
+                           'x': .5,
+                           'xanchor': 'center',
+                           'y': .95,
+                           'yanchor': 'top'},
+                  legend = {'traceorder': 'normal',
+                            'orientation': 'h',
+                            'font_size': 16,
+                            'x': .5,
+                            'xanchor': 'center',
+                            'y': 1,
+                            'yanchor': 'bottom'},
+                  margin = {'b': 120, 
+                            'l': 80,
+                            'r': 80,
+                            't': 120},
+                  xaxis = {'tickfont_size': 14,
+                           'fixedrange': True, 
+                           'showgrid': False},
+                  yaxis = {'tickfont_size': 12,
+                           'rangemode': 'nonnegative',
+                           'fixedrange': True,
+                           'showgrid': True},
+                  hoverlabel = {'font_size': 14}, 
+                  font = {'family': 'Arial',
+                          'color': 'black'},
+                  dragmode = False)
+
+fig.add_annotation(text = 'Data Source: <a href="https://www.census.gov/programs-surveys/acs/microdata/access.2019.html" target="blank">Census Bureau 2019 ACS 5-Year PUMS</a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/test/test.csv" target="blank">Download Chart Data</a>',
+                   font_size = 14,
+                   showarrow = False, 
+                   x = 1, 
+                   xanchor = 'right',
+                   xref = 'paper',
+                   y = -.1,
+                   yanchor = 'top',
+                   yref = 'paper')
+fig
+
+fig.write_html('C:/Users/M_Free/OneDrive - NYC O365 HOSTED/Data/Travel Trends Update/Dec 2021/test.html',
+               include_plotlyjs='cdn',
+               config={'displayModeBar':False})
 
 dest_fig = px.bar(dest, 
                   x = 'RES', 
