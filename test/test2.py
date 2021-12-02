@@ -8,7 +8,7 @@ import plotly.subplots as ps
 pio.renderers.default = 'browser'
 pd.set_option('display.max_columns', None)
 path='C:/Users/Y_Ma2/Desktop/GITHUB/td-trends/test/'
-path='C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/test/'
+# path='C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/test/'
 
 # assign puma codes for each boro 
 bronx = list(range(3700,3711))
@@ -69,7 +69,94 @@ tt=pd.merge(tt,tttotal,how='inner',on=['RES','DEST'])
 tt['PCT']=tt['PWGTP']/tt['TOTAL']
 tt.to_csv(path+'test2.csv',index=False)
 
-tt['HOVER']='<b>Residence: </b>'+dest['RES']+'<br><b>Workplace: </b>'+dest['DEST']+'<br><b>Commuters: </b>'+dest['PWGTP'].map('{:,.0f}'.format)+'<br><b>Percentage: </b>'+dest['PCT'].map('{:.0%}'.format)
+# tt['HOVER']='<b>Residence: </b>'+dest['RES']+'<br><b>Workplace: </b>'+dest['DEST']+'<br><b>Commuters: </b>'+dest['PWGTP'].map('{:,.0f}'.format)+'<br><b>Percentage: </b>'+dest['PCT'].map('{:.0%}'.format)
+
+
+# tt_fig = px.bar(tt, 
+#                 x = 'RES', 
+#                 y = 'PWGTP', 
+#                 color = 'TT',
+#                 facet_col = 'DEST',
+#                 labels = {'RES':'Residence', 
+#                           'PWGTP':'Number of Workers', 
+#                           'DEST':'Destination', 
+#                           'TT':'Travel Time'},
+#                 category_orders={'TT': ['Less Than 30 Mins',
+#                                         '30 to 60 Mins', 
+#                                         'More Than 60 Mins'], 
+#                                  'DEST':['Same Boro',
+#                                          'Other Boro',
+#                                          'Region']},
+#                 title = 'Travel Time to Destination of Work by Borough of Residence for NYC Commuters')
+
+
+
+boro=['Bronx','Brooklyn','Manhattan','Queens','Staten Island']
+ttcat=['Less Than 30 Mins','30 to 60 Mins','More Than 60 Mins']
+
+dfcolors={'Less Than 30 Mins':'#729ece',
+          '30 to 60 Mins':'#ff9e4a',
+          'More Than 60 Mins':'#67bf5c'}
+
+fig=ps.make_subplots(rows=1,
+                     cols=len(boro),
+                     shared_yaxes=True,
+                     subplot_titles=boro,
+                     horizontal_spacing=0)
+
+for i in range(0,1):
+    for j in range(0,len(ttcat)):
+        fig=fig.add_trace(go.Bar(name=ttcat[j],
+                                 x=tt.loc[(tt['RES']==boro[i])&(tt['TT']==ttcat[j]),'DEST'],
+                                 y=tt.loc[(tt['RES']==boro[i])&(tt['TT']==ttcat[j]),'PWGTP'],
+                                 marker={'color':dfcolors[ttcat[j]]},
+                                 legendgroup=ttcat[j],
+                                 showlegend=True),
+                      row=1,
+                      col=i+1)
+for i in range(1,len(boro)):
+    for j in range(0,len(ttcat)):
+        fig=fig.add_trace(go.Bar(name=ttcat[j],
+                                 x=tt.loc[(tt['RES']==boro[i])&(tt['TT']==ttcat[j]),'DEST'],
+                                 y=tt.loc[(tt['RES']==boro[i])&(tt['TT']==ttcat[j]),'PWGTP'],
+                                 marker={'color':dfcolors[ttcat[j]]},
+                                 legendgroup=ttcat[j],
+                                 showlegend=False),
+                      row=1,
+                      col=i+1)
+fig.update_layout(
+    barmode='stack',
+    template='plotly_white',
+    title={'text':'<b>Destination of Work by Borough of Residence for NYC Commuters</b>',
+           'font_size':20,
+           'x':0.5,
+           'xanchor':'center',
+           'y':0.95,
+           'yanchor':'top'},
+    legend={'traceorder':'normal',
+            'orientation':'h',
+            'title_text':'',
+            'font_size':16,
+            'x':0.5,
+            'xanchor':'center',
+            'y':1,
+            'yanchor':'bottom'},
+    margin={'b':120,
+            'l':80,
+            'r':80,
+            't':120},
+    xaxis={'tickfont_size':14,
+           'fixedrange':True,
+           'showgrid':False},
+    yaxis={'tickfont_size':12,
+           'rangemode':'nonnegative',
+           'fixedrange':True,
+           'showgrid':True},
+    hoverlabel={'font_size':14},
+    font={'family':'Arial',
+          'color':'black'},
+    dragmode=False)
+fig
 
 
 
@@ -77,36 +164,6 @@ tt['HOVER']='<b>Residence: </b>'+dest['RES']+'<br><b>Workplace: </b>'+dest['DEST
 
 
 
-tt_fig = px.bar(tt, 
-                x = 'RES', 
-                y = 'PWGTP', 
-                color = 'TT',
-                facet_col = 'DEST',
-                labels = {'RES':'Residence', 
-                          'PWGTP':'Number of Workers', 
-                          'DEST':'Destination', 
-                          'TT':'Travel Time'},
-                category_orders={'TT': ['Less Than 30 Mins',
-                                        '30 to 60 Mins', 
-                                        'More Than 60 Mins'], 
-                                 'DEST':['Same Boro',
-                                         'Other Boro',
-                                         'Region']},
-                title = 'Travel Time to Destination of Work by Borough of Residence for NYC Commuters')
-tt_fig.show()
-
-
-
-
-
-
-
-fig=ps.make_subplots(rows=1,cols=3)
-
-
-dfcolors={'Same Boro':'#729ece',
-          'Other Boro':'#ff9e4a',
-          'Region':'#67bf5c'}
 
 fig=go.Figure()
 for i in ['Same Boro','Other Boro','Region']:
