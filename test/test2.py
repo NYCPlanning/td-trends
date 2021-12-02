@@ -101,8 +101,7 @@ dfcolors={'Less Than 30 Mins':'#729ece',
 fig=ps.make_subplots(rows=1,
                      cols=len(boro),
                      shared_yaxes=True,
-                     subplot_titles=boro,
-                     horizontal_spacing=0)
+                     subplot_titles=boro)
 
 for i in range(0,1):
     for j in range(0,len(ttcat)):
@@ -156,6 +155,8 @@ fig.update_layout(
     font={'family':'Arial',
           'color':'black'},
     dragmode=False)
+for i in range(0,len(boro)):
+    fig.layout.annotations[i].update(y=-0.05,yanchor='top')
 fig
 
 
@@ -163,60 +164,6 @@ fig
 
 
 
-
-
-fig=go.Figure()
-for i in ['Same Boro','Other Boro','Region']:
-    fig=fig.add_trace(go.Bar(name=i,
-                             x='<b>'+dest.loc[dest['DEST']==i,'RES']+'</b>',
-                             y=dest.loc[dest['DEST']==i,'PWGTP'],
-                             marker={'color':dfcolors[i]},
-                             width=0.5,
-                             hoverinfo='text',
-                             hovertext=dest.loc[dest['DEST']==i,'HOVER']))
-fig.update_layout(
-    barmode='stack',
-    template='plotly_white',
-    title={'text':'<b>Destination of Work by Borough of Residence for NYC Commuters</b>',
-           'font_size':20,
-           'x':0.5,
-           'xanchor':'center',
-           'y':0.95,
-           'yanchor':'top'},
-    legend={'traceorder':'normal',
-            'orientation':'h',
-            'title_text':'',
-            'font_size':16,
-            'x':0.5,
-            'xanchor':'center',
-            'y':1,
-            'yanchor':'bottom'},
-    margin={'b':120,
-            'l':80,
-            'r':80,
-            't':120},
-    xaxis={'tickfont_size':14,
-           'fixedrange':True,
-           'showgrid':False},
-    yaxis={'tickfont_size':12,
-           'rangemode':'nonnegative',
-           'fixedrange':True,
-           'showgrid':True},
-    hoverlabel={'font_size':14},
-    font={'family':'Arial',
-          'color':'black'},
-    dragmode=False)
-fig.add_annotation(
-    text='Data Source: <a href="https://www.census.gov/programs-surveys/acs/microdata/access.2019.html" target="blank">Census Bureau 2019 ACS 5-Year PUMS</a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/test/test.csv" target="blank">Download Chart Data</a>',
-    font_size=14,
-    showarrow=False,
-    x=1,
-    xanchor='right',
-    xref='paper',
-    y=-0.2,
-    yanchor='top',
-    yref='paper')
-fig
 fig.write_html(path+'test.html',
                include_plotlyjs='cdn',
                config={'displayModeBar':False})

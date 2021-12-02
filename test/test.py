@@ -112,7 +112,7 @@ fig.add_annotation(
     x=1,
     xanchor='right',
     xref='paper',
-    y=-0.2,
+    y=-0.1,
     yanchor='top',
     yref='paper')
 fig
