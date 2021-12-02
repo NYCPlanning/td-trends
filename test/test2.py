@@ -164,7 +164,7 @@ fig
 
 
 
-fig.write_html(path+'test.html',
+fig.write_html(path+'test2.html',
                include_plotlyjs='cdn',
                config={'displayModeBar':False})
 
