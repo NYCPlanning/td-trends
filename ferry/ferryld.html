@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title> Subway Ridership </title>
+    <title> Ferry Ridership </title>
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
     <script src="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js"></script>
     <link href="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css" rel="stylesheet" />
@@ -127,7 +127,7 @@
     <nav id="legend">
         <div class="container g-0">
             <div class="row g-0 justify-content-between" id="header">
-                <div class="col-auto"> Annual Subway Ridership </div>
+                <div class="col-auto"> Monthly Ferry Ridership </div>
                 <div class="col-auto">
                     <i class="bi bi-chevron-down" id='chevron'></i>
                 </div>
@@ -187,20 +187,7 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-            
-
-            // Add subway lines
+            // Add ferry routes
             // Set layer contents
             var layerContent = {
                 'sourceid': 'ferryrt', // source id
@@ -208,14 +195,15 @@
                 'sourcedata': 'ferryrt.geojson', // data source
                 'layerid': 'ferryrt', // layer id
                 'layertype': 'line', // symbology type
-                'layername': 'Subway Line', // layer name for the legend
+                'layername': 'Ferry Route', // layer name for the legend
                 'layerlinecap': 'round', // line endings; butt/round/square
                 'layerlinejoin': 'round', // line joining; bevel/round/miter
                 'layervisibility': 'visible', // visibility of the layer
                 'layercat': [''], // categories
-                'layercolor': ['rgba(0,162,255,1)'], // color for each category; use rgba
-                'layerwidth': 1, // line width
-                'layeroutlinecolor': 'rgba(255, 255, 255, 0)', // outline color; for legend only
+                'layercolor': ['rgba(0,162,255,0.7)'], // color for each category; use rgba
+                'layerdasharray': [2, 4], // dash line
+                'layerwidth': 2, // line width
+                'layeroutlinecolor': 'rgba(255,255,255,1)', // outline color; for legend only
             };
 
             // Add layer content to the overall layer content list
@@ -239,6 +227,7 @@
                 },
                 'paint': {
                     'line-color': layerContent['layercolor'][0],
+                    'line-dasharray': layerContent['layerdasharray'],
                     'line-width': layerContent['layerwidth'],
                 },
             });
@@ -254,7 +243,7 @@
                 'sourcedata': 'ferryld.geojson', // data source
                 'layerid': 'ferryld', // layer id
                 'layertype': 'circle', // symbology type
-                'layername': 'Percent Change from 2015 to 2019', // layer name for the legend
+                'layername': 'October 2021', // layer name for the legend
                 'layervisibility': 'visible', // visibility of the layer
                 'layercolname': 'cat', // category column name
                 'layercat': ['>500000', '100000~499999', '50000~99999', '10000~49999', '<10000'], // categories
@@ -262,8 +251,8 @@
                 'layeropacity': 1, // circle opacity
                 'layerradius': 5, // circle radius; change size based on zoom level
                 'layerstrokecolor': 'rgba(0,0,0,1)', // circle stroke color
-                'layerstrokeopacity': 0, // circle stroke opacity
-                'layerstrokewidth': 0.5, // circle stroke width
+                'layerstrokeopacity': 0.2, // circle stroke opacity
+                'layerstrokewidth': 1, // circle stroke width
                 'layeroutlinecolor': 'rgba(255,255,255,0)', // outline color; can only be set to 1px width; to change the outline width, add another line layer
             };
 
@@ -320,7 +309,7 @@
 
 
 
-            // Add subway1519 popup
+            // Add ferryld popup
             // Add click event
             map.on('click', 'ferryld', function (e) {
                 var coordinates = e.features[0].geometry.coordinates.slice(); // get point coordinates
@@ -348,7 +337,7 @@
 
 
             // Add layer selector and legend
-            var layerOrder = ['ferryld']; // set layer order in the legend
+            var layerOrder = ['ferryld', 'ferryrt']; // set layer order in the legend
             var layerContentListOrder = []; // create ordered layer content list
             for (var i = 0; i < layerOrder.length; i++) {
                 layerContentListOrder.push(layerContentList.filter(e => e.layerid == layerOrder[i])[0]);
@@ -376,11 +365,6 @@
                 for (var j = 0; j < layerContentListOrder[i]['layercat'].length; j++) {
                     var item2 = document.createElement('div'); // create level-2 item
                     item2.className = 'item2';
-                    var input2 = document.createElement('input'); // create level-2 checkbox
-                    input2.type = 'checkbox';
-                    input2.className = 'item2-input';
-                    input2.id = layerContentListOrder[i]['layerid'] + '|' + layerContentListOrder[i]['layercolname'] + '|' + layerContentListOrder[i]['layercat'][j];
-                    input2.checked = true;
                     var key2 = document.createElement('span'); // create level-2 key
                     key2.className = 'key-' + layerContentListOrder[i]['layertype'];
                     key2.style.backgroundColor = layerContentListOrder[i]['layercolor'][j];
@@ -391,24 +375,9 @@
                     label2.className = 'item2-label';
                     label2.setAttribute('for', layerContentListOrder[i]['layerid'] + '|' + layerContentListOrder[i]['layercolname'] + '|' + layerContentListOrder[i]['layercat'][j]);
                     label2.textContent = layerContentListOrder[i]['layercat'][j];
-                    item2.appendChild(input2);
                     item2.appendChild(key2);
                     item2.appendChild(label2);
                     itemgroup2.appendChild(item2);
-
-                    // Create legend selector click event
-                    input2.addEventListener('click', function (e) {
-                        var clickedLayer = this.id.split('|')[0];
-                        var clickedLayerColname = this.id.split('|')[1];
-                        var catGroup = document.getElementById(clickedLayer + '-cat').getElementsByClassName('item2-input');
-                        var checkedFilter = ['any'];
-                        for (var k = 0; k < catGroup.length; k++) {
-                            if (catGroup[k]['checked'] === true) {
-                                checkedFilter.push(['==', clickedLayerColname, catGroup[k].id.split('|')[2]]);
-                            };
-                        };
-                        map.setFilter(clickedLayer, checkedFilter);
-                    });
                 };
                 itemgroup1.appendChild(itemgroup2);
                 filterLegend.appendChild(itemgroup1);
