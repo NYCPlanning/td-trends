@@ -21,7 +21,7 @@ p=p %>%
   add_trace(type="scatter", mode="lines", x=df[["Year"]], y=df[["Queens"]], name = "Queens", hovertemplate="%[y:,.0f") %>%
   add_trace(type="scatter", mode="lines", x=df[["Year"]], y=df[["Staten.Island"]], name = 'Staten Island', hovertemplate="%[y:,.0f") %>%
   layout(title = "Annual Bus Ridership", xaxis=list(title="Date"), yaxis=list(title="Ridership")) %>%
-  layout(margin = list(b=160), annotations=list(x=1, y=-0.2, text= "Data Source: MTA", showarrow=F, xref="paper", yref="paper", xanchor="right", yanchor="top", xshift=0, yshift=0, font=list(size=12, color="grey"))) %>%
+  layout(margin = list(b=160), annotations=list(x=1, y=-0.1, text= "Data Source: MTA", showarrow=F, xref="paper", yref="paper", xanchor="right", yanchor="top", xshift=0, yshift=0, font=list(size=12, color="grey"))) %>%
   config(displayModeBar = F)
 
 p
