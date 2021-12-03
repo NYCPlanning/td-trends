@@ -1,4 +1,7 @@
 import pandas as pd
+import numpy as np
+import geopandas as gpd
+import shapely
 import os
 
 
@@ -167,6 +170,7 @@ sif=sif[1:].reset_index(drop=True)
 sif.to_csv(path+'ferry/sif.csv',index=False,na_rep=0)
 
 
+
 pfop=pd.read_csv(path+'ferry/pfop.csv')
 pfop=pfop.drop(['Total'],axis=1).reset_index(drop=True)
 sif=pd.read_csv(path+'ferry/sif.csv')
@@ -177,11 +181,15 @@ ferryop.to_csv(path+'ferry/ferryop.csv',index=False)
 
 
 
-
-
-
-
-
+ferryld=pd.read_csv(path+'ferry/ferryld.csv')
+ferryld['MT202110'].describe(percentiles=np.arange(0.2,1,0.2))
+ferryld['cat']=np.where(ferryld['MT202110']>=500000,'>500000',
+               np.where(ferryld['MT202110']>=100000,'100000~499999',
+               np.where(ferryld['MT202110']>=50000,'50000~99999',
+               np.where(ferryld['MT202110']>=10000,'10000~49999',
+                        '<10000'))))
+ferryld=gpd.GeoDataFrame(ferryld,geometry=[shapely.geometry.Point(x,y) for x,y in zip(ferryld['Long'],ferryld['Lat'])],crs=4326)
+ferryld.to_file(path+'ferry/ferryld.geojson',driver='GeoJSON')
 
 
 
