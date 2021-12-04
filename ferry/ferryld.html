@@ -32,7 +32,7 @@
             position: absolute;
             top: 1rem;
             left: 1rem;
-            width: 19rem;
+            width: 16rem;
             height: auto;
             max-height: 90%;
             padding-top: 1rem;
@@ -154,7 +154,7 @@
             style: 'mapbox://styles/mapbox/light-v10', // light base map
             hash: true, // make sure it's on to get the url with map view
             attributionControl: true, // show the credit bar
-            customAttribution: '<b> Data Sources: <a href="https://new.mta.info/agency/new-york-city-transit/subway-bus-ridership-2020" target="blank">MTA Subway and Bus Ridership for 2020 </a></b> | <b><a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/subway/annual1519.geojson" target="blank"> Download Map Data </a> </b>', // add overall credit to the beggining
+            customAttribution: '<b>Data Source: <a href="https://www1.nyc.gov/html/dot/html/about/datafeeds.shtml#ferry" target="blank">NYC DOT</a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/ferry/ferryld.geojson" target="blank">Download Map Data</a></b>', // add overall credit to the beggining
             preserveDrawingBuffer: true, // make sure it's on to allow printing
             center: [-74.0197, 40.721], // testing to get the centroid of bounds
             zoom: 10, // set the initial zoom of the map view
@@ -313,18 +313,8 @@
             // Add click event
             map.on('click', 'ferryld', function (e) {
                 var coordinates = e.features[0].geometry.coordinates.slice(); // get point coordinates
-                var description = "<b>Complex ID: </b><span>" + e.features[0].properties.CmplxID + "</span><br>"; // description in the popup
-                description += "<b>Borough: </b><span>" + e.features[0].properties.Boro + "</span><br>";
-                description += "<b>Complex Name: </b><span>" + e.features[0].properties.CmplxName + "</span><br>";
-                description += "<b>Routes: </b><span>" + e.features[0].properties.Routes + "</span><br>";
-                description += "<b>2015 Annual Ridership: </b><span>" + e.features[0].properties.Annu2015.toLocaleString() + "</span><br>";
-                description += "<b>2016 Annual Ridership: </b><span>" + e.features[0].properties.Annu2016.toLocaleString() + "</span><br>";
-                description += "<b>2017 Annual Ridership: </b><span>" + e.features[0].properties.Annu2017.toLocaleString() + "</span><br>";
-                description += "<b>2018 Annual Ridership: </b><span>" + e.features[0].properties.Annu2018.toLocaleString() + "</span><br>";
-                description += "<b>2019 Annual Ridership: </b><span>" + e.features[0].properties.Annu2019.toLocaleString() + "</span><br>";
-                description += "<b>2020 Annual Ridership: </b><span>" + e.features[0].properties.Annu2020.toLocaleString() + "</span><br>";
-                description += "<b>2019 vs 2015 Percent Change: </b><span>" + (Number(e.features[0].properties.Pct1519) * 100).toFixed(2) + "%</span><br>";
-                description += "<b>Notes: </b><span>" + e.features[0].properties.Notes + "</span><br>";
+                var description = "<b>Landing: </b><span>" + e.features[0].properties.Landing + "</span><br>"; // description in the popup
+                description += "<b>October 2021 Monthly Ridership: </b><span>" + e.features[0].properties.MT202110.toLocaleString() + "</span><br>";
                 popup.setLngLat(coordinates).setHTML(description).addTo(map); //add popup
             });
             // Add hover events
