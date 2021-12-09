@@ -12,18 +12,16 @@ import plotly.express as px
 import plotly.io as pio
 
 pio.renderers.default = 'browser'
-path = 'C:/Users/M_Free/OneDrive - NYC O365 HOSTED/Data/Travel Trends Update/Dec 2021/'
+
+#path = 'C:/Users/M_Free/OneDrive - NYC O365 HOSTED/Data/Travel Trends Update/Dec 2021/'
+path = '/Users/Work/OneDrive - NYC O365 HOSTED/Data/Travel Trends Update/Dec 2021/'
 
 col_list = ['SERIALNO', 'ST', 'PUMA', 'PWGTP', 'POWPUMA','JWRIP','JWTRNS', 'JWMNP']
 
-pums_ny = pd.read_csv('C:/Users/M_Free/OneDrive - NYC O365 HOSTED/Data/Travel Trends Update/Dec 2021/csv_pny.csv', 
-                      usecols=col_list, dtype={'SERIALNO': str})
-pums_ct = pd.read_csv('C:/Users/M_Free/OneDrive - NYC O365 HOSTED/Data/Travel Trends Update/Dec 2021/csv_pct.csv', 
-                      usecols=col_list, dtype={'SERIALNO': str})
-pums_nj = pd.read_csv('C:/Users/M_Free/OneDrive - NYC O365 HOSTED/Data/Travel Trends Update/Dec 2021/csv_pnj.csv', 
-                      usecols=col_list, dtype={'SERIALNO': str})
-pums_pa = pd.read_csv('C:/Users/M_Free/OneDrive - NYC O365 HOSTED/Data/Travel Trends Update/Dec 2021/csv_ppa.csv', 
-                      usecols=col_list, dtype={'SERIALNO': str})
+pums_ny = pd.read_csv(path + 'csv_pny.csv', usecols=col_list, dtype={'SERIALNO': str})
+pums_ct = pd.read_csv(path + 'csv_pct.csv', usecols=col_list, dtype={'SERIALNO': str})
+pums_nj = pd.read_csv(path + 'csv_pnj.csv', usecols=col_list, dtype={'SERIALNO': str})
+pums_pa = pd.read_csv(path + 'csv_ppa.csv', usecols=col_list, dtype={'SERIALNO': str})
 
 # assign puma codes for each boro 
 bronx = list(range(3700,3711))
@@ -88,9 +86,12 @@ nyc_commuters['DEST'] = np.select([nyc_commuters['POW'] == 'Region',
                                    'Same Boro'],
                                   default = 'Other Boro')
 
-dest = nyc_commuters[['RES','DEST','PWGTP']].groupby(['RES', 'DEST']).sum()
-dest['% DEST'] = dest.div(dest.sum(level=0), level=0)
-dest = dest.reset_index()
+dest = nyc_commuters[['RES','DEST','PWGTP']].groupby(['RES', 'DEST']).sum().reset_index()
+dest_total=dest[['RES','PWGTP']].groupby(['RES']).sum().reset_index()
+dest_total.columns=['RES','TOTAL']
+dest=pd.merge(dest,dest_total,how='inner',on='RES')
+dest['% DEST']=dest['PWGTP']/dest['TOTAL']
+dest.to_csv(path+'dest.csv',index=False)
 
 dest['HOVER']='<b>Residence: </b>'+dest['RES']+'<br><b>Workplace: </b>'+dest['DEST']+'<br><b>Commuters: </b>'+dest['PWGTP'].map('{:,.0f}'.format)+'<br><b>Percentage: </b>'+dest['% DEST'].map('{:.0%}'.format)
 
@@ -140,7 +141,7 @@ fig.update_layout(barmode = 'stack',
                           'color': 'black'},
                   dragmode = False)
 
-fig.add_annotation(text = 'Data Source: <a href="https://www.census.gov/programs-surveys/acs/microdata/access.2019.html" target="blank">Census Bureau 2019 ACS 5-Year PUMS</a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/test/test.csv" target="blank">Download Chart Data</a>',
+fig.add_annotation(text = 'Data Source: <a href="https://www.census.gov/programs-surveys/acs/microdata/access.2019.html" target="blank">Census Bureau 2019 ACS 5-Year PUMS</a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/commute/annotations/dest.csv" target="blank">Download Chart Data</a>',
                    font_size = 14,
                    showarrow = False, 
                    x = 1, 
@@ -151,23 +152,11 @@ fig.add_annotation(text = 'Data Source: <a href="https://www.census.gov/programs
                    yref = 'paper')
 fig
 
-fig.write_html('C:/Users/M_Free/OneDrive - NYC O365 HOSTED/Data/Travel Trends Update/Dec 2021/test.html',
+fig.write_html(path + 'dest.html',
                include_plotlyjs='cdn',
                config={'displayModeBar':False})
 
-dest_fig = px.bar(dest, 
-                  x = 'RES', 
-                  y = 'PWGTP', 
-                  color = 'DEST',
-                  labels = {'RES':'<b>Residence<b>', 
-                            'PWGTP':'<b>Number of Workers<b>', 
-                            'DEST':'<b>Destination<b>'},
-                  color_discrete_sequence= ['#729ece','#ff9e4a','#67bf5c'],     #EDIT
-                  category_orders= {'DEST': ['Same Boro',
-                                             'Other Boro',
-                                             'Region']},
-                  title = '<b>Destination of Work by Borough of Residence for NYC Commuters<b>')
-dest_fig.show()
+print('Chart Available at: https://nycplanning.github.io/td-trends/commute/annotations/dest.html')
 
 # NYC COMMUTERS: TRAVEL MODE
 
@@ -193,56 +182,144 @@ def get_mn(row):
     
 nyc_commuters['TM'] = nyc_commuters.apply(get_mn, axis=1)
 
-tm = nyc_commuters[['RES', 'TM', 'PWGTP']].groupby(['RES', 'TM']).sum()
-tm['% TM'] = tm.div(tm.sum(level=0), level=0) 
-tm = tm.reset_index()
+tm = nyc_commuters[['RES','TM','PWGTP']].groupby(['RES', 'TM']).sum().reset_index()
+tm_total = dest[['RES','PWGTP']].groupby(['RES']).sum().reset_index()
+tm_total.columns = ['RES','TOTAL']
+tm = pd.merge(tm,tm_total,how='inner',on='RES')
+tm['% TM'] = tm['PWGTP']/tm['TOTAL']
+tm.to_csv(path + 'tm.csv',index=False)
 
-tm_fig = px.bar(tm,
-                x = 'RES',
-                y = '% TM',
-                color = 'TM',
-                labels = {'RES': '<b>Residence<b>',
-                          '% TM': '<b>Percentage<b>',
-                          'TM' : '<b>Travel Mode<b>'},
-                category_orders={'TM':['Subway', 
-                                       'Rail', 
-                                       'Bus',
-                                       'Drive Alone', 
-                                       'Carpool', 
-                                       'Other', 
-                                       'Work From Home']},
-                title = '<b>Travel Mode to Work by Borough of Residence for NYC Commuters<b>')
-tm_fig.update_layout(yaxis_tickformat = '.1%')
-tm_fig.show()
+tm['HOVER']='<b>Residence: </b>'+tm['RES']+'<br><b>Travel Mode: </b>'+tm['TM']+'<br><b>Commuters: </b>'+tm['PWGTP'].map('{:,.0f}'.format)+'<br><b>Percentage: </b>'+tm['% TM'].map('{:.0%}'.format)
+
+tm_colors = {'Subway':'#729ece',
+             'Rail':'#ff9e4a',
+             'Bus':'#67bf5c',
+             'Drive Alone': '#ed665d',
+             'Carpool': '#ad8bc9',
+             'Other': '#ed97ca',
+             'Work From Home': '#6dccda'}
+
+fig = go.Figure()
+
+for i in ['Subway', 'Rail', 'Bus', 'Drive Alone', 'Carpool', 'Other', 'Work From Home']:
+    fig = fig.add_trace(go.Bar(name = i,
+                               x = tm.loc[tm['TM'] == i, 'RES'],
+                               y = tm.loc[tm['TM'] == i, '% TM'],
+                               marker = {'color': tm_colors[i]},
+                               width = .5,
+                               hoverinfo = 'text',
+                               hovertext = tm.loc[tm['TM'] == i, 'HOVER']))
+    
+fig.update_layout(barmode = 'stack',
+                  template = 'plotly_white',
+                  title = {'text': '<b>Travel Mode to Work by Borough of Residence for NYC Commuters<b>',
+                           'font_size': 20,
+                           'x': .5,
+                           'xanchor': 'center',
+                           'y': .95,
+                           'yanchor': 'top'},
+                  legend = {'traceorder': 'normal',
+                            'orientation': 'h',
+                            'font_size': 16,
+                            'x': .5,
+                            'xanchor': 'center',
+                            'y': 1,
+                            'yanchor': 'bottom'},
+                  margin = {'b': 120, 
+                            'l': 80,
+                            'r': 80,
+                            't': 120},
+                  xaxis = {'tickfont_size': 14,
+                           'fixedrange': True, 
+                           'showgrid': False},
+                  yaxis = {'tickfont_size': 12,
+                           'tickformat': ',.0%',
+                           'rangemode': 'nonnegative',
+                           'fixedrange': True,
+                           'showgrid': True},
+                  hoverlabel = {'font_size': 14}, 
+                  font = {'family': 'Arial',
+                          'color': 'black'},
+                  dragmode = False)
+
+fig.add_annotation(text = 'Data Source: <a href="https://www.census.gov/programs-surveys/acs/microdata/access.2019.html" target="blank">Census Bureau 2019 ACS 5-Year PUMS</a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/commute/annotations/tm.csv" target="blank">Download Chart Data</a>',
+                   font_size = 14,
+                   showarrow = False, 
+                   x = 1, 
+                   xanchor = 'right',
+                   xref = 'paper',
+                   y = -.1,
+                   yanchor = 'top',
+                   yref = 'paper')
+fig
+
+fig.write_html(path + 'tm.html',
+               include_plotlyjs='cdn',
+               config={'displayModeBar':False})
+
+print('Chart Available at: https://nycplanning.github.io/td-trends/commute/annotations/tm.html')
 
 # determine mode split for commuters not living or working in manhattan
 tm_not_mn = nyc_commuters[['RES', 'POW', 'TM', 'PWGTP']].groupby(['RES','POW','TM']).sum()
 tm_not_mn = tm_not_mn.drop(index='Manhattan')
 tm_not_mn = tm_not_mn.drop(index='Manhattan', level =1).reset_index()
 tm_not_mn = tm_not_mn.groupby(['TM']).sum().reset_index()
+tm_not_mn['% TM'] = tm_not_mn['PWGTP'] / tm_not_mn['PWGTP'].sum()
 
-sorter = ['Subway','Rail','Bus','Drive Alone','Carpool', 'Other', 'Work From Home']
-tm_not_mn = tm_not_mn.set_index('TM').loc[sorter].reset_index()
+#sorter = ['Subway','Rail','Bus','Drive Alone','Carpool', 'Other', 'Work From Home']
+#tm_not_mn = tm_not_mn.set_index('TM').loc[sorter].reset_index()
+
+tm_not_mn.to_csv(path + 'tm_not_mn.csv',index=False)
+
+tm_not_mn['HOVER']='<b>Travel Mode: </b>'+tm_not_mn['TM']+'<br><b>Commuters: </b>'+tm_not_mn['PWGTP'].map('{:,.0f}'.format)+'<br><b>Percentage: </b>'+tm_not_mn['% TM'].map('{:.0%}'.format)
 
 
 fig = go.Figure()
 
-fig = fig.add_pie(values = tm_not_mn['PWGTP'],
-                  labels = tm_not_mn['TM'],
-                  direction = 'clockwise', 
-                  showlegend = True,
-                  sort = False,
-                  textfont = {'family':'Arial'},
-                  title = 'Mode Split for Commuters Living or Working in the Outer Boroughs')
-fig.show()
+fig = fig.add_trace(go.Pie(labels = tm_not_mn['TM'],  #need to add colors and arrange in order
+                           values = tm_not_mn['% TM'],
+                           hoverinfo = 'text',
+                           hovertext = tm_not_mn['HOVER'])) 
+    
+fig.update_layout(template = 'plotly_white',
+                  title = {'text': '<b>Mode Split for Commuters Living or Working in the Outer Boroughs<b>',
+                           'font_size': 20,
+                           'x': .5,
+                           'xanchor': 'center',
+                           'y': .95,
+                           'yanchor': 'top'},
+                  legend = {'traceorder': 'normal',
+                            'orientation': 'h',
+                            'font_size': 16,
+                            'x': .5,
+                            'xanchor': 'center',
+                            'y': 1,
+                            'yanchor': 'bottom'},
+                  margin = {'b': 120, 
+                            'l': 80,
+                            'r': 80,
+                            't': 120},
+                  hoverlabel = {'font_size': 14}, 
+                  font = {'family': 'Arial',
+                          'color': 'black'},
+                  dragmode = False)
 
-tm_not_mn_fig = px.pie(tm_not_mn, 
-                       values = 'PWGTP',
-                       names = 'TM',
-                       labels = {'TM':'Travel Mode', 
-                                 'PWGTP':'Number of Workers'}, 
-                       title = '<b>Mode Split of NYC Commuters Living or Working in the Outer Boroughs<b>')
-tm_not_mn_fig.show()
+fig.add_annotation(text = 'Data Source: <a href="https://www.census.gov/programs-surveys/acs/microdata/access.2019.html" target="blank">Census Bureau 2019 ACS 5-Year PUMS</a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/commute/annotations/tm_not_mn.csv" target="blank">Download Chart Data</a>',
+                   font_size = 14,
+                   showarrow = False, 
+                   x = 1, 
+                   xanchor = 'right',
+                   xref = 'paper',
+                   y = -.1,
+                   yanchor = 'top',
+                   yref = 'paper')
+fig
+
+fig.write_html(path + 'tm_not_mn.html',
+               include_plotlyjs='cdn',
+               config={'displayModeBar':False})
+
+print('Chart Available at: https://nycplanning.github.io/td-trends/commute/annotations/tm_not_mn.html')
 
 # NYC COMMUTERS: TRAVEL TIME
 
