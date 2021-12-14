@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 """
-Travel Conditions and Trends Update for Commutting 
+Travel Conditions and Trends Update for Commuting 
 
 Source: 2019 ACS 5-Year PUMS
-Date: November 2021 
+Date: November - December 2021 
 """
 import pandas as pd
 import numpy as np
@@ -44,16 +44,16 @@ live_nyc = nyc_commuters['PWGTP'].sum()
 live_work_nyc = nyc_commuters[nyc_commuters.POWPUMA.isin(nyc)]['PWGTP'].sum()
 work_nyc = live_work_nyc + regional_commuters['PWGTP'].sum()
 
-# print('Workers Living in NYC: ' 
-#       + str('{:,}'.format(live_nyc)))
-# print('Workers Working in NYC: ' 
-#       + str('{:,}'.format(work_nyc)))
-# print('Workers Living & Working in NYC: ' 
-#       + str('{:,}'.format(live_work_nyc)))
-# print('Workers Living in NYC & Working Elsewhere: ' 
-#       + str('{:,}'.format(live_nyc - live_work_nyc)))
-# print('Workers Living Elsewhere & Working in NYC: '
-#       + str('{:,}'.format(work_nyc - live_work_nyc)))
+print('Workers Living in NYC: ' 
+      + str('{:,}'.format(live_nyc)))
+print('Workers Working in NYC: ' 
+      + str('{:,}'.format(work_nyc)))
+print('Workers Living & Working in NYC: ' 
+      + str('{:,}'.format(live_work_nyc)))
+print('Workers Living in NYC & Working Elsewhere: ' 
+      + str('{:,}'.format(live_nyc - live_work_nyc)))
+print('Workers Living Elsewhere & Working in NYC: '
+      + str('{:,}'.format(work_nyc - live_work_nyc)))
 
 # NYC COMMUTERS: DESTINATION
 
@@ -600,15 +600,79 @@ fig.add_annotation(text = 'Data Source: <a href="https://www.census.gov/programs
                    yanchor = 'top',
                    yref = 'paper')
 
-#fig   
+# fig   
 
 # fig.write_html(path + 'dest_rc.html',
 #               include_plotlyjs='cdn',
 #               config={'displayModeBar':False})
 
-#print('Chart Available at: https://nycplanning.github.io/td-trends/commute/annotations/dest_rc.html')    
+# print('Chart Available at: https://nycplanning.github.io/td-trends/commute/annotations/dest_rc.html')    
 
 # determine residence for all people working in nyc
  
-#ADD ROW WITH NYC RESIDENTS TO DEST_RC_TOTAL AND PLOT PIE CHART
-                                    
+work_nyc_total = dest_rc_total.copy()
+work_nyc_total = work_nyc_total.append({'RES': 'New York City', 'TOTAL': live_work_nyc}, ignore_index = True)
+work_nyc_total.loc[2, 'RES'] = 'New York State'
+work_nyc_total['% RES'] = work_nyc_total['TOTAL'] / work_nyc_total['TOTAL'].sum()
+work_nyc_total = work_nyc_total.sort_values(by = 'TOTAL', ascending = False)
+
+# work_nyc_total.to_csv(path + 'work_nyc_total.csv',index = False)
+
+work_nyc_total['HOVER']='<b>Residence: </b>'+ work_nyc_total['RES']+'<br><b>Commuters: </b>'+ work_nyc_total['TOTAL'].map('{:,.0f}'.format)+'<br><b>Percentage: </b>'+ work_nyc_total['% RES'].map('{:.0%}'.format)
+
+work_nyc_colors = {'New York City':'#729ece',
+                   'New York State':'#ff9e4a',
+                   'Connecticut':'#67bf5c',
+                   'New Jersey': '#ed665d',
+                   'Pennsylvanial': '#ad8bc9'}
+
+fig = go.Figure()
+
+for res, color in work_nyc_colors.items():    
+ fig = fig.add_trace(go.Pie(labels = work_nyc_total['RES'],  
+                            values = work_nyc_total['TOTAL'],
+                            sort = True,
+                            direction = 'clockwise',
+                            marker = {'colors': list(work_nyc_colors.values())},
+                            hoverinfo = 'text',
+                            hovertext = work_nyc_total['HOVER']))    
+    
+fig.update_layout(template = 'plotly_white',
+                  title = {'text': '<b>Place of Residence for NYC Workers<b>',
+                            'font_size': 20,
+                            'x': .5,
+                            'xanchor': 'center',
+                            'y': .95,
+                            'yanchor': 'top'},
+                  legend = {'traceorder': 'normal',
+                            'orientation': 'h',
+                            'font_size': 16,
+                            'x': .5,
+                            'xanchor': 'center',
+                            'y': 1,
+                            'yanchor': 'bottom'},
+                  margin = {'b': 120, 
+                            'l': 80,
+                            'r': 80,
+                            't': 120},
+                  hoverlabel = {'font_size': 14}, 
+                  font = {'family': 'Arial',
+                          'color': 'black'},
+                  dragmode = False)
+
+fig.add_annotation(text = 'Data Source: <a href="https://www.census.gov/programs-surveys/acs/microdata/access.2019.html" target="blank">Census Bureau 2019 ACS 5-Year PUMS</a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/commute/annotations/work_nyc_total.csv" target="blank">Download Chart Data</a>',
+                    font_size = 14,
+                    showarrow = False, 
+                    x = 1, 
+                    xanchor = 'right',
+                    xref = 'paper',
+                    y = -.1,
+                    yanchor = 'top',
+                    yref = 'paper')
+# fig
+
+# fig.write_html(path + 'work_nyc_total.html',
+#               include_plotlyjs='cdn',
+#               config={'displayModeBar':False})
+
+# print('Chart Available at: https://nycplanning.github.io/td-trends/commute/annotations/work_nyc_total.html')                                    
