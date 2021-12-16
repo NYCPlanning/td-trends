@@ -3,7 +3,7 @@
 """
 Travel Conditions and Trends Update for Entries to the CBD
 
-Source: NYMTC Hub Bound Travel
+Source: NYMTC Hub Bound Travel 2019
 Date: November - December 2021 
 """
 
@@ -89,10 +89,10 @@ fig.add_annotation(text = 'Data Source: <a href="https://www.nymtc.org/Data-and-
 fig
 
 # fig.write_html(path + 'annotations/commuters.html',
-#                include_plotlyjs = 'cdn',
-#                config = {'displayModeBar': False})
+#                 include_plotlyjs = 'cdn',
+#                 config = {'displayModeBar': False})
 
-# print('Chart Available at: https://nycplanning.github.io/td-trends/hubbound/all_modes/annotations/commuters.html')  
+print('Chart Available at: https://nycplanning.github.io/td-trends/hubbound/all_modes/annotations/entries.html')  
 
 # MODE SPLIT
 
@@ -138,7 +138,7 @@ fig.update_layout(template = 'plotly_white',
                            'range': [min(df_pct['Year'])-0.5, max(df_pct['Year'])+0.5],
                            'fixedrange': True,
                            'showgrid': False},
-                  yaxis = {'title':{'text': '<b>Daily Entries</b>',
+                  yaxis = {'title':{'text': '<b>Percent of Total Daily Entries</b>',
                                     'font_size': 14},
                            'tickformat': ',.0%',
                            'tickfont_size': 12,
@@ -152,18 +152,18 @@ fig.update_layout(template = 'plotly_white',
                   hoverlabel = {'font_size': 14})
 
 fig.add_annotation(text = 'Data Source: <a href="https://www.nymtc.org/Data-and-Modeling/Transportation-Data-and-Statistics/Publications/Hub-Bound-Travel" target="blank">NYMTC Hub Bound Travel </a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/hubbound/all_modes/hubbound_all.csv" target="blank">Download Chart Data</a>',
-                   font_size = 14,
-                   showarrow = False,
-                   x = 1,
-                   xanchor = 'right',
-                   xref = 'paper',
-                   y = -0.1,
-                   yanchor = 'top',
-                   yref = 'paper')
+                    font_size = 14,
+                    showarrow = False,
+                    x = 1,
+                    xanchor = 'right',
+                    xref = 'paper',
+                    y = -0.1,
+                    yanchor = 'top',
+                    yref = 'paper')
 fig
 
 # fig.write_html(path + 'annotations/mode_split.html',
 #               include_plotlyjs='cdn',
 #               config={'displayModeBar':False})
 
-#print('Chart Available at: https://nycplanning.github.io/td-trends/hubbound/all_modes/annotations/mode_split.html')   
+print('Chart Available at: https://nycplanning.github.io/td-trends/hubbound/all_modes/annotations/mode_split.html')   
