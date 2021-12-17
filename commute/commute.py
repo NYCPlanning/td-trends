@@ -13,8 +13,8 @@ import plotly.subplots as ps
 
 pio.renderers.default = 'browser'
 
-#path = 'C:/Users/M_Free/OneDrive - NYC O365 HOSTED/Data/Travel Trends Update/Dec 2021/'
-path = '/Users/Work/OneDrive - NYC O365 HOSTED/Data/Travel Trends Update/Dec 2021/'
+path = 'C:/Users/M_Free/OneDrive - NYC O365 HOSTED/Data/Travel Trends Update/Dec 2021/'
+#path = '/Users/Work/OneDrive - NYC O365 HOSTED/Data/Travel Trends Update/Dec 2021/'
 
 col_list = ['SERIALNO', 'ST', 'PUMA', 'PWGTP', 'POWPUMA','JWRIP','JWTRNS', 'JWMNP']
 
@@ -44,17 +44,111 @@ live_nyc = nyc_commuters['PWGTP'].sum()
 live_work_nyc = nyc_commuters[nyc_commuters.POWPUMA.isin(nyc)]['PWGTP'].sum()
 work_nyc = live_work_nyc + regional_commuters['PWGTP'].sum()
 
-print('Workers Living in NYC: ' 
-      + str('{:,}'.format(live_nyc)))
-print('Workers Working in NYC: ' 
-      + str('{:,}'.format(work_nyc)))
-print('Workers Living & Working in NYC: ' 
-      + str('{:,}'.format(live_work_nyc)))
-print('Workers Living in NYC & Working Elsewhere: ' 
-      + str('{:,}'.format(live_nyc - live_work_nyc)))
-print('Workers Living Elsewhere & Working in NYC: '
-      + str('{:,}'.format(work_nyc - live_work_nyc)))
+data = {'Type': ['Workers Living in NYC',
+                 'Workers Working in NYC',
+                 'Workers Living & Working in NYC', 
+                 'Workers Living in NYC & Working Elsewhere', 
+                 'Workers Living Elsewhere & Working in NYC'],
+        'Workers': [live_nyc, 
+                    work_nyc,
+                    live_work_nyc, 
+                    live_nyc - live_work_nyc, 
+                    work_nyc - live_work_nyc]}
 
+flows = pd.DataFrame(data)
+# flows.to_csv(path + 'flows.csv', index = False)
+
+fig = go.Figure()
+
+# create venn diagram 
+fig.add_shape(type = 'circle', 
+              line_color = '#729ece',
+              fillcolor = '#729ece',
+              opacity = .5,
+              layer = 'below',
+              x0 = 0, 
+              y0 = 0, 
+              x1 = 2,
+              y1 = 2)
+
+fig.add_shape(type = 'circle',
+              line_color = '#ff9e4a',
+              fillcolor = '#ff9e4a',
+              opacity = .5,
+              layer = 'below',
+              x0 = 1, 
+              y0 = 0, 
+              x1 = 3,
+              y1 = 2)
+
+fig.add_trace(go.Scatter(x = [.5, 1.5, 2.5],
+                         y = [1, 1, 1],
+                         text = [str('{:,}'.format(live_nyc - live_work_nyc)) +'<br>Workers Living in NYC<br>& Working Elsewhere',
+                                 str('{:,}'.format(live_work_nyc)) + '<br>Workers Living<br>& Working in NYC',
+                                 str('{:,}'.format(work_nyc - live_work_nyc)) + '<br>Workers Living Elsewhere<br>& Working in NYC'],
+                         mode = 'text',
+                         textfont = {'size': 16,
+                                     'family': 'Arial',
+                                     'color': 'black'},
+                         hoverinfo = 'none'))
+
+fig.add_annotation(x = 0,
+                   y = 2,
+                   text = str('{:,}'.format(live_nyc)) + '<br>Workers Living in NYC',
+                   font = {'size': 16,
+                           'family': 'Arial',
+                           'color': '#729ece'},
+                   showarrow = False)
+
+fig.add_annotation(x = 3,
+                   y = 0,
+                   text = str('{:,}'.format(work_nyc)) + '<br>Workers Working in NYC',
+                   font = {'size': 16,
+                           'family': 'Arial',
+                           'color': '#ff9e4a'},
+                   showarrow = False)
+
+fig.update_xaxes(showticklabels = False, 
+                 showgrid = False,
+                 zeroline = False)
+
+fig.update_yaxes(showticklabels = False, 
+                  showgrid = False, 
+                  zeroline = False)
+
+fig.update_layout(template = 'plotly_white',
+                  title = {'text': '<b>Commuting Flows<b>',
+                            'font_size': 20,
+                            'x': .5,
+                            'xanchor': 'center',
+                            'y': .95,
+                            'yanchor': 'top'},
+                  margin = {'b': 120, 
+                            'l': 80,
+                            'r': 80,
+                            't': 120}, 
+                  font = {'family': 'Arial',
+                          'color': 'black'},
+                  dragmode = False)
+
+fig.add_annotation(text = 'Data Source: <a href="https://www.census.gov/programs-surveys/acs/microdata/access.2019.html" target="blank">Census Bureau 2019 ACS 5-Year PUMS</a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/commute/annotations/flows.csv" target="blank">Download Chart Data</a>',
+                   font_size = 14,
+                   showarrow = False, 
+                   x = 1, 
+                   xanchor = 'right',
+                   xref = 'paper',
+                   y = -.1,
+                   yanchor = 'top',
+                   yref = 'paper')
+
+# fig
+
+fig.write_html(path + 'flows.html',
+              include_plotlyjs='cdn',
+              config={'displayModeBar':False})
+
+# print('Chart Available at: https://nycplanning.github.io/td-trends/commute/annotations/flows.html')
+    
 # NYC COMMUTERS: DESTINATION
 
 nyc_commuters['RES'] = np.select([nyc_commuters.PUMA.isin(bronx),
@@ -92,7 +186,7 @@ dest_total.columns = ['RES', 'TOTAL']
 dest = pd.merge(dest, dest_total, how = 'inner', on = 'RES')
 dest['% DEST'] = dest['PWGTP'] / dest['TOTAL']
 
-#dest.to_csv(path+'dest.csv',index=False)
+# dest.to_csv(path+'dest.csv',index=False)
 
 dest['HOVER']='<b>Residence: </b>'+dest['RES']+'<br><b>Workplace: </b>'+dest['DEST']+'<br><b>Commuters: </b>'+dest['PWGTP'].map('{:,.0f}'.format)+'<br><b>Percentage: </b>'+dest['% DEST'].map('{:.0%}'.format)
 
