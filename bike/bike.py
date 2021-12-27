@@ -5,16 +5,19 @@ Travel Conditions and Trends Update for Biking
 Source(s): NYC DOHMH Community Health Survey 2020
 Date: December 2021 
 """
+
 import pyreadstat
 import plotly.graph_objects as go
 import plotly.io as pio
 
 pio.renderers.default = 'browser'
-path = '/Users/Work/Desktop/GitHub/td-trends/bike/annotations/'
+path = 'C:/Users/M_Free/Desktop/td-trends/bike/annotations'
+# path = '/Users/Work/Desktop/GitHub/td-trends/bike/annotations/'
 
-# CYCLISTS
+#%% CYCLISTS
 
-local_path = '/Users/Work/OneDrive - NYC O365 HOSTED/Data/Travel Trends Update/Dec 2021/chs2020_public.sas7bdat' 
+# local_path = '/Users/Work/OneDrive - NYC O365 HOSTED/Data/Travel Trends Update/Dec 2021/chs2020_public.sas7bdat' 
+local_path = 'C:/Users/M_Free/OneDrive - NYC O365 HOSTED/Data/Travel Trends Update/Dec 2021/chs2020_public.sas7bdat'
 cols = ['cyclingfreq', 'wt21_dual']
 chs, meta = pyreadstat.read_sas7bdat(local_path, usecols=cols)
 
@@ -99,6 +102,7 @@ fig
 # fig.write_html(path + 'chs.html', include_plotlyjs='cdn', config={'displayModeBar':False})
 # print('Chart Available at: https://nycplanning.github.io/td-trends/bike/annotations/chs.html')
 
-# BIKE COUNTS
+#%% BIKE COUNTS
 
-# CITI BIKE
+#%% CITI BIKE
+
