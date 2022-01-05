@@ -11,13 +11,14 @@ import plotly.graph_objects as go
 import plotly.io as pio
 
 pio.renderers.default = 'browser'
-path = 'C:/Users/M_Free/Desktop/td-trends/bike/annotations'
-# path = '/Users/Work/Desktop/GitHub/td-trends/bike/annotations/'
+# path = 'C:/Users/M_Free/Desktop/td-trends/bike/annotations'
+path = '/Users/Work/Desktop/GitHub/td-trends/bike/annotations/'
 
 #%% CYCLISTS
 
-# local_path = '/Users/Work/OneDrive - NYC O365 HOSTED/Data/Travel Trends Update/Dec 2021/chs2020_public.sas7bdat' 
-local_path = 'C:/Users/M_Free/OneDrive - NYC O365 HOSTED/Data/Travel Trends Update/Dec 2021/chs2020_public.sas7bdat'
+# local_path = 'C:/Users/M_Free/OneDrive - NYC O365 HOSTED/Data/Travel Trends Update/Dec 2021/chs2020_public.sas7bdat'
+local_path = '/Users/Work/OneDrive - NYC O365 HOSTED/Data/Travel Trends Update/Dec 2021/chs2020_public.sas7bdat' 
+
 cols = ['cyclingfreq', 'wt21_dual']
 chs, meta = pyreadstat.read_sas7bdat(local_path, usecols=cols)
 
