@@ -13,10 +13,12 @@ from datetime import datetime
 import numpy as np
 
 pio.renderers.default = 'browser'
+
 path = 'C:/Users/M_Free/Desktop/td-trends/bike/annotations/'
 # path = '/Users/Work/Desktop/GitHub/td-trends/bike/annotations/'
 local_path = 'C:/Users/M_Free/OneDrive - NYC O365 HOSTED/Data/Travel Trends Update/Dec 2021/'
 # local_path = '/Users/Work/OneDrive - NYC O365 HOSTED/Data/Travel Trends Update/Dec 2021/' 
+
 
 #%% CYCLISTS
 
@@ -106,37 +108,35 @@ fig
 
 #%% BIKE COUNTS
 
-parser = lambda x: datetime.strptime(x, '%m/%d/%Y %I:%M:%S %p')
+parser = lambda x: datetime.strptime(x, '%m/%d/%Y %I:%M:%S %p') # 8/31/2012  12:00:00 AM                 
 counts = pd.read_csv(local_path + 'bicycle_counts.csv', parse_dates = ['date'], date_parser = parser)
-counters = pd.read_csv(local_path + 'bicycle_counters.csv')
 
-# counts.merge(counters, on= 'id', how = 'left')
+counters = pd.read_csv(local_path + 'bicycle_counters.csv', usecols = ['name', 'site', 'latitude','longitude'])
+# counters = counters[['name', 'site', 'latitude','longitude']]
 
-# test = counters.set_index('id').to_dict()['name']
+counters_map = {100057316: '8th Ave at 50th St',
+                100057319: 'Amsterdam Ave at 86th St',
+                100057318: 'Broadway at 50th St',
+                100010022: 'Brooklyn Bridge Bike Path',
+                100057320: 'Columbus Ave at 86th St',
+                100009428: 'Ed Koch Queensboro Bridge Shared Path',
+                100010019: 'Kent Ave btw North 8th St and North 9th St',
+                100062893: 'Manhattan Bridge Bike Comprehensive',
+                100009425: 'Prospect Park West',
+                100010018: 'Pulaski Bridge',
+                100010017: 'Staten Island Ferry',
+                100009427: 'Williamsburg Bridge Bike Path'}
 
-# for i in range(len(counts)):
-#     if counts['id'][i] in test:
-#         counts['test'][i] = test[counts['id'][i]]
+counts = counts[counts.site.isin(list(counters_map.keys()))]
 
+counts['date'] = pd.to_datetime(counts['date']).dt.date
+counts = counts['site', 'date', 'counts'].groupby(['site','date']).sum().reset_index()
 
-# counts['test'] = counts['id'].apply(lambda x: x.map(test))
+counts = counts.merge(counters, how='left', on='site')
 
-# counts['test'] = counts['id'].map(test)
+time = counts.groupby(['name', 'site']).agg({'date': ['min','max'], 'counts':'sum'})
 
-# MN Bridge 100010022 (overall vs. bk and mn bound)
-# SI Ferry 100010017
-# Queensboro 100009428
-# Williamsburg 100009427
-# Kent Ave
-# 1st Ave at 26th St
-# Prospect Park West
-# Pulaski Bridge
-# 8th Ave at 50th St
-# Broadway at 50th t
-# Amsterdam Ave at 86th St
-# Columbus Ave at 96th St
-
-# https://medium.com/qri-io/which-nyc-bridge-has-the-most-bike-traffic-6bb291eb74ef
+counts['name'].value_counts()
 
 #%% CITI BIKE
 
