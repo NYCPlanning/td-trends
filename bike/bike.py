@@ -8,9 +8,9 @@ Date: December 2021 - January 2022
 import pyreadstat
 import pandas as pd
 import plotly.graph_objects as go
+import plotly.subplots as ps
 import plotly.io as pio
 from datetime import datetime
-import numpy as np
 
 pio.renderers.default = 'browser'
 
@@ -114,29 +114,46 @@ counts = pd.read_csv(local_path + 'bicycle_counts.csv', parse_dates = ['date'], 
 counters = pd.read_csv(local_path + 'bicycle_counters.csv', usecols = ['name', 'site', 'latitude','longitude'])
 # counters = counters[['name', 'site', 'latitude','longitude']]
 
-counters_map = {100057316: '8th Ave at 50th St',
-                100057319: 'Amsterdam Ave at 86th St',
-                100057318: 'Broadway at 50th St',
-                100010022: 'Brooklyn Bridge Bike Path',
-                100057320: 'Columbus Ave at 86th St',
+counters_map = {100010022: 'Brooklyn Bridge Bike Path',
                 100009428: 'Ed Koch Queensboro Bridge Shared Path',
                 100010019: 'Kent Ave btw North 8th St and North 9th St',
                 100062893: 'Manhattan Bridge Bike Comprehensive',
                 100009425: 'Prospect Park West',
                 100010018: 'Pulaski Bridge',
                 100010017: 'Staten Island Ferry',
-                100009427: 'Williamsburg Bridge Bike Path'}
+                100009427: 'Williamsburg Bridge Bike Path'} #automatic count locations 
+
+counters_list = list(counters_map.values())
 
 counts = counts[counts.site.isin(list(counters_map.keys()))]
 
 counts['date'] = pd.to_datetime(counts['date']).dt.date
-counts = counts['site', 'date', 'counts'].groupby(['site','date']).sum().reset_index()
-
-counts = counts.merge(counters, how='left', on='site')
 
 time = counts.groupby(['name', 'site']).agg({'date': ['min','max'], 'counts':'sum'})
 
-counts['name'].value_counts()
+date_limit = datetime.strptime('1/1/2014', '%m/%d/%Y').date #fix
+counts = counts[~(counts['date'] < date_limit)] #fix
+
+counts = counts[['site', 'date', 'counts']].groupby(['site','date']).sum().reset_index()
+
+counts = counts.merge(counters, how='left', on='site')
+
+fig = ps.make_subplots(rows = len(counters_list),
+                       cols = 1,
+                       shared_xaxes = True,
+                       shared_yaxes = 'all',
+                       subplot_titles = counters_list)                
+count = 0                       
+
+for counter in range(0, len(counters_list)):
+    fig = fig.add_trace(go.Bar(name = counters_list[counter],
+                               x = counts.loc[(counts['name'] == counters_list[counter]), 'date'],
+                               y = counts.loc[(counts['name'] == counters_list[counter]), 'counts']),
+                        row = counter + 1,
+                        col = 1)
+    count = count + 1
+    
+fig
 
 #%% CITI BIKE
 
