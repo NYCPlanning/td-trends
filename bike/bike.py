@@ -10,7 +10,7 @@ import pandas as pd
 import plotly.graph_objects as go
 import plotly.subplots as ps
 import plotly.io as pio
-from datetime import datetime
+import datetime
 
 pio.renderers.default = 'browser'
 
@@ -18,7 +18,6 @@ path = 'C:/Users/M_Free/Desktop/td-trends/bike/annotations/'
 # path = '/Users/Work/Desktop/GitHub/td-trends/bike/annotations/'
 local_path = 'C:/Users/M_Free/OneDrive - NYC O365 HOSTED/Data/Travel Trends Update/Dec 2021/'
 # local_path = '/Users/Work/OneDrive - NYC O365 HOSTED/Data/Travel Trends Update/Dec 2021/' 
-
 
 #%% CYCLISTS
 
@@ -108,47 +107,129 @@ fig
 
 #%% BIKE COUNTS
 
-parser = lambda x: datetime.strptime(x, '%m/%d/%Y %I:%M:%S %p') # 8/31/2012  12:00:00 AM                 
+parser = lambda x: datetime.datetime.strptime(x, '%m/%d/%Y %I:%M:%S %p') # 8/31/2012  12:00:00 AM                 
 counts = pd.read_csv(local_path + 'bicycle_counts.csv', parse_dates = ['date'], date_parser = parser)
 
 counters = pd.read_csv(local_path + 'bicycle_counters.csv', usecols = ['name', 'site', 'latitude','longitude'])
-# counters = counters[['name', 'site', 'latitude','longitude']]
 
-counters_map = {100010022: 'Brooklyn Bridge Bike Path',
-                100009428: 'Ed Koch Queensboro Bridge Shared Path',
-                100010019: 'Kent Ave btw North 8th St and North 9th St',
-                100062893: 'Manhattan Bridge Bike Comprehensive',
-                100009425: 'Prospect Park West',
-                100010018: 'Pulaski Bridge',
-                100010017: 'Staten Island Ferry',
-                100009427: 'Williamsburg Bridge Bike Path'} #automatic count locations 
+counter_map = {100010022: 'Brooklyn Bridge Bike Path',
+               100009428: 'Ed Koch Queensboro Bridge Shared Path',
+               100010019: 'Kent Ave btw North 8th St and North 9th St',
+               100062893: 'Manhattan Bridge Bike Comprehensive',
+               100009425: 'Prospect Park West',
+               100010018: 'Pulaski Bridge',
+               100010017: 'Staten Island Ferry',
+               100009427: 'Williamsburg Bridge Bike Path'} #automatic count locations 
 
-counters_list = list(counters_map.values())
+counter_list = list(counter_map.values())
 
-counts = counts[counts.site.isin(list(counters_map.keys()))]
-
+counts = counts[counts.site.isin(list(counter_map.keys()))]
 counts['date'] = pd.to_datetime(counts['date']).dt.date
-
-time = counts.groupby(['name', 'site']).agg({'date': ['min','max'], 'counts':'sum'})
-
-date_limit = datetime.strptime('1/1/2014', '%m/%d/%Y').date #fix
-counts = counts[~(counts['date'] < date_limit)] #fix
-
-counts = counts[['site', 'date', 'counts']].groupby(['site','date']).sum().reset_index()
-
+counts['year'] = pd.to_datetime(counts['date']).dt.year
+counts = counts[counts['year'] > 2013]
+counts = counts[['site', 'year', 'counts']].groupby(['site','year']).sum().reset_index()
 counts = counts.merge(counters, how='left', on='site')
 
-fig = ps.make_subplots(rows = len(counters_list),
+# time = counts.groupby(['name', 'site']).agg({'date': ['min','max'], 'counts':'sum'})
+
+counter_colors = {'Williamsburg Bridge Bike Path':'#cdcc5d',
+                  'Manhattan Bridge Bike Comprehensive': '#ff9e4a',
+                  'Ed Koch Queensboro Bridge Shared Path': '#67bf5c',
+                  'Brooklyn Bridge Bike Path': '#ed665d',
+                  'Kent Ave btw North 8th St and North 9th St': '#729ece',
+                  'Prospect Park West': '#ed97ca',
+                  'Pulaski Bridge':'#ad8bc9',
+                  'Staten Island Ferry':'#6dccda',
+                  }
+
+fig = go.Figure()
+
+for counter, color in counter_colors.items():
+    fig = fig.add_trace(go.Scatter(name = counter,
+                                     mode = 'lines',
+                                     stackgroup = 'one',
+                                     x = counts.loc[counts['name'] == counter, 'year'],
+                                     y = counts.loc[counts['name'] == counter, 'counts'],
+                                     line = {'color': color,
+                                             'width': .5},
+                                     hovertemplate = '%{y:,.0f}'))
+     
+fig.update_layout(template = 'plotly_white',
+                  title = {'text': '<b>Automatic Bicycle Counts</b>',
+                           'font_size': 20,
+                           'x': 0.5,
+                           'xanchor':'center',
+                           'y': 0.95,
+                           'yanchor': 'top'},
+                  legend = {'orientation': 'h',
+                            'title_text': '',
+                            'font_size': 16,
+                            'x': 0.5,
+                            'xanchor': 'center',
+                            'y': 1,
+                            'yanchor': 'bottom'},
+                  margin = {'b': 120,
+                            'l': 80,
+                            'r': 80,
+                            't': 120},
+                  xaxis = {'title': {'text': '<b>Year</b>',
+                                     'font_size': 14},
+                           'tickfont_size': 12,
+                           'dtick': 'M12',
+                           'range': [min(counts['year'])-0.1, max(counts['year'])+0.1],
+                           'fixedrange': True,
+                           'showgrid': False},
+                  yaxis = {'title':{'text': '<b>Counts</b>',
+                                    'font_size': 14},
+                           'tickfont_size': 12,
+                           'rangemode': 'nonnegative',
+                           'fixedrange': True,
+                           'showgrid': True},
+                  font = {'family': 'Arial',
+                          'color': 'black'},
+                  dragmode = False,
+                  hovermode = 'x unified',
+                  hoverlabel = {'font_size': 14})
+
+fig.add_annotation(text = 'Data Source: <a href="https://www.nymtc.org/Data-and-Modeling/Transportation-Data-and-Statistics/Publications/Hub-Bound-Travel" target="blank">NYMTC Hub Bound Travel </a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/hubbound/all_modes/hubbound_all.csv" target="blank">Download Chart Data</a>',
+                   font_size = 14,
+                   showarrow = False,
+                   x = 1,
+                   xanchor = 'right',
+                   xref = 'paper',
+                   y = -0.1,
+                   yanchor = 'top',
+                   yref = 'paper')
+
+fig
+
+# fig.write_html(path + 'annotations/commuters.html',
+#                 include_plotlyjs = 'cdn',
+#                 config = {'displayModeBar': False})
+
+print('Chart Available at: https://nycplanning.github.io/td-trends/hubbound/all_modes/annotations/entries.html')  
+
+
+
+
+--
+
+counts = counts[counts.site.isin(list(counter_map.keys()))]
+counts['date'] = pd.to_datetime(counts['date']).dt.date
+counts = counts[counts['date'] > datetime.date(2013, 12, 31)]
+counts = counts[['site', 'date', 'counts']].groupby(['site','date']).sum().reset_index()
+counts = counts.merge(counters, how='left', on='site')
+fig = ps.make_subplots(rows = len(counter_list),
                        cols = 1,
                        shared_xaxes = True,
                        shared_yaxes = 'all',
-                       subplot_titles = counters_list)                
+                       subplot_titles = counter_list)                
 count = 0                       
 
-for counter in range(0, len(counters_list)):
+for counter in range(0, len(counter_list)):
     fig = fig.add_trace(go.Bar(name = counters_list[counter],
-                               x = counts.loc[(counts['name'] == counters_list[counter]), 'date'],
-                               y = counts.loc[(counts['name'] == counters_list[counter]), 'counts']),
+                               x = counts.loc[(counts['name'] == counter_list[counter]), 'date'],
+                               y = counts.loc[(counts['name'] == counter_list[counter]), 'counts']),
                         row = counter + 1,
                         col = 1)
     count = count + 1
