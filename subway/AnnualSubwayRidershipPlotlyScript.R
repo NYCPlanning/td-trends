@@ -24,6 +24,6 @@ p
 
 path = "C:/Users/S_Sanich/Desktop/td-trends/subway"
 
-htmlwidgets::saveWidget(p,paste0(path,"annualsubway.html"))
+htmlwidgets::saveWidget(p,paste0(path,"annual/subway.html"))
 
 
