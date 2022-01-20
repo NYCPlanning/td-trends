@@ -31,7 +31,7 @@ queens = list(range(4100,4115))
 si = list(range(3900,3904))
 nyc = bronx + brooklyn + manhattan + queens + si
 
-# COMMUTING FLOWS
+#%% COMMUTING FLOWS
 
 nyc_commuters = pums_ny[pums_ny.PUMA.isin(nyc)]
 nyc_commuters = nyc_commuters[nyc_commuters.POWPUMA.notna()] # github csv
@@ -148,8 +148,8 @@ fig.write_html(path + 'flows.html',
               config={'displayModeBar':False})
 
 # print('Chart Available at: https://nycplanning.github.io/td-trends/commute/annotations/flows.html')
-    
-# NYC COMMUTERS: DESTINATION
+
+#%% NYC COMMUTERS: DESTINATION
 
 nyc_commuters['RES'] = np.select([nyc_commuters.PUMA.isin(bronx),
                                   nyc_commuters.PUMA.isin(brooklyn),
@@ -253,7 +253,7 @@ fig.add_annotation(text = 'Data Source: <a href="https://www.census.gov/programs
 
 #print('Chart Available at: https://nycplanning.github.io/td-trends/commute/annotations/dest.html')
 
-# NYC COMMUTERS: TRAVEL MODE
+#%% NYC COMMUTERS: TRAVEL MODE
 
 di = {2: 'Bus',
       3: 'Subway', 
@@ -421,7 +421,7 @@ fig.add_annotation(text = 'Data Source: <a href="https://www.census.gov/programs
 
 #print('Chart Available at: https://nycplanning.github.io/td-trends/commute/annotations/tm_not_mn.html')
 
-# NYC COMMUTERS: TRAVEL TIME
+#%% NYC COMMUTERS: TRAVEL TIME
 
 nyc_commuters['MN'] = np.select([nyc_commuters['POW'] == 'Manhattan'],
                                 ['Manhattan Bound'], 
@@ -600,7 +600,7 @@ fig.add_annotation(text = 'Data Source: <a href="https://www.census.gov/programs
 
 # print('Chart Available at: https://nycplanning.github.io/td-trends/commute/annotations/tt_mn.html')
 
-# REGIONAL IN-COMMUTERS: DESTINATION
+#%% REGIONAL IN-COMMUTERS: DESTINATION
 
 regional_commuters['RES'] = np.select([regional_commuters['ST'] == 36,
                                        regional_commuters['ST'] == 9,

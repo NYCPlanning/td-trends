@@ -2,7 +2,7 @@
 """
 Travel Conditions and Trends Update for Biking
 
-Source(s): NYC DOHMH Community Health Survey 2020
+Source(s): NYC DOHMH Community Health Survey 2020, NYC DOT Bicycle Counts, Citi Bike Operating Reports
 Date: December 2021 - January 2022 
 """
 import pyreadstat
@@ -191,7 +191,7 @@ fig.update_layout(template = 'plotly_white',
                   hovermode = 'x unified',
                   hoverlabel = {'font_size': 14})
 
-fig.add_annotation(text = 'Data Source: <a href="https://www.nymtc.org/Data-and-Modeling/Transportation-Data-and-Statistics/Publications/Hub-Bound-Travel" target="blank">NYMTC Hub Bound Travel </a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/hubbound/all_modes/hubbound_all.csv" target="blank">Download Chart Data</a>',
+fig.add_annotation(text = 'Data Source: <a href="https://data.cityofnewyork.us/Transportation/Bicycle-Counts/uczf-rk3c" target="blank">NYC DOT Bicycle Counts </a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/hubbound/all_modes/hubbound_all.csv" target="blank">Download Chart Data</a>',
                    font_size = 14,
                    showarrow = False,
                    x = 1,
