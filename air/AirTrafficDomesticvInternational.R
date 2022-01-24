@@ -14,12 +14,30 @@ Total <- c(74409340, 74813956, 68190733, 71791007, 72410828, 77569820, 78317146,
 
 df <- data.frame(Year, Domestic, International, Total)
 
-fig <- plot_ly(df, x= ~Year, y= ~International, type = "bar", name = "International Flights", marker = list(color = "#1b9e77", showticklabels=TRUE))
-fig <- fig %>% add_trace(y = ~Domestic, name = "Domestic Flights", marker = list(color="#d95f02"))
+fig <- plot_ly(df,
+               x= ~Year, y= ~International, 
+               type = "bar", 
+               name = "International Flights", 
+               marker = list(color = "#6dccda", 
+                             showticklabels=TRUE))
+fig <- fig %>% add_trace(y = ~Domestic, 
+                         name = "Domestic Flights", 
+                         marker = list(color="#cdcc5d"))
 fig <- fig %>% layout(yaxis = list(title = "Number of Passengers"), barmode = "stack")
 fig <- fig %>% layout(title = "Annual Air Passenger Traffic")
 fig <- fig %>% config(displayModeBar = F)
-fig <- fig %>% layout(margin = list(b=160), annotations=list(x=1, y=-0.2, text= "Data Source: Port Authority of NY and NJ", showarrow=F, xref="paper", yref="paper",
-                                                            xanchor="right", yanchor="top", xshift=0, yshift=0, font=list(size=12, color="grey")))
+fig <- fig %>% layout(margin = list(b=160), 
+                      annotations=list(x=1, y=-0.2, 
+                                       text= "Data Source: Port Authority of NY and NJ", 
+                                       showarrow=F, 
+                                       xref="paper", yref="paper",
+                                       xanchor="right", yanchor="top", 
+                                       xshift=0, yshift=0, 
+                                       font=list(size=12, 
+                                        color="grey")))
 
 fig
+
+path = "C:/Users/S_Sanich/Desktop/td-trends/air"
+
+htmlwidgets::saveWidget(p,paste0(path,"annual_air_domesticvinternational.html"))
