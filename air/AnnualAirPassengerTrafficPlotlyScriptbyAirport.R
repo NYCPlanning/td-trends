@@ -10,36 +10,56 @@ JFK_International <- c(30077876, 31779334, 32527901, 33518898, 34317281, 8362976
 LGA_Domestic <- c(26684923, 27996855, 27474292, 27857697, 28875041, 7853368, 9323457)
 LGA_International <- c(1752745, 1790006, 2087936, 2224430, 2209853, 391824, 112094)
 
-
 df <- data.frame(Year, EWR_Domestic, EWR_International, JFK_Domestic, JFK_International,
                  LGA_Domestic, LGA_International)
 
 p=plot_ly()
 
 p=p %>%
-  add_trace(type="scatter", mode="lines", x=df[["Year"]], y=df[["EWR_Domestic"]], name = "EWR Domestic", hovertemplate="%{y:,.0f}") %>% 
-  add_trace(type="scatter", mode="lines", x=df[["Year"]], y=df[["EWR_International"]], name = "EWR International", hovertemplate="%{y:,.0f}") %>%
-  add_trace(type="scatter", mode="lines", x=df[["Year"]], y=df[["JFK_Domestic"]], name = "JFK Domestic", hovertemplate="%{y:,.0f}") %>%
-  add_trace(type="scatter", mode="lines", x=df[["Year"]], y=df[["JFK_International"]], name = "JFK International", hovertemplate="%{y:,.0f}") %>%
-  add_trace(type="scatter", mode="lines", x=df[["Year"]], y=df[["LGA_Domestic"]], name = "LGA Domestic", hovertemplate="%{y:,.0f}") %>%
-  add_trace(type="scatter", mode="lines", x=df[["Year"]], y=df[["LGA_International"]], name = "LGA International", hovertemplate="%{y:,.0f}") %>%
-  layout(title = "Annual Air Passenger Traffic Per Airport", xaxis=list(title="Date"), yaxis=list(title="Number of Passengers")) %>%
-  layout(margin = list(b=160), annotations=list(x=1, y=-0.2, text= "Data Source: Port Authority of NY and NJ", showarrow=F, xref="paper", yref="paper", xanchor= "right", yanchor = "top",
-                                                xshift=0, yshift=0, font=list(size=12, color="grey"))) %>%
+  add_trace(type="scatter", mode="lines", 
+            x=df[["Year"]], y=df[["EWR_Domestic"]], 
+            line = list(color = "#6dccda", width = 4),
+            name = "EWR Domestic", 
+            hovertemplate="%{y:,.0f}") %>% 
+  add_trace(type="scatter", mode="lines", 
+            line = list(color = "#6dccda", width = 4, dash="dot"),
+            x=df[["Year"]], y=df[["EWR_International"]], 
+            name = "EWR International", 
+            hovertemplate="%{y:,.0f}") %>%
+  add_trace(type="scatter", mode="lines", 
+            line = list(color = "#cdcc5d", width = 4),
+            x=df[["Year"]], y=df[["JFK_Domestic"]], 
+            name = "JFK Domestic", 
+            hovertemplate="%{y:,.0f}") %>%
+  add_trace(type="scatter", mode="lines", 
+            line = list(color = "#cdcc5d", width = 4, dash = "dot"),
+            x=df[["Year"]], y=df[["JFK_International"]], 
+            name = "JFK International", 
+            hovertemplate="%{y:,.0f}") %>%
+  add_trace(type="scatter", mode="lines", 
+            line = list(color = "#a2a2a2", width = 4),
+            x=df[["Year"]], y=df[["LGA_Domestic"]], 
+            name = "LGA Domestic", 
+            hovertemplate="%{y:,.0f}") %>%
+  add_trace(type="scatter", mode="lines", 
+            line = list(color = "#a2a2a2", width = 4, dash = "dot"),
+            x=df[["Year"]], y=df[["LGA_International"]], 
+            name = "LGA International", 
+            hovertemplate="%{y:,.0f}") %>%
+  layout(title = "Annual Air Passenger Traffic Per Airport", 
+         xaxis=list(title="Date"), 
+         yaxis=list(title="Number of Passengers")) %>%
+  layout(margin = list(b=160), 
+         annotations=list(x=1, y=-0.2, 
+                          text= "Data Source: Port Authority of NY and NJ", 
+                          showarrow=F, 
+                          xref="paper", yref="paper", 
+                          xanchor= "right", yanchor = "top",
+                          xshift=0, yshift=0, font=list(size=12, color="grey"))) %>%
   config(displayModeBar=F)
 
 p
 
+path = "C:/Users/S_Sanich/Desktop/td-trends/air"
 
-
-  
-
-
-
-
-
-
-
-
-
-
+htmlwidgets::saveWidget(p,paste0(path,"annualair.html"))
