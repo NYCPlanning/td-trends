@@ -10,7 +10,7 @@ import pandas as pd
 import plotly.graph_objects as go
 import plotly.subplots as ps
 import plotly.io as pio
-import datetime
+from datetime import datetime
 
 pio.renderers.default = 'browser'
 
@@ -107,59 +107,75 @@ fig
 
 #%% BIKE COUNTS
 
-parser = lambda x: datetime.datetime.strptime(x, '%m/%d/%Y %I:%M:%S %p') # 8/31/2012  12:00:00 AM                 
+parser = lambda x: datetime.strptime(x, '%m/%d/%Y %I:%M:%S %p') # 8/31/2012  12:00:00 AM                 
 counts = pd.read_csv(local_path + 'bicycle_counts.csv', parse_dates = ['date'], date_parser = parser)
 
 counters = pd.read_csv(local_path + 'bicycle_counters.csv', usecols = ['name', 'site', 'latitude','longitude'])
 
-counter_map = {100010022: 'Brooklyn Bridge Bike Path',
-               100009428: 'Ed Koch Queensboro Bridge Shared Path',
-               100010019: 'Kent Ave btw North 8th St and North 9th St',
-               100062893: 'Manhattan Bridge Bike Comprehensive',
-               100009425: 'Prospect Park West',
-               100010018: 'Pulaski Bridge',
-               100010017: 'Staten Island Ferry',
-               100009427: 'Williamsburg Bridge Bike Path'} #automatic count locations 
+# active counters
+counter_list = [100009425, 100009427, 100009428, 100010017, 100010018, 100010019, 100057320, 100062893, 300020904]
 
-counter_list = list(counter_map.values())
+counts = counts[counts.site.isin(counter_list)]
+counts = counts.groupby(['site', pd.Grouper(key = 'date', freq = 'M')])['counts'].sum().reset_index()
+# time = counts.groupby(['site']).agg({'date': ['min','max'], 'counts':'sum'})
+counts = counts[counts['date'] > '2013-12-31']
 
-counts = counts[counts.site.isin(list(counter_map.keys()))]
-counts['date'] = pd.to_datetime(counts['date']).dt.date
-counts['year'] = pd.to_datetime(counts['date']).dt.year
-counts = counts[counts['year'] > 2013]
-counts = counts[['site', 'year', 'counts']].groupby(['site','year']).sum().reset_index()
-counts = counts.merge(counters, how='left', on='site')
+counts = pd.merge(counts, counters[['name', 'site']], how = 'inner', on = 'site')
+counts['name'] = counts['name'].replace({'Ed Koch Queensboro Bridge Shared Path': 'Queensboro Bridge',
+                                         'Kent Ave btw North 8th St and North 9th St': 'Kent Ave btw N 8 St and N 9 St',
+                                         'Manhattan Bridge Bike Comprehensive': 'Manhattan Bridge',
+                                         'Williamsburg Bridge Bike Path': 'Williamsburg Bridge',
+                                         'Comprehensive Brooklyn Bridge Counter': 'Brooklyn Bridge',
+                                         'Columbus Ave at 86th St.': 'Columbus Ave at 86 St'})
 
-# time = counts.groupby(['name', 'site']).agg({'date': ['min','max'], 'counts':'sum'})
+counts_total = counts[['date', 'counts']].groupby(['date']).sum().reset_index()
+counts_total.columns = ['date', 'total']
 
-counter_colors = {'Williamsburg Bridge Bike Path':'#cdcc5d',
-                  'Manhattan Bridge Bike Comprehensive': '#ff9e4a',
-                  'Ed Koch Queensboro Bridge Shared Path': '#67bf5c',
-                  'Brooklyn Bridge Bike Path': '#ed665d',
-                  'Kent Ave btw North 8th St and North 9th St': '#729ece',
-                  'Prospect Park West': '#ed97ca',
-                  'Pulaski Bridge':'#ad8bc9',
+counts = pd.merge(counts, counts_total, how = 'inner', on = 'date')
+counts['%'] = counts['counts']/ counts['total']
+
+# counts.to_csv(path + 'counts.csv', index = False)
+
+counts['hover'] = '<i>' + counts['name'] + ': </i>' + counts['counts'].map('{:,.0f}'.format) + ' (' + counts['%'].map('{:.0%}'.format) + ')'
+
+counter_colors = {'Williamsburg Bridge':'#cdcc5d',
+                  'Manhattan Bridge': '#ff9e4a',
+                  'Brooklyn Bridge': '#ed665d',
+                  'Queensboro Bridge': '#67bf5c',
                   'Staten Island Ferry':'#6dccda',
-                  }
+                  'Prospect Park West': '#ed97ca',
+                  'Kent Ave btw N 8 St and N 9 St': '#729ece',      
+                  'Pulaski Bridge':'#ad8bc9',                 
+                  'Columbus Ave at 86 St': '#a2a2a2'}
+
+hover_title = counts[['date', 'total']].groupby('date').first().reset_index()
 
 fig = go.Figure()
 
 for counter, color in counter_colors.items():
     fig = fig.add_trace(go.Scatter(name = counter,
-                                     mode = 'lines',
-                                     stackgroup = 'one',
-                                     x = counts.loc[counts['name'] == counter, 'year'],
-                                     y = counts.loc[counts['name'] == counter, 'counts'],
-                                     line = {'color': color,
-                                             'width': .5},
-                                     hovertemplate = '%{y:,.0f}'))
-     
+                                   x = counts.loc[counts['name'] == counter, 'date'],
+                                   y = counts.loc[counts['name'] == counter, 'counts'],
+                                   mode = 'lines',
+                                   stackgroup = 'one',
+                                   line = {'color': color,
+                                           'width': .5},
+                                   hoverinfo = 'text',
+                                   hovertext = counts.loc[counts['name'] == counter, 'hover']))
+    
+fig = fig.add_trace(go.Scatter(x = hover_title['date'],
+                               y = hover_title['total'],
+                               mode = 'none',
+                               showlegend = False,
+                               hoverinfo = 'text',
+                               hovertext = '<b>' + hover_title['date'].map('{:%B %Y}'.format) + ' <br>Total Trips: ' + hover_title['total'].map('{:,.0f}'.format)))
+
 fig.update_layout(template = 'plotly_white',
                   title = {'text': '<b>Automatic Bicycle Counts</b>',
                            'font_size': 20,
                            'x': 0.5,
                            'xanchor':'center',
-                           'y': 0.95,
+                           'y': .95,
                            'yanchor': 'top'},
                   legend = {'orientation': 'h',
                             'title_text': '',
@@ -176,7 +192,6 @@ fig.update_layout(template = 'plotly_white',
                                      'font_size': 14},
                            'tickfont_size': 12,
                            'dtick': 'M12',
-                           'range': [min(counts['year'])-0.1, max(counts['year'])+0.1],
                            'fixedrange': True,
                            'showgrid': False},
                   yaxis = {'title':{'text': '<b>Counts</b>',
@@ -191,7 +206,7 @@ fig.update_layout(template = 'plotly_white',
                   hovermode = 'x unified',
                   hoverlabel = {'font_size': 14})
 
-fig.add_annotation(text = 'Data Source: <a href="https://data.cityofnewyork.us/Transportation/Bicycle-Counts/uczf-rk3c" target="blank">NYC DOT Bicycle Counts </a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/hubbound/all_modes/hubbound_all.csv" target="blank">Download Chart Data</a>',
+fig.add_annotation(text = 'Data Source: <a href="https://data.cityofnewyork.us/Transportation/Bicycle-Counts/uczf-rk3c" target="blank">NYC DOT Bicycle Counts </a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/bike/annotations/counts.csv" target="blank">Download Chart Data</a>',
                    font_size = 14,
                    showarrow = False,
                    x = 1,
@@ -203,38 +218,11 @@ fig.add_annotation(text = 'Data Source: <a href="https://data.cityofnewyork.us/T
 
 fig
 
-# fig.write_html(path + 'annotations/commuters.html',
+# fig.write_html(path + 'counts.html',
 #                 include_plotlyjs = 'cdn',
 #                 config = {'displayModeBar': False})
 
-print('Chart Available at: https://nycplanning.github.io/td-trends/hubbound/all_modes/annotations/entries.html')  
-
-
-
-
---
-
-counts = counts[counts.site.isin(list(counter_map.keys()))]
-counts['date'] = pd.to_datetime(counts['date']).dt.date
-counts = counts[counts['date'] > datetime.date(2013, 12, 31)]
-counts = counts[['site', 'date', 'counts']].groupby(['site','date']).sum().reset_index()
-counts = counts.merge(counters, how='left', on='site')
-fig = ps.make_subplots(rows = len(counter_list),
-                       cols = 1,
-                       shared_xaxes = True,
-                       shared_yaxes = 'all',
-                       subplot_titles = counter_list)                
-count = 0                       
-
-for counter in range(0, len(counter_list)):
-    fig = fig.add_trace(go.Bar(name = counters_list[counter],
-                               x = counts.loc[(counts['name'] == counter_list[counter]), 'date'],
-                               y = counts.loc[(counts['name'] == counter_list[counter]), 'counts']),
-                        row = counter + 1,
-                        col = 1)
-    count = count + 1
-    
-fig
+print('Chart Available at: https://nycplanning.github.io/td-trends/bike/annotations/counts.html')  
 
 #%% CITI BIKE
 
