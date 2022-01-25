@@ -55,3 +55,7 @@ p=p %>%
   config(displayModeBar = F)
 
 p
+
+path = "C:/Users/S_Sanich/Desktop/td-trends/bus"
+
+htmlwidgets::saveWidget(p,paste0(path,"bus_speeds.html"))
