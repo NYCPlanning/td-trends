@@ -8,7 +8,6 @@ Date: December 2021 - January 2022
 import pyreadstat
 import pandas as pd
 import plotly.graph_objects as go
-import plotly.subplots as ps
 import plotly.io as pio
 from datetime import datetime
 
@@ -228,7 +227,7 @@ print('Chart Available at: https://nycplanning.github.io/td-trends/bike/annotati
 
 citibike = pd.read_csv(path + 'citibike.csv')
 citibike['12M Rolling Avg'] = citibike['Avg Daily Rides'].rolling(window = 12).mean()
-citibike['Hover'] = '<b>Date: </b>' + citibike['Date2']+'<br><b>Average Daily Rides: </b>' + citibike['Avg Daily Rides'].map('{:,.0f}'.format) + '<br><b>12-Month Rolling Average: </b>' + citibike['12M Rolling Avg'].map('{:,.0f}'.format)
+citibike['Hover'] = '<b>Date: </b>' + citibike['Date2']+'<br><b>Average Daily Rides: </b>' + citibike['Avg Daily Rides'].map('{:,.0f}'.format) + '<br><b>12-Month Rolling Average: </b>' + citibike['12M Rolling Avg'].map('{:,.0f}'.format) + '<br><b>Fleet Size: </b>' + citibike['Fleet Size'].map('{:,.0f}'.format)
 
 fig = go.Figure()
 
@@ -236,6 +235,7 @@ fig = fig.add_trace(go.Bar(x = citibike['Date'],
                            y = citibike['Avg Daily Rides'],
                            marker = {'color': '#729ece'},
                            name = 'Average Daily Rides',
+                           opacity = .5,
                            hoverinfo = 'text', 
                            hovertext = citibike['Hover']))
 
@@ -243,6 +243,13 @@ fig = fig.add_trace(go.Scatter(x = citibike['Date'],
                                y = citibike['12M Rolling Avg'], 
                                marker = {'color': '#ff9e4a'},
                                name = '12-Month Rolling Average',
+                               mode = 'lines',
+                               hoverinfo = 'none'))
+
+fig = fig.add_trace(go.Scatter(x = citibike['Date'],
+                               y = citibike['Fleet Size'], 
+                               marker = {'color': '#ed97ca'},
+                               name = 'Fleet Size',
                                mode = 'lines',
                                hoverinfo = 'none'))
     
