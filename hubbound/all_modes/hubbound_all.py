@@ -37,7 +37,7 @@ for mode, color in mode_colors.items():
                                    mode = 'lines',
                                    stackgroup = 'one',
                                    line = {'color': color,
-                                           'width': 2},
+                                           'width': .5},
                                    hoverinfo = 'text',
                                    hovertext = df.loc[df['mode'] == mode, 'hover']))
 
