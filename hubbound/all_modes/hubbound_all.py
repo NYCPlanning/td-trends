@@ -13,8 +13,8 @@ import plotly.io as pio
 
 pio.renderers.default = 'browser'
 
-path = '/Users/Work/Desktop/GitHub/td-trends/hubbound/all_modes/'
-# path = 'C:/Users/M_Free/Desktop/GitHub/td-trends/hubbound/all_modes/'
+# path = '/Users/Work/Desktop/GitHub/td-trends/hubbound/all_modes/'
+path = 'C:/Users/M_Free/Desktop/td-trends/hubbound/all_modes/'
 
 df = pd.read_csv(path + 'hubbound_all.csv', index_col = [0,1])
 
