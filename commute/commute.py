@@ -143,9 +143,9 @@ fig.add_annotation(text = 'Data Source: <a href="https://www.census.gov/programs
 
 # fig
 
-fig.write_html(path + 'flows.html',
-              include_plotlyjs='cdn',
-              config={'displayModeBar':False})
+# fig.write_html(path + 'flows.html',
+#               include_plotlyjs='cdn',
+#               config={'displayModeBar':False})
 
 # print('Chart Available at: https://nycplanning.github.io/td-trends/commute/annotations/flows.html')
 
@@ -653,7 +653,7 @@ for boro, color in boro_colors.items():
 fig.update_layout(
     barmode='stack',
     template='plotly_white',
-    title={'text':'<b>Destination of Work by State for Regional In-Commuters</b>',
+    title={'text':'<b>Destination of Work by State of Residence for Regional In-Commuters</b>',
            'font_size':20,
            'x':0.5,
            'xanchor':'center',
