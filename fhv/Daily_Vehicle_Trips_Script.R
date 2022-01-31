@@ -55,6 +55,7 @@ p=p %>%
                           y=-0.3,
                           yanchor='top',
                           yref='paper')) %>%
+  layout(margin = list(b=160)) %>%
   config(displayModeBar=F)
 
 p
