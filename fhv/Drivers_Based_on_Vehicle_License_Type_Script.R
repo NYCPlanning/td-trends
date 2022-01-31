@@ -36,12 +36,12 @@ fig <- fig %>% add_trace(y=~FHV...Lux.Limo,
                          hovertemplate = "Luxury Limo: %{y}")
 
 fig <- fig %>% add_trace(y=~Green, 
-                         name = "Green",
+                         name = "Green Taxis",
                          marker = list(color = "#67bf5c"),
                          hovertemplate = "Green: %{y}")
 
 fig <- fig %>% add_trace(y =~Yellow,
-                         name = "Yellow",
+                         name = "Yellow Taxis",
                          marker = list(color = "#cdcc5d"),
                          hovertemplate = "Yellow: %{y}")
 
