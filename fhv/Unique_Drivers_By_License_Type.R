@@ -4,7 +4,7 @@ library(tibble)
 
 url = "https://raw.githubusercontent.com/NYCPlanning/td-trends/main/fhv/Monthly_Unique_Drivers.csv"
 
-df = read.csv(url, stringsAsFactors = F)
+df = read.csv(url, fileEncoding = 'UTF-8-BOM', stringsAsFactors = F)
 
 colnames(df)
 
@@ -26,9 +26,9 @@ fig <- fig %>% add_trace(y=~FHV...High.Volume,
                          hovertemplate = "High Volume: %{y}")
 
 fig <- fig %>% add_trace(y=~FHV...Livery,
-                     name = "FHV (Livery)",
-                     marker = list(color = "#a2a2a2"),
-                     hovertemplate = "Livery: %{y}")
+                         name = "FHV (Livery)",
+                         marker = list(color = "#a2a2a2"),
+                         hovertemplate = "Livery: %{y}")
 
 fig <- fig %>% add_trace(y=~FHV...Lux.Limo,
                          name = "FHV (Luxury Limo)",
@@ -36,12 +36,12 @@ fig <- fig %>% add_trace(y=~FHV...Lux.Limo,
                          hovertemplate = "Luxury Limo: %{y}")
 
 fig <- fig %>% add_trace(y=~Green, 
-                         name = "Green",
+                         name = "Green Taxis",
                          marker = list(color = "#67bf5c"),
                          hovertemplate = "Green: %{y}")
 
 fig <- fig %>% add_trace(y =~Yellow,
-                         name = "Yellow",
+                         name = "Yellow Taxis",
                          marker = list(color = "#cdcc5d"),
                          hovertemplate = "Yellow: %{y}")
 
@@ -68,14 +68,6 @@ fig <- fig %>% layout(yaxis=list(ticklen = 10, tickcolor = "transparent"))
 
 fig
 
+path = "C:/Users/S_Sanich/Desktop/td-trends/fhv"
 
-
-
-
-
-
-
-
-
-
-
+htmlwidgets::saveWidget(fig,paste0(path,"license_types.html"))
