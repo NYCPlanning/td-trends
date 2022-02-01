@@ -80,4 +80,9 @@ p=p %>%
 
 p
 
+path = "C:/Users/S_Sanich/Desktop/td-trends/cbd"
+
+htmlwidgets::saveWidget(p,paste0(path,"manhattan-bound.html"))
+
+
 
