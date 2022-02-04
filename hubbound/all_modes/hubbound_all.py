@@ -43,7 +43,7 @@ fig = fig.add_trace(go.Scatter(x = df_total['year'],
                                mode = 'none',
                                showlegend = False,
                                hoverinfo = 'text',
-                               hovertext = '<b>' + df_total['year'] + ' <br>Total Entries: ' + df_total['entries'].map('{:,.0f}'.format)))
+                               hovertext = '<b>' + df_total['year'] + ' Total Entries: ' + df_total['entries'].map('{:,.0f}'.format)))
 
 fig.update_layout(template = 'plotly_white',
                   title = {'text': '<b>Daily Entries into the Manhattan Hub</b>',
@@ -94,8 +94,8 @@ fig.add_annotation(text = 'Data Source: <a href="https://www.nymtc.org/Data-and-
 
 fig
 
-fig.write_html(path + 'annotations/entries.html',
-              include_plotlyjs='cdn',
-              config={'displayModeBar':False})
+# fig.write_html(path + 'annotations/entries.html',
+#               include_plotlyjs='cdn',
+#               config={'displayModeBar':False})
 
-print('Chart Available at: https://nycplanning.github.io/td-trends/hubbound/all_modes/annotations/entries.html')   
+# https://nycplanning.github.io/td-trends/hubbound/all_modes/annotations/entries.html')   
