@@ -45,16 +45,14 @@ fig <- fig %>% add_trace(y =~Yellow,
                          marker = list(color = "#cdcc5d"),
                          hovertemplate = "Yellow: %{y}")
 
-fig <- fig %>% layout(yaxis = list(title="Number of Drivers"), barmode = "stack")
+fig <- fig %>% layout(yaxis = list(title="<b>Number of Drivers</b>"), barmode = "stack")
 
-fig <- fig %>% layout(xaxis = list(title = "Year"))
+fig <- fig %>% layout(xaxis = list(title = "<b>Year</b>"))
 
-fig  <- fig %>% layout(title = "Number of Drivers Based on Vehicle Licenses Type, 2015-2021")
-
-fig <- fig %>% config(displayModebar = F)
+fig  <- fig %>% layout(title = "<b>Number of Drivers Based on Vehicle Licenses Type, 2015-2021</b>")
 
 fig <- fig %>% layout(margin = list(b=160),
-                      annotations=list(text='Data Source: <a href="https://www1.nyc.gov/site/tlc/about/aggregated-reports.page", target="blank">NYCTLC</a>', 
+                      annotations=list(text='Data Source: <a href="https://www1.nyc.gov/site/tlc/about/aggregated-reports.page", target="blank">NYCTLC</a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/fhv/Monthly_Unique_Drivers.csv" target = "blank">Download Chart Data</a>', 
                                        font=list(size=11),
                                        showarrow=F,
                                        x=1,
@@ -65,6 +63,8 @@ fig <- fig %>% layout(margin = list(b=160),
                                        yref='paper'))
 
 fig <- fig %>% layout(yaxis=list(ticklen = 10, tickcolor = "transparent"))
+
+fig <- fig %>% config(displayModebar = F)
 
 fig
 
