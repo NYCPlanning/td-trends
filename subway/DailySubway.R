@@ -18,15 +18,15 @@ p=p %>%
             mode="lines", 
             x=df[["Date"]], 
             y=df[["Subways..Average.Estimated.Ridership"]], 
-            line = list(color = "#6dccda", width = 4),
+            line = list(color = "#a8786e", width = 4),
             hovertemplate="%{y:,.0f}") %>%
-  layout(title = "Daily Subway Ridership", 
-         xaxis=list(title="Date"), 
-         yaxis=list(title="Ridership")) %>%
+  layout(title = "<b>Daily Subway Ridership</b>", 
+         xaxis=list(title="<b>Date</b>"), 
+         yaxis=list(title="<b>Ridership</b>")) %>%
   layout(showlegend=FALSE)%>%
   layout(margin = list(b=160), 
          annotations=list(x=1, y=-0.2, 
-                          text= 'Data Source: <a href="https://new.mta.info/coronavirus/ridership", target="blank">MTA</a>', 
+                          text= 'Data Source: <a href="https://new.mta.info/coronavirus/ridership", target="blank">MTA</a> | <a href= "https://raw.githubusercontent.com/NYCPlanning/td-trends/main/bus/MTA_Bus_and_Subway_Ridership_Averages.csv" target = "blank">Download Chart Data</a>',
                           showarrow=F, 
                           xref="paper", yref="paper", 
                           xanchor="right", yanchor="top", 
@@ -35,3 +35,8 @@ p=p %>%
   config(displayModeBar = F)
 
 p
+
+
+path = "C:/Users/S_Sanich/Desktop/td-trends/subway"
+
+htmlwidgets::saveWidget(p,paste0(path,"dailysubway.html"))
