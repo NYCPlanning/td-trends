@@ -2,9 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 Travel Conditions and Trends Update for Entries to the CBD
-
-Source: NYMTC Hub Bound Travel 2019
-Date: November - December 2021 
+Source: NYMTC Hub Bound Travel
 """
 
 import pandas as pd
@@ -13,8 +11,8 @@ import plotly.io as pio
 
 pio.renderers.default = 'browser'
 
-# path = '/Users/Work/Desktop/GitHub/td-trends/hubbound/all_modes/'
-path = 'C:/Users/M_Free/Desktop/td-trends/hubbound/all_modes/'
+path = '/Users/Work/Desktop/GitHub/td-trends/hubbound/all_modes/'
+# path = 'C:/Users/M_Free/Desktop/td-trends/hubbound/all_modes/'
 
 df = pd.read_csv(path + 'hubbound_all.csv')
 df['hover'] = '<i>' + df['mode'] + ': </i>' + df['entries'].map('{:,.0f}'.format) + ' (' + df['%'].map('{:.0%}'.format) + ')'
@@ -34,10 +32,9 @@ for mode, color in mode_colors.items():
     fig = fig.add_trace(go.Scatter(name = mode,
                                    x = df.loc[df['mode'] == mode, 'year'],
                                    y = df.loc[df['mode'] == mode, 'entries'],
-                                   mode = 'lines',
-                                   stackgroup = 'one',
+                                   mode = 'lines+markers',
                                    line = {'color': color,
-                                           'width': .5},
+                                           'width': 2},
                                    hoverinfo = 'text',
                                    hovertext = df.loc[df['mode'] == mode, 'hover']))
 
@@ -46,7 +43,7 @@ fig = fig.add_trace(go.Scatter(x = df_total['year'],
                                mode = 'none',
                                showlegend = False,
                                hoverinfo = 'text',
-                               hovertext = '<b>' + df_total['year'] + ' <br>Total Entries: ' + df_total['entries'].map('{:,.0f}'.format)))
+                               hovertext = '<b>' + df_total['year'] + ' Total Entries: ' + df_total['entries'].map('{:,.0f}'.format)))
 
 fig.update_layout(template = 'plotly_white',
                   title = {'text': '<b>Daily Entries into the Manhattan Hub</b>',
@@ -76,7 +73,7 @@ fig.update_layout(template = 'plotly_white',
                   yaxis = {'title':{'text': '<b>Daily Entries</b>',
                                     'font_size': 14},
                            'tickfont_size': 12,
-                           'rangemode': 'nonnegative',
+                           'range': [0, 2500000],
                            'fixedrange': True,
                            'showgrid': True},
                   font = {'family': 'Arial',
@@ -97,8 +94,8 @@ fig.add_annotation(text = 'Data Source: <a href="https://www.nymtc.org/Data-and-
 
 fig
 
-fig.write_html(path + 'annotations/entries.html',
-              include_plotlyjs='cdn',
-              config={'displayModeBar':False})
+# fig.write_html(path + 'annotations/entries.html',
+#               include_plotlyjs='cdn',
+#               config={'displayModeBar':False})
 
-print('Chart Available at: https://nycplanning.github.io/td-trends/hubbound/all_modes/annotations/entries.html')   
+# https://nycplanning.github.io/td-trends/hubbound/all_modes/annotations/entries.html')   
