@@ -40,12 +40,12 @@ p=p %>%
             name = 'Staten Island', 
             color = "#ed665d",
             hovertemplate="%[y:,.0f") %>%
-  layout(title = "Annual Bus Ridership", 
-         xaxis=list(title="Date"), 
-         yaxis=list(title="Ridership")) %>%
+  layout(title = "<b>Annual Bus Ridership</b>", 
+         xaxis=list(title="<b>Date</b>"), 
+         yaxis=list(title="<b>Ridership</b>")) %>%
   layout(margin = list(b=160), 
          annotations=list(x=1, y=-0.2, 
-                          text= "Data Source: MTA", 
+                          text= "Data Source: <a href='https://new.mta.info/agency/new-york-city-transit/subway-bus-ridership-2020' target = 'blank'>MTA</a>", 
                           showarrow=F, 
                           xref="paper", yref="paper", 
                           xanchor="right", yanchor="top", 
@@ -58,6 +58,7 @@ p
 path = "C:/Users/S_Sanich/Desktop/td-trends/bus"
 
 htmlwidgets::saveWidget(p,paste0(path,"annualbus.html"))
+
 
 
 
