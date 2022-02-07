@@ -33,17 +33,18 @@ p=p %>%
             line = list(color = "#cdcc5d", width = 2),
             name = "Yellow",
             hovertemplate ="%{y:,.0f}") %>%
-  layout(title = "NYCTLC Daily Vehicle Trips, by Vehicle License Type, 2015-2021",
-         xaxis = list(title="Month/Year"),
-         yaxis = list(title="Number of Trips")) %>%
+  layout(title = "<b>NYCTLC Daily Vehicle Trips, by Vehicle License Type, 2015-2021</b>",
+         xaxis = list(title="<b>Month/Year</b>"),
+         yaxis = list(title="<b>Number of Trips</b>")) %>%
   config(displayModeBar=F) %>%
-  layout(annotations=list(text='Data Source: <a href="https://www1.nyc.gov/site/tlc/about/aggregated-reports.page", target="blank">NYCTLC</a>', 
+  layout(xaxis=list(showgrid=FALSE)) %>%
+  layout(annotations=list(text='Data Source: <a href="https://www1.nyc.gov/site/tlc/about/aggregated-reports.page", target="blank">NYCTLC</a> | <a href ="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/fhv/TLC_Monthly_Ridership.csv" target="blank">Download Chart Data</a>', 
                           font=list(size=11),
                           showarrow=F,
                           x=1,
                           xanchor='right',
                           xref='paper',
-                          y=-0.2,
+                          y=-0.3,
                           yanchor='top',
                           yref='paper')) %>%
   layout(annotations=list(text='Note: Trips do not equal ridership because they may be pooled', 
@@ -52,7 +53,7 @@ p=p %>%
                           x=1,
                           xanchor='right',
                           xref='paper',
-                          y=-0.3,
+                          y=-0.4,
                           yanchor='top',
                           yref='paper')) %>%
   layout(margin = list(b=160)) %>%
