@@ -26,9 +26,9 @@ fig <- fig %>% add_trace(y = ~LGA,
                          marker = list(color="#a2a2a2"),
                          hovertemplate = paste('%{y:,.0f}'),
                          texttemplate = '%{y:.2s}', textposition = 'outside')
-fig <- fig %>% layout(xaxis = list(title = "Month", tickangle = -45))
-fig <- fig %>% layout(yaxis = list(title = "Number of Passengers"))
-fig <- fig %>% layout(title = "Monthly Air Passenger Traffic in 2021")
+fig <- fig %>% layout(xaxis = list(title = "<b>Month", tickangle = -45))
+fig <- fig %>% layout(yaxis = list(title = "<b>Number of Passengers"))
+fig <- fig %>% layout(title = "<b>Monthly Air Passenger Traffic in 2021")
 fig <- fig %>% config(displayModeBar = F)
 fig <- fig %>% layout(margin = list(b=160), 
                       annotations=list(x=1, y=-0.2, 
