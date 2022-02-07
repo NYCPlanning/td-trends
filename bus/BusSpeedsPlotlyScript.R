@@ -42,11 +42,11 @@ p=p %>%
             name = 'Staten Island', 
             color = "#ed665d",
             hovertemplate="%[y:,.0f") %>%
-  layout(title = "Bus Speeds in 2020-2021", 
-         xaxis=list(title="Month"), yaxis=list(title="Speed (mph)")) %>%
+  layout(title = "<b>Bus Speeds in 2020-2021</b>", 
+         xaxis=list(title="<b>Month</b>"), yaxis=list(title="<b>Speed (mph)</b>")) %>%
   layout(margin = list(b=160), 
          annotations=list(x=1, y=-0.3, 
-                          text= "Data Source: MTA", 
+                          text= "Data Source: <a href='http://busdashboard.mta.info/' target='blank'>MTA</a> | <a href='https://raw.githubusercontent.com/NYCPlanning/td-trends/main/bus/BusSpeedAveragesbyBoroughUpdated.csv' target='blank'>Download Chart Data</a>", 
                           showarrow=F, 
                           xref="paper", yref="paper", 
                           xanchor="right", yanchor="top",
@@ -59,3 +59,5 @@ p
 path = "C:/Users/S_Sanich/Desktop/td-trends/bus"
 
 htmlwidgets::saveWidget(p,paste0(path,"bus_speeds.html"))
+
+
