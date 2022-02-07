@@ -13,9 +13,20 @@ p=p %>%
             x=df[['Date']],
             y=df[['Ridership']],
             hovertemplate='%{y:,.0f}',
-            color="#6dccda") %>%
-  layout(title="Annual Subway Ridership", axis=list(title="Date", showgrid=F), yaxis=list(title="Ridership", showgrid=F)) %>%
-  layout(margin = list(b=160), annotations=list(x=1, y=-0.2, text= "Data Source: MTA", showarrow=F, xref="paper", yref="paper", xanchor="right", yanchor="top", xshift=0, yshift=0, font=list(size=12, color="grey"))) %>%
+            line = list(color="#a8786e", width = 4)) %>%
+  layout(title="<b>Annual Subway Ridership</b>", 
+         xaxis=list(title="<b>Date</b>", 
+                    showgrid=F), 
+         yaxis=list(title="<b>Ridership</b>", 
+                    showgrid=F)) %>%
+  layout(margin = list(b=160), 
+         annotations=list(x=1, y=-0.2, 
+                          text= "Data Source: <a href='https://new.mta.info/agency/new-york-city-transit/subway-bus-ridership-2020' target='blank'>MTA</a> | <a href 'https://raw.githubusercontent.com/NYCPlanning/td-trends/main/subway/1904-2020Ridership.csv' target = 'blank'>Download Chart Data</a>",
+                          showarrow=F, 
+                          xref="paper", yref="paper", 
+                          xanchor="right", yanchor="top", 
+                          xshift=0, yshift=0, 
+                          font=list(size=12, color="grey"))) %>%
   layout(showlegend=FALSE) %>%
   config(displayModeBar = F)
 
@@ -24,6 +35,8 @@ p
 
 path = "C:/Users/S_Sanich/Desktop/td-trends/subway"
 
-htmlwidgets::saveWidget(p,paste0(path,"annual/subway.html"))
+htmlwidgets::saveWidget(p,paste0(path,"annualsubway.html"))
+
+
 
 
