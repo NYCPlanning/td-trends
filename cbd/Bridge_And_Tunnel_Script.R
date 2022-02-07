@@ -35,7 +35,7 @@ p=p %>%
             x=df[["Year"]],
             y=df[["Holland_Tunnel"]],
             line = list(color = "#a2a2a2", width = 2),
-            name = "HOlland Tunnel",
+            name = "Holland Tunnel",
             hovertemplate ="%{y:,.0f}") %>%
   add_trace(type="scatter",
             mode = "lines",
