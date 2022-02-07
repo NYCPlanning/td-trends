@@ -18,44 +18,45 @@ p=plot_ly()
 p=p %>%
   add_trace(type="scatter", mode="lines", 
             x=df[["Year"]], y=df[["EWR_Domestic"]], 
-            line = list(color = "#6dccda", width = 4),
+            line = list(color = "#6dccda", width = 2),
             name = "EWR Domestic", 
             hovertemplate="%{y:,.0f}") %>% 
   add_trace(type="scatter", mode="lines", 
-            line = list(color = "#6dccda", width = 4, dash="dot"),
+            line = list(color = "#6dccda", width = 2, dash="dot"),
             x=df[["Year"]], y=df[["EWR_International"]], 
             name = "EWR International", 
             hovertemplate="%{y:,.0f}") %>%
   add_trace(type="scatter", mode="lines", 
-            line = list(color = "#cdcc5d", width = 4),
+            line = list(color = "#cdcc5d", width = 2),
             x=df[["Year"]], y=df[["JFK_Domestic"]], 
             name = "JFK Domestic", 
             hovertemplate="%{y:,.0f}") %>%
   add_trace(type="scatter", mode="lines", 
-            line = list(color = "#cdcc5d", width = 4, dash = "dot"),
+            line = list(color = "#cdcc5d", width = 2, dash = "dot"),
             x=df[["Year"]], y=df[["JFK_International"]], 
             name = "JFK International", 
             hovertemplate="%{y:,.0f}") %>%
   add_trace(type="scatter", mode="lines", 
-            line = list(color = "#a2a2a2", width = 4),
+            line = list(color = "#a2a2a2", width = 2),
             x=df[["Year"]], y=df[["LGA_Domestic"]], 
             name = "LGA Domestic", 
             hovertemplate="%{y:,.0f}") %>%
   add_trace(type="scatter", mode="lines", 
-            line = list(color = "#a2a2a2", width = 4, dash = "dot"),
+            line = list(color = "#a2a2a2", width = 2, dash = "dot"),
             x=df[["Year"]], y=df[["LGA_International"]], 
             name = "LGA International", 
             hovertemplate="%{y:,.0f}") %>%
-  layout(title = "Annual Air Passenger Traffic Per Airport", 
-         xaxis=list(title="Date"), 
-         yaxis=list(title="Number of Passengers")) %>%
+  layout(title = "<b>Annual Air Passenger Traffic Per Airport</b>", 
+         xaxis=list(title="<b>Date</b>"), 
+         yaxis=list(title="<b>Number of Passengers</b>")) %>%
   layout(margin = list(b=160), 
          annotations=list(x=1, y=-0.2, 
-                          text= "Data Source: Port Authority of NY and NJ", 
+                          text= "Data Source: <a href='https://www.panynj.gov/airports/en/statistics-general-info.html' target='blank'> Port Authority of NY and NJ </a>", 
                           showarrow=F, 
                           xref="paper", yref="paper", 
                           xanchor= "right", yanchor = "top",
                           xshift=0, yshift=0, font=list(size=12, color="grey"))) %>%
+  layout(xaxis=list(showgrid=FALSE)) %>%
   config(displayModeBar=F)
 
 p
