@@ -10,13 +10,17 @@ import plotly.io as pio
 
 pio.renderers.default = 'browser'
 
-path = 'C:/Users/M_Free/Desktop/td-trends/all_modes/'
+path = 'C:/Users/M_Free/Desktop/td-trends/all_modes/annotations/'
 
 df = pd.read_csv(path + 'ridership_annual.csv')
+df_total = df[['year', 'ridership']].groupby('year').sum().reset_index()
+df_total.columns = ['year', 'total']
+df = pd.merge(df, df_total, how = 'inner', on = 'year')
+df['%'] = df['ridership'] / df['total']
 df['hover'] = '<i>' + df['mode'] + ': </i>' + df['ridership'].map('{:,.0f}'.format) + ' (' + df['%'].map('{:.0%}'.format) + ')'
 
-df_total = df[['year', 'ridership']].groupby('year').sum().reset_index()
 df_total['year'] = df_total['year'].astype(str)
+df_total['y'] = [0 for i in range(df_total['year'].size)]
 
 mode_colors = {'Subway': '#729ece',
                'Bus': '#67bf5c',
@@ -40,11 +44,11 @@ for mode, color in mode_colors.items():
                                    hovertext = df.loc[df['mode'] == mode, 'hover']))
 
 fig = fig.add_trace(go.Scatter(x = df_total['year'],
-                               y = df_total['ridership'],
+                               y = df_total['y'],
                                mode = 'none',
                                showlegend = False,
                                hoverinfo = 'text',
-                               hovertext = '<b>' + df_total['year'] + ' Total Ridership: ' + df_total['ridership'].map('{:,.0f}'.format)))
+                               hovertext = '<b>' + df_total['year'] + ' Total Ridership: ' + df_total['total'].map('{:,.0f}'.format)))
 
 fig.update_layout(template = 'plotly_white',
                   title = {'text': '<b>Annual Ridership by Mode</b>',
@@ -74,7 +78,6 @@ fig.update_layout(template = 'plotly_white',
                   yaxis = {'title':{'text': '<b>Ridership</b>',
                                     'font_size': 14},
                            'tickfont_size': 12,
-                           'range': [0, 2000000000],
                            'fixedrange': True,
                            'showgrid': True},
                   font = {'family': 'Arial',
@@ -83,7 +86,7 @@ fig.update_layout(template = 'plotly_white',
                   hovermode = 'x unified',
                   hoverlabel = {'font_size': 14})
 
-fig.add_annotation(text = '<a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/all_modes/ridership_annual.csv" target="blank">Download Chart Data</a>',
+fig.add_annotation(text = '<a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/all_modes/annotations/ridership_annual.csv" target="blank">Download Chart Data</a>',
                    font_size = 14,
                    showarrow = False,
                    x = 1,
@@ -95,7 +98,7 @@ fig.add_annotation(text = '<a href="https://raw.githubusercontent.com/NYCPlannin
 
 fig
 
-# fig.write_html(path + 'annotations/annual_ridership.html',
+# fig.write_html(path + 'ridership_annual.html',
 #               include_plotlyjs='cdn',
 #               config={'displayModeBar':False})
 
