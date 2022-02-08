@@ -17,24 +17,24 @@ df <- data.frame(Year, Domestic, International, Total)
 fig <- plot_ly(df,
                x= ~Year, y= ~International, 
                type = "bar", 
-               name = "International Flights", 
+               name = "<b>International Flights", 
                marker = list(color = "#6dccda", 
                              showticklabels=TRUE))
 fig <- fig %>% add_trace(y = ~Domestic, 
-                         name = "Domestic Flights", 
+                         name = "<b>Domestic Flights", 
                          marker = list(color="#cdcc5d"))
-fig <- fig %>% layout(yaxis = list(title = "Number of Passengers"), barmode = "stack")
-fig <- fig %>% layout(title = "Annual Air Passenger Traffic")
+fig <- fig %>% layout(yaxis = list(title = "<b>Number of Passengers"), barmode = "stack")
+fig <- fig %>% layout(title = "<b>Annual Air Passenger Traffic")
 fig <- fig %>% config(displayModeBar = F)
 fig <- fig %>% layout(margin = list(b=160), 
                       annotations=list(x=1, y=-0.2, 
-                                       text= "Data Source: Port Authority of NY and NJ", 
+                                       text= "Data Source: <a href='https://www.panynj.gov/airports/en/statistics-general-info.html' target='blank'>Port Authority of NY and NJ</a>", 
                                        showarrow=F, 
                                        xref="paper", yref="paper",
                                        xanchor="right", yanchor="top", 
                                        xshift=0, yshift=0, 
                                        font=list(size=12, 
-                                        color="grey")))
+                                                 color="grey")))
 
 fig
 
