@@ -13,7 +13,7 @@ pio.renderers.default = 'browser'
 path = 'C:/Users/M_Free/Desktop/td-trends/all_modes/'
 
 df = pd.read_csv(path + 'ridership_annual.csv')
-df['hover'] = '<i>' + df['mode'] + ': </i>' + df['ridership'].map('{:,.0f}'.format)
+df['hover'] = '<i>' + df['mode'] + ': </i>' + df['ridership'].map('{:,.0f}'.format) + ' (' + df['%'].map('{:.0%}'.format) + ')'
 
 df_total = df[['year', 'ridership']].groupby('year').sum().reset_index()
 df_total['year'] = df_total['year'].astype(str)
@@ -25,6 +25,7 @@ mode_colors = {'Subway': '#729ece',
                'For Hire Vehicle': '#ad8bc9',
                'Ferry': '#6dccda',             
                'Citi Bike': '#ed97ca'}
+
 
 fig = go.Figure()
 
