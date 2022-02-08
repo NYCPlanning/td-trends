@@ -153,14 +153,27 @@ fig = go.Figure()
 
 for counter, color in counter_colors.items():
     fig = fig.add_trace(go.Scatter(name = counter,
-                                   x = counts.loc[counts['name'] == counter, 'date'],
-                                   y = counts.loc[counts['name'] == counter, 'counts'],
-                                   mode = 'lines',
-                                   stackgroup = 'one',
-                                   line = {'color': color,
-                                           'width': .5},
-                                   hoverinfo = 'text',
-                                   hovertext = counts.loc[counts['name'] == counter, 'hover']))
+                                    x = counts.loc[counts['name'] == counter, 'date'],
+                                    y = counts.loc[counts['name'] == counter, 'counts'],
+                                    mode = 'lines',
+                                    stackgroup = 'one',
+                                    line = {'color': color,
+                                            'width': .5},
+                                    hoverinfo = 'text',
+                                    hovertext = counts.loc[counts['name'] == counter, 'hover']))
+    
+#for a 100% opacity fill chart with rgba colors
+# for counter, color in counter_colors.items():
+#     fig = fig.add_trace(go.Scatter(name = counter,
+#                                     x = counts.loc[counts['name'] == counter, 'date'],
+#                                     y = counts.loc[counts['name'] == counter, 'counts'],
+#                                     stackgroup = 'one',
+#                                     fill = 'tonexty',
+#                                     fillcolor = color,
+#                                     line_color = color,
+#                                     mode = 'lines',
+#                                     hoverinfo = 'text',
+#                                     hovertext = counts.loc[counts['name'] == counter, 'hover']))
     
 fig = fig.add_trace(go.Scatter(x = hover_title['date'],
                                y = hover_title['total'],
@@ -218,10 +231,10 @@ fig.add_annotation(text = 'Data Source: <a href="https://data.cityofnewyork.us/T
 fig
 
 # fig.write_html(path + 'counts.html',
-#                 include_plotlyjs = 'cdn',
-#                 config = {'displayModeBar': False})
+#                include_plotlyjs = 'cdn',
+#                config = {'displayModeBar': False})
 
-print('Chart Available at: https://nycplanning.github.io/td-trends/bike/annotations/counts.html')  
+# print('Chart Available at: https://nycplanning.github.io/td-trends/bike/annotations/counts.html')  
 
 #%% CITI BIKE
 

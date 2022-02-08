@@ -11,14 +11,15 @@ import plotly.io as pio
 
 pio.renderers.default = 'browser'
 
-path = '/Users/Work/Desktop/GitHub/td-trends/hubbound/all_modes/'
-# path = 'C:/Users/M_Free/Desktop/td-trends/hubbound/all_modes/'
+# path = '/Users/Work/Desktop/GitHub/td-trends/hubbound/all_modes/'
+path = 'C:/Users/M_Free/Desktop/td-trends/hubbound/all_modes/'
 
 df = pd.read_csv(path + 'hubbound_all.csv')
 df['hover'] = '<i>' + df['mode'] + ': </i>' + df['entries'].map('{:,.0f}'.format) + ' (' + df['%'].map('{:.0%}'.format) + ')'
 
 df_total = df[['year', 'entries']].groupby('year').sum().reset_index()
 df_total['year'] = df_total['year'].astype(str)
+df_total['y'] = [0 for i in range(df_total['year'].size)]
 
 mode_colors = {'Subway': '#729ece',
                'Auto': '#ed665d',
@@ -39,7 +40,7 @@ for mode, color in mode_colors.items():
                                    hovertext = df.loc[df['mode'] == mode, 'hover']))
 
 fig = fig.add_trace(go.Scatter(x = df_total['year'],
-                               y = df_total['entries'],
+                               y = df_total['y'],
                                mode = 'none',
                                showlegend = False,
                                hoverinfo = 'text',
@@ -73,7 +74,6 @@ fig.update_layout(template = 'plotly_white',
                   yaxis = {'title':{'text': '<b>Daily Entries</b>',
                                     'font_size': 14},
                            'tickfont_size': 12,
-                           'range': [0, 2500000],
                            'fixedrange': True,
                            'showgrid': True},
                   font = {'family': 'Arial',
