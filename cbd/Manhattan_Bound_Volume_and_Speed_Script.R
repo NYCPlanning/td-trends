@@ -49,10 +49,10 @@ p=p %>%
             hovertemplate ="%{y:,.0f}") %>%
   layout(yaxis2 = list(range = c(as.Date("2020-03-12"), as.Date("2021-12-03")))) %>%
   layout(yaxis2 = list(overlaying = "y", side="right")) %>%
-  layout(title = "Manhattan-Bound Traffic Volume and Speed (Seven Day Average)",
-         xaxis = list(title="Date"),
-         yaxis = list(title="Total Vehicles"),
-         yaxis2 = list(title="Miles Per Hour")) %>%
+  layout(title = "<b>Manhattan-Bound Traffic Volume and Speed (Seven Day Average)</b>",
+         xaxis = list(title="<b>Date</b>"),
+         yaxis = list(title="<b>Total Vehicles</b>"),
+         yaxis2 = list(title="<b>Miles Per Hour</b>")) %>%
   config(displayModeBar=F) %>%
   layout(annotations=list(text='Data Source: NYC DOT', 
                           font=list(size=11),
@@ -63,9 +63,7 @@ p=p %>%
                           y=-0.2,
                           yanchor='top',
                           yref='paper')) %>%
-  layout(annotations=list(text="*Note: As the Midtown speed in the pre-COVID period
-                          is not available, Taxi speed for that area and period is
-                          used instead",
+  layout(annotations=list(text="*Note: As the Midtown speed in the pre-COVID period is not available, Taxi speed for that area and period is used instead",
                           font=list(size=11),
                           showarrow=F,
                           x=1,
