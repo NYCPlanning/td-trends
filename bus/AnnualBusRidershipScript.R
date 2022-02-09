@@ -24,22 +24,22 @@ p=p %>%
             x=df[["Year"]], y=df[["Bronx"]], 
             name = "Bronx", 
             color = "#729ece",
-            hovertemplate="%[y:,.0f") %>%
+            hovertemplate="%{y:,.0f}") %>%
   add_trace(type="scatter", mode="lines", 
             x=df[["Year"]], y=df[["Manhattan"]], 
             name = "Manhattan", 
             color = "#67bf5c",
-            hovertemplate="%[y:,.0f") %>%
+            hovertemplate="%{y:,.0f}") %>%
   add_trace(type="scatter", mode="lines", 
             x=df[["Year"]], y=df[["Queens"]], 
             name = "Queens", 
             color = "#ad8bc9",
-            hovertemplate="%[y:,.0f") %>%
+            hovertemplate="%{y:,.0f}") %>%
   add_trace(type="scatter", mode="lines", 
             x=df[["Year"]], y=df[["Staten.Island"]], 
             name = 'Staten Island', 
             color = "#ed665d",
-            hovertemplate="%[y:,.0f") %>%
+            hovertemplate="%{y:,.0f}") %>%
   layout(title = "<b>Annual Bus Ridership</b>", 
          xaxis=list(title="<b>Date</b>"), 
          yaxis=list(title="<b>Ridership</b>")) %>%
@@ -57,31 +57,4 @@ p
 
 path = "C:/Users/S_Sanich/Desktop/td-trends/bus"
 
-htmlwidgets::saveWidget(p,paste0(path,"annualbus.html"))
-
-
-
-
-
-
-
- 
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+htmlwidgets::saveWidget(p,paste0(path,"annual.html"))
