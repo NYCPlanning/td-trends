@@ -49,7 +49,7 @@ fig = fig.add_trace(go.Scatter(x = df_total['date'],
                                mode = 'none',
                                showlegend = False,
                                hoverinfo = 'text',
-                               hovertext = '<b>' + df_total['date'] + ' Total Ridership: ' + df_total['total'].map('{:,.0f}'.format)))
+                               hovertext = '<b>Total Ridership: ' + df_total['total'].map('{:,.0f}'.format)))
 
 fig.update_layout(template = 'plotly_white',
                   title = {'text': '<b>Annual Ridership by Mode</b>',
@@ -73,7 +73,7 @@ fig.update_layout(template = 'plotly_white',
                                      'font_size': 14},
                            'tickfont_size': 12,
                            'dtick': 'M12',
-                           'range': [min(df['date'])-0.5, max(df['date'])+0.5],
+                           'range': [min(df['date']), max(df['date'])],
                            'fixedrange': True,
                            'showgrid': False},
                   yaxis = {'title':{'text': '<b>Ridership</b>',
