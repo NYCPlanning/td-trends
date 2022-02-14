@@ -88,14 +88,14 @@ fig.update_layout(template = 'plotly_white',
                   hoverlabel = {'font_size': 14})
 
 fig.add_annotation(text = '<a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/all_modes/annotations/ridership_annual.csv" target="blank">Download Chart Data</a>',
-                   font_size = 14,
-                   showarrow = False,
-                   x = 1,
-                   xanchor = 'right',
-                   xref = 'paper',
-                   y = -0.1,
-                   yanchor = 'top',
-                   yref = 'paper')
+                    font_size = 14,
+                    showarrow = False,
+                    x = 1,
+                    xanchor = 'right',
+                    xref = 'paper',
+                    y = -0.1,
+                    yanchor = 'top',
+                    yref = 'paper')
 
 fig
 
@@ -172,14 +172,14 @@ fig.update_layout(template = 'plotly_white',
                   hoverlabel = {'font_size': 14})
 
 fig.add_annotation(text = '<a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/all_modes/annotations/ridership_covid.csv" target="blank">Download Chart Data</a>',
-                   font_size = 14,
-                   showarrow = False,
-                   x = 1,
-                   xanchor = 'right',
-                   xref = 'paper',
-                   y = -0.1,
-                   yanchor = 'top',
-                   yref = 'paper')
+                    font_size = 14,
+                    showarrow = False,
+                    x = 1,
+                    xanchor = 'right',
+                    xref = 'paper',
+                    y = -0.1,
+                    yanchor = 'top',
+                    yref = 'paper')
 
 fig
 
