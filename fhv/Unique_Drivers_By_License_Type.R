@@ -54,13 +54,13 @@ fig  <- fig %>% layout(title = "Number of Drivers Based on Vehicle Licenses Type
 fig <- fig %>% config(displayModebar = F)
 
 fig <- fig %>% layout(margin = list(b=160),
-                      annotations=list(text='Data Source: <a href="https://www1.nyc.gov/site/tlc/about/aggregated-reports.page", target="blank">NYCTLC</a>', 
+                      annotations=list(text='Data Source: <a href="https://www1.nyc.gov/site/tlc/about/aggregated-reports.page", target="blank">NYCTLC</a> | <a href = "https://raw.githubusercontent.com/NYCPlanning/td-trends/main/fhv/Monthly_Unique_Drivers.csv" target="blank">Download Chart Data</a>',  
                                        font=list(size=11),
                                        showarrow=F,
                                        x=1,
                                        xanchor='right',
                                        xref='paper',
-                                       y=-0.3,
+                                       y=-0.2,
                                        yanchor='top',
                                        yref='paper'))
 
