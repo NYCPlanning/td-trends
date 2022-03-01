@@ -424,7 +424,7 @@ fig.update_layout(barmode = 'stack',
                             'yanchor': 'bottom'},
                   margin = {'b': 120, 
                             'l': 80,
-                            'r': 80,
+                            'r': 40,
                             't': 120},
                   xaxis = {'title': {'text': '<b>Borough of Residence</b>',
                                      'font_size': 14},
@@ -449,9 +449,10 @@ fig.add_annotation(text = 'Data Source: <a href="https://www.census.gov/programs
                    x = 1, 
                    xanchor = 'right',
                    xref = 'paper',
-                   y = -.1,
+                   y = 0,
                    yanchor = 'top',
-                   yref = 'paper')
+                   yref = 'paper',
+                   yshift = -80)
 fig
 
 # fig.write_html(path + 'annotations/tm.html',
