@@ -615,10 +615,12 @@ fig.update_layout(barmode = 'stack',
                   font = {'family': 'Arial',
                           'color':'black'},
                   dragmode = False)
-    
+
 for boro in range(0, len(boro_li)):
-    fig.layout.annotations[boro].update(y = -0.05, 
+    fig.layout.annotations[boro].update(y = 0, 
                                         yanchor = 'top',
+                                        yref = 'paper',
+                                        yshift = -40,
                                         text = '<b>' + boro_li[boro] + '</b>',
                                         font = {'size': 14,
                                                'family': 'Arial'})
