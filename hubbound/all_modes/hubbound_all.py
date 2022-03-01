@@ -21,9 +21,9 @@ df_total = df[['year', 'entries']].groupby('year').sum().reset_index()
 df_total['year'] = df_total['year'].astype(str)
 df_total['y'] = [0 for i in range(df_total['year'].size)]
 
-mode_colors = {'Subway': '#729ece',
-               'Auto': '#ed665d',
-               'Rail': '#ff9e4a',
+mode_colors = {'Auto': '#ed665d',
+               'Subway': '#729ece',
+               'Rail': '#a8786e',
                'Bus': '#67bf5c',
                'Other': '#ed97ca'}
 
@@ -36,6 +36,7 @@ for mode, color in mode_colors.items():
                                    mode = 'lines+markers',
                                    line = {'color': color,
                                            'width': 2},
+                                   opacity = .8,
                                    hoverinfo = 'text',
                                    hovertext = df.loc[df['mode'] == mode, 'hover']))
 
@@ -62,7 +63,7 @@ fig.update_layout(template = 'plotly_white',
                             'yanchor': 'bottom'},
                   margin = {'b': 120,
                             'l': 80,
-                            'r': 80,
+                            'r': 40,
                             't': 120},
                   xaxis = {'title': {'text': '<b>Year</b>',
                                      'font_size': 14},
@@ -88,14 +89,15 @@ fig.add_annotation(text = 'Data Source: <a href="https://www.nymtc.org/Data-and-
                    x = 1,
                    xanchor = 'right',
                    xref = 'paper',
-                   y = -0.1,
+                   y = 0,
                    yanchor = 'top',
-                   yref = 'paper')
+                   yref = 'paper',
+                   yshift = -80)
 
 fig
 
-# fig.write_html(path + 'annotations/entries.html',
-#               include_plotlyjs='cdn',
-#               config={'displayModeBar':False})
+fig.write_html(path + 'annotations/entries.html',
+              include_plotlyjs='cdn',
+              config={'displayModeBar':False})
 
 # https://nycplanning.github.io/td-trends/hubbound/all_modes/annotations/entries.html')   
