@@ -60,7 +60,7 @@ p=p %>%
                           x=1,
                           xanchor='right',
                           xref='paper',
-                          y=-0.2,
+                          y=-0.1,
                           yanchor='top',
                           yref='paper')) %>%
   layout(annotations=list(text="*Note: As the Midtown speed in the pre-COVID period is not available, Taxi speed for that area and period is used instead",
@@ -69,7 +69,7 @@ p=p %>%
                           x=1,
                           xanchor='right',
                           xref='paper',
-                          y=-0.3,
+                          y=-0.2,
                           yanchor='top',
                           yref='paper')) %>%
   layout(margin = list(b=160)) %>%
