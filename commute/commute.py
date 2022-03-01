@@ -551,15 +551,16 @@ sorter = ['Same Boro', 'Other Boro', 'Region']
 tt = tt.set_index('DEST').loc[sorter].reset_index()
 
 # tt.to_csv(path + 'annotations/tt.csv', index = False)
-
+path='C:/Users/Y_Ma2/Desktop/GITHUB/td-trends/commute/'
+tt=pd.read_csv(path+'annotations/tt.csv')
 tt['HOVER']='<b>Travel Time: </b>'+tt['TT']+'<br><b>Commuters: </b>'+tt['PWGTP'].map('{:,.0f}'.format)+'<br><b>Percentage: </b>'+tt['% TT'].map('{:.0%}'.format)
 
 boro_li = ['Bronx','Brooklyn','Manhattan','Queens','Staten Island']
 tt_li = ['Less Than 30 Mins','30 to 60 Mins','More Than 60 Mins']
 
-tt_colors = {'Less Than 30 Mins':'#729ece',
-             '30 to 60 Mins':'#ff9e4a',
-             'More Than 60 Mins':'#67bf5c'}
+tt_colors = {'Less Than 30 Mins':'#6dccda',
+             '30 to 60 Mins':'#ad8bc9',
+             'More Than 60 Mins':'#ed665d'}
 
 fig = ps.make_subplots(rows = 1,
                        cols = len(boro_li),
@@ -574,6 +575,7 @@ for boro in range(0, len(boro_li)):
                                     x = tt.loc[(tt['RES'] == boro_li[boro]) & (tt['TT'] == tt_li[time]), 'DEST'],
                                     y = tt.loc[(tt['RES'] == boro_li[boro]) & (tt['TT'] == tt_li[time]), 'PWGTP'],
                                     marker = {'color': tt_colors[tt_li[time]]},
+                                    opacity = .8,
                                     hoverinfo = 'text',
                                     hovertext = tt.loc[(tt['RES'] == boro_li[boro]) & (tt['TT'] == tt_li[time]), 'HOVER'],
                                     legendgroup = tt_li[time],
@@ -584,7 +586,7 @@ for boro in range(0, len(boro_li)):
         
 fig.update_layout(barmode = 'stack',
                   template = 'plotly_white',
-                  title = {'text': '<b>Travel Time to Destination of Work by Borough of Residence for NYC Commuters</b>',
+                  title = {'text': '<b>Travel Time to Work by Borough of Residence for NYC Commuters</b>',
                            'font_size': 20,
                            'x': 0.5,
                            'xanchor': 'center',
@@ -600,7 +602,7 @@ fig.update_layout(barmode = 'stack',
                             'yanchor': 'bottom'},
                   margin = {'b': 120,
                             'l': 80,
-                            'r': 80,
+                            'r': 40,
                             't': 120},
                   xaxis = {'fixedrange': True, 
                            'showgrid': False},
@@ -628,15 +630,16 @@ fig.add_annotation(text = 'Data Source: <a href="https://www.census.gov/programs
                    x = 1, 
                    xanchor = 'right',
                    xref = 'paper',
-                   y = -.1,
+                   y = 0,
                    yanchor = 'top',
-                   yref = 'paper')
+                   yref = 'paper',
+                   yshift = -80)
 
 fig
 
-# fig.write_html(path+'annotations/tt.html',
-#                include_plotlyjs='cdn',
-#                config={'displayModeBar':False})
+fig.write_html(path+'annotations/tt.html',
+                include_plotlyjs='cdn',
+                config={'displayModeBar':False})
 
 # https://nycplanning.github.io/td-trends/commute/annotations/tt.html
 
