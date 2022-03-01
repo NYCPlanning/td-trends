@@ -551,8 +551,7 @@ sorter = ['Same Boro', 'Other Boro', 'Region']
 tt = tt.set_index('DEST').loc[sorter].reset_index()
 
 # tt.to_csv(path + 'annotations/tt.csv', index = False)
-path='C:/Users/Y_Ma2/Desktop/GITHUB/td-trends/commute/'
-tt=pd.read_csv(path+'annotations/tt.csv')
+
 tt['HOVER']='<b>Travel Time: </b>'+tt['TT']+'<br><b>Commuters: </b>'+tt['PWGTP'].map('{:,.0f}'.format)+'<br><b>Percentage: </b>'+tt['% TT'].map('{:.0%}'.format)
 
 boro_li = ['Bronx','Brooklyn','Manhattan','Queens','Staten Island']
@@ -637,9 +636,9 @@ fig.add_annotation(text = 'Data Source: <a href="https://www.census.gov/programs
 
 fig
 
-fig.write_html(path+'annotations/tt.html',
-                include_plotlyjs='cdn',
-                config={'displayModeBar':False})
+# fig.write_html(path+'annotations/tt.html',
+#                 include_plotlyjs='cdn',
+#                 config={'displayModeBar':False})
 
 # https://nycplanning.github.io/td-trends/commute/annotations/tt.html
 
