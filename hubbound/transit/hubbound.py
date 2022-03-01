@@ -41,7 +41,7 @@ fig.update_layout(
            'font_size':20,
            'x':0.5,
            'xanchor':'center',
-           'y':0.98,
+           'y':0.95,
            'yanchor':'top'},
     legend={'orientation':'h',
             'title_text':'',
