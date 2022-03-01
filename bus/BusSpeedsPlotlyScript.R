@@ -45,7 +45,7 @@ p=p %>%
   layout(title = "<b>Bus Speeds in 2020-2021</b>", 
          xaxis=list(title="<b>Month/Year</b>"), yaxis=list(title="<b>Speed (mph)</b>")) %>%
   layout(margin = list(b=160), 
-         annotations=list(x=1, y=-0.3, 
+         annotations=list(x=1, y=-0.2, 
                           text= "Data Source: <a href='http://busdashboard.mta.info/' target='blank'>MTA</a> | <a href='https://raw.githubusercontent.com/NYCPlanning/td-trends/main/bus/BusSpeedAveragesbyBoroughUpdated.csv' target='blank'>Download Chart Data</a>", 
                           showarrow=F, 
                           xref="paper", yref="paper", 
