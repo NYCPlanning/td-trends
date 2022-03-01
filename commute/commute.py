@@ -307,8 +307,8 @@ dest['% DEST'] = dest['PWGTP'] / dest['TOTAL']
 
 dest['HOVER']='<b>Residence: </b>'+dest['RES']+'<br><b>Workplace: </b>'+dest['DEST']+'<br><b>Commuters: </b>'+dest['PWGTP'].map('{:,.0f}'.format)+'<br><b>Percentage: </b>'+dest['% DEST'].map('{:.0%}'.format)
 
-dest_colors = {'Same Boro':'#729ece',
-               'Other Boro':'#ff9e4a',
+dest_colors = {'Same Boro':'#ed665d',
+               'Other Boro':'#729ece',
                'Region':'#67bf5c'}
 
 fig = go.Figure()
@@ -319,6 +319,7 @@ for destination, color in dest_colors.items():
                                y = dest.loc[dest['DEST'] == destination, 'PWGTP'],
                                marker = {'color': color},
                                width = .5,
+                               opacity = .8,
                                hoverinfo = 'text',
                                hovertext = dest.loc[dest['DEST'] == destination, 'HOVER']))
     
@@ -387,12 +388,12 @@ tm['% TM'] = tm['PWGTP'] / tm['TOTAL']
 
 tm['HOVER']='<b>Residence: </b>'+tm['RES']+'<br><b>Travel Mode: </b>'+tm['TM']+'<br><b>Commuters: </b>'+tm['PWGTP'].map('{:,.0f}'.format)+'<br><b>Percentage: </b>'+tm['% TM'].map('{:.0%}'.format)
 
-tm_colors = {'Subway':'#729ece',
-             'Rail':'#ff9e4a',
-             'Bus':'#67bf5c',
-             'Drive Alone': '#ed665d',
-             'Carpool': '#ad8bc9',
-             'Other': '#ed97ca',
+tm_colors = {'Drive Alone': '#ed665d',
+             'Carpool': '#ff9e4a',
+             'Subway': '#729ece',
+             'Rail': '#a8786e',
+             'Bus': '#67bf5c',
+             'Other*': '#ed97ca',
              'Work From Home': '#6dccda'}
 
 fig = go.Figure()
@@ -403,6 +404,7 @@ for mode, color in tm_colors.items():
                                y = tm.loc[tm['TM'] == mode, '% TM'],
                                marker = {'color': color},
                                width = .5,
+                               opacity = .8,
                                hoverinfo = 'text',
                                hovertext = tm.loc[tm['TM'] == mode, 'HOVER']))
 
@@ -443,7 +445,7 @@ fig.update_layout(barmode = 'stack',
                           'color': 'black'},
                   dragmode = False)
 
-fig.add_annotation(text = 'Data Source: <a href="https://www.census.gov/programs-surveys/acs/microdata/access.2019.html" target="blank">Census Bureau 2019 ACS 5-Year PUMS</a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/commute/annotations/tm.csv" target="blank">Download Chart Data</a>',
+fig.add_annotation(text = '*Other includes walked, taxi, bicycle, ferry, motorcycle and other',
                    font_size = 14,
                    showarrow = False, 
                    x = 1, 
@@ -453,11 +455,21 @@ fig.add_annotation(text = 'Data Source: <a href="https://www.census.gov/programs
                    yanchor = 'top',
                    yref = 'paper',
                    yshift = -80)
+fig.add_annotation(text = 'Data Source: <a href="https://www.census.gov/programs-surveys/acs/microdata/access.2019.html" target="blank">Census Bureau 2019 ACS 5-Year PUMS</a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/commute/annotations/tm.csv" target="blank">Download Chart Data</a>',
+                   font_size = 14,
+                   showarrow = False, 
+                   x = 1, 
+                   xanchor = 'right',
+                   xref = 'paper',
+                   y = 0,
+                   yanchor = 'top',
+                   yref = 'paper',
+                   yshift = -100)
 fig
 
 # fig.write_html(path + 'annotations/tm.html',
-#                include_plotlyjs='cdn',
-#                config={'displayModeBar':False})
+#                 include_plotlyjs='cdn',
+#                 config={'displayModeBar':False})
 
 # https://nycplanning.github.io/td-trends/commute/annotations/tm.html
 
