@@ -44,7 +44,7 @@ p=p %>%
                           x=1,
                           xanchor='right',
                           xref='paper',
-                          y=-0.3,
+                          y=-0.1,
                           yanchor='top',
                           yref='paper')) %>%
   layout(annotations=list(text='Note: Trips do not equal ridership because they may be pooled', 
@@ -53,7 +53,7 @@ p=p %>%
                           x=1,
                           xanchor='right',
                           xref='paper',
-                          y=-0.4,
+                          y=-0.2,
                           yanchor='top',
                           yref='paper')) %>%
   layout(margin = list(b=160)) %>%
