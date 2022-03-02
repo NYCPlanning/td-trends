@@ -9,6 +9,7 @@ df=read.csv(paste0(path,'subway/1904-2020Ridership.csv'),stringsAsFactors=F)
 
 p=plot_ly()
 p=p %>%
+  
   add_trace(name='Ridership',
             type='scatter',
             mode='lines',
@@ -77,11 +78,22 @@ p=p %>%
   add_annotations(text='1.76 billion<br>in 2015',
                   font=list(size=10),
                   showarrow=F,
-                  x=41,
+                  x=110,
                   xanchor='center',
                   xref='x',
-                  y=2100000000,
+                  y=1800000000,
                   yanchor='bottom',
+                  yref='y')
+
+p=p %>% 
+  add_annotations(text='640 million<br>in 2020',
+                  font=list(size=10),
+                  showarrow=F,
+                  x=115,
+                  xanchor='center',
+                  xref='x',
+                  y=620000000,
+                  yanchor='top',
                   yref='y')
 
 p=p %>% 
