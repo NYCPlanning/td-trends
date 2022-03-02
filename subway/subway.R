@@ -9,76 +9,31 @@ df=read.csv(paste0(path,'subway/1904-2020Ridership.csv'),stringsAsFactors=F)
 
 p=plot_ly()
 p=p %>%
-  add_trace(type='scatter',
+  add_trace(name='Ridership',
+            type='scatter',
             mode='lines',
-            x=df[['Date']],
+            x=df[['Year']],
             y=df[['Ridership']],
+            line=list(color='rgba(114,158,206,0.8)',
+                      width=3),
+            showlegend=F,
             hovertemplate='%{y:,.0f}')
-p
-
-
-
-
-
-
-
-
-df=df %>%
-  mutate(Date=as.Date(paste0(yearmonth,'01'),'%Y%m%d')) %>%
-  filter(Date>=as.Date('20150101','%Y%m%d'))
-
-dfcolors=c('BillyBey'='rgba(255,158,74,0.8)',
-           'Liberty Landing Ferry'='rgba(103,191,92,0.8)',
-           'NY Waterway'='rgba(173,139,201,0.8)',
-           'NYC Ferry'='rgba(237,102,93,0.8)',
-           'New York Water Taxi'='rgba(205,204,93,0.8)',
-           'SeaStreak'='rgba(237,151,202,0.8)',
-           'Staten Island Ferry'='rgba(114,158,206,0.8')
-
-
-
-
-
-for (i in list('Staten Island Ferry','BillyBey','Liberty Landing Ferry','NY Waterway','New York Water Taxi','SeaStreak','NYC Ferry')){
-  p=p %>%
-    add_trace(name=i,
-              type='scatter',
-              mode='none',
-              x=df[['Date']],
-              y=df[[i]],
-              stackgroup='one',
-              groupnorm='',
-              orientation='v',
-              fill='tonexty',
-              fillcolor=dfcolors[i],
-              hovertemplate='%{y:,.0f}',
-              xhoverformat='<b>%b %Y</b>')
-}
 p=p %>%
   layout(template='plotly_white',
-         title=list(text=paste0('<b>Ferry Ridership by Operator</b>'),
+         title=list(text=paste0('<b>Annual Subway Ridership</b>'),
                     font=list(size=20),
                     x=0.5,
                     xanchor='center',
                     y=0.95,
                     yanchor='top'),
-         legend=list(orientation='h',
-                     title=list(text=''),
-                     font=list(size=16),
-                     x=0.5,
-                     xanchor='center',
-                     y=1,
-                     yanchor='bottom'),
          margin=list(b=120,
                      l=80,
-                     r=80,
+                     r=40,
                      t=120),
-         xaxis=list(title=list(text='<b>Month</b>',
+         xaxis=list(title=list(text='<b>Year*</b>',
                                font=list(size=14)),
                     tickfont=list(size=12),
-                    tickformat='%b %Y',
-                    dtick='M6',
-                    range=c(min(df[['Date']])-60,max(df[['Date']])+60),
+                    range=c(-1,nrow(df['Year'])),
                     fixedrange=T,
                     showgrid=F),
          yaxis=list(title=list(text='<b>Ridership</b>',
@@ -88,26 +43,73 @@ p=p %>%
                     fixedrange=T,
                     showgrid=T,
                     zeroline=T,
-                    zerolinecolor='#444',
-                    zerolinewidth=1),
+                    zerolinecolor='rgba(0,0,0,0.2)',
+                    zerolinewidth=2),
          hoverlabel=list(font=list(size=14)),
          font=list(family='Arial',
                    color='black'),
          dragmode=F,
-         hovermode='x unified',
-         annotations=list(text='Data Source: <a href="https://www1.nyc.gov/html/dot/html/about/datafeeds.shtml#ferry" target="blank">NYC DOT</a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/ferry/ferryop.csv" target="blank">Download Chart Data</a>',
-                          font=list(size=14),
-                          showarrow=F,
-                          x=1,
-                          xanchor='right',
-                          xref='paper',
-                          y=-0.2,
-                          yanchor='top',
-                          yref='paper'))
+         hovermode='x unified')
+
+p=p %>%
+  add_annotations(text='2.05 billion<br>in 1929-1930',
+                  font=list(size=10),
+                  showarrow=F,
+                  x='1929-30',
+                  xanchor='center',
+                  xref='x',
+                  y=2100000000,
+                  yanchor='bottom',
+                  yref='y')
+
+p=p %>% 
+  add_annotations(text='2.07 billion<br>in 1946',
+                  font=list(size=10),
+                  showarrow=F,
+                  x=41,
+                  xanchor='center',
+                  xref='x',
+                  y=2100000000,
+                  yanchor='bottom',
+                  yref='y')
+
+p=p %>% 
+  add_annotations(text='1.76 billion<br>in 2015',
+                  font=list(size=10),
+                  showarrow=F,
+                  x=41,
+                  xanchor='center',
+                  xref='x',
+                  y=2100000000,
+                  yanchor='bottom',
+                  yref='y')
+
+p=p %>% 
+  add_annotations(text='*Reported by Fiscal Year Before 1940',
+                  font=list(size=14),
+                  showarrow=F,
+                  x=1,
+                  xanchor='right',
+                  xref='paper',
+                  y=0,
+                  yanchor='top',
+                  yref='paper',
+                  yshift=-80)
+p=p %>% 
+  add_annotations(text='Data Source: <a href="https://new.mta.info/agency/new-york-city-transit/subway-bus-ridership-2020" target="blank">MTA</a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/subway/1904-2020Ridership.csv" target="blank">Download Chart Data</a>',
+                  font=list(size=14),
+                  showarrow=F,
+                  x=1,
+                  xanchor='right',
+                  xref='paper',
+                  y=0,
+                  yanchor='top',
+                  yref='paper',
+                  yshift=-100)
 p=p %>%
   config(displayModeBar=F)
 p
-htmlwidgets::saveWidget(p,paste0(path,'ferry/ferry.html'))
+htmlwidgets::saveWidget(p,paste0(path,'subway/subwayannual.html'))
 
 
 
