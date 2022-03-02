@@ -15,6 +15,12 @@ path='C:/Users/Y_Ma2/Desktop/GITHUB/td-trends/'
 df=gpd.read_file(path+'daytime/daytime.geojson')
 df.crs=4326
 
+df['daypop'].describe(percentiles=np.arange(0.2,1,0.2))
+df['cat']=np.where(df['daypop']<20000,'<=20k',
+          np.where(df['daypop']<=40000,'21k~40k',
+          np.where(df['daypop']<=60000,'41k~60k',
+          np.where(df['daypop']<=80000,'61k~80k',
+                    '>80k'))))
 
 df['percdpl'].describe(percentiles=np.arange(0.2,1,0.2))
 df['catl']=np.where(df['percdpl']>=0.1,'10%~28%',
@@ -41,12 +47,7 @@ df['cate']=np.where(df['percdpe']>=0.1,'10%~28%',
 
 
 
-# df['daypop'].describe(percentiles=np.arange(0.2,1,0.2))
-# df['cat']=np.where(df['daypop']<20000,'<=20k',
-#           np.where(df['daypop']<=30000,'21k~30k',
-#           np.where(df['daypop']<=40000,'31k~40k',
-#           np.where(df['daypop']<=50000,'41k~50k',
-#                    '>50k'))))
+
 
 # df['daypopdiffl']=df['daypopl']-df['daypop']
 # df['daypopdiffl'].describe(percentiles=np.arange(0.2,1,0.2))
