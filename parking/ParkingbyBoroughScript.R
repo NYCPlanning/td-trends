@@ -2,14 +2,12 @@ library(tidyverse)
 library(plotly)
 library(tibble)
 
-url = "https://raw.githubusercontent.com/NYCPlanning/td-trends/main/parking/Off-Street_Parking_By_Borough.csv"
+url = "https://raw.githubusercontent.com/NYCPlanning/td-trends/main/parking/Two_Year_Citywide_Average.csv"
 
 df=read.csv(url, fileEncoding = 'UTF-8-BOM', stringsAsFactors = F)
 
-df$Date=as.Date(df$Year,"%m/%d/%Y")
-
 df=df %>%
-  arrange("Date")
+  arrange("Year")
   
 
 p=plot_ly()
@@ -17,31 +15,31 @@ p=plot_ly()
 p=p %>%
   add_trace(type="scatter",
             mode="lines",
-            x=df[["Date"]], y=df[["Bronx"]],
+            x=df[["Year"]], y=df[["Bronx"]],
             name="Bronx",
             color = "#729ece",
             hovertemplate='%{y:,.0f}') %>%
   add_trace(type="scatter",
             mode="lines",
-            x=df[["Date"]], y=df[["Brooklyn"]],
+            x=df[["Year"]], y=df[["Brooklyn"]],
             name="Brooklyn",
             color="#ff9e4a",
             hovertemplate='%{y:,.0f}') %>%
   add_trace(type="scatter",
             mode="lines",
-            x=df[["Date"]], y=df[["Manhattan"]],
+            x=df[["Year"]], y=df[["Manhattan"]],
             name="Manhattan",
             color = "#67bf5c",
             hovertemplate='%{y:,.0f}') %>%
   add_trace(type="scatter",
             mode="lines",
-            x=df[["Date"]], y=df[["Queens"]],
+            x=df[["Year"]], y=df[["Queens"]],
             name="Queens",
             color="#ad8bc9",
             hovertemplate='%{y:,.0f}') %>%
   add_trace(type="scatter",
             mode="lines",
-            x=df[["Date"]], y=df[["Staten.Island"]],
+            x=df[["Year"]], y=df[["Staten.Island"]],
             name="Staten Island",
             color = "#ed665d",
             hovertemplate='%{y:,.0f}') %>%
@@ -64,4 +62,3 @@ p
 path = "C:/Users/S_Sanich/Desktop/td-trends/parking"
 
 htmlwidgets::saveWidget(p,paste0(path,"Borough_Parking.html"))
-
