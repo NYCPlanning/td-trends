@@ -48,7 +48,7 @@ p=p %>%
   layout(title = "<b>NYC DCA Public Parking Spaces 2005-2021, by Borough</b>", 
          xaxis=list(title="<b>Year</b>"), yaxis=list(title="<b>Parking Capacity</b>")) %>%
   layout(margin = list(b=160),
-         annotations=list(x=1, y=-0.3,
+         annotations=list(x=1, y=-0.2,
                           text= "Data Source: DCA | <a href='https://raw.githubusercontent.com/NYCPlanning/td-trends/main/parking/Off-Street_Parking_By_Borough.csv' target='blank'>Download Chart Data</a>", 
                           showarrow=F,
                           xref="paper", yref="paper",
