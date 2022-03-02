@@ -41,48 +41,46 @@ df['cate']=np.where(df['percdpe']>=0.1,'10%~28%',
 
 
 
+# df['daypop'].describe(percentiles=np.arange(0.2,1,0.2))
+# df['cat']=np.where(df['daypop']<20000,'<=20k',
+#           np.where(df['daypop']<=30000,'21k~30k',
+#           np.where(df['daypop']<=40000,'31k~40k',
+#           np.where(df['daypop']<=50000,'41k~50k',
+#                    '>50k'))))
 
-df['daypop'].describe(percentiles=np.arange(0.2,1,0.2))
-df['cat']=np.where(df['daypop']<20000,'<=20k',
-          np.where(df['daypop']<=30000,'21k~30k',
-          np.where(df['daypop']<=40000,'31k~40k',
-          np.where(df['daypop']<=50000,'41k~50k',
-                   '>50k'))))
+# df['daypopdiffl']=df['daypopl']-df['daypop']
+# df['daypopdiffl'].describe(percentiles=np.arange(0.2,1,0.2))
+# df['catl']=np.where(df['daypopdiffl']<500,'<=500',
+#            np.where(df['daypopdiffl']<=1000,'501~1000',
+#            np.where(df['daypopdiffl']<=1500,'1001~1500',
+#            np.where(df['daypopdiffl']<=2000,'1501~2000',
+#                     '>2000'))))
 
-df['daypopcdiffl']=df['daypopl']-df['daypop']
-df['daypopcdiffl'].describe(percentiles=np.arange(0.2,1,0.2))
-df['catl']=np.where(df['daypopcdiffl']<500,'<=500',
-           np.where(df['daypopcdiffl']<=1000,'501~1000',
-           np.where(df['daypopcdiffl']<=1500,'1001~1500',
-           np.where(df['daypopcdiffl']<=2000,'1501~2000',
-                    '>2000'))))
+# df['daypopdiffm']=df['daypopm']-df['daypop']
+# df['daypopdiffm'].describe(percentiles=np.arange(0.2,1,0.2))
+# df['catm']=np.where(df['daypopcdiffm']<500,'<=500',
+#            np.where(df['daypopcdiffm']<=1000,'501~1000',
+#            np.where(df['daypopcdiffm']<=1500,'1001~1500',
+#            np.where(df['daypopcdiffm']<=2000,'1501~2000',
+#                     '>2000'))))
 
-df['daypopcdiffm']=df['daypopm']-df['daypop']
-df['daypopcdiffm'].describe(percentiles=np.arange(0.2,1,0.2))
-df['catm']=np.where(df['daypopcdiffm']<500,'<=500',
-           np.where(df['daypopcdiffm']<=1000,'501~1000',
-           np.where(df['daypopcdiffm']<=1500,'1001~1500',
-           np.where(df['daypopcdiffm']<=2000,'1501~2000',
-                    '>2000'))))
+# df['daypopdiffh']=df['daypoph']-df['daypop']
+# df['daypopdiffh'].describe(percentiles=np.arange(0.2,1,0.2))
+# df['cath']=np.where(df['daypopcdiffh']<500,'<=500',
+#            np.where(df['daypopcdiffh']<=1000,'501~1000',
+#            np.where(df['daypopcdiffh']<=1500,'1001~1500',
+#            np.where(df['daypopcdiffh']<=2000,'1501~2000',
+#                     '>2000'))))
 
-df['daypopcdiffh']=df['daypoph']-df['daypop']
-df['daypopcdiffh'].describe(percentiles=np.arange(0.2,1,0.2))
-df['cath']=np.where(df['daypopcdiffh']<500,'<=500',
-           np.where(df['daypopcdiffh']<=1000,'501~1000',
-           np.where(df['daypopcdiffh']<=1500,'1001~1500',
-           np.where(df['daypopcdiffh']<=2000,'1501~2000',
-                    '>2000'))))
-
-df['daypopcdiffe']=df['daypope']-df['daypop']
-df['daypopcdiffe'].describe(percentiles=np.arange(0.2,1,0.2))
-df['cate']=np.where(df['daypopcdiffe']<500,'<=500',
-           np.where(df['daypopcdiffe']<=1000,'501~1000',
-           np.where(df['daypopcdiffe']<=1500,'1001~1500',
-           np.where(df['daypopcdiffe']<=2000,'1501~2000',
-                    '>2000'))))
+# df['daypopdiffe']=df['daypope']-df['daypop']
+# df['daypopdiffe'].describe(percentiles=np.arange(0.2,1,0.2))
+# df['cate']=np.where(df['daypopcdiffe']<500,'<=500',
+#            np.where(df['daypopcdiffe']<=1000,'501~1000',
+#            np.where(df['daypopcdiffe']<=1500,'1001~1500',
+#            np.where(df['daypopcdiffe']<=2000,'1501~2000',
+#                     '>2000'))))
 
 df.to_file(path+'daytime/daytime.geojson',driver='GeoJSON')
-
 
 
 k=pd.concat([df['percdpl'],df['percdpm'],df['percdph'],df['percdpe']],axis=0,ignore_index=True)

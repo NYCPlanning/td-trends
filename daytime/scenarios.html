@@ -363,6 +363,40 @@
 
 
 
+            // Add popup
+            var popup = new mapboxgl.Popup({
+                closeButton: true, // close button
+                closeOnClick: false, // close if click on map
+                closeOnMove: false, // close if move the map
+                anchor: 'bottom', // anchor of the popup
+                offset: 0, // offset from the feature
+                maxWidth: 'none', // max width of the popoup; 'none' to fit to the content                
+            });
+
+            // Add low popup
+            // Add click event
+            map1.on('click', 'low', function (e) {
+                var coordinates = e.lngLat; // get pointer coordinates
+                var description = "<b>Borough: </b><span>" + e.features[0].properties.boroname + "</span><br>"; // description in the popup
+                description += "<b>NTA Name: </b><span>" + e.features[0].properties.ntaname + "</span><br>";
+                description += "<b>Population: </b><span>" + e.features[0].properties.pop_20.toFixed(0) + "</span><br>";
+                description += "<b>Commuters Living Here: </b><span>" + e.features[0].properties.rsuml.toFixed(0) + "</span><br>";
+                description += "<b>Commuters Working Here: </b><span>" + e.features[0].properties.wsuml.toFixed(0) + "</span><br>";
+                description += "<b>Daytime Population: </b><span>" + e.features[0].properties.daypopl.toFixed(0) + "</span><br>";
+                description += "<b>Change from Baseline Scenario: </b><span>" + e.features[0].properties.daypopdiffl.toFixed(0) + "</span><br>";
+                description += "<b>% Change from Baseline Scenario: </b><span>" + (Number(e.features[0].properties.percdpl) * 100).toFixed(2) + "%</span><br>";
+                popup.setLngLat(coordinates).setHTML(description).addTo(map1); //add popup
+            });
+            // Add hover events
+            map1.on('mouseenter', 'low', function () {
+                map1.getCanvas().style.cursor = 'pointer'; // mouse becoming pointer
+            });
+            map1.on('mouseleave', 'low', function () {
+                map1.getCanvas().style.cursor = '';
+            });
+
+
+
             // Add layer selector and legend
             var layerOrder = ['low']; // set layer order in the legend
             var layerContentListOrder = []; // create ordered layer content list
@@ -484,6 +518,40 @@
                     'fill-outline-color': layerContent['layeroutlinecolor'],
                 },
             });
+
+
+
+            // Add popup
+            var popup = new mapboxgl.Popup({
+                closeButton: true, // close button
+                closeOnClick: false, // close if click on map
+                closeOnMove: false, // close if move the map
+                anchor: 'bottom', // anchor of the popup
+                offset: 0, // offset from the feature
+                maxWidth: 'none', // max width of the popoup; 'none' to fit to the content                
+            });
+
+            // Add medium popup
+            // Add click event
+            map2.on('click', 'medium', function (e) {
+                var coordinates = e.lngLat; // get pointer coordinates
+                var description = "<b>Borough: </b><span>" + e.features[0].properties.boroname + "</span><br>"; // description in the popup
+                description += "<b>NTA Name: </b><span>" + e.features[0].properties.ntaname + "</span><br>";
+                description += "<b>Population: </b><span>" + e.features[0].properties.pop_20.toFixed(0) + "</span><br>";
+                description += "<b>Commuters Living Here: </b><span>" + e.features[0].properties.rsumm.toFixed(0) + "</span><br>";
+                description += "<b>Commuters Working Here: </b><span>" + e.features[0].properties.wsumm.toFixed(0) + "</span><br>";
+                description += "<b>Daytime Population: </b><span>" + e.features[0].properties.daypopm.toFixed(0) + "</span><br>";
+                description += "<b>Change from Baseline Scenario: </b><span>" + e.features[0].properties.daypopdiffm.toFixed(0) + "</span><br>";
+                description += "<b>% Change from Baseline Scenario: </b><span>" + (Number(e.features[0].properties.percdpm) * 100).toFixed(2) + "%</span><br>";
+                popup.setLngLat(coordinates).setHTML(description).addTo(map2); //add popup
+            });
+            // Add hover events
+            map2.on('mouseenter', 'medium', function () {
+                map2.getCanvas().style.cursor = 'pointer'; // mouse becoming pointer
+            });
+            map2.on('mouseleave', 'medium', function () {
+                map2.getCanvas().style.cursor = '';
+            });
         });
 
 
@@ -571,6 +639,40 @@
                     'fill-outline-color': layerContent['layeroutlinecolor'],
                 },
             });
+
+
+
+            // Add popup
+            var popup = new mapboxgl.Popup({
+                closeButton: true, // close button
+                closeOnClick: false, // close if click on map
+                closeOnMove: false, // close if move the map
+                anchor: 'bottom', // anchor of the popup
+                offset: 0, // offset from the feature
+                maxWidth: 'none', // max width of the popoup; 'none' to fit to the content                
+            });
+
+            // Add high popup
+            // Add click event
+            map3.on('click', 'high', function (e) {
+                var coordinates = e.lngLat; // get pointer coordinates
+                var description = "<b>Borough: </b><span>" + e.features[0].properties.boroname + "</span><br>"; // description in the popup
+                description += "<b>NTA Name: </b><span>" + e.features[0].properties.ntaname + "</span><br>";
+                description += "<b>Population: </b><span>" + e.features[0].properties.pop_20.toFixed(0) + "</span><br>";
+                description += "<b>Commuters Living Here: </b><span>" + e.features[0].properties.rsumh.toFixed(0) + "</span><br>";
+                description += "<b>Commuters Working Here: </b><span>" + e.features[0].properties.wsumh.toFixed(0) + "</span><br>";
+                description += "<b>Daytime Population: </b><span>" + e.features[0].properties.daypoph.toFixed(0) + "</span><br>";
+                description += "<b>Change from Baseline Scenario: </b><span>" + e.features[0].properties.daypopdiffh.toFixed(0) + "</span><br>";
+                description += "<b>% Change from Baseline Scenario: </b><span>" + (Number(e.features[0].properties.percdph) * 100).toFixed(2) + "%</span><br>";
+                popup.setLngLat(coordinates).setHTML(description).addTo(map3); //add popup
+            });
+            // Add hover events
+            map3.on('mouseenter', 'high', function () {
+                map3.getCanvas().style.cursor = 'pointer'; // mouse becoming pointer
+            });
+            map3.on('mouseleave', 'high', function () {
+                map3.getCanvas().style.cursor = '';
+            });
         });
 
 
@@ -583,7 +685,7 @@
             style: 'mapbox://styles/mapbox/light-v10', // light base map
             hash: true, // make sure it's on to get the url with map view
             attributionControl: true, // show the credit bar
-            customAttribution: '<b> Data Sources: <a href="http://web.mta.info/developers/fare.html" target="blank">MTA Fare Data</a>; <a href="https://lehd.ces.census.gov/" target="blank">Census Bureau LEHD 2017</a></b>', // add overall credit to the beggining
+            customAttribution: '<b> Data Sources: <a href="https://data.census.gov/cedsci/table?t=Population%20Total&g=0500000US36005%241000000,36047%241000000,36061%241000000,36081%241000000,36085%241000000&y=2020&tid=DECENNIALPL2020.P1" target="blank">2020 Census</a>; <a href="https://lehd.ces.census.gov/data/#lodes" target="blank">LEHD 2019</a>; <a href="https://lehd.ces.census.gov/data/#lodes" target="blank">LEHD 2019</a>; <a href="" target="blank">Telework Capability Assumptions</a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/ferry/ferryld.geojson" target="blank">Download Map Data</a></b>', // add overall credit to the beggining
             logoPosition: 'bottom-left', // no need to change 
             preserveDrawingBuffer: true, // make sure it's on to allow printing
             center: [-74.0197, 40.721], // testing to get the centroid of bounds
@@ -597,15 +699,15 @@
 
             var layerContentList = []; // store all the layer contents
 
-            // Add extremely
+            // Add highest
             // Set layer contents
             var layerContent = {
-                'sourceid': 'extremely', // source id
+                'sourceid': 'highest', // source id
                 'sourcetype': 'geojson', // source type
                 'sourcedata': 'daytime.geojson', // data source
-                'layerid': 'extremely', // layer id
+                'layerid': 'highest', // layer id
                 'layertype': 'fill', // symbology type
-                'layername': 'extremely', // layer name for the legend
+                'layername': 'highest', // layer name for the legend
                 'layervisibility': 'visible', // visibility of the layer
                 'layercolname': 'cate', // category column name
                 'layercat': ['10%~28%', '5%~9%', '-2%~4%', '-16%~-3%', '-37%~-17%'], // categories
@@ -642,6 +744,40 @@
                     'fill-color': layerColor,
                     'fill-outline-color': layerContent['layeroutlinecolor'],
                 },
+            });
+
+
+
+            // Add popup
+            var popup = new mapboxgl.Popup({
+                closeButton: true, // close button
+                closeOnClick: false, // close if click on map
+                closeOnMove: false, // close if move the map
+                anchor: 'bottom', // anchor of the popup
+                offset: 0, // offset from the feature
+                maxWidth: 'none', // max width of the popoup; 'none' to fit to the content                
+            });
+
+            // Add highest popup
+            // Add click event
+            map4.on('click', 'highest', function (e) {
+                var coordinates = e.lngLat; // get pointer coordinates
+                var description = "<b>Borough: </b><span>" + e.features[0].properties.boroname + "</span><br>"; // description in the popup
+                description += "<b>NTA Name: </b><span>" + e.features[0].properties.ntaname + "</span><br>";
+                description += "<b>Population: </b><span>" + e.features[0].properties.pop_20.toFixed(0) + "</span><br>";
+                description += "<b>Commuters Living Here: </b><span>" + e.features[0].properties.rsume.toFixed(0) + "</span><br>";
+                description += "<b>Commuters Working Here: </b><span>" + e.features[0].properties.wsume.toFixed(0) + "</span><br>";
+                description += "<b>Daytime Population: </b><span>" + e.features[0].properties.daypope.toFixed(0) + "</span><br>";
+                description += "<b>Change from Baseline Scenario: </b><span>" + e.features[0].properties.daypopdiffe.toFixed(0) + "</span><br>";
+                description += "<b>% Change from Baseline Scenario: </b><span>" + (Number(e.features[0].properties.percdpe) * 100).toFixed(2) + "%</span><br>";
+                popup.setLngLat(coordinates).setHTML(description).addTo(map4); //add popup
+            });
+            // Add hover events
+            map4.on('mouseenter', 'highest', function () {
+                map4.getCanvas().style.cursor = 'pointer'; // mouse becoming pointer
+            });
+            map4.on('mouseleave', 'highest', function () {
+                map4.getCanvas().style.cursor = '';
             });
         });
 
