@@ -387,13 +387,13 @@ tm['% TM'] = tm['PWGTP'] / tm['TOTAL']
 
 tm['HOVER']='<b>Residence: </b>'+tm['RES']+'<br><b>Travel Mode: </b>'+tm['TM']+'<br><b>Commuters: </b>'+tm['PWGTP'].map('{:,.0f}'.format)+'<br><b>Percentage: </b>'+tm['% TM'].map('{:.0%}'.format)
 
-tm_colors = {'Drive Alone': '#ed665d',
-             'Carpool': '#ff9e4a',
-             'Subway': '#729ece',
-             'Rail': '#a8786e',
-             'Bus': '#67bf5c',
-             'Other*': '#ed97ca',
-             'Work From Home': '#6dccda'}
+tm_colors = {'Drive Alone': 'rgba(237,102,93,0.8)',
+             'Carpool': 'rgba(255,158,74,0.8)',
+             'Subway': 'rgba(114,158,206,0.8)',
+             'Rail': 'rgba(168,120,110,0.8)',
+             'Bus': 'rgba(103,191,92,0.8)',
+             'Other*': 'rgba(237,151,202,0.8)',
+             'Work From Home': 'rgba(109,204,218,0.8)'}
 
 fig = go.Figure()
 
@@ -403,7 +403,6 @@ for mode, color in tm_colors.items():
                                y = tm.loc[tm['TM'] == mode, '% TM'],
                                marker = {'color': color},
                                width = .5,
-                               opacity = .8,
                                hoverinfo = 'text',
                                hovertext = tm.loc[tm['TM'] == mode, 'HOVER']))
 
@@ -556,9 +555,9 @@ tt['HOVER']='<b>Travel Time: </b>'+tt['TT']+'<br><b>Commuters: </b>'+tt['PWGTP']
 boro_li = ['Bronx','Brooklyn','Manhattan','Queens','Staten Island']
 tt_li = ['Less Than 30 Mins','30 to 60 Mins','More Than 60 Mins']
 
-tt_colors = {'Less Than 30 Mins':'#6dccda',
-             '30 to 60 Mins':'#ad8bc9',
-             'More Than 60 Mins':'#ed665d'}
+tt_colors = {'Less Than 30 Mins':'rgba(109,204,218,0.8)',
+             '30 to 60 Mins':'rgba(173,139,201,0.8)',
+             'More Than 60 Mins':'rgba(237,102,93,0.8)'}
 
 fig = ps.make_subplots(rows = 1,
                        cols = len(boro_li),
@@ -573,7 +572,6 @@ for boro in range(0, len(boro_li)):
                                     x = tt.loc[(tt['RES'] == boro_li[boro]) & (tt['TT'] == tt_li[time]), 'DEST'],
                                     y = tt.loc[(tt['RES'] == boro_li[boro]) & (tt['TT'] == tt_li[time]), 'PWGTP'],
                                     marker = {'color': tt_colors[tt_li[time]]},
-                                    opacity = .8,
                                     hoverinfo = 'text',
                                     hovertext = tt.loc[(tt['RES'] == boro_li[boro]) & (tt['TT'] == tt_li[time]), 'HOVER'],
                                     legendgroup = tt_li[time],
@@ -637,9 +635,9 @@ fig.add_annotation(text = 'Data Source: <a href="https://www.census.gov/programs
 
 fig
 
-# fig.write_html(path+'annotations/tt.html',
-#                 include_plotlyjs='cdn',
-#                 config={'displayModeBar':False})
+fig.write_html(path+'annotations/tt.html',
+                include_plotlyjs='cdn',
+                config={'displayModeBar':False})
 
 # https://nycplanning.github.io/td-trends/commute/annotations/tt.html
 
