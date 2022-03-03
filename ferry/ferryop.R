@@ -18,7 +18,7 @@ dfcolors=c('BillyBey'='rgba(255,158,74,0.8)',
            'Staten Island Ferry'='rgba(114,158,206,0.8')
 
 p=plot_ly()
-for (i in list('Staten Island Ferry','BillyBey','Liberty Landing Ferry','NY Waterway','New York Water Taxi','SeaStreak','NYC Ferry')){
+for (i in c('Staten Island Ferry','BillyBey','Liberty Landing Ferry','NY Waterway','New York Water Taxi','SeaStreak','NYC Ferry')){
   p=p %>%
     add_trace(name=i,
               type='scatter',

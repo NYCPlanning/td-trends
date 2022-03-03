@@ -8,7 +8,7 @@ path='C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/'
 
 url='https://new.mta.info/document/20441'
 download.file(url,destfile='temp.csv')
-df=read.csv('temp.csv',stringsAsFactors = F,check.names=F)
+df=read.csv('temp.csv',stringsAsFactors=F,check.names=F)
 
 
 df=df %>%

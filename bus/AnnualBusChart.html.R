@@ -4,23 +4,32 @@ library(plotly)
 # path='C:/Users/Y_Ma2/Desktop/GITHUB/td-trends/'
 path='C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/'
 
-df=read.csv(paste0(path,'bus/BusRidership2008-2020.csv'),stringsAsFactors=F)
+df=read.csv(paste0(path,'bus/BusRidership2008-2020.csv'),stringsAsFactors=F,check.names=F)
 
+dfcolors=c('Bronx'='rgba(114,158,206,0.8)',
+           'Brooklyn'='rgba(255,158,74,0.8)',
+           'Manhattan'='rgba(103,191,92,0.8)',
+           'Queens'='rgba(237,102,93,0.8)',
+           'Staten Island'='rgba(173,139,201,0.8)')
 
 p=plot_ly()
-p=p %>%
-  add_trace(name='Ridership',
-            type='scatter',
-            mode='lines',
-            x=df[['Year']],
-            y=df[['Ridership']],
-            line=list(color='rgba(114,158,206,0.8)',
-                      width=3),
-            showlegend=F,
-            hovertemplate='%{y:,.0f}')
+for (i in c('Bronx','Brooklyn','Manhattan','Queens','Staten Island')){
+  p=p %>%
+    add_trace(name=i,
+              type='scatter',
+              mode='lines+markers',
+              x=df[['Year']],
+              y=df[[i]],
+              line=list(color=dfcolors[i],
+                        width=2),
+              showlegend=T,
+              hovertemplate='%{y:,.0f}')
+}
+p
+
 p=p %>%
   layout(template='plotly_white',
-         title=list(text=paste0('<b>Annual Subway Ridership</b>'),
+         title=list(text=paste0('<b>Annual Bus Ridership</b>'),
                     font=list(size=20),
                     x=0.5,
                     xanchor='center',
@@ -30,7 +39,7 @@ p=p %>%
                      l=80,
                      r=40,
                      t=120),
-         xaxis=list(title=list(text='<b>Year*</b>',
+         xaxis=list(title=list(text='<b>Year</b>',
                                font=list(size=14)),
                     tickfont=list(size=12),
                     range=c(-1,nrow(df['Year'])),
