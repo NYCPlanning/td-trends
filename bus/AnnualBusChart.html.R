@@ -4,7 +4,7 @@ library(plotly)
 # path='C:/Users/Y_Ma2/Desktop/GITHUB/td-trends/'
 path='C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/'
 
-df=read.csv(paste0(path,'subway/SubwayRidership1904-2020.csv'),stringsAsFactors=F)
+df=read.csv(paste0(path,'bus/BusRidership2008-2020.csv'),stringsAsFactors=F)
 
 
 p=plot_ly()
