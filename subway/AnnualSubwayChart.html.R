@@ -1,35 +1,11 @@
 library(tidyverse)
 library(plotly)
 
-
 # path='C:/Users/Y_Ma2/Desktop/GITHUB/td-trends/'
 path='C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/'
 
+df=read.csv(paste0(path,'subway/1904-2020Ridership.csv'),stringsAsFactors=F)
 
-url='https://new.mta.info/document/20441'
-download.file(url,destfile='temp.csv')
-df=read.csv('temp.csv',stringsAsFactors = F,check.names=F)
-
-
-df=df %>%
-  mutate(Date=as.Date(df[['Date']], "%m/%d/%Y"),
-         Subway=as.numeric(df[['Subways: Total Estimated Ridership']])) %>%
-  select(Date,Subway) %>%
-  arrange(Date)
-
-df=df %>%
-  mutate(Subway1=c(NA,df[1:nrow(df)-1,'Subway']),
-         Subway2=c(NA,NA,df[2:nrow(df)-2,'Subway']),
-         Subway3=c(NA,NA,NA,df[3:nrow(df)-3,'Subway']),
-         Subway4=c(NA,NA,NA,NA,df[4:nrow(df)-4,'Subway']),
-         Subway5=c(NA,NA,NA,NA,NA,df[5:nrow(df)-5,'Subway']),
-         Subway6=c(NA,NA,NA,NA,NA,NA,df[6:nrow(df)-6,'Subway']),
-         Subway7DayAverage=rowMeans(cbind(Subway,Subway1,Subway2,Subway3,Subway4,Subway5,Subway6))) %>%
-  select(Date,Subway,Subway7DayAverage)
-write.csv(df,paste0(path,'subway/Subway7DayAverage.csv'),na='NA',row.names=F)
-
-
-df=read.csv(paste0(path,'subway/Subway7DayAverage.csv'),stringsAsFactors = F,colClasses = c('Date','numeric','numeric'))
 
 p=plot_ly()
 p=p %>%
@@ -145,6 +121,9 @@ p=p %>%
 p=p %>%
   config(displayModeBar=F)
 p
-htmlwidgets::saveWidget(p,paste0(path,'subway/DailySubway.html'))
+htmlwidgets::saveWidget(p,paste0(path,'subway/AnnualSubwayChart.html'))
+
+
+
 
 
