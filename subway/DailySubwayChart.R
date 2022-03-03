@@ -74,7 +74,7 @@ p=p %>%
                                font=list(size=14)),
                     tickfont=list(size=12),
                     tickformat='%b %Y',
-                    dtick='M1',
+                    dtick='M2',
                     range=c(min(df[['Date']])-10,max(df[['Date']])+10),
                     fixedrange=T,
                     showgrid=F),
