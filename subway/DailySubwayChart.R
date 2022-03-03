@@ -81,7 +81,7 @@ p=p %>%
          yaxis=list(title=list(text='<b>Ridership</b>',
                                font=list(size=14)),
                     tickfont=list(size=12),
-                    rangemode='nonnegative',
+                    rangemode='tozero',
                     fixedrange=T,
                     showgrid=T,
                     zeroline=T,
@@ -92,21 +92,6 @@ p=p %>%
                    color='black'),
          dragmode=F,
          hovermode='x unified')
-
-
-
-# p=p %>%
-#   add_annotations(text='2.05 billion<br>in 1929-1930',
-#                   font=list(size=10),
-#                   showarrow=F,
-#                   x='1929-30',
-#                   xanchor='center',
-#                   xref='x',
-#                   y=2100000000,
-#                   yanchor='bottom',
-#                   yref='y')
-
-
 p=p %>% 
   add_annotations(text='Data Source: <a href="https://new.mta.info/coronavirus/ridership" target="blank">MTA</a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/subway/Subway7DayAverage.csv" target="blank">Download Chart Data</a>',
                   font=list(size=14),

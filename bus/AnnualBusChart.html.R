@@ -25,8 +25,6 @@ for (i in c('Bronx','Brooklyn','Manhattan','Queens','Staten Island')){
               showlegend=T,
               hovertemplate='%{y:,.0f}')
 }
-p
-
 p=p %>%
   layout(template='plotly_white',
          title=list(text=paste0('<b>Annual Bus Ridership</b>'),
@@ -35,6 +33,13 @@ p=p %>%
                     xanchor='center',
                     y=0.95,
                     yanchor='top'),
+         legend=list(orientation='h',
+                     title=list(text=''),
+                     font=list(size=16),
+                     x=0.5,
+                     xanchor='center',
+                     y=1,
+                     yanchor='bottom'),
          margin=list(b=120,
                      l=80,
                      r=40,
@@ -42,13 +47,15 @@ p=p %>%
          xaxis=list(title=list(text='<b>Year</b>',
                                font=list(size=14)),
                     tickfont=list(size=12),
-                    range=c(-1,nrow(df['Year'])),
+                    dtick='M12',
+                    range=c(min(df[['Year']])-0.5,max(df[['Year']])+0.5),
                     fixedrange=T,
                     showgrid=F),
          yaxis=list(title=list(text='<b>Ridership</b>',
                                font=list(size=14)),
                     tickfont=list(size=12),
-                    rangemode='nonnegative',
+                    # range=c(-0.5,max(df)),
+                    rangemode='tozero',
                     fixedrange=T,
                     showgrid=T,
                     zeroline=T,
@@ -59,62 +66,6 @@ p=p %>%
                    color='black'),
          dragmode=F,
          hovermode='x unified')
-
-p=p %>%
-  add_annotations(text='2.05 billion<br>in 1929-1930',
-                  font=list(size=10),
-                  showarrow=F,
-                  x='1929-30',
-                  xanchor='center',
-                  xref='x',
-                  y=2100000000,
-                  yanchor='bottom',
-                  yref='y')
-
-p=p %>% 
-  add_annotations(text='2.07 billion<br>in 1946',
-                  font=list(size=10),
-                  showarrow=F,
-                  x=41,
-                  xanchor='center',
-                  xref='x',
-                  y=2100000000,
-                  yanchor='bottom',
-                  yref='y')
-
-p=p %>% 
-  add_annotations(text='1.76 billion<br>in 2015',
-                  font=list(size=10),
-                  showarrow=F,
-                  x=110,
-                  xanchor='center',
-                  xref='x',
-                  y=1800000000,
-                  yanchor='bottom',
-                  yref='y')
-
-p=p %>% 
-  add_annotations(text='640 million<br>in 2020',
-                  font=list(size=10),
-                  showarrow=F,
-                  x=115,
-                  xanchor='center',
-                  xref='x',
-                  y=620000000,
-                  yanchor='top',
-                  yref='y')
-
-p=p %>% 
-  add_annotations(text='*Reported by Fiscal Year Before 1940',
-                  font=list(size=14),
-                  showarrow=F,
-                  x=1,
-                  xanchor='right',
-                  xref='paper',
-                  y=0,
-                  yanchor='top',
-                  yref='paper',
-                  yshift=-80)
 p=p %>% 
   add_annotations(text='Data Source: <a href="https://new.mta.info/agency/new-york-city-transit/subway-bus-ridership-2020" target="blank">MTA</a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/subway/SubwayRidership1904-2020.csv" target="blank">Download Chart Data</a>',
                   font=list(size=14),
@@ -125,7 +76,7 @@ p=p %>%
                   y=0,
                   yanchor='top',
                   yref='paper',
-                  yshift=-100)
+                  yshift=-80)
 p=p %>%
   config(displayModeBar=F)
 p

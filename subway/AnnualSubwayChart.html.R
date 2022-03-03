@@ -39,7 +39,7 @@ p=p %>%
          yaxis=list(title=list(text='<b>Ridership</b>',
                                font=list(size=14)),
                     tickfont=list(size=12),
-                    rangemode='nonnegative',
+                    rangemode='tozero',
                     fixedrange=T,
                     showgrid=T,
                     zeroline=T,
@@ -50,7 +50,6 @@ p=p %>%
                    color='black'),
          dragmode=F,
          hovermode='x unified')
-
 p=p %>%
   add_annotations(text='2.05 billion<br>in 1929-1930',
                   font=list(size=10),
@@ -61,7 +60,6 @@ p=p %>%
                   y=2100000000,
                   yanchor='bottom',
                   yref='y')
-
 p=p %>% 
   add_annotations(text='2.07 billion<br>in 1946',
                   font=list(size=10),
@@ -72,7 +70,6 @@ p=p %>%
                   y=2100000000,
                   yanchor='bottom',
                   yref='y')
-
 p=p %>% 
   add_annotations(text='1.76 billion<br>in 2015',
                   font=list(size=10),
@@ -83,7 +80,6 @@ p=p %>%
                   y=1800000000,
                   yanchor='bottom',
                   yref='y')
-
 p=p %>% 
   add_annotations(text='640 million<br>in 2020',
                   font=list(size=10),
@@ -94,7 +90,6 @@ p=p %>%
                   y=620000000,
                   yanchor='top',
                   yref='y')
-
 p=p %>% 
   add_annotations(text='*Reported by Fiscal Year Before 1940',
                   font=list(size=14),
