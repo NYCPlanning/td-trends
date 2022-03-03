@@ -21,11 +21,11 @@ df_total = df[['year', 'entries']].groupby('year').sum().reset_index()
 df_total['year'] = df_total['year'].astype(str)
 df_total['y'] = [0 for i in range(df_total['year'].size)]
 
-mode_colors = {'Auto': '#ed665d',
-               'Subway': '#729ece',
-               'Rail': '#a8786e',
-               'Bus': '#67bf5c',
-               'Other': '#ed97ca'}
+mode_colors = {'Auto': 'rgba(237,102,93,0.8)',
+               'Subway': 'rgba(114,158,206,0.8)',
+               'Rail': 'rgba(168,120,110,0.8)',
+               'Bus': 'rgba(103,191,92,0.8)',
+               'Other': 'rgba(237,151,202,0.8)'}
 
 fig = go.Figure()
 
@@ -36,7 +36,8 @@ for mode, color in mode_colors.items():
                                    mode = 'lines+markers',
                                    line = {'color': color,
                                            'width': 2},
-                                   opacity = .8,
+                                   marker = {'color': color,
+                                             'size': 6},                                   
                                    hoverinfo = 'text',
                                    hovertext = df.loc[df['mode'] == mode, 'hover']))
 
@@ -96,8 +97,8 @@ fig.add_annotation(text = 'Data Source: <a href="https://www.nymtc.org/Data-and-
 
 fig
 
-fig.write_html(path + 'annotations/entries.html',
-              include_plotlyjs='cdn',
-              config={'displayModeBar':False})
+# fig.write_html(path + 'annotations/entries.html',
+#               include_plotlyjs='cdn',
+#               config={'displayModeBar':False})
 
 # https://nycplanning.github.io/td-trends/hubbound/all_modes/annotations/entries.html')   

@@ -307,9 +307,9 @@ dest['% DEST'] = dest['PWGTP'] / dest['TOTAL']
 
 dest['HOVER']='<b>Residence: </b>'+dest['RES']+'<br><b>Workplace: </b>'+dest['DEST']+'<br><b>Commuters: </b>'+dest['PWGTP'].map('{:,.0f}'.format)+'<br><b>Percentage: </b>'+dest['% DEST'].map('{:.0%}'.format)
 
-dest_colors = {'Same Boro':'#ed665d',
-               'Other Boro':'#729ece',
-               'Region':'#67bf5c'}
+dest_colors = {'Same Boro':'rgba(237,102,93,0.8)',
+               'Other Boro':'rgba(114,158,206,0.8)',
+               'Region':'rgba(103,191,92,0.8)'}
 
 fig = go.Figure()
 
@@ -319,7 +319,6 @@ for destination, color in dest_colors.items():
                                y = dest.loc[dest['DEST'] == destination, 'PWGTP'],
                                marker = {'color': color},
                                width = .5,
-                               opacity = .8,
                                hoverinfo = 'text',
                                hovertext = dest.loc[dest['DEST'] == destination, 'HOVER']))
     

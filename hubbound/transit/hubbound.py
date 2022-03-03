@@ -21,9 +21,9 @@ dfcolors={'PATH':'#729ece',
 
 fig=go.Figure()
 fig=fig.add_trace(go.Scattergl(name='',
+                               mode='none',
                                x=df['YEAR'],
                                y=df['AMTRAK'],
-                               opacity=0,
                                showlegend=False,
                                hovertext=['<b>'+str(x)+'</b>' for x in df['YEAR']],
                                hoverinfo='text'))

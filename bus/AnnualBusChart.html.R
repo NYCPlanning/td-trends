@@ -22,7 +22,10 @@ for (i in c('Bronx','Brooklyn','Manhattan','Queens','Staten Island')){
               y=df[[i]],
               line=list(color=dfcolors[i],
                         width=2),
+              marker=list(color=dfcolors[i],
+                          size=10),
               showlegend=T,
+              text=df[['Year']],
               hovertemplate='%{y:,.0f}')
 }
 p=p %>%
