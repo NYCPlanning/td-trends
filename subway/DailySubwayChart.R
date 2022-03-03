@@ -121,6 +121,6 @@ p=p %>%
 p=p %>%
   config(displayModeBar=F)
 p
-htmlwidgets::saveWidget(p,paste0(path,'subway/DailySubway.html'))
+htmlwidgets::saveWidget(p,paste0(path,'subway/DailySubwayChart.html'))
 
 
