@@ -66,13 +66,9 @@
             vertical-align: -0.1rem;
         }
 
-        .item1-label1 {
+        .item1-label {
             font-size: 0.9rem;
             font-weight: bold;
-        }
-
-        .item1-label2 {
-            font-size: 0.9rem;
         }
 
         .itemgroup2 {
@@ -333,6 +329,7 @@
                 layerContentListOrder.push(layerContentList.filter(e => e.layerid == layerOrder[i])[0]);
             };
 
+
             var filterLegend = document.getElementById('legends');
             for (var i = 0; i < layerContentListOrder.length; i++) {
                 // Create layer selector
@@ -341,17 +338,21 @@
                 var item1 = document.createElement('div'); // create level-1 item
                 item1.className = 'item1';
                 var label1 = document.createElement('label'); // create level-1 checkbox label
-                label1.className = 'item1-label1';
+                label1.className = 'item1-label';
                 label1.setAttribute('for', layerContentListOrder[i]['layerid']);
                 label1.textContent = layerContentListOrder[i]['layername'];
                 item1.appendChild(label1);
-                item1.appendChild(document.createElement('br'));
                 itemgroup1.appendChild(item1);
 
                 // Create legend selector
                 var itemgroup2 = document.createElement('div'); // create level-2 item group
                 itemgroup2.className = 'itemgroup2';
                 itemgroup2.id = layerContentListOrder[i]['layerid'] + '-cat';
+                if (layerContentListOrder[i]['layervisibility'] === 'visible') {
+                    itemgroup2.style.display = 'block';
+                } else {
+                    itemgroup2.style.display = 'none';
+                };
                 for (var j = 0; j < layerContentListOrder[i]['layercat'].length; j++) {
                     var item2 = document.createElement('div'); // create level-2 item
                     item2.className = 'item2';
