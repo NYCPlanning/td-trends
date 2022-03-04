@@ -4,7 +4,7 @@ library(plotly)
 # path='C:/Users/Y_Ma2/Desktop/GITHUB/td-trends/'
 path='C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/'
 
-df=read.csv(paste0(path,'ferry/ferryop.csv'),stringsAsFactors=F,check.names=F)
+df=read.csv(paste0(path,'ferry/FerryByOperator.csv'),stringsAsFactors=F,check.names=F)
 df=df %>%
   mutate(Date=as.Date(paste0(yearmonth,'01'),'%Y%m%d')) %>%
   filter(Date>=as.Date('20150101','%Y%m%d'))
@@ -97,7 +97,7 @@ p=p %>%
 p=p %>%
   config(displayModeBar=F)
 p
-htmlwidgets::saveWidget(p,paste0(path,'ferry/ferryop.html'))
+htmlwidgets::saveWidget(p,paste0(path,'ferry/FerryByOperator.html'))
 
 
 

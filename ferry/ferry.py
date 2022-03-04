@@ -88,13 +88,13 @@ pfop=pfop.sort_values('id').reset_index(drop=True)
 pfop=pfop.transpose().reset_index(drop=False)
 pfop.columns=['yearmonth']+list(pfop.iloc[0,1:])
 pfop=pfop[1:].reset_index(drop=True)
-pfop.to_csv(path+'ferry/pfop.csv',index=False,na_rep=0)
+pfop.to_csv(path+'ferry/PrivateFerryByOperator.csv',index=False,na_rep=0)
 
 pfld=pfld.sort_values('id').reset_index(drop=True)
 pfld=pfld.transpose().reset_index(drop=False)
 pfld.columns=['yearmonth']+list(pfld.iloc[0,1:])
 pfld=pfld[1:].reset_index(drop=True)
-pfld.to_csv(path+'ferry/pfld.csv',index=False,na_rep=0)
+pfld.to_csv(path+'ferry/PrivateFerryByLanding.csv',index=False,na_rep=0)
 
 
 
@@ -167,26 +167,26 @@ sif=sif.sort_values('id').reset_index(drop=True)
 sif=sif.transpose().reset_index(drop=False)
 sif.columns=['yearmonth']+list(sif.iloc[0,1:])
 sif=sif[1:].reset_index(drop=True)
-sif.to_csv(path+'ferry/sif.csv',index=False,na_rep=0)
+sif.to_csv(path+'ferry/SIFRidership.csv',index=False,na_rep=0)
 
 
 
-pfop=pd.read_csv(path+'ferry/pfop.csv')
+pfop=pd.read_csv(path+'ferry/PrivateFerryByOperator.csv')
 pfop=pfop.drop(['Total'],axis=1).reset_index(drop=True)
-sif=pd.read_csv(path+'ferry/sif.csv')
+sif=pd.read_csv(path+'ferry/SIFRidership.csv')
 sif['Staten Island Ferry']=sif['STG']+sif['WHT']
 sif=sif[['yearmonth','Staten Island Ferry']].reset_index(drop=True)
 ferryop=pd.merge(pfop,sif,how='left',on='yearmonth')
-ferryop.to_csv(path+'ferry/ferryop.csv',index=False)
+ferryop.to_csv(path+'ferry/FerryByOperator.csv',index=False)
 
 
 
 ferryld=pd.read_csv(path+'ferry/ferryld.csv')
-ferryld['MT202110'].describe(percentiles=np.arange(0.2,1,0.2))
-ferryld['cat']=np.where(ferryld['MT202110']>=500000,'>500000',
-               np.where(ferryld['MT202110']>=100000,'100000~499999',
-               np.where(ferryld['MT202110']>=50000,'50000~99999',
-               np.where(ferryld['MT202110']>=10000,'10000~49999',
+ferryld['YM202110'].describe(percentiles=np.arange(0.2,1,0.2))
+ferryld['cat']=np.where(ferryld['YM202110']>=500000,'>500000',
+               np.where(ferryld['YM202110']>=100000,'100000~499999',
+               np.where(ferryld['YM202110']>=50000,'50000~99999',
+               np.where(ferryld['YM202110']>=10000,'10000~49999',
                         '<10000'))))
 ferryld=gpd.GeoDataFrame(ferryld,geometry=[shapely.geometry.Point(x,y) for x,y in zip(ferryld['Long'],ferryld['Lat'])],crs=4326)
 ferryld.to_file(path+'ferry/ferryld.geojson',driver='GeoJSON')
