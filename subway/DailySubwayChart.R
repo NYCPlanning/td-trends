@@ -93,7 +93,7 @@ p=p %>%
                     tickfont=list(size=12),
                     tickformat='%b %Y',
                     dtick='M2',
-                    range=c(min(df[['Date']])-10,max(df[['Date']])+10),
+                    range=c(min(df[['Date']])-15,max(df[['Date']])+15),
                     fixedrange=T,
                     showgrid=F),
          yaxis=list(title=list(text='<b>Ridership</b>',
