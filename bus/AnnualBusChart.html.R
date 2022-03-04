@@ -13,6 +13,14 @@ dfcolors=c('Bronx'='rgba(114,158,206,0.8)',
            'Staten Island'='rgba(173,139,201,0.8)')
 
 p=plot_ly()
+p=p %>%
+  add_trace(type='scatter',
+            mode='none',
+            x=df[['Year']],
+            y=df[['Staten Island']],
+            showlegend=F,
+            hovertext=paste0('<b>Year: </b>',df[['Year']]),
+            hoverinfo='text')
 for (i in c('Bronx','Brooklyn','Manhattan','Queens','Staten Island')){
   p=p %>%
     add_trace(name=i,
@@ -25,9 +33,17 @@ for (i in c('Bronx','Brooklyn','Manhattan','Queens','Staten Island')){
               marker=list(color=dfcolors[i],
                           size=6),
               showlegend=T,
-              text=df[['Year']],
-              hovertemplate='%{y:,.0f}')
+              hovertext=paste0('<b>',i,': </b>',format(df[[i]],trim=T,big.mark=',')),
+              hoverinfo='text')
 }
+p=p %>%
+  add_trace(type='scatter',
+            mode='none',
+            x=df[['Year']],
+            y=df[['Staten Island']],
+            showlegend=F,
+            hovertext=paste0('<b>Total: </b>',format(df[['Total']],trim=T,big.mark=',')),
+            hoverinfo='text')
 p=p %>%
   layout(template='plotly_white',
          title=list(text=paste0('<b>Annual Bus Ridership</b>'),
@@ -70,7 +86,7 @@ p=p %>%
          dragmode=F,
          hovermode='x unified')
 p=p %>% 
-  add_annotations(text='Data Source: <a href="https://new.mta.info/agency/new-york-city-transit/subway-bus-ridership-2020" target="blank">MTA</a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/subway/SubwayRidership1904-2020.csv" target="blank">Download Chart Data</a>',
+  add_annotations(text='Data Source: <a href="https://new.mta.info/agency/new-york-city-transit/subway-bus-ridership-2020" target="blank">MTA</a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/bus/BusRidership2008-2020.csv" target="blank">Download Chart Data</a>',
                   font=list(size=14),
                   showarrow=F,
                   x=1,

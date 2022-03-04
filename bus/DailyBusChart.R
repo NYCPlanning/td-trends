@@ -14,8 +14,10 @@ file.remove('temp.csv')
 
 df=df %>%
   mutate(Date=as.Date(df[['Date']], "%m/%d/%Y"),
-         Bus=as.numeric(df[['Buses: Total Estimated Ridership']])) %>%
-  select(Date,Bus) %>%
+         Bus=as.numeric(df[['Buses: Total Estimated Ridership']]),
+         BusPrior=Bus/as.numeric(str_replace(df[['Buses: % of Comparable Pre-Pandemic Day']],'%',''))*100,
+         BusPctPrior=Bus/BusPrior) %>%
+  select(Date,Bus,BusPrior,BusPctPrior) %>%
   arrange(Date)
 
 df=df %>%
@@ -25,13 +27,29 @@ df=df %>%
          Bus4=c(NA,NA,NA,NA,df[4:nrow(df)-4,'Bus']),
          Bus5=c(NA,NA,NA,NA,NA,df[5:nrow(df)-5,'Bus']),
          Bus6=c(NA,NA,NA,NA,NA,NA,df[6:nrow(df)-6,'Bus']),
-         Bus7DayAverage=rowMeans(cbind(Bus,Bus1,Bus2,Bus3,Bus4,Bus5,Bus6))) %>%
-  select(Date,Bus,Bus7DayAverage)
+         Bus7DayAvg=rowMeans(cbind(Bus,Bus1,Bus2,Bus3,Bus4,Bus5,Bus6)),
+         BusPrior1=c(NA,df[1:nrow(df)-1,'BusPrior']),
+         BusPrior2=c(NA,NA,df[2:nrow(df)-2,'BusPrior']),
+         BusPrior3=c(NA,NA,NA,df[3:nrow(df)-3,'BusPrior']),
+         BusPrior4=c(NA,NA,NA,NA,df[4:nrow(df)-4,'BusPrior']),
+         BusPrior5=c(NA,NA,NA,NA,NA,df[5:nrow(df)-5,'BusPrior']),
+         BusPrior6=c(NA,NA,NA,NA,NA,NA,df[6:nrow(df)-6,'BusPrior']),
+         Bus7DayAvgPrior=rowMeans(cbind(BusPrior,BusPrior1,BusPrior2,BusPrior3,BusPrior4,BusPrior5,BusPrior6)),
+         Bus7DayAvgPctPrior=Bus7DayAvg/Bus7DayAvgPrior) %>%
+  select(Date,Bus,BusPrior,BusPctPrior,Bus7DayAvg,Bus7DayAvgPrior,Bus7DayAvgPctPrior)
 write.csv(df,paste0(path,'bus/Bus7DayAverage.csv'),na='NA',row.names=F)
 
 
-df=read.csv(paste0(path,'bus/Bus7DayAverage.csv'),stringsAsFactors = F,colClasses = c('Date','numeric','numeric'))
+df=read.csv(paste0(path,'bus/Bus7DayAverage.csv'),stringsAsFactors=F,colClasses=c('Date','numeric','numeric','numeric','numeric','numeric','numeric'))
 p=plot_ly()
+p=p %>%
+  add_trace(type='bar',
+            x=df[['Date']],
+            y=df[['Subway']],
+            opacity=0,
+            showlegend=F,
+            hovertext=paste0('<b>Date: </b>',format(df[['Date']],'%m/%d/%Y',trim=T)),
+            hoverinfo='text')
 p=p %>%
   add_trace(name='Daily Ridership',
             type='bar',
@@ -39,19 +57,19 @@ p=p %>%
             y=df[['Bus']],
             marker=list(color='rgba(114,158,206,0.5)'),
             showlegend=T,
-            hovertemplate='%{y:,.0f}',
-            xhoverformat='<b>%m/%d/%Y</b>')
+            hovertext=paste0('<b>Daily Ridership: </b>',format(df[['Bus']],trim=T,big.mark=','),' (',format(df[['BusPctPrior']]*100,trim=T,nsmall=1),'%)'),
+            hoverinfo='text')
 p=p %>%
   add_trace(name='7-Day Moving Average',
             type='scatter',
             mode='lines',
             x=df[['Date']],
-            y=df[['Bus7DayAverage']],
+            y=df[['Bus7DayAvg']],
             line=list(color='rgba(237,102,93,0.8)',
                       width=3),
             showlegend=T,
-            hovertemplate='%{y:,.0f}',
-            xhoverformat='<b>%m/%d/%Y</b>')
+            hovertext=paste0('<b>7-Day Moving Average: </b>',format(df[['Bus7DayAvg']],trim=T,big.mark=','),' (',format(round(df[['Bus7DayAvgPctPrior']]*100,1),trim=T,nsmall=1),'%)'),
+            hoverinfo='text')
 p=p %>%
   layout(template='plotly_white',
          title=list(text=paste0('<b>Daily Bus Ridership</b>'),
