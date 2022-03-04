@@ -45,7 +45,7 @@ p=plot_ly()
 p=p %>%
   add_trace(type='bar',
             x=df[['Date']],
-            y=df[['Subway']],
+            y=df[['Bus']],
             opacity=0,
             showlegend=F,
             hovertext=paste0('<b>Date: </b>',format(df[['Date']],'%m/%d/%Y',trim=T)),
@@ -55,7 +55,7 @@ p=p %>%
             type='bar',
             x=df[['Date']],
             y=df[['Bus']],
-            marker=list(color='rgba(114,158,206,0.5)'),
+            marker=list(color='rgba(103,191,92,0.5)'),
             showlegend=T,
             hovertext=paste0('<b>Daily Ridership: </b>',format(df[['Bus']],trim=T,big.mark=','),' (',format(df[['BusPctPrior']]*100,trim=T,nsmall=1),'%)'),
             hoverinfo='text')
