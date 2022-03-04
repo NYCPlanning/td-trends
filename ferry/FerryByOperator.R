@@ -55,7 +55,7 @@ p=p %>%
                      font=list(size=16),
                      x=0.5,
                      xanchor='center',
-                     y=1,
+                     y=0.95,
                      yanchor='bottom'),
          margin=list(b=120,
                      l=80,
@@ -90,7 +90,7 @@ p=p %>%
                   x=1,
                   xanchor='right',
                   xref='paper',
-                  y=-0.2,
+                  y=0,
                   yanchor='top',
                   yref='paper',
                   yshift=-80)
