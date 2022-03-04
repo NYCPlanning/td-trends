@@ -635,9 +635,9 @@ fig.add_annotation(text = 'Data Source: <a href="https://www.census.gov/programs
 
 fig
 
-fig.write_html(path+'annotations/tt.html',
-                include_plotlyjs='cdn',
-                config={'displayModeBar':False})
+# fig.write_html(path+'annotations/tt.html',
+#                 include_plotlyjs='cdn',
+#                 config={'displayModeBar':False})
 
 # https://nycplanning.github.io/td-trends/commute/annotations/tt.html
 
