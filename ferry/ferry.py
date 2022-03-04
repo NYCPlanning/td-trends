@@ -8,7 +8,7 @@ import os
 
 pd.set_option('display.max_columns', None)
 path='C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/'
-path='C:/Users/Y_Ma2/Desktop/GITHUB/td-trends/'
+# path='C:/Users/Y_Ma2/Desktop/GITHUB/td-trends/'
 
 
 
@@ -183,11 +183,11 @@ ferryop.to_csv(path+'ferry/FerryByOperator.csv',index=False)
 
 ferryld=pd.read_csv(path+'ferry/ferryld.csv')
 ferryld['YM202110'].describe(percentiles=np.arange(0.2,1,0.2))
-ferryld['cat']=np.where(ferryld['YM202110']>=500000,'>500000',
-               np.where(ferryld['YM202110']>=100000,'100000~499999',
-               np.where(ferryld['YM202110']>=50000,'50000~99999',
-               np.where(ferryld['YM202110']>=10000,'10000~49999',
-                        '<10000'))))
+ferryld['cat']=np.where(ferryld['YM202110']>=500000,'>500k',
+               np.where(ferryld['YM202110']>=100000,'100k~499k',
+               np.where(ferryld['YM202110']>=50000,'50k~99k',
+               np.where(ferryld['YM202110']>=10000,'10k~49k',
+                        '<10k'))))
 ferryld=gpd.GeoDataFrame(ferryld,geometry=[shapely.geometry.Point(x,y) for x,y in zip(ferryld['Long'],ferryld['Lat'])],crs=4326)
 ferryld.to_file(path+'ferry/ferryld.geojson',driver='GeoJSON')
 

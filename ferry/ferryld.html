@@ -196,10 +196,9 @@
                 'layerlinejoin': 'round', // line joining; bevel/round/miter
                 'layervisibility': 'visible', // visibility of the layer
                 'layercat': [''], // categories
-                'layercolor': ['rgba(0,162,255,0.7)'], // color for each category; use rgba
-                'layerdasharray': [2, 4], // dash line
+                'layercolor': ['rgba(0,162,255,0.5)'], // color for each category; use rgba
                 'layerwidth': 2, // line width
-                'layeroutlinecolor': 'rgba(255,255,255,1)', // outline color; for legend only
+                'layeroutlinecolor': 'rgba(255,255,255,0)', // outline color; for legend only
             };
 
             // Add layer content to the overall layer content list
@@ -223,7 +222,6 @@
                 },
                 'paint': {
                     'line-color': layerContent['layercolor'][0],
-                    'line-dasharray': layerContent['layerdasharray'],
                     'line-width': layerContent['layerwidth'],
                 },
             });
@@ -242,14 +240,14 @@
                 'layername': 'October 2021', // layer name for the legend
                 'layervisibility': 'visible', // visibility of the layer
                 'layercolname': 'cat', // category column name
-                'layercat': ['>500000', '100000~499999', '50000~99999', '10000~49999', '<10000'], // categories
+                'layercat': ['>500k', '100k~499k', '50k~99k', '10k~49k', '<10k'], // categories
                 'layercolor': ['rgba(113,55,0,1)', 'rgba(186,92,4,1)', 'rgba(226,117,15,1)', 'rgba(241,186,135,1)', 'rgba(249,227,207,1)'], // color for each category; use rgba
                 'layeropacity': 1, // circle opacity
                 'layerradius': 5, // circle radius; change size based on zoom level
                 'layerstrokecolor': 'rgba(0,0,0,1)', // circle stroke color
                 'layerstrokeopacity': 0.2, // circle stroke opacity
                 'layerstrokewidth': 1, // circle stroke width
-                'layeroutlinecolor': 'rgba(255,255,255,0)', // outline color; can only be set to 1px width; to change the outline width, add another line layer
+                'layeroutlinecolor': 'rgba(255,255,255,0)',  // outline color; for legend purpose only
             };
 
             // Generate layer colors
