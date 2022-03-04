@@ -243,9 +243,9 @@
                 'layercat': ['>500k', '100k~499k', '50k~99k', '10k~49k', '<10k'], // categories
                 'layercolor': ['rgba(113,55,0,1)', 'rgba(186,92,4,1)', 'rgba(226,117,15,1)', 'rgba(241,186,135,1)', 'rgba(249,227,207,1)'], // color for each category; use rgba
                 'layeropacity': 1, // circle opacity
-                'layerradius': 5, // circle radius; change size based on zoom level
+                'layerradius': 10, // circle radius; change size based on zoom level
                 'layerstrokecolor': 'rgba(0,0,0,1)', // circle stroke color
-                'layerstrokeopacity': 0.2, // circle stroke opacity
+                'layerstrokeopacity': 0.5, // circle stroke opacity
                 'layerstrokewidth': 1, // circle stroke width
                 'layeroutlinecolor': 'rgba(255,255,255,0)',  // outline color; for legend purpose only
             };
@@ -308,7 +308,7 @@
             map.on('click', 'ferryld', function (e) {
                 var coordinates = e.features[0].geometry.coordinates.slice(); // get point coordinates
                 var description = "<b>Landing: </b><span>" + e.features[0].properties.Landing + "</span><br>"; // description in the popup
-                description += "<b>October 2021 Monthly Ridership: </b><span>" + e.features[0].properties.MT202110.toLocaleString() + "</span><br>";
+                description += "<b>October 2021 Monthly Ridership: </b><span>" + e.features[0].properties.YM202110.toLocaleString() + "</span><br>";
                 popup.setLngLat(coordinates).setHTML(description).addTo(map); //add popup
             });
             // Add hover events
