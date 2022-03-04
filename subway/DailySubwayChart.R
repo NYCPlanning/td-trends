@@ -47,7 +47,7 @@ p=p %>%
             y=df[['Subway']],
             opacity=0,
             showlegend=F,
-            hovertext=paste0('<b>',format(df[['Date']],'%m/%d/%Y',trim=T),'</b>'),
+            hovertext=paste0('<b>Date: </b>',format(df[['Date']],'%m/%d/%Y',trim=T)),
             hoverinfo='text')
 p=p %>%
   add_trace(name='Daily Ridership',

@@ -11,13 +11,23 @@ p=plot_ly()
 p=p %>%
   add_trace(name='Ridership',
             type='scatter',
+            mode='none',
+            x=df[['Year']],
+            y=df[['Ridership']],
+            showlegend=F,
+            hovertext=paste0('<b>Year: </b>',df[['Year']]),
+            hoverinfo='text')
+p=p %>%
+  add_trace(name='Ridership',
+            type='scatter',
             mode='lines',
             x=df[['Year']],
             y=df[['Ridership']],
             line=list(color='rgba(114,158,206,0.8)',
                       width=3),
             showlegend=F,
-            hovertemplate='%{y:,.0f}')
+            hovertext=paste0('<b>Ridership: </b>',format(df[['Ridership']],trim=T,big.mark=',')),
+            hoverinfo='text')
 p=p %>%
   layout(template='plotly_white',
          title=list(text=paste0('<b>Annual Subway Ridership</b>'),
