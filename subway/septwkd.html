@@ -24,22 +24,22 @@
             position: absolute;
             left: 0;
             top: 0;
-            bottom: 0;
-            width: 50%;
-            border-right-style: solid;
-            border-right-width: 0.1rem;
-            border-right-color: rgba(0, 0, 0, 0.5);
+            width: 100%;
+            height: 50%;
+            border-style: solid;
+            border-width: 0.1rem;
+            border-color: rgba(0, 0, 0, 0.5);
         }
 
         #map2 {
             position: absolute;
-            right: 0;
-            top: 0;
-            bottom: 0;
-            width: 50%;
-            border-left-style: solid;
-            border-left-width: 0.1rem;
-            border-left-color: rgba(0, 0, 0, 0.5);
+            left: 0;
+            top: 50%;
+            width: 100%;
+            height: 50%;
+            border-style: solid;
+            border-width: 0.1rem;
+            border-color: rgba(0, 0, 0, 0.5);
         }
 
         #legend {
@@ -123,7 +123,7 @@
         #title1-nav {
             position: absolute;
             top: 1rem;
-            right: 50%;
+            right: 0;
         }
 
         #title1 {
@@ -145,13 +145,13 @@
 
         #title2-nav {
             position: absolute;
-            top: 1rem;
-            left: 50%;
+            top: 50%;
+            right: 1rem;
         }
 
         #title2 {
             position: relative;
-            left: 1rem;
+            top: 1rem;
             width: auto;
             height: auto;
             padding-top: 0.5rem;
@@ -229,26 +229,6 @@
         map1.on('load', function () {
 
             var layerContentList = []; // store all the layer contents
-
-            // Add full screen control
-            map1.addControl(new mapboxgl.FullscreenControl({
-                container: document.querySelector('body'),
-            }),
-                'bottom-left', // control position
-            );
-
-            // Add navigation control
-            map1.addControl(new mapboxgl.NavigationControl({
-                showCompass: true, // show compass
-                showZoom: true, // show zoom
-                visualizePitch: true, // show pitch
-            }),
-                'bottom-left', // control position
-            );
-
-
-
-
 
             // Add points
             // Set layer contents
@@ -408,6 +388,23 @@
         map2.on('load', function () {
 
             var layerContentList = []; // store all the layer contents
+
+            // Add full screen control
+            map2.addControl(new mapboxgl.FullscreenControl({
+                container: document.querySelector('body'),
+            }),
+                'bottom-left', // control position
+            );
+
+            // Add navigation control
+            map2.addControl(new mapboxgl.NavigationControl({
+                showCompass: true, // show compass
+                showZoom: true, // show zoom
+                visualizePitch: true, // show pitch
+            }),
+                'bottom-left', // control position
+            );
+
 
 
             // Add points
