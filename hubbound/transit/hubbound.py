@@ -11,33 +11,37 @@ path='C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/'
 
 
 
-df=pd.read_excel(path+'hubbound/transit/hubbound.xlsx',sheet_name='SUMMARY')
-dfcolors={'PATH':'#729ece',
-          'NJT':'#ff9e4a',
-          'LIRR':'#67bf5c',
-          'MNR':'#ed665d',
-          'AMTRAK':'#a8786e',
-          'NJ BUS':'#ad8bc9'}
+df=pd.read_csv(path+'hubbound/transit/hubbound.csv')
+dfcolors={'PATH':'rgba(237,102,93,0.8)',
+          'NJT':'rgba(114,158,206,0.8)',
+          'LIRR':'rgba(168,120,110,0.8)',
+          'MNR':'rgba(103,191,92,0.8)',
+          'Amtrak':'rgba(237,151,202,0.8)',
+          'NJ Bus':'rgba(109,204,218,0.8)'}
+
 
 fig=go.Figure()
 fig=fig.add_trace(go.Scattergl(name='',
                                mode='none',
-                               x=df['YEAR'],
-                               y=df['AMTRAK'],
+                               x=df['Year'],
+                               y=df['Amtrak'],
                                showlegend=False,
-                               hovertext=['<b>'+str(x)+'</b>' for x in df['YEAR']],
+                               hovertext=['<b>Year: </b>'+str(x) for x in df['Year']],
                                hoverinfo='text'))
-for i in ['PATH','NJT','LIRR','MNR','AMTRAK','NJ BUS']:
+for i in ['PATH','NJT','LIRR','MNR','Amtrak','NJ Bus']:
     fig=fig.add_trace(go.Scattergl(name=i,
                                    mode='lines+markers',
-                                   x=df['YEAR'],
+                                   x=df['Year'],
                                    y=df[i],
                                    line={'color':dfcolors[i],
                                          'width':2},
-                                   hovertemplate='%{y:,.0f}'))
+                                   marker = {'color': dfcolors[i],
+                                             'size': 6},
+                                   hovertext=['<b>'+str(i)+': </b>'+'{:,.0f}'.format(x) for x in df[i]],
+                                   hoverinfo='text'))
 fig.update_layout(
     template='plotly_white',
-    title={'text':'<b>Daily Entries to the Manhattan Hub (2000-2019)</b>',
+    title={'text':'<b>Daily Entries into the Manhattan Hub</b>',
            'font_size':20,
            'x':0.5,
            'xanchor':'center',
@@ -58,13 +62,13 @@ fig.update_layout(
                     'font_size':14},
            'tickfont_size':12,
            'dtick':'M12',
-           'range':[min(df['YEAR'])-0.5,max(df['YEAR'])+0.5],
+           'range':[min(df['Year'])-0.5,max(df['Year'])+0.5],
            'fixedrange':True,
            'showgrid':False},
     yaxis={'title':{'text':'<b>Daily Entries</b>',
                     'font_size':14},
            'tickfont_size':12,
-           'rangemode':'nonnegative',
+           'rangemode':'tozero',
            'fixedrange':True,
            'showgrid':True},
     hoverlabel={'font_size':14},
