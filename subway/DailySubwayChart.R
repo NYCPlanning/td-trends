@@ -56,7 +56,7 @@ p=p %>%
             y=df[['Subway']],
             marker=list(color='rgba(114,158,206,0.5)'),
             showlegend=T,
-            hovertext=paste0('<b>Daily Ridership: </b>',format(df[['Subway']],trim=T,big.mark=','),' (',format(df[['SubwayPctPrior']]*100,trim=T,nsmall=1),'%)'),
+            hovertext=paste0('<b>Daily Ridership: </b>',format(df[['Subway']],trim=T,big.mark=','),' (',round(df[['SubwayPctPrior']]*100,1),'%)'),
             hoverinfo='text')
 p=p %>%
   add_trace(name='7-Day Moving Average',
@@ -67,7 +67,7 @@ p=p %>%
             line=list(color='rgba(237,102,93,0.8)',
                       width=3),
             showlegend=T,
-            hovertext=paste0('<b>7-Day Moving Average: </b>',format(df[['Subway7DayAvg']],trim=T,big.mark=','),' (',format(round(df[['Subway7DayAvgPctPrior']]*100,1),trim=T,nsmall=1),'%)'),
+            hovertext=paste0('<b>7-Day Moving Average: </b>',format(df[['Subway7DayAvg']],trim=T,big.mark=','),' (',round(df[['Subway7DayAvgPctPrior']]*100,1),'%)'),
             hoverinfo='text')
 p=p %>%
   layout(template='plotly_white',
