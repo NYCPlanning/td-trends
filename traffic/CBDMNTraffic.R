@@ -104,7 +104,7 @@ p=p %>%
          dragmode=F,
          hovermode='x unified')
 p=p %>% 
-  add_annotations(text='Data Source: <a href="https://www1.nyc.gov/html/dot/html/about/datafeeds.shtml#ferry" target="blank">NYC DOT</a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/ferry/ferryop.csv" target="blank">Download Chart Data</a>',
+  add_annotations(text='Data Source: NYC DOT | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/traffic/CBDMN2019_2021.csv" target="blank">Download Chart Data</a>',
                   font=list(size=14),
                   showarrow=F,
                   x=1,
