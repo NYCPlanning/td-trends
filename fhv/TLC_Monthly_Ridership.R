@@ -64,7 +64,7 @@ p=p %>%
                     range=c(min(df[['Date']])-15,max(df[['Date']])+15),
                     fixedrange=T,
                     showgrid=F),
-         yaxis=list(title=list(text='<b>Trips</b>',
+         yaxis=list(title=list(text='<b>Number of Trips</b>',
                                font=list(size=14)),
                     tickfont=list(size=12),
                     rangemode='tozero',

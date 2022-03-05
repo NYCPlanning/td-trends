@@ -1,0 +1,1681 @@
+Bridge/Tunnel,Year,Month,Vehicles Type,Eastbound Volume
+Bayonne Bridge,2015,Jun,Automobile,172089
+Bayonne Bridge,2015,Oct,Automobile,141316
+Bayonne Bridge,2015,Nov,Automobile,140476
+Bayonne Bridge,2015,Apr,Automobile,158059
+Bayonne Bridge,2015,Jul,Automobile,160440
+Bayonne Bridge,2015,Mar,Automobile,180071
+Bayonne Bridge,2015,Jan,Automobile,183686
+Bayonne Bridge,2015,Dec,Automobile,158019
+Bayonne Bridge,2015,Feb,Automobile,153817
+Bayonne Bridge,2015,Aug,Automobile,151366
+Bayonne Bridge,2015,Sep,Automobile,152748
+Bayonne Bridge,2015,May,Automobile,181481
+Bayonne Bridge,2015,Apr,Bus,1034
+Bayonne Bridge,2015,Mar,Bus,1262
+Bayonne Bridge,2015,Dec,Bus,915
+Bayonne Bridge,2015,May,Bus,1105
+Bayonne Bridge,2015,Jun,Bus,1057
+Bayonne Bridge,2015,Jul,Bus,954
+Bayonne Bridge,2015,Sep,Bus,926
+Bayonne Bridge,2015,Feb,Bus,1030
+Bayonne Bridge,2015,Oct,Bus,848
+Bayonne Bridge,2015,Jan,Bus,1151
+Bayonne Bridge,2015,Aug,Bus,908
+Bayonne Bridge,2015,Nov,Bus,807
+Bayonne Bridge,2015,Nov,Total vehicles,148348
+Bayonne Bridge,2015,May,Total vehicles,191820
+Bayonne Bridge,2015,Oct,Total vehicles,149906
+Bayonne Bridge,2015,Mar,Total vehicles,194723
+Bayonne Bridge,2015,Apr,Total vehicles,167765
+Bayonne Bridge,2015,Aug,Total vehicles,160308
+Bayonne Bridge,2015,Jul,Total vehicles,169705
+Bayonne Bridge,2015,Jan,Total vehicles,198710
+Bayonne Bridge,2015,Sep,Total vehicles,161798
+Bayonne Bridge,2015,Dec,Total vehicles,167150
+Bayonne Bridge,2015,Feb,Total vehicles,166023
+Bayonne Bridge,2015,Jun,Total vehicles,181418
+Bayonne Bridge,2015,Feb,Truck,11176
+Bayonne Bridge,2015,Jul,Truck,8311
+Bayonne Bridge,2015,Dec,Truck,8216
+Bayonne Bridge,2015,May,Truck,9234
+Bayonne Bridge,2015,Mar,Truck,13390
+Bayonne Bridge,2015,Jan,Truck,13873
+Bayonne Bridge,2015,Apr,Truck,8672
+Bayonne Bridge,2015,Oct,Truck,7742
+Bayonne Bridge,2015,Sep,Truck,8124
+Bayonne Bridge,2015,Jun,Truck,8272
+Bayonne Bridge,2015,Nov,Truck,7065
+Bayonne Bridge,2015,Aug,Truck,8034
+Bayonne Bridge,2014,Jul,Automobile,230708
+Bayonne Bridge,2014,Mar,Automobile,228401
+Bayonne Bridge,2014,Jun,Automobile,230353
+Bayonne Bridge,2014,May,Automobile,211592
+Bayonne Bridge,2014,Feb,Automobile,191670
+Bayonne Bridge,2014,Sep,Automobile,198731
+Bayonne Bridge,2014,Nov,Automobile,192936
+Bayonne Bridge,2014,Oct,Automobile,224999
+Bayonne Bridge,2014,Dec,Automobile,216058
+Bayonne Bridge,2014,Aug,Automobile,198838
+Bayonne Bridge,2014,Apr,Automobile,222839
+Bayonne Bridge,2014,Jan,Automobile,217623
+Bayonne Bridge,2014,Aug,Bus,1289
+Bayonne Bridge,2014,Oct,Bus,1456
+Bayonne Bridge,2014,Jun,Bus,1511
+Bayonne Bridge,2014,Jan,Bus,1389
+Bayonne Bridge,2014,Mar,Bus,1383
+Bayonne Bridge,2014,May,Bus,1468
+Bayonne Bridge,2014,Nov,Bus,1325
+Bayonne Bridge,2014,Apr,Bus,1298
+Bayonne Bridge,2014,Feb,Bus,1211
+Bayonne Bridge,2014,Dec,Bus,1340
+Bayonne Bridge,2014,Sep,Bus,1282
+Bayonne Bridge,2014,Jul,Bus,1612
+Bayonne Bridge,2014,Feb,Total vehicles,207434
+Bayonne Bridge,2014,May,Total vehicles,230416
+Bayonne Bridge,2014,Nov,Total vehicles,207807
+Bayonne Bridge,2014,Jul,Total vehicles,250536
+Bayonne Bridge,2014,Apr,Total vehicles,240789
+Bayonne Bridge,2014,Jan,Total vehicles,236061
+Bayonne Bridge,2014,Jun,Total vehicles,249395
+Bayonne Bridge,2014,Mar,Total vehicles,247515
+Bayonne Bridge,2014,Dec,Total vehicles,232744
+Bayonne Bridge,2014,Oct,Total vehicles,243349
+Bayonne Bridge,2014,Aug,Total vehicles,215960
+Bayonne Bridge,2014,Sep,Total vehicles,215817
+Bayonne Bridge,2014,Mar,Truck,17731
+Bayonne Bridge,2014,Apr,Truck,16652
+Bayonne Bridge,2014,Jun,Truck,17531
+Bayonne Bridge,2014,Nov,Truck,13546
+Bayonne Bridge,2014,Sep,Truck,15804
+Bayonne Bridge,2014,Feb,Truck,14553
+Bayonne Bridge,2014,Dec,Truck,15346
+Bayonne Bridge,2014,Aug,Truck,15833
+Bayonne Bridge,2014,Jul,Truck,18216
+Bayonne Bridge,2014,May,Truck,17356
+Bayonne Bridge,2014,Jan,Truck,17049
+Bayonne Bridge,2014,Oct,Truck,16894
+Bayonne Bridge,2013,Jul,Automobile,274895
+Bayonne Bridge,2013,Jun,Automobile,270994
+Bayonne Bridge,2013,May,Automobile,278376
+Bayonne Bridge,2013,Apr,Automobile,264471
+Bayonne Bridge,2013,Dec,Automobile,246151
+Bayonne Bridge,2013,Nov,Automobile,260625
+Bayonne Bridge,2013,Oct,Automobile,276098
+Bayonne Bridge,2013,Aug,Automobile,280857
+Bayonne Bridge,2013,Sep,Automobile,262422
+Bayonne Bridge,2013,Mar,Automobile,261071
+Bayonne Bridge,2013,Feb,Automobile,228696
+Bayonne Bridge,2013,Jan,Automobile,255418
+Bayonne Bridge,2013,May,Bus,2052
+Bayonne Bridge,2013,Apr,Bus,1852
+Bayonne Bridge,2013,Dec,Bus,1605
+Bayonne Bridge,2013,Nov,Bus,1814
+Bayonne Bridge,2013,Oct,Bus,2154
+Bayonne Bridge,2013,Jan,Bus,1637
+Bayonne Bridge,2013,Feb,Bus,1475
+Bayonne Bridge,2013,Mar,Bus,1776
+Bayonne Bridge,2013,Sep,Bus,1858
+Bayonne Bridge,2013,Jun,Bus,1783
+Bayonne Bridge,2013,Aug,Bus,2172
+Bayonne Bridge,2013,Jul,Bus,1990
+Bayonne Bridge,2013,Feb,Total vehicles,249747
+Bayonne Bridge,2013,Mar,Total vehicles,283081
+Bayonne Bridge,2013,Jul,Total vehicles,299264
+Bayonne Bridge,2013,Dec,Total vehicles,266325
+Bayonne Bridge,2013,Nov,Total vehicles,282641
+Bayonne Bridge,2013,Sep,Total vehicles,286315
+Bayonne Bridge,2013,Oct,Total vehicles,301657
+Bayonne Bridge,2013,Jan,Total vehicles,279932
+Bayonne Bridge,2013,Jun,Total vehicles,293505
+Bayonne Bridge,2013,May,Total vehicles,302573
+Bayonne Bridge,2013,Apr,Total vehicles,288071
+Bayonne Bridge,2013,Aug,Total vehicles,307269
+Bayonne Bridge,2013,Nov,Truck,20202
+Bayonne Bridge,2013,Dec,Truck,18569
+Bayonne Bridge,2013,Apr,Truck,21748
+Bayonne Bridge,2013,Jul,Truck,22379
+Bayonne Bridge,2013,Aug,Truck,24240
+Bayonne Bridge,2013,May,Truck,22145
+Bayonne Bridge,2013,Mar,Truck,20234
+Bayonne Bridge,2013,Feb,Truck,19576
+Bayonne Bridge,2013,Jan,Truck,22877
+Bayonne Bridge,2013,Sep,Truck,22035
+Bayonne Bridge,2013,Jun,Truck,20728
+Bayonne Bridge,2013,Oct,Truck,23405
+Bayonne Bridge,2012,May,Automobile,279834
+Bayonne Bridge,2012,Nov,Automobile,255092
+Bayonne Bridge,2012,Dec,Automobile,264083
+Bayonne Bridge,2012,Jan,Automobile,251641
+Bayonne Bridge,2012,Feb,Automobile,246458
+Bayonne Bridge,2012,Mar,Automobile,271635
+Bayonne Bridge,2012,Oct,Automobile,257249
+Bayonne Bridge,2012,Aug,Automobile,285574
+Bayonne Bridge,2012,Jul,Automobile,274135
+Bayonne Bridge,2012,Sep,Automobile,261214
+Bayonne Bridge,2012,Jun,Automobile,276357
+Bayonne Bridge,2012,Apr,Automobile,265546
+Bayonne Bridge,2012,Jun,Bus,2138
+Bayonne Bridge,2012,Aug,Bus,2171
+Bayonne Bridge,2012,Sep,Bus,1802
+Bayonne Bridge,2012,Oct,Bus,1857
+Bayonne Bridge,2012,Nov,Bus,2621
+Bayonne Bridge,2012,Dec,Bus,1732
+Bayonne Bridge,2012,Mar,Bus,2029
+Bayonne Bridge,2012,Feb,Bus,1752
+Bayonne Bridge,2012,Jan,Bus,1784
+Bayonne Bridge,2012,Apr,Bus,1956
+Bayonne Bridge,2012,May,Bus,2353
+Bayonne Bridge,2012,Jul,Bus,2133
+Bayonne Bridge,2012,Jul,Total vehicles,299695
+Bayonne Bridge,2012,Aug,Total vehicles,312325
+Bayonne Bridge,2012,Jan,Total vehicles,277750
+Bayonne Bridge,2012,Dec,Total vehicles,287728
+Bayonne Bridge,2012,Sep,Total vehicles,283566
+Bayonne Bridge,2012,Oct,Total vehicles,279714
+Bayonne Bridge,2012,Apr,Total vehicles,293024
+Bayonne Bridge,2012,Mar,Total vehicles,299551
+Bayonne Bridge,2012,Nov,Total vehicles,280807
+Bayonne Bridge,2012,Feb,Total vehicles,271941
+Bayonne Bridge,2012,May,Total vehicles,308448
+Bayonne Bridge,2012,Jun,Total vehicles,303953
+Bayonne Bridge,2012,Jul,Truck,23427
+Bayonne Bridge,2012,Dec,Truck,21913
+Bayonne Bridge,2012,Nov,Truck,23094
+Bayonne Bridge,2012,Oct,Truck,20608
+Bayonne Bridge,2012,Sep,Truck,20550
+Bayonne Bridge,2012,Aug,Truck,24580
+Bayonne Bridge,2012,Jun,Truck,25458
+Bayonne Bridge,2012,May,Truck,26261
+Bayonne Bridge,2012,Apr,Truck,25522
+Bayonne Bridge,2012,Mar,Truck,25887
+Bayonne Bridge,2012,Feb,Truck,23731
+Bayonne Bridge,2012,Jan,Truck,24325
+Bayonne Bridge,2011,Dec,Automobile,271087
+Bayonne Bridge,2011,Jan,Automobile,237522
+Bayonne Bridge,2011,Feb,Automobile,232496
+Bayonne Bridge,2011,Mar,Automobile,273643
+Bayonne Bridge,2011,Apr,Automobile,272343
+Bayonne Bridge,2011,May,Automobile,285160
+Bayonne Bridge,2011,Jun,Automobile,284862
+Bayonne Bridge,2011,Jul,Automobile,278601
+Bayonne Bridge,2011,Aug,Automobile,270606
+Bayonne Bridge,2011,Sep,Automobile,267838
+Bayonne Bridge,2011,Oct,Automobile,266971
+Bayonne Bridge,2011,Nov,Automobile,264128
+Bayonne Bridge,2011,May,Bus,2420
+Bayonne Bridge,2011,Dec,Bus,1833
+Bayonne Bridge,2011,Nov,Bus,2120
+Bayonne Bridge,2011,Oct,Bus,2194
+Bayonne Bridge,2011,Sep,Bus,2272
+Bayonne Bridge,2011,Aug,Bus,2212
+Bayonne Bridge,2011,Jul,Bus,2312
+Bayonne Bridge,2011,Jun,Bus,2501
+Bayonne Bridge,2011,Apr,Bus,2187
+Bayonne Bridge,2011,Mar,Bus,2096
+Bayonne Bridge,2011,Feb,Bus,1741
+Bayonne Bridge,2011,Jan,Bus,1743
+Bayonne Bridge,2011,Apr,Total vehicles,300070
+Bayonne Bridge,2011,Oct,Total vehicles,294054
+Bayonne Bridge,2011,Nov,Total vehicles,290553
+Bayonne Bridge,2011,Dec,Total vehicles,297024
+Bayonne Bridge,2011,Jan,Total vehicles,262283
+Bayonne Bridge,2011,Aug,Total vehicles,301245
+Bayonne Bridge,2011,Jun,Total vehicles,314230
+Bayonne Bridge,2011,May,Total vehicles,313124
+Bayonne Bridge,2011,Feb,Total vehicles,257419
+Bayonne Bridge,2011,Mar,Total vehicles,302679
+Bayonne Bridge,2011,Sep,Total vehicles,297538
+Bayonne Bridge,2011,Jul,Total vehicles,306207
+Bayonne Bridge,2011,May,Truck,25544
+Bayonne Bridge,2011,Apr,Truck,25540
+Bayonne Bridge,2011,Mar,Truck,26940
+Bayonne Bridge,2011,Feb,Truck,23182
+Bayonne Bridge,2011,Jan,Truck,23018
+Bayonne Bridge,2011,Dec,Truck,24104
+Bayonne Bridge,2011,Nov,Truck,24305
+Bayonne Bridge,2011,Oct,Truck,24889
+Bayonne Bridge,2011,Sep,Truck,27428
+Bayonne Bridge,2011,Aug,Truck,28427
+Bayonne Bridge,2011,Jul,Truck,25294
+Bayonne Bridge,2011,Jun,Truck,26867
+George Washington Bridge,2015,Mar,Automobile,3622112
+George Washington Bridge,2015,Oct,Automobile,3999640
+George Washington Bridge,2015,Nov,Automobile,3869655
+George Washington Bridge,2015,Sep,Automobile,3899794
+George Washington Bridge,2015,Feb,Automobile,3083340
+George Washington Bridge,2015,Jan,Automobile,3311360
+George Washington Bridge,2015,Dec,Automobile,3964751
+George Washington Bridge,2015,Jun,Automobile,4027236
+George Washington Bridge,2015,Jul,Automobile,4256461
+George Washington Bridge,2015,Apr,Automobile,3839751
+George Washington Bridge,2015,May,Automobile,4118473
+George Washington Bridge,2015,Aug,Automobile,4368773
+George Washington Bridge,2015,Apr,Bus,35430
+George Washington Bridge,2015,Aug,Bus,39849
+George Washington Bridge,2015,Oct,Bus,38397
+George Washington Bridge,2015,Jul,Bus,42976
+George Washington Bridge,2015,Sep,Bus,34414
+George Washington Bridge,2015,Jan,Bus,29809
+George Washington Bridge,2015,Nov,Bus,34845
+George Washington Bridge,2015,Mar,Bus,34389
+George Washington Bridge,2015,May,Bus,38158
+George Washington Bridge,2015,Jun,Bus,38111
+George Washington Bridge,2015,Feb,Bus,29292
+George Washington Bridge,2015,Dec,Bus,33630
+George Washington Bridge,2015,Oct,Total vehicles,4364137
+George Washington Bridge,2015,May,Total vehicles,4465676
+George Washington Bridge,2015,Nov,Total vehicles,4199613
+George Washington Bridge,2015,Jun,Total vehicles,4387567
+George Washington Bridge,2015,Jul,Total vehicles,4622590
+George Washington Bridge,2015,Sep,Total vehicles,4247572
+George Washington Bridge,2015,Dec,Total vehicles,4308497
+George Washington Bridge,2015,Jan,Total vehicles,3613894
+George Washington Bridge,2015,Feb,Total vehicles,3376558
+George Washington Bridge,2015,Mar,Total vehicles,3962433
+George Washington Bridge,2015,Aug,Total vehicles,4721645
+George Washington Bridge,2015,Apr,Total vehicles,4186615
+George Washington Bridge,2015,Jul,Truck,323153
+George Washington Bridge,2015,Mar,Truck,305932
+George Washington Bridge,2015,Jun,Truck,322220
+George Washington Bridge,2015,Aug,Truck,313023
+George Washington Bridge,2015,Sep,Truck,313364
+George Washington Bridge,2015,May,Truck,309045
+George Washington Bridge,2015,Feb,Truck,263926
+George Washington Bridge,2015,Nov,Truck,295113
+George Washington Bridge,2015,Apr,Truck,311434
+George Washington Bridge,2015,Dec,Truck,310116
+George Washington Bridge,2015,Oct,Truck,326100
+George Washington Bridge,2015,Jan,Truck,272725
+George Washington Bridge,2014,May,Automobile,4059315
+George Washington Bridge,2014,Jan,Automobile,3255715
+George Washington Bridge,2014,Mar,Automobile,3667843
+George Washington Bridge,2014,Nov,Automobile,3753086
+George Washington Bridge,2014,Oct,Automobile,3900970
+George Washington Bridge,2014,Sep,Automobile,3821762
+George Washington Bridge,2014,Dec,Automobile,3857135
+George Washington Bridge,2014,Jun,Automobile,3924976
+George Washington Bridge,2014,Jul,Automobile,4041566
+George Washington Bridge,2014,Feb,Automobile,2891336
+George Washington Bridge,2014,Apr,Automobile,3772933
+George Washington Bridge,2014,Aug,Automobile,4188938
+George Washington Bridge,2014,Mar,Bus,35065
+George Washington Bridge,2014,Jan,Bus,30449
+George Washington Bridge,2014,Aug,Bus,40298
+George Washington Bridge,2014,Sep,Bus,34689
+George Washington Bridge,2014,May,Bus,38502
+George Washington Bridge,2014,Apr,Bus,35147
+George Washington Bridge,2014,Dec,Bus,33041
+George Washington Bridge,2014,Nov,Bus,33410
+George Washington Bridge,2014,Feb,Bus,28186
+George Washington Bridge,2014,Oct,Bus,37246
+George Washington Bridge,2014,Jul,Bus,41886
+George Washington Bridge,2014,Jun,Bus,37885
+George Washington Bridge,2014,Nov,Total vehicles,4063038
+George Washington Bridge,2014,May,Total vehicles,4412253
+George Washington Bridge,2014,Mar,Total vehicles,4003444
+George Washington Bridge,2014,Apr,Total vehicles,4118130
+George Washington Bridge,2014,Jul,Total vehicles,4366984
+George Washington Bridge,2014,Jun,Total vehicles,4247633
+George Washington Bridge,2014,Sep,Total vehicles,4141635
+George Washington Bridge,2014,Dec,Total vehicles,4190613
+George Washington Bridge,2014,Aug,Total vehicles,4503805
+George Washington Bridge,2014,Jan,Total vehicles,3569088
+George Washington Bridge,2014,Oct,Total vehicles,4246759
+George Washington Bridge,2014,Feb,Total vehicles,3172907
+George Washington Bridge,2014,May,Truck,314436
+George Washington Bridge,2014,Mar,Truck,300536
+George Washington Bridge,2014,Jan,Truck,282924
+George Washington Bridge,2014,Sep,Truck,285184
+George Washington Bridge,2014,Jul,Truck,283532
+George Washington Bridge,2014,Nov,Truck,276542
+George Washington Bridge,2014,Jun,Truck,284772
+George Washington Bridge,2014,Dec,Truck,300437
+George Washington Bridge,2014,Feb,Truck,253385
+George Washington Bridge,2014,Aug,Truck,274569
+George Washington Bridge,2014,Apr,Truck,310050
+George Washington Bridge,2014,Oct,Truck,308543
+George Washington Bridge,2013,May,Automobile,3981261
+George Washington Bridge,2013,Oct,Automobile,3911303
+George Washington Bridge,2013,Jul,Automobile,4106819
+George Washington Bridge,2013,Jan,Automobile,3492301
+George Washington Bridge,2013,Feb,Automobile,3123248
+George Washington Bridge,2013,Nov,Automobile,3703555
+George Washington Bridge,2013,Aug,Automobile,4152567
+George Washington Bridge,2013,Dec,Automobile,3662840
+George Washington Bridge,2013,Mar,Automobile,3733528
+George Washington Bridge,2013,Apr,Automobile,3766341
+George Washington Bridge,2013,Sep,Automobile,3776525
+George Washington Bridge,2013,Jun,Automobile,3953938
+George Washington Bridge,2013,May,Bus,37779
+George Washington Bridge,2013,Jul,Bus,40797
+George Washington Bridge,2013,Dec,Bus,32715
+George Washington Bridge,2013,Jan,Bus,32511
+George Washington Bridge,2013,Nov,Bus,34300
+George Washington Bridge,2013,Mar,Bus,34418
+George Washington Bridge,2013,Feb,Bus,29704
+George Washington Bridge,2013,Oct,Bus,38981
+George Washington Bridge,2013,Apr,Bus,35943
+George Washington Bridge,2013,Aug,Bus,39525
+George Washington Bridge,2013,Sep,Bus,34975
+George Washington Bridge,2013,Jun,Bus,37751
+George Washington Bridge,2013,May,Total vehicles,4343637
+George Washington Bridge,2013,Apr,Total vehicles,4112127
+George Washington Bridge,2013,Jun,Total vehicles,4291856
+George Washington Bridge,2013,Oct,Total vehicles,4270770
+George Washington Bridge,2013,Nov,Total vehicles,4016385
+George Washington Bridge,2013,Dec,Total vehicles,3980077
+George Washington Bridge,2013,Jul,Total vehicles,4465522
+George Washington Bridge,2013,Aug,Total vehicles,4500807
+George Washington Bridge,2013,Sep,Total vehicles,4098852
+George Washington Bridge,2013,Mar,Total vehicles,4065855
+George Washington Bridge,2013,Feb,Total vehicles,3426080
+George Washington Bridge,2013,Jan,Total vehicles,3830276
+George Washington Bridge,2013,Dec,Truck,284522
+George Washington Bridge,2013,Jul,Truck,317906
+George Washington Bridge,2013,May,Truck,324597
+George Washington Bridge,2013,Jun,Truck,300167
+George Washington Bridge,2013,Mar,Truck,297909
+George Washington Bridge,2013,Oct,Truck,320486
+George Washington Bridge,2013,Nov,Truck,278530
+George Washington Bridge,2013,Aug,Truck,308715
+George Washington Bridge,2013,Sep,Truck,287352
+George Washington Bridge,2013,Feb,Truck,273128
+George Washington Bridge,2013,Jan,Truck,305464
+George Washington Bridge,2013,Apr,Truck,309843
+George Washington Bridge,2012,Sep,Automobile,3745627
+George Washington Bridge,2012,Oct,Automobile,3613061
+George Washington Bridge,2012,Jul,Automobile,3938602
+George Washington Bridge,2012,Nov,Automobile,3530822
+George Washington Bridge,2012,Dec,Automobile,3764422
+George Washington Bridge,2012,Aug,Automobile,4064364
+George Washington Bridge,2012,Jun,Automobile,3950022
+George Washington Bridge,2012,May,Automobile,3989147
+George Washington Bridge,2012,Apr,Automobile,3800033
+George Washington Bridge,2012,Mar,Automobile,3776733
+George Washington Bridge,2012,Feb,Automobile,3403296
+George Washington Bridge,2012,Jan,Automobile,3466198
+George Washington Bridge,2012,Sep,Bus,34274
+George Washington Bridge,2012,Jan,Bus,31139
+George Washington Bridge,2012,Feb,Bus,32270
+George Washington Bridge,2012,Mar,Bus,36306
+George Washington Bridge,2012,Apr,Bus,35555
+George Washington Bridge,2012,May,Bus,38900
+George Washington Bridge,2012,Jun,Bus,38686
+George Washington Bridge,2012,Jul,Bus,40140
+George Washington Bridge,2012,Aug,Bus,39204
+George Washington Bridge,2012,Oct,Bus,35049
+George Washington Bridge,2012,Nov,Bus,34840
+George Washington Bridge,2012,Dec,Bus,33738
+George Washington Bridge,2012,Feb,Total vehicles,3716610
+George Washington Bridge,2012,Mar,Total vehicles,4124500
+George Washington Bridge,2012,Apr,Total vehicles,4134467
+George Washington Bridge,2012,May,Total vehicles,4348902
+George Washington Bridge,2012,Jun,Total vehicles,4298201
+George Washington Bridge,2012,Jan,Total vehicles,3781788
+George Washington Bridge,2012,Jul,Total vehicles,4276079
+George Washington Bridge,2012,Aug,Total vehicles,4422202
+George Washington Bridge,2012,Sep,Total vehicles,4070506
+George Washington Bridge,2012,Oct,Total vehicles,3949978
+George Washington Bridge,2012,Nov,Total vehicles,3892052
+George Washington Bridge,2012,Dec,Total vehicles,4095636
+George Washington Bridge,2012,Feb,Truck,281044
+George Washington Bridge,2012,Oct,Truck,301868
+George Washington Bridge,2012,Jan,Truck,284451
+George Washington Bridge,2012,Sep,Truck,290605
+George Washington Bridge,2012,Aug,Truck,318634
+George Washington Bridge,2012,Jul,Truck,297337
+George Washington Bridge,2012,Jun,Truck,309493
+George Washington Bridge,2012,Dec,Truck,297476
+George Washington Bridge,2012,Nov,Truck,326390
+George Washington Bridge,2012,May,Truck,320855
+George Washington Bridge,2012,Apr,Truck,298879
+George Washington Bridge,2012,Mar,Truck,311461
+George Washington Bridge,2011,Dec,Automobile,3838062
+George Washington Bridge,2011,Feb,Automobile,3272225
+George Washington Bridge,2011,Mar,Automobile,3843661
+George Washington Bridge,2011,Apr,Automobile,3895462
+George Washington Bridge,2011,May,Automobile,4109595
+George Washington Bridge,2011,Jun,Automobile,4087871
+George Washington Bridge,2011,Jan,Automobile,3370936
+George Washington Bridge,2011,Jul,Automobile,4286338
+George Washington Bridge,2011,Aug,Automobile,4029977
+George Washington Bridge,2011,Sep,Automobile,3831941
+George Washington Bridge,2011,Oct,Automobile,3794633
+George Washington Bridge,2011,Nov,Automobile,3755512
+George Washington Bridge,2011,Aug,Bus,44918
+George Washington Bridge,2011,Jan,Bus,36807
+George Washington Bridge,2011,Sep,Bus,39980
+George Washington Bridge,2011,Oct,Bus,37018
+George Washington Bridge,2011,Nov,Bus,35205
+George Washington Bridge,2011,Dec,Bus,33718
+George Washington Bridge,2011,May,Bus,44575
+George Washington Bridge,2011,Mar,Bus,42201
+George Washington Bridge,2011,Jun,Bus,45933
+George Washington Bridge,2011,Jul,Bus,48498
+George Washington Bridge,2011,Apr,Bus,41868
+George Washington Bridge,2011,Feb,Bus,36337
+George Washington Bridge,2011,Nov,Total vehicles,4101174
+George Washington Bridge,2011,Mar,Total vehicles,4221447
+George Washington Bridge,2011,Apr,Total vehicles,4255625
+George Washington Bridge,2011,May,Total vehicles,4483446
+George Washington Bridge,2011,Jun,Total vehicles,4474718
+George Washington Bridge,2011,Jul,Total vehicles,4646097
+George Washington Bridge,2011,Aug,Total vehicles,4415798
+George Washington Bridge,2011,Sep,Total vehicles,4195808
+George Washington Bridge,2011,Jan,Total vehicles,3695684
+George Washington Bridge,2011,Feb,Total vehicles,3587374
+George Washington Bridge,2011,Oct,Total vehicles,4145059
+George Washington Bridge,2011,Dec,Total vehicles,4175177
+George Washington Bridge,2011,Nov,Truck,310457
+George Washington Bridge,2011,Jan,Truck,287941
+George Washington Bridge,2011,Feb,Truck,278812
+George Washington Bridge,2011,Mar,Truck,335585
+George Washington Bridge,2011,Apr,Truck,318295
+George Washington Bridge,2011,May,Truck,329276
+George Washington Bridge,2011,Jun,Truck,340914
+George Washington Bridge,2011,Jul,Truck,311261
+George Washington Bridge,2011,Aug,Truck,340903
+George Washington Bridge,2011,Sep,Truck,323887
+George Washington Bridge,2011,Oct,Truck,313408
+George Washington Bridge,2011,Dec,Truck,303397
+Goethals Bridge,2015,Aug,Automobile,1233125
+Goethals Bridge,2015,Nov,Automobile,1159648
+Goethals Bridge,2015,Jun,Automobile,1129225
+Goethals Bridge,2015,Jul,Automobile,1216797
+Goethals Bridge,2015,Oct,Automobile,1183866
+Goethals Bridge,2015,Apr,Automobile,1111197
+Goethals Bridge,2015,Dec,Automobile,1196600
+Goethals Bridge,2015,Jan,Automobile,934463
+Goethals Bridge,2015,Mar,Automobile,1036220
+Goethals Bridge,2015,May,Automobile,1147791
+Goethals Bridge,2015,Feb,Automobile,890153
+Goethals Bridge,2015,Sep,Automobile,1140655
+Goethals Bridge,2015,Mar,Bus,9755
+Goethals Bridge,2015,Oct,Bus,10481
+Goethals Bridge,2015,May,Bus,10323
+Goethals Bridge,2015,Nov,Bus,8982
+Goethals Bridge,2015,Jun,Bus,10899
+Goethals Bridge,2015,Feb,Bus,8303
+Goethals Bridge,2015,Jul,Bus,10751
+Goethals Bridge,2015,Aug,Bus,10049
+Goethals Bridge,2015,Dec,Bus,9580
+Goethals Bridge,2015,Jan,Bus,8133
+Goethals Bridge,2015,Apr,Bus,10131
+Goethals Bridge,2015,Sep,Bus,9986
+Goethals Bridge,2015,Nov,Total vehicles,1263763
+Goethals Bridge,2015,Oct,Total vehicles,1299405
+Goethals Bridge,2015,Feb,Total vehicles,979080
+Goethals Bridge,2015,Dec,Total vehicles,1307038
+Goethals Bridge,2015,Jul,Total vehicles,1334481
+Goethals Bridge,2015,Jan,Total vehicles,1025364
+Goethals Bridge,2015,Mar,Total vehicles,1139980
+Goethals Bridge,2015,Apr,Total vehicles,1218600
+Goethals Bridge,2015,May,Total vehicles,1255932
+Goethals Bridge,2015,Jun,Total vehicles,1244082
+Goethals Bridge,2015,Aug,Total vehicles,1343397
+Goethals Bridge,2015,Sep,Total vehicles,1252046
+Goethals Bridge,2015,Jul,Truck,106933
+Goethals Bridge,2015,Dec,Truck,100858
+Goethals Bridge,2015,Aug,Truck,100223
+Goethals Bridge,2015,Feb,Truck,80624
+Goethals Bridge,2015,Mar,Truck,94005
+Goethals Bridge,2015,Jun,Truck,103958
+Goethals Bridge,2015,Apr,Truck,97272
+Goethals Bridge,2015,Nov,Truck,95133
+Goethals Bridge,2015,May,Truck,97818
+Goethals Bridge,2015,Sep,Truck,101405
+Goethals Bridge,2015,Oct,Truck,105058
+Goethals Bridge,2015,Jan,Truck,82768
+Goethals Bridge,2014,Aug,Automobile,1208704
+Goethals Bridge,2014,Oct,Automobile,1080707
+Goethals Bridge,2014,Mar,Automobile,995437
+Goethals Bridge,2014,Jul,Automobile,1154540
+Goethals Bridge,2014,May,Automobile,1138786
+Goethals Bridge,2014,Jun,Automobile,1114883
+Goethals Bridge,2014,Sep,Automobile,1074889
+Goethals Bridge,2014,Apr,Automobile,1051963
+Goethals Bridge,2014,Jan,Automobile,878738
+Goethals Bridge,2014,Nov,Automobile,1045803
+Goethals Bridge,2014,Feb,Automobile,789584
+Goethals Bridge,2014,Dec,Automobile,1083542
+Goethals Bridge,2014,Apr,Bus,9074
+Goethals Bridge,2014,Jan,Bus,7699
+Goethals Bridge,2014,Aug,Bus,10473
+Goethals Bridge,2014,Jun,Bus,10102
+Goethals Bridge,2014,Nov,Bus,8641
+Goethals Bridge,2014,Dec,Bus,8914
+Goethals Bridge,2014,Oct,Bus,10408
+Goethals Bridge,2014,Jul,Bus,10418
+Goethals Bridge,2014,Feb,Bus,7186
+Goethals Bridge,2014,Sep,Bus,9521
+Goethals Bridge,2014,May,Bus,10037
+Goethals Bridge,2014,Mar,Bus,8699
+Goethals Bridge,2014,Mar,Total vehicles,1099805
+Goethals Bridge,2014,Oct,Total vehicles,1193422
+Goethals Bridge,2014,Jan,Total vehicles,975666
+Goethals Bridge,2014,May,Total vehicles,1249255
+Goethals Bridge,2014,Apr,Total vehicles,1156609
+Goethals Bridge,2014,Feb,Total vehicles,876723
+Goethals Bridge,2014,Jun,Total vehicles,1226958
+Goethals Bridge,2014,Jul,Total vehicles,1270819
+Goethals Bridge,2014,Nov,Total vehicles,1139796
+Goethals Bridge,2014,Dec,Total vehicles,1184769
+Goethals Bridge,2014,Aug,Total vehicles,1318147
+Goethals Bridge,2014,Sep,Total vehicles,1184505
+Goethals Bridge,2014,Jan,Truck,89229
+Goethals Bridge,2014,Mar,Truck,95669
+Goethals Bridge,2014,Oct,Truck,102307
+Goethals Bridge,2014,Feb,Truck,79953
+Goethals Bridge,2014,Jun,Truck,101973
+Goethals Bridge,2014,Dec,Truck,92313
+Goethals Bridge,2014,Sep,Truck,100095
+Goethals Bridge,2014,Aug,Truck,98970
+Goethals Bridge,2014,Jul,Truck,105861
+Goethals Bridge,2014,May,Truck,100432
+Goethals Bridge,2014,Nov,Truck,85352
+Goethals Bridge,2014,Apr,Truck,95572
+Goethals Bridge,2013,Nov,Automobile,1021910
+Goethals Bridge,2013,Oct,Automobile,1117146
+Goethals Bridge,2013,Apr,Automobile,1017343
+Goethals Bridge,2013,May,Automobile,1076043
+Goethals Bridge,2013,Jun,Automobile,1083832
+Goethals Bridge,2013,Dec,Automobile,1038184
+Goethals Bridge,2013,Sep,Automobile,1124392
+Goethals Bridge,2013,Aug,Automobile,1241481
+Goethals Bridge,2013,Jul,Automobile,1189012
+Goethals Bridge,2013,Jan,Automobile,962190
+Goethals Bridge,2013,Feb,Automobile,854167
+Goethals Bridge,2013,Mar,Automobile,1034280
+Goethals Bridge,2013,Jul,Bus,10379
+Goethals Bridge,2013,Feb,Bus,7817
+Goethals Bridge,2013,Jan,Bus,8689
+Goethals Bridge,2013,Oct,Bus,9848
+Goethals Bridge,2013,Dec,Bus,8181
+Goethals Bridge,2013,Aug,Bus,10470
+Goethals Bridge,2013,May,Bus,9606
+Goethals Bridge,2013,Jun,Bus,9622
+Goethals Bridge,2013,Nov,Bus,8010
+Goethals Bridge,2013,Mar,Bus,9349
+Goethals Bridge,2013,Apr,Bus,9786
+Goethals Bridge,2013,Sep,Bus,8874
+Goethals Bridge,2013,Jun,Total vehicles,1186320
+Goethals Bridge,2013,Dec,Total vehicles,1140219
+Goethals Bridge,2013,Oct,Total vehicles,1240313
+Goethals Bridge,2013,Jul,Total vehicles,1309880
+Goethals Bridge,2013,Aug,Total vehicles,1368812
+Goethals Bridge,2013,Nov,Total vehicles,1122564
+Goethals Bridge,2013,Jan,Total vehicles,1068959
+Goethals Bridge,2013,Sep,Total vehicles,1240948
+Goethals Bridge,2013,Mar,Total vehicles,1134529
+Goethals Bridge,2013,Feb,Total vehicles,947736
+Goethals Bridge,2013,Apr,Total vehicles,1123174
+Goethals Bridge,2013,May,Total vehicles,1182806
+Goethals Bridge,2013,May,Truck,97157
+Goethals Bridge,2013,Dec,Truck,93854
+Goethals Bridge,2013,Nov,Truck,92644
+Goethals Bridge,2013,Oct,Truck,113319
+Goethals Bridge,2013,Jan,Truck,98080
+Goethals Bridge,2013,Feb,Truck,85752
+Goethals Bridge,2013,Mar,Truck,90900
+Goethals Bridge,2013,Sep,Truck,107682
+Goethals Bridge,2013,Aug,Truck,116861
+Goethals Bridge,2013,Jul,Truck,110489
+Goethals Bridge,2013,Apr,Truck,96045
+Goethals Bridge,2013,Jun,Truck,92866
+Goethals Bridge,2012,Jun,Automobile,1108960
+Goethals Bridge,2012,Feb,Automobile,933634
+Goethals Bridge,2012,Jan,Automobile,953229
+Goethals Bridge,2012,Aug,Automobile,1179889
+Goethals Bridge,2012,Mar,Automobile,1030675
+Goethals Bridge,2012,Apr,Automobile,1051085
+Goethals Bridge,2012,Sep,Automobile,1053576
+Goethals Bridge,2012,May,Automobile,1096654
+Goethals Bridge,2012,Jul,Automobile,1160643
+Goethals Bridge,2012,Oct,Automobile,991045
+Goethals Bridge,2012,Nov,Automobile,1034847
+Goethals Bridge,2012,Dec,Automobile,1063539
+Goethals Bridge,2012,Jul,Bus,10861
+Goethals Bridge,2012,Feb,Bus,8401
+Goethals Bridge,2012,Jan,Bus,8407
+Goethals Bridge,2012,Aug,Bus,11234
+Goethals Bridge,2012,Sep,Bus,8753
+Goethals Bridge,2012,Mar,Bus,9867
+Goethals Bridge,2012,Oct,Bus,9078
+Goethals Bridge,2012,Apr,Bus,9762
+Goethals Bridge,2012,May,Bus,10566
+Goethals Bridge,2012,Nov,Bus,10640
+Goethals Bridge,2012,Dec,Bus,8586
+Goethals Bridge,2012,Jun,Bus,10675
+Goethals Bridge,2012,Jun,Total vehicles,1230779
+Goethals Bridge,2012,Nov,Total vehicles,1153915
+Goethals Bridge,2012,Oct,Total vehicles,1091633
+Goethals Bridge,2012,Sep,Total vehicles,1153291
+Goethals Bridge,2012,Aug,Total vehicles,1296117
+Goethals Bridge,2012,Jul,Total vehicles,1277963
+Goethals Bridge,2012,May,Total vehicles,1216872
+Goethals Bridge,2012,Apr,Total vehicles,1166113
+Goethals Bridge,2012,Mar,Total vehicles,1148825
+Goethals Bridge,2012,Feb,Total vehicles,1039786
+Goethals Bridge,2012,Jan,Total vehicles,1061906
+Goethals Bridge,2012,Dec,Total vehicles,1166420
+Goethals Bridge,2012,Oct,Truck,91510
+Goethals Bridge,2012,Aug,Truck,104994
+Goethals Bridge,2012,Jul,Truck,106459
+Goethals Bridge,2012,Jan,Truck,100270
+Goethals Bridge,2012,Nov,Truck,108428
+Goethals Bridge,2012,Jun,Truck,111144
+Goethals Bridge,2012,May,Truck,109652
+Goethals Bridge,2012,Feb,Truck,97751
+Goethals Bridge,2012,Dec,Truck,94295
+Goethals Bridge,2012,Mar,Truck,108283
+Goethals Bridge,2012,Apr,Truck,105266
+Goethals Bridge,2012,Sep,Truck,90962
+Goethals Bridge,2011,Oct,Automobile,1067176
+Goethals Bridge,2011,Sep,Automobile,1076713
+Goethals Bridge,2011,Mar,Automobile,1044992
+Goethals Bridge,2011,Dec,Automobile,1083376
+Goethals Bridge,2011,Jun,Automobile,1121666
+Goethals Bridge,2011,Jul,Automobile,1206196
+Goethals Bridge,2011,Apr,Automobile,1053866
+Goethals Bridge,2011,Feb,Automobile,896210
+Goethals Bridge,2011,May,Automobile,1128772
+Goethals Bridge,2011,Jan,Automobile,908233
+Goethals Bridge,2011,Aug,Automobile,1125589
+Goethals Bridge,2011,Nov,Automobile,1053908
+Goethals Bridge,2011,Dec,Bus,8265
+Goethals Bridge,2011,Jan,Bus,8722
+Goethals Bridge,2011,Feb,Bus,8511
+Goethals Bridge,2011,Mar,Bus,10411
+Goethals Bridge,2011,Apr,Bus,10157
+Goethals Bridge,2011,May,Bus,10978
+Goethals Bridge,2011,Jun,Bus,11390
+Goethals Bridge,2011,Jul,Bus,11227
+Goethals Bridge,2011,Aug,Bus,11495
+Goethals Bridge,2011,Sep,Bus,9740
+Goethals Bridge,2011,Oct,Bus,9692
+Goethals Bridge,2011,Nov,Bus,8948
+Goethals Bridge,2011,Jul,Total vehicles,1325269
+Goethals Bridge,2011,Aug,Total vehicles,1255443
+Goethals Bridge,2011,Dec,Total vehicles,1195988
+Goethals Bridge,2011,Nov,Total vehicles,1169558
+Goethals Bridge,2011,Jan,Total vehicles,1013561
+Goethals Bridge,2011,Feb,Total vehicles,1000142
+Goethals Bridge,2011,Mar,Total vehicles,1168410
+Goethals Bridge,2011,Apr,Total vehicles,1166681
+Goethals Bridge,2011,Oct,Total vehicles,1186503
+Goethals Bridge,2011,Sep,Total vehicles,1198164
+Goethals Bridge,2011,May,Total vehicles,1249166
+Goethals Bridge,2011,Jun,Total vehicles,1249564
+Goethals Bridge,2011,Nov,Truck,106702
+Goethals Bridge,2011,Mar,Truck,113007
+Goethals Bridge,2011,Feb,Truck,95421
+Goethals Bridge,2011,May,Truck,109416
+Goethals Bridge,2011,Apr,Truck,102658
+Goethals Bridge,2011,Jan,Truck,96606
+Goethals Bridge,2011,Dec,Truck,104347
+Goethals Bridge,2011,Jul,Truck,107846
+Goethals Bridge,2011,Aug,Truck,118359
+Goethals Bridge,2011,Sep,Truck,111711
+Goethals Bridge,2011,Jun,Truck,116508
+Goethals Bridge,2011,Oct,Truck,109635
+Holland Tunnel,2015,Nov,Automobile,1215957
+Holland Tunnel,2015,Feb,Automobile,1056817
+Holland Tunnel,2015,Sep,Automobile,1207708
+Holland Tunnel,2015,Jul,Automobile,1295057
+Holland Tunnel,2015,Mar,Automobile,1205470
+Holland Tunnel,2015,Jun,Automobile,1273302
+Holland Tunnel,2015,Dec,Automobile,1261524
+Holland Tunnel,2015,Oct,Automobile,1271702
+Holland Tunnel,2015,Aug,Automobile,1306637
+Holland Tunnel,2015,Jan,Automobile,1099574
+Holland Tunnel,2015,Apr,Automobile,1248189
+Holland Tunnel,2015,May,Automobile,1320456
+Holland Tunnel,2015,Oct,Bus,17683
+Holland Tunnel,2015,Mar,Bus,15778
+Holland Tunnel,2015,Feb,Bus,13670
+Holland Tunnel,2015,Jan,Bus,13413
+Holland Tunnel,2015,Dec,Bus,14938
+Holland Tunnel,2015,Jul,Bus,19789
+Holland Tunnel,2015,Jun,Bus,18266
+Holland Tunnel,2015,Sep,Bus,17035
+Holland Tunnel,2015,Aug,Bus,18912
+Holland Tunnel,2015,Nov,Bus,14850
+Holland Tunnel,2015,Apr,Bus,17087
+Holland Tunnel,2015,May,Bus,17872
+Holland Tunnel,2015,Jun,Total vehicles,1330957
+Holland Tunnel,2015,Dec,Total vehicles,1314614
+Holland Tunnel,2015,Apr,Total vehicles,1302519
+Holland Tunnel,2015,Sep,Total vehicles,1262846
+Holland Tunnel,2015,Mar,Total vehicles,1258086
+Holland Tunnel,2015,Jan,Total vehicles,1146262
+Holland Tunnel,2015,Jul,Total vehicles,1354588
+Holland Tunnel,2015,Feb,Total vehicles,1103138
+Holland Tunnel,2015,Oct,Total vehicles,1329328
+Holland Tunnel,2015,May,Total vehicles,1375465
+Holland Tunnel,2015,Nov,Total vehicles,1267025
+Holland Tunnel,2015,Aug,Total vehicles,1364192
+Holland Tunnel,2015,Feb,Truck,32651
+Holland Tunnel,2015,Jun,Truck,39389
+Holland Tunnel,2015,Mar,Truck,36838
+Holland Tunnel,2015,Sep,Truck,38103
+Holland Tunnel,2015,May,Truck,37137
+Holland Tunnel,2015,Jul,Truck,39742
+Holland Tunnel,2015,Aug,Truck,38643
+Holland Tunnel,2015,Dec,Truck,38152
+Holland Tunnel,2015,Apr,Truck,37243
+Holland Tunnel,2015,Oct,Truck,39943
+Holland Tunnel,2015,Jan,Truck,33275
+Holland Tunnel,2015,Nov,Truck,36218
+Holland Tunnel,2014,Apr,Automobile,1221890
+Holland Tunnel,2014,Jan,Automobile,1132938
+Holland Tunnel,2014,Mar,Automobile,1261875
+Holland Tunnel,2014,Sep,Automobile,1256700
+Holland Tunnel,2014,Jul,Automobile,1306025
+Holland Tunnel,2014,Oct,Automobile,1279894
+Holland Tunnel,2014,Feb,Automobile,1017220
+Holland Tunnel,2014,May,Automobile,1303867
+Holland Tunnel,2014,Jun,Automobile,1289702
+Holland Tunnel,2014,Dec,Automobile,1278468
+Holland Tunnel,2014,Aug,Automobile,1337589
+Holland Tunnel,2014,Nov,Automobile,1229097
+Holland Tunnel,2014,Sep,Bus,18136
+Holland Tunnel,2014,Oct,Bus,18877
+Holland Tunnel,2014,Nov,Bus,15447
+Holland Tunnel,2014,Jul,Bus,20614
+Holland Tunnel,2014,Apr,Bus,17915
+Holland Tunnel,2014,Jun,Bus,19446
+Holland Tunnel,2014,Mar,Bus,16173
+Holland Tunnel,2014,Aug,Bus,20355
+Holland Tunnel,2014,Feb,Bus,13351
+Holland Tunnel,2014,May,Bus,18857
+Holland Tunnel,2014,Dec,Bus,15644
+Holland Tunnel,2014,Jan,Bus,14519
+Holland Tunnel,2014,Nov,Total vehicles,1278995
+Holland Tunnel,2014,Apr,Total vehicles,1276855
+Holland Tunnel,2014,Aug,Total vehicles,1397065
+Holland Tunnel,2014,Jun,Total vehicles,1347706
+Holland Tunnel,2014,Feb,Total vehicles,1061542
+Holland Tunnel,2014,Dec,Total vehicles,1331235
+Holland Tunnel,2014,Sep,Total vehicles,1313770
+Holland Tunnel,2014,Mar,Total vehicles,1314376
+Holland Tunnel,2014,Oct,Total vehicles,1339190
+Holland Tunnel,2014,Jul,Total vehicles,1366826
+Holland Tunnel,2014,Jan,Total vehicles,1182062
+Holland Tunnel,2014,May,Total vehicles,1360976
+Holland Tunnel,2014,Sep,Truck,38934
+Holland Tunnel,2014,Dec,Truck,37123
+Holland Tunnel,2014,Nov,Truck,34451
+Holland Tunnel,2014,Oct,Truck,40419
+Holland Tunnel,2014,Feb,Truck,30971
+Holland Tunnel,2014,Jul,Truck,40187
+Holland Tunnel,2014,Aug,Truck,39121
+Holland Tunnel,2014,Jan,Truck,34605
+Holland Tunnel,2014,May,Truck,38252
+Holland Tunnel,2014,Mar,Truck,36328
+Holland Tunnel,2014,Apr,Truck,37050
+Holland Tunnel,2014,Jun,Truck,38558
+Holland Tunnel,2013,Jul,Automobile,1344131
+Holland Tunnel,2013,May,Automobile,1351918
+Holland Tunnel,2013,Jun,Automobile,1331205
+Holland Tunnel,2013,Oct,Automobile,1338370
+Holland Tunnel,2013,Nov,Automobile,1274789
+Holland Tunnel,2013,Feb,Automobile,1111849
+Holland Tunnel,2013,Jan,Automobile,1233012
+Holland Tunnel,2013,Dec,Automobile,1288600
+Holland Tunnel,2013,Sep,Automobile,1271663
+Holland Tunnel,2013,Aug,Automobile,1348026
+Holland Tunnel,2013,Apr,Automobile,1299892
+Holland Tunnel,2013,Mar,Automobile,1317115
+Holland Tunnel,2013,Jul,Bus,21010
+Holland Tunnel,2013,Sep,Bus,17613
+Holland Tunnel,2013,Jan,Bus,16540
+Holland Tunnel,2013,Feb,Bus,15234
+Holland Tunnel,2013,Mar,Bus,17856
+Holland Tunnel,2013,Nov,Bus,16593
+Holland Tunnel,2013,Jun,Bus,19084
+Holland Tunnel,2013,May,Bus,20402
+Holland Tunnel,2013,Aug,Bus,20668
+Holland Tunnel,2013,Apr,Bus,18944
+Holland Tunnel,2013,Oct,Bus,19337
+Holland Tunnel,2013,Dec,Bus,16289
+Holland Tunnel,2013,Apr,Total vehicles,1355016
+Holland Tunnel,2013,Oct,Total vehicles,1396817
+Holland Tunnel,2013,Aug,Total vehicles,1406358
+Holland Tunnel,2013,Sep,Total vehicles,1323592
+Holland Tunnel,2013,Nov,Total vehicles,1326572
+Holland Tunnel,2013,Jul,Total vehicles,1403023
+Holland Tunnel,2013,Feb,Total vehicles,1157853
+Holland Tunnel,2013,Dec,Total vehicles,1339287
+Holland Tunnel,2013,Mar,Total vehicles,1369232
+Holland Tunnel,2013,Jan,Total vehicles,1283310
+Holland Tunnel,2013,Jun,Total vehicles,1386529
+Holland Tunnel,2013,May,Total vehicles,1409980
+Holland Tunnel,2013,Oct,Truck,39110
+Holland Tunnel,2013,Nov,Truck,35190
+Holland Tunnel,2013,May,Truck,37660
+Holland Tunnel,2013,Apr,Truck,36180
+Holland Tunnel,2013,Aug,Truck,37664
+Holland Tunnel,2013,Mar,Truck,34261
+Holland Tunnel,2013,Sep,Truck,34316
+Holland Tunnel,2013,Jun,Truck,36240
+Holland Tunnel,2013,Dec,Truck,34398
+Holland Tunnel,2013,Feb,Truck,30770
+Holland Tunnel,2013,Jan,Truck,33758
+Holland Tunnel,2013,Jul,Truck,37882
+Holland Tunnel,2012,Jan,Automobile,1238578
+Holland Tunnel,2012,Feb,Automobile,1210725
+Holland Tunnel,2012,Mar,Automobile,1354370
+Holland Tunnel,2012,Apr,Automobile,1313721
+Holland Tunnel,2012,May,Automobile,1383353
+Holland Tunnel,2012,Jun,Automobile,1369231
+Holland Tunnel,2012,Jul,Automobile,1364617
+Holland Tunnel,2012,Aug,Automobile,1384751
+Holland Tunnel,2012,Sep,Automobile,1296412
+Holland Tunnel,2012,Oct,Automobile,1219479
+Holland Tunnel,2012,Nov,Automobile,1003234
+Holland Tunnel,2012,Dec,Automobile,1350480
+Holland Tunnel,2012,Nov,Bus,16386
+Holland Tunnel,2012,Oct,Bus,18897
+Holland Tunnel,2012,Sep,Bus,18719
+Holland Tunnel,2012,Dec,Bus,17688
+Holland Tunnel,2012,Aug,Bus,22344
+Holland Tunnel,2012,Jul,Bus,21750
+Holland Tunnel,2012,Jun,Bus,20423
+Holland Tunnel,2012,May,Bus,21941
+Holland Tunnel,2012,Apr,Bus,20079
+Holland Tunnel,2012,Mar,Bus,19790
+Holland Tunnel,2012,Feb,Bus,17398
+Holland Tunnel,2012,Jan,Bus,18492
+Holland Tunnel,2012,Aug,Total vehicles,1444077
+Holland Tunnel,2012,Jul,Total vehicles,1421140
+Holland Tunnel,2012,Jun,Total vehicles,1424569
+Holland Tunnel,2012,May,Total vehicles,1440753
+Holland Tunnel,2012,Apr,Total vehicles,1365421
+Holland Tunnel,2012,Mar,Total vehicles,1408648
+Holland Tunnel,2012,Jan,Total vehicles,1287761
+Holland Tunnel,2012,Feb,Total vehicles,1258525
+Holland Tunnel,2012,Nov,Total vehicles,1046097
+Holland Tunnel,2012,Dec,Total vehicles,1399951
+Holland Tunnel,2012,Sep,Total vehicles,1348588
+Holland Tunnel,2012,Oct,Total vehicles,1272003
+Holland Tunnel,2012,Jan,Truck,30691
+Holland Tunnel,2012,Dec,Truck,31783
+Holland Tunnel,2012,Nov,Truck,26477
+Holland Tunnel,2012,Oct,Truck,33627
+Holland Tunnel,2012,Sep,Truck,33457
+Holland Tunnel,2012,Aug,Truck,36982
+Holland Tunnel,2012,Jul,Truck,34773
+Holland Tunnel,2012,Jun,Truck,34915
+Holland Tunnel,2012,May,Truck,35459
+Holland Tunnel,2012,Apr,Truck,31621
+Holland Tunnel,2012,Mar,Truck,34488
+Holland Tunnel,2012,Feb,Truck,30402
+Holland Tunnel,2011,Feb,Automobile,1183356
+Holland Tunnel,2011,Apr,Automobile,1354127
+Holland Tunnel,2011,Mar,Automobile,1383611
+Holland Tunnel,2011,Jan,Automobile,1192262
+Holland Tunnel,2011,May,Automobile,1404464
+Holland Tunnel,2011,Jun,Automobile,1392537
+Holland Tunnel,2011,Jul,Automobile,1415311
+Holland Tunnel,2011,Dec,Automobile,1369636
+Holland Tunnel,2011,Nov,Automobile,1308279
+Holland Tunnel,2011,Sep,Automobile,1292859
+Holland Tunnel,2011,Oct,Automobile,1337877
+Holland Tunnel,2011,Aug,Automobile,1333653
+Holland Tunnel,2011,Jul,Bus,25336
+Holland Tunnel,2011,Jan,Bus,18936
+Holland Tunnel,2011,Feb,Bus,18580
+Holland Tunnel,2011,Mar,Bus,22661
+Holland Tunnel,2011,Apr,Bus,22175
+Holland Tunnel,2011,May,Bus,24059
+Holland Tunnel,2011,Jun,Bus,23971
+Holland Tunnel,2011,Aug,Bus,25690
+Holland Tunnel,2011,Sep,Bus,23379
+Holland Tunnel,2011,Oct,Bus,22350
+Holland Tunnel,2011,Nov,Bus,20367
+Holland Tunnel,2011,Dec,Bus,20700
+Holland Tunnel,2011,Nov,Total vehicles,1360280
+Holland Tunnel,2011,Apr,Total vehicles,1403554
+Holland Tunnel,2011,Sep,Total vehicles,1347191
+Holland Tunnel,2011,Jun,Total vehicles,1447245
+Holland Tunnel,2011,Oct,Total vehicles,1391174
+Holland Tunnel,2011,Mar,Total vehicles,1435707
+Holland Tunnel,2011,Feb,Total vehicles,1226770
+Holland Tunnel,2011,Jan,Total vehicles,1236450
+Holland Tunnel,2011,Jul,Total vehicles,1469957
+Holland Tunnel,2011,Dec,Total vehicles,1422961
+Holland Tunnel,2011,Aug,Total vehicles,1391267
+Holland Tunnel,2011,May,Total vehicles,1457144
+Holland Tunnel,2011,Mar,Truck,29435
+Holland Tunnel,2011,Aug,Truck,31924
+Holland Tunnel,2011,Jul,Truck,29310
+Holland Tunnel,2011,Jun,Truck,30737
+Holland Tunnel,2011,May,Truck,28621
+Holland Tunnel,2011,Apr,Truck,27252
+Holland Tunnel,2011,Jan,Truck,25252
+Holland Tunnel,2011,Feb,Truck,24834
+Holland Tunnel,2011,Dec,Truck,32625
+Holland Tunnel,2011,Nov,Truck,31634
+Holland Tunnel,2011,Oct,Truck,30947
+Holland Tunnel,2011,Sep,Truck,30953
+Lincoln Tunnel,2015,Jan,Automobile,1160866
+Lincoln Tunnel,2015,Apr,Automobile,1320491
+Lincoln Tunnel,2015,Sep,Automobile,1285083
+Lincoln Tunnel,2015,Mar,Automobile,1311351
+Lincoln Tunnel,2015,Oct,Automobile,1390624
+Lincoln Tunnel,2015,May,Automobile,1395215
+Lincoln Tunnel,2015,Nov,Automobile,1327395
+Lincoln Tunnel,2015,Aug,Automobile,1384856
+Lincoln Tunnel,2015,Feb,Automobile,1112701
+Lincoln Tunnel,2015,Dec,Automobile,1357457
+Lincoln Tunnel,2015,Jul,Automobile,1330841
+Lincoln Tunnel,2015,Jun,Automobile,1329203
+Lincoln Tunnel,2015,Nov,Bus,175044
+Lincoln Tunnel,2015,Dec,Bus,186868
+Lincoln Tunnel,2015,Jun,Bus,186037
+Lincoln Tunnel,2015,Feb,Bus,157239
+Lincoln Tunnel,2015,Apr,Bus,185596
+Lincoln Tunnel,2015,Mar,Bus,182622
+Lincoln Tunnel,2015,Jul,Bus,190153
+Lincoln Tunnel,2015,Sep,Bus,180078
+Lincoln Tunnel,2015,May,Bus,182975
+Lincoln Tunnel,2015,Aug,Bus,184868
+Lincoln Tunnel,2015,Oct,Bus,188112
+Lincoln Tunnel,2015,Jan,Bus,165278
+Lincoln Tunnel,2015,Oct,Total vehicles,1674385
+Lincoln Tunnel,2015,Jul,Total vehicles,1614447
+Lincoln Tunnel,2015,Jun,Total vehicles,1610822
+Lincoln Tunnel,2015,Nov,Total vehicles,1590190
+Lincoln Tunnel,2015,Jan,Total vehicles,1401488
+Lincoln Tunnel,2015,Mar,Total vehicles,1582276
+Lincoln Tunnel,2015,Aug,Total vehicles,1659999
+Lincoln Tunnel,2015,Apr,Total vehicles,1596498
+Lincoln Tunnel,2015,Dec,Total vehicles,1631931
+Lincoln Tunnel,2015,Feb,Total vehicles,1344534
+Lincoln Tunnel,2015,Sep,Total vehicles,1555832
+Lincoln Tunnel,2015,May,Total vehicles,1669186
+Lincoln Tunnel,2015,May,Truck,90996
+Lincoln Tunnel,2015,Sep,Truck,90671
+Lincoln Tunnel,2015,Apr,Truck,90411
+Lincoln Tunnel,2015,Feb,Truck,74594
+Lincoln Tunnel,2015,Mar,Truck,88303
+Lincoln Tunnel,2015,Aug,Truck,90275
+Lincoln Tunnel,2015,Oct,Truck,95649
+Lincoln Tunnel,2015,Dec,Truck,87606
+Lincoln Tunnel,2015,Jul,Truck,93453
+Lincoln Tunnel,2015,Nov,Truck,87751
+Lincoln Tunnel,2015,Jan,Truck,75344
+Lincoln Tunnel,2015,Jun,Truck,95582
+Lincoln Tunnel,2014,Jun,Automobile,1363822
+Lincoln Tunnel,2014,Mar,Automobile,1312849
+Lincoln Tunnel,2014,Feb,Automobile,1050042
+Lincoln Tunnel,2014,Aug,Automobile,1369748
+Lincoln Tunnel,2014,Dec,Automobile,1332199
+Lincoln Tunnel,2014,May,Automobile,1389716
+Lincoln Tunnel,2014,Apr,Automobile,1322246
+Lincoln Tunnel,2014,Nov,Automobile,1294683
+Lincoln Tunnel,2014,Jan,Automobile,1159422
+Lincoln Tunnel,2014,Sep,Automobile,1306417
+Lincoln Tunnel,2014,Oct,Automobile,1368904
+Lincoln Tunnel,2014,Jul,Automobile,1326877
+Lincoln Tunnel,2014,Jan,Bus,168063
+Lincoln Tunnel,2014,Oct,Bus,193430
+Lincoln Tunnel,2014,Aug,Bus,186013
+Lincoln Tunnel,2014,Sep,Bus,180691
+Lincoln Tunnel,2014,Feb,Bus,152260
+Lincoln Tunnel,2014,Jun,Bus,181313
+Lincoln Tunnel,2014,Nov,Bus,171803
+Lincoln Tunnel,2014,Apr,Bus,182730
+Lincoln Tunnel,2014,Dec,Bus,185247
+Lincoln Tunnel,2014,May,Bus,185988
+Lincoln Tunnel,2014,Jul,Bus,187178
+Lincoln Tunnel,2014,Mar,Bus,176087
+Lincoln Tunnel,2014,Aug,Total vehicles,1643217
+Lincoln Tunnel,2014,May,Total vehicles,1666298
+Lincoln Tunnel,2014,Jul,Total vehicles,1603049
+Lincoln Tunnel,2014,Jan,Total vehicles,1409508
+Lincoln Tunnel,2014,Dec,Total vehicles,1603447
+Lincoln Tunnel,2014,Jun,Total vehicles,1635328
+Lincoln Tunnel,2014,Nov,Total vehicles,1548544
+Lincoln Tunnel,2014,Mar,Total vehicles,1574585
+Lincoln Tunnel,2014,Apr,Total vehicles,1594801
+Lincoln Tunnel,2014,Sep,Total vehicles,1576301
+Lincoln Tunnel,2014,Oct,Total vehicles,1658428
+Lincoln Tunnel,2014,Feb,Total vehicles,1277459
+Lincoln Tunnel,2014,Apr,Truck,89825
+Lincoln Tunnel,2014,Oct,Truck,96094
+Lincoln Tunnel,2014,Nov,Truck,82058
+Lincoln Tunnel,2014,Mar,Truck,85649
+Lincoln Tunnel,2014,Dec,Truck,86001
+Lincoln Tunnel,2014,Sep,Truck,89193
+Lincoln Tunnel,2014,Feb,Truck,75157
+Lincoln Tunnel,2014,Jul,Truck,88994
+Lincoln Tunnel,2014,Jan,Truck,82023
+Lincoln Tunnel,2014,Aug,Truck,87456
+Lincoln Tunnel,2014,May,Truck,90594
+Lincoln Tunnel,2014,Jun,Truck,90193
+Lincoln Tunnel,2013,Dec,Automobile,1305674
+Lincoln Tunnel,2013,Sep,Automobile,1303675
+Lincoln Tunnel,2013,Aug,Automobile,1378856
+Lincoln Tunnel,2013,Jul,Automobile,1306647
+Lincoln Tunnel,2013,Jun,Automobile,1335536
+Lincoln Tunnel,2013,May,Automobile,1356218
+Lincoln Tunnel,2013,Apr,Automobile,1296866
+Lincoln Tunnel,2013,Mar,Automobile,1326952
+Lincoln Tunnel,2013,Feb,Automobile,1097250
+Lincoln Tunnel,2013,Jan,Automobile,1219523
+Lincoln Tunnel,2013,Oct,Automobile,1351104
+Lincoln Tunnel,2013,Nov,Automobile,1301802
+Lincoln Tunnel,2013,Dec,Bus,178956
+Lincoln Tunnel,2013,Sep,Bus,171687
+Lincoln Tunnel,2013,Aug,Bus,186154
+Lincoln Tunnel,2013,Jul,Bus,185458
+Lincoln Tunnel,2013,Mar,Bus,176558
+Lincoln Tunnel,2013,Feb,Bus,153534
+Lincoln Tunnel,2013,Jan,Bus,172246
+Lincoln Tunnel,2013,Jun,Bus,175656
+Lincoln Tunnel,2013,May,Bus,186529
+Lincoln Tunnel,2013,Apr,Bus,181173
+Lincoln Tunnel,2013,Nov,Bus,171875
+Lincoln Tunnel,2013,Oct,Bus,188012
+Lincoln Tunnel,2013,Aug,Total vehicles,1655961
+Lincoln Tunnel,2013,Sep,Total vehicles,1562146
+Lincoln Tunnel,2013,Dec,Total vehicles,1568694
+Lincoln Tunnel,2013,Nov,Total vehicles,1559777
+Lincoln Tunnel,2013,Oct,Total vehicles,1634586
+Lincoln Tunnel,2013,Jul,Total vehicles,1579328
+Lincoln Tunnel,2013,Jan,Total vehicles,1474388
+Lincoln Tunnel,2013,Feb,Total vehicles,1325372
+Lincoln Tunnel,2013,Mar,Total vehicles,1587688
+Lincoln Tunnel,2013,Apr,Total vehicles,1565983
+Lincoln Tunnel,2013,May,Total vehicles,1634667
+Lincoln Tunnel,2013,Jun,Total vehicles,1597360
+Lincoln Tunnel,2013,Feb,Truck,74588
+Lincoln Tunnel,2013,Mar,Truck,84178
+Lincoln Tunnel,2013,Dec,Truck,84064
+Lincoln Tunnel,2013,Sep,Truck,86784
+Lincoln Tunnel,2013,Jul,Truck,87223
+Lincoln Tunnel,2013,Nov,Truck,86100
+Lincoln Tunnel,2013,Oct,Truck,95470
+Lincoln Tunnel,2013,Aug,Truck,90951
+Lincoln Tunnel,2013,Jun,Truck,86168
+Lincoln Tunnel,2013,May,Truck,91920
+Lincoln Tunnel,2013,Apr,Truck,87944
+Lincoln Tunnel,2013,Jan,Truck,82619
+Lincoln Tunnel,2012,Jun,Automobile,1363012
+Lincoln Tunnel,2012,Dec,Automobile,1346790
+Lincoln Tunnel,2012,Mar,Automobile,1368212
+Lincoln Tunnel,2012,Nov,Automobile,1255820
+Lincoln Tunnel,2012,May,Automobile,1379275
+Lincoln Tunnel,2012,Feb,Automobile,1225113
+Lincoln Tunnel,2012,Jan,Automobile,1264594
+Lincoln Tunnel,2012,Oct,Automobile,1303701
+Lincoln Tunnel,2012,Sep,Automobile,1314035
+Lincoln Tunnel,2012,Apr,Automobile,1371508
+Lincoln Tunnel,2012,Aug,Automobile,1367403
+Lincoln Tunnel,2012,Jul,Automobile,1349939
+Lincoln Tunnel,2012,Dec,Bus,178807
+Lincoln Tunnel,2012,Jan,Bus,167814
+Lincoln Tunnel,2012,Apr,Bus,177057
+Lincoln Tunnel,2012,Feb,Bus,162144
+Lincoln Tunnel,2012,Jul,Bus,177959
+Lincoln Tunnel,2012,May,Bus,183978
+Lincoln Tunnel,2012,Aug,Bus,184836
+Lincoln Tunnel,2012,Mar,Bus,180432
+Lincoln Tunnel,2012,Jun,Bus,176106
+Lincoln Tunnel,2012,Sep,Bus,167684
+Lincoln Tunnel,2012,Oct,Bus,168647
+Lincoln Tunnel,2012,Nov,Bus,180166
+Lincoln Tunnel,2012,Sep,Total vehicles,1561978
+Lincoln Tunnel,2012,Apr,Total vehicles,1633764
+Lincoln Tunnel,2012,Dec,Total vehicles,1604865
+Lincoln Tunnel,2012,Nov,Total vehicles,1520182
+Lincoln Tunnel,2012,Oct,Total vehicles,1556431
+Lincoln Tunnel,2012,Feb,Total vehicles,1464800
+Lincoln Tunnel,2012,Jan,Total vehicles,1510709
+Lincoln Tunnel,2012,Aug,Total vehicles,1641481
+Lincoln Tunnel,2012,Jul,Total vehicles,1609256
+Lincoln Tunnel,2012,Mar,Total vehicles,1634450
+Lincoln Tunnel,2012,Jun,Total vehicles,1624182
+Lincoln Tunnel,2012,May,Total vehicles,1652937
+Lincoln Tunnel,2012,Nov,Truck,84196
+Lincoln Tunnel,2012,Apr,Truck,85199
+Lincoln Tunnel,2012,Jan,Truck,78301
+Lincoln Tunnel,2012,May,Truck,89684
+Lincoln Tunnel,2012,Oct,Truck,84083
+Lincoln Tunnel,2012,Sep,Truck,80259
+Lincoln Tunnel,2012,Jun,Truck,85064
+Lincoln Tunnel,2012,Aug,Truck,89242
+Lincoln Tunnel,2012,Dec,Truck,79268
+Lincoln Tunnel,2012,Mar,Truck,85806
+Lincoln Tunnel,2012,Feb,Truck,77543
+Lincoln Tunnel,2012,Jul,Truck,81358
+Lincoln Tunnel,2011,Aug,Automobile,1386454
+Lincoln Tunnel,2011,Feb,Automobile,1222260
+Lincoln Tunnel,2011,Dec,Automobile,1407683
+Lincoln Tunnel,2011,Jun,Automobile,1450951
+Lincoln Tunnel,2011,Sep,Automobile,1368670
+Lincoln Tunnel,2011,Oct,Automobile,1414449
+Lincoln Tunnel,2011,Jan,Automobile,1244648
+Lincoln Tunnel,2011,Mar,Automobile,1435307
+Lincoln Tunnel,2011,Apr,Automobile,1436851
+Lincoln Tunnel,2011,May,Automobile,1469370
+Lincoln Tunnel,2011,Jul,Automobile,1446782
+Lincoln Tunnel,2011,Nov,Automobile,1360566
+Lincoln Tunnel,2011,Jun,Bus,186651
+Lincoln Tunnel,2011,Jan,Bus,165583
+Lincoln Tunnel,2011,Feb,Bus,156704
+Lincoln Tunnel,2011,Mar,Bus,185900
+Lincoln Tunnel,2011,Apr,Bus,183567
+Lincoln Tunnel,2011,May,Bus,187682
+Lincoln Tunnel,2011,Jul,Bus,184111
+Lincoln Tunnel,2011,Aug,Bus,186798
+Lincoln Tunnel,2011,Sep,Bus,179702
+Lincoln Tunnel,2011,Oct,Bus,181822
+Lincoln Tunnel,2011,Nov,Bus,176902
+Lincoln Tunnel,2011,Dec,Bus,180754
+Lincoln Tunnel,2011,Apr,Total vehicles,1704764
+Lincoln Tunnel,2011,Jan,Total vehicles,1487813
+Lincoln Tunnel,2011,Dec,Total vehicles,1672079
+Lincoln Tunnel,2011,Mar,Total vehicles,1711098
+Lincoln Tunnel,2011,Nov,Total vehicles,1624250
+Lincoln Tunnel,2011,Oct,Total vehicles,1686179
+Lincoln Tunnel,2011,Feb,Total vehicles,1453817
+Lincoln Tunnel,2011,Sep,Total vehicles,1638207
+Lincoln Tunnel,2011,Aug,Total vehicles,1663648
+Lincoln Tunnel,2011,Jul,Total vehicles,1713646
+Lincoln Tunnel,2011,Jun,Total vehicles,1729257
+Lincoln Tunnel,2011,May,Total vehicles,1744676
+Lincoln Tunnel,2011,Mar,Truck,89891
+Lincoln Tunnel,2011,Oct,Truck,89908
+Lincoln Tunnel,2011,Nov,Truck,86782
+Lincoln Tunnel,2011,Dec,Truck,83642
+Lincoln Tunnel,2011,Feb,Truck,74853
+Lincoln Tunnel,2011,Apr,Truck,84346
+Lincoln Tunnel,2011,May,Truck,87624
+Lincoln Tunnel,2011,Jun,Truck,91655
+Lincoln Tunnel,2011,Jan,Truck,77582
+Lincoln Tunnel,2011,Jul,Truck,82753
+Lincoln Tunnel,2011,Aug,Truck,90396
+Lincoln Tunnel,2011,Sep,Truck,89835
+Outerbridge Crossing,2015,May,Automobile,1217858
+Outerbridge Crossing,2015,Mar,Automobile,1043156
+Outerbridge Crossing,2015,Aug,Automobile,1295679
+Outerbridge Crossing,2015,Dec,Automobile,1182936
+Outerbridge Crossing,2015,Jun,Automobile,1205559
+Outerbridge Crossing,2015,Apr,Automobile,1114199
+Outerbridge Crossing,2015,Sep,Automobile,1143937
+Outerbridge Crossing,2015,Nov,Automobile,1121021
+Outerbridge Crossing,2015,Feb,Automobile,885600
+Outerbridge Crossing,2015,Jan,Automobile,954304
+Outerbridge Crossing,2015,Jul,Automobile,1244251
+Outerbridge Crossing,2015,Oct,Automobile,1160821
+Outerbridge Crossing,2015,Aug,Bus,4662
+Outerbridge Crossing,2015,May,Bus,4531
+Outerbridge Crossing,2015,Apr,Bus,3680
+Outerbridge Crossing,2015,Nov,Bus,3666
+Outerbridge Crossing,2015,Oct,Bus,4143
+Outerbridge Crossing,2015,Dec,Bus,3725
+Outerbridge Crossing,2015,Jun,Bus,4550
+Outerbridge Crossing,2015,Mar,Bus,3599
+Outerbridge Crossing,2015,Jul,Bus,4582
+Outerbridge Crossing,2015,Jan,Bus,2932
+Outerbridge Crossing,2015,Sep,Bus,3703
+Outerbridge Crossing,2015,Feb,Bus,2866
+Outerbridge Crossing,2015,May,Total vehicles,1292734
+Outerbridge Crossing,2015,Apr,Total vehicles,1185048
+Outerbridge Crossing,2015,Jul,Total vehicles,1321375
+Outerbridge Crossing,2015,Mar,Total vehicles,1109119
+Outerbridge Crossing,2015,Sep,Total vehicles,1218191
+Outerbridge Crossing,2015,Oct,Total vehicles,1235862
+Outerbridge Crossing,2015,Aug,Total vehicles,1372381
+Outerbridge Crossing,2015,Jan,Total vehicles,1018022
+Outerbridge Crossing,2015,Nov,Total vehicles,1191523
+Outerbridge Crossing,2015,Dec,Total vehicles,1258111
+Outerbridge Crossing,2015,Jun,Total vehicles,1282536
+Outerbridge Crossing,2015,Feb,Total vehicles,943618
+Outerbridge Crossing,2015,Nov,Truck,66836
+Outerbridge Crossing,2015,Apr,Truck,67169
+Outerbridge Crossing,2015,Jan,Truck,60786
+Outerbridge Crossing,2015,Feb,Truck,55152
+Outerbridge Crossing,2015,Jun,Truck,72427
+Outerbridge Crossing,2015,Aug,Truck,72040
+Outerbridge Crossing,2015,Sep,Truck,70551
+Outerbridge Crossing,2015,Oct,Truck,70898
+Outerbridge Crossing,2015,Jul,Truck,72542
+Outerbridge Crossing,2015,Dec,Truck,71450
+Outerbridge Crossing,2015,Mar,Truck,62364
+Outerbridge Crossing,2015,May,Truck,70345
+Outerbridge Crossing,2014,Feb,Automobile,845583
+Outerbridge Crossing,2014,Oct,Automobile,1115310
+Outerbridge Crossing,2014,Apr,Automobile,1088412
+Outerbridge Crossing,2014,Dec,Automobile,1121397
+Outerbridge Crossing,2014,Nov,Automobile,1063097
+Outerbridge Crossing,2014,Jul,Automobile,1205280
+Outerbridge Crossing,2014,May,Automobile,1165785
+Outerbridge Crossing,2014,Sep,Automobile,1108475
+Outerbridge Crossing,2014,Mar,Automobile,1057894
+Outerbridge Crossing,2014,Jan,Automobile,936982
+Outerbridge Crossing,2014,Jun,Automobile,1175398
+Outerbridge Crossing,2014,Aug,Automobile,1251075
+Outerbridge Crossing,2014,Feb,Bus,2835
+Outerbridge Crossing,2014,May,Bus,4249
+Outerbridge Crossing,2014,Apr,Bus,3556
+Outerbridge Crossing,2014,Sep,Bus,3514
+Outerbridge Crossing,2014,Mar,Bus,3438
+Outerbridge Crossing,2014,Oct,Bus,4106
+Outerbridge Crossing,2014,Jan,Bus,3044
+Outerbridge Crossing,2014,Jun,Bus,4180
+Outerbridge Crossing,2014,Dec,Bus,3361
+Outerbridge Crossing,2014,Jul,Bus,4458
+Outerbridge Crossing,2014,Nov,Bus,3423
+Outerbridge Crossing,2014,Aug,Bus,4542
+Outerbridge Crossing,2014,Apr,Total vehicles,1158505
+Outerbridge Crossing,2014,Feb,Total vehicles,899500
+Outerbridge Crossing,2014,Mar,Total vehicles,1123228
+Outerbridge Crossing,2014,Oct,Total vehicles,1190251
+Outerbridge Crossing,2014,Dec,Total vehicles,1193810
+Outerbridge Crossing,2014,Jan,Total vehicles,998439
+Outerbridge Crossing,2014,Sep,Total vehicles,1182443
+Outerbridge Crossing,2014,Jun,Total vehicles,1246114
+Outerbridge Crossing,2014,Nov,Total vehicles,1130360
+Outerbridge Crossing,2014,Aug,Total vehicles,1324550
+Outerbridge Crossing,2014,Jul,Total vehicles,1279123
+Outerbridge Crossing,2014,May,Total vehicles,1239181
+Outerbridge Crossing,2014,Oct,Truck,70835
+Outerbridge Crossing,2014,Jan,Truck,58413
+Outerbridge Crossing,2014,Feb,Truck,51082
+Outerbridge Crossing,2014,Aug,Truck,68933
+Outerbridge Crossing,2014,Jul,Truck,69385
+Outerbridge Crossing,2014,Nov,Truck,63840
+Outerbridge Crossing,2014,May,Truck,69147
+Outerbridge Crossing,2014,Mar,Truck,61896
+Outerbridge Crossing,2014,Dec,Truck,69052
+Outerbridge Crossing,2014,Apr,Truck,66537
+Outerbridge Crossing,2014,Jun,Truck,66536
+Outerbridge Crossing,2014,Sep,Truck,70454
+Outerbridge Crossing,2013,Jan,Automobile,1053973
+Outerbridge Crossing,2013,Jul,Automobile,1126688
+Outerbridge Crossing,2013,Aug,Automobile,1144093
+Outerbridge Crossing,2013,Jun,Automobile,1203344
+Outerbridge Crossing,2013,May,Automobile,1183467
+Outerbridge Crossing,2013,Apr,Automobile,1115188
+Outerbridge Crossing,2013,Oct,Automobile,1055048
+Outerbridge Crossing,2013,Nov,Automobile,1048288
+Outerbridge Crossing,2013,Sep,Automobile,1013425
+Outerbridge Crossing,2013,Dec,Automobile,1074183
+Outerbridge Crossing,2013,Mar,Automobile,1121310
+Outerbridge Crossing,2013,Feb,Automobile,937802
+Outerbridge Crossing,2013,Oct,Bus,2936
+Outerbridge Crossing,2013,Dec,Bus,2830
+Outerbridge Crossing,2013,Sep,Bus,2504
+Outerbridge Crossing,2013,Aug,Bus,3253
+Outerbridge Crossing,2013,Jul,Bus,3795
+Outerbridge Crossing,2013,Nov,Bus,2956
+Outerbridge Crossing,2013,Jan,Bus,2851
+Outerbridge Crossing,2013,Jun,Bus,4021
+Outerbridge Crossing,2013,May,Bus,3985
+Outerbridge Crossing,2013,Feb,Bus,2690
+Outerbridge Crossing,2013,Apr,Bus,3526
+Outerbridge Crossing,2013,Mar,Bus,3269
+Outerbridge Crossing,2013,Apr,Total vehicles,1193917
+Outerbridge Crossing,2013,Sep,Total vehicles,1062572
+Outerbridge Crossing,2013,Jul,Total vehicles,1188235
+Outerbridge Crossing,2013,Mar,Total vehicles,1192967
+Outerbridge Crossing,2013,Nov,Total vehicles,1112196
+Outerbridge Crossing,2013,Feb,Total vehicles,1000685
+Outerbridge Crossing,2013,Jan,Total vehicles,1125764
+Outerbridge Crossing,2013,Aug,Total vehicles,1200648
+Outerbridge Crossing,2013,Jun,Total vehicles,1278407
+Outerbridge Crossing,2013,Oct,Total vehicles,1117240
+Outerbridge Crossing,2013,May,Total vehicles,1264417
+Outerbridge Crossing,2013,Dec,Total vehicles,1138312
+Outerbridge Crossing,2013,Sep,Truck,46643
+Outerbridge Crossing,2013,Nov,Truck,60952
+Outerbridge Crossing,2013,Dec,Truck,61299
+Outerbridge Crossing,2013,Jun,Truck,71042
+Outerbridge Crossing,2013,May,Truck,76965
+Outerbridge Crossing,2013,Apr,Truck,75203
+Outerbridge Crossing,2013,Jan,Truck,68940
+Outerbridge Crossing,2013,Feb,Truck,60193
+Outerbridge Crossing,2013,Mar,Truck,68388
+Outerbridge Crossing,2013,Oct,Truck,59256
+Outerbridge Crossing,2013,Jul,Truck,57752
+Outerbridge Crossing,2013,Aug,Truck,53302
+Outerbridge Crossing,2012,Dec,Automobile,1154147
+Outerbridge Crossing,2012,Nov,Automobile,1068805
+Outerbridge Crossing,2012,Jul,Automobile,1232593
+Outerbridge Crossing,2012,Aug,Automobile,1263507
+Outerbridge Crossing,2012,Feb,Automobile,1015951
+Outerbridge Crossing,2012,Jan,Automobile,1039372
+Outerbridge Crossing,2012,Apr,Automobile,1124260
+Outerbridge Crossing,2012,May,Automobile,1181137
+Outerbridge Crossing,2012,Oct,Automobile,1063493
+Outerbridge Crossing,2012,Sep,Automobile,1132936
+Outerbridge Crossing,2012,Mar,Automobile,1120401
+Outerbridge Crossing,2012,Jun,Automobile,1211568
+Outerbridge Crossing,2012,May,Bus,4230
+Outerbridge Crossing,2012,Dec,Bus,3315
+Outerbridge Crossing,2012,Nov,Bus,3828
+Outerbridge Crossing,2012,Oct,Bus,3598
+Outerbridge Crossing,2012,Sep,Bus,3609
+Outerbridge Crossing,2012,Aug,Bus,4196
+Outerbridge Crossing,2012,Jul,Bus,4818
+Outerbridge Crossing,2012,Jun,Bus,4493
+Outerbridge Crossing,2012,Apr,Bus,3853
+Outerbridge Crossing,2012,Mar,Bus,3782
+Outerbridge Crossing,2012,Feb,Bus,3176
+Outerbridge Crossing,2012,Jan,Bus,3201
+Outerbridge Crossing,2012,Dec,Total vehicles,1227962
+Outerbridge Crossing,2012,Oct,Total vehicles,1131840
+Outerbridge Crossing,2012,Nov,Total vehicles,1148408
+Outerbridge Crossing,2012,Sep,Total vehicles,1202396
+Outerbridge Crossing,2012,Aug,Total vehicles,1343245
+Outerbridge Crossing,2012,Jul,Total vehicles,1310687
+Outerbridge Crossing,2012,Jun,Total vehicles,1291571
+Outerbridge Crossing,2012,May,Total vehicles,1261677
+Outerbridge Crossing,2012,Apr,Total vehicles,1197886
+Outerbridge Crossing,2012,Mar,Total vehicles,1197527
+Outerbridge Crossing,2012,Feb,Total vehicles,1086885
+Outerbridge Crossing,2012,Jan,Total vehicles,1106579
+Outerbridge Crossing,2012,May,Truck,76310
+Outerbridge Crossing,2012,Jan,Truck,64006
+Outerbridge Crossing,2012,Feb,Truck,67758
+Outerbridge Crossing,2012,Mar,Truck,73344
+Outerbridge Crossing,2012,Apr,Truck,69773
+Outerbridge Crossing,2012,Jun,Truck,75510
+Outerbridge Crossing,2012,Jul,Truck,73276
+Outerbridge Crossing,2012,Aug,Truck,75542
+Outerbridge Crossing,2012,Sep,Truck,65851
+Outerbridge Crossing,2012,Oct,Truck,64749
+Outerbridge Crossing,2012,Nov,Truck,75775
+Outerbridge Crossing,2012,Dec,Truck,70500
+Outerbridge Crossing,2011,Oct,Automobile,1142344
+Outerbridge Crossing,2011,Sep,Automobile,1147633
+Outerbridge Crossing,2011,Aug,Automobile,1201291
+Outerbridge Crossing,2011,Jul,Automobile,1284348
+Outerbridge Crossing,2011,Jun,Automobile,1233632
+Outerbridge Crossing,2011,May,Automobile,1216294
+Outerbridge Crossing,2011,Apr,Automobile,1141720
+Outerbridge Crossing,2011,Jan,Automobile,989714
+Outerbridge Crossing,2011,Mar,Automobile,1134072
+Outerbridge Crossing,2011,Feb,Automobile,979631
+Outerbridge Crossing,2011,Dec,Automobile,1155746
+Outerbridge Crossing,2011,Nov,Automobile,1101917
+Outerbridge Crossing,2011,Dec,Bus,3357
+Outerbridge Crossing,2011,Jan,Bus,3907
+Outerbridge Crossing,2011,Jul,Bus,5522
+Outerbridge Crossing,2011,Mar,Bus,4745
+Outerbridge Crossing,2011,Jun,Bus,5405
+Outerbridge Crossing,2011,Apr,Bus,4782
+Outerbridge Crossing,2011,Feb,Bus,3866
+Outerbridge Crossing,2011,Nov,Bus,3705
+Outerbridge Crossing,2011,May,Bus,5212
+Outerbridge Crossing,2011,Aug,Bus,4820
+Outerbridge Crossing,2011,Sep,Bus,4206
+Outerbridge Crossing,2011,Oct,Bus,4152
+Outerbridge Crossing,2011,May,Total vehicles,1297228
+Outerbridge Crossing,2011,Sep,Total vehicles,1225084
+Outerbridge Crossing,2011,Dec,Total vehicles,1229855
+Outerbridge Crossing,2011,Nov,Total vehicles,1175896
+Outerbridge Crossing,2011,Aug,Total vehicles,1281346
+Outerbridge Crossing,2011,Jul,Total vehicles,1357849
+Outerbridge Crossing,2011,Jun,Total vehicles,1315660
+Outerbridge Crossing,2011,Oct,Total vehicles,1217997
+Outerbridge Crossing,2011,Apr,Total vehicles,1215639
+Outerbridge Crossing,2011,Mar,Total vehicles,1208881
+Outerbridge Crossing,2011,Feb,Total vehicles,1039569
+Outerbridge Crossing,2011,Jan,Total vehicles,1053365
+Outerbridge Crossing,2011,Sep,Truck,73245
+Outerbridge Crossing,2011,Mar,Truck,70064
+Outerbridge Crossing,2011,Aug,Truck,75235
+Outerbridge Crossing,2011,Jan,Truck,59744
+Outerbridge Crossing,2011,Dec,Truck,70752
+Outerbridge Crossing,2011,Nov,Truck,70274
+Outerbridge Crossing,2011,Jun,Truck,76623
+Outerbridge Crossing,2011,May,Truck,75722
+Outerbridge Crossing,2011,Apr,Truck,69137
+Outerbridge Crossing,2011,Jul,Truck,67979
+Outerbridge Crossing,2011,Oct,Truck,71501
+Outerbridge Crossing,2011,Feb,Truck,56072
+PA All Crossings,2015,Nov,Automobile,8834152
+PA All Crossings,2015,Oct,Automobile,9147969
+PA All Crossings,2015,Mar,Automobile,8398380
+PA All Crossings,2015,Sep,Automobile,8829925
+PA All Crossings,2015,Feb,Automobile,7182428
+PA All Crossings,2015,Jun,Automobile,9136614
+PA All Crossings,2015,Jan,Automobile,7644253
+PA All Crossings,2015,Apr,Automobile,8791886
+PA All Crossings,2015,Aug,Automobile,9740436
+PA All Crossings,2015,May,Automobile,9381274
+PA All Crossings,2015,Dec,Automobile,9121287
+PA All Crossings,2015,Jul,Automobile,9503847
+PA All Crossings,2015,Apr,Bus,252958
+PA All Crossings,2015,Feb,Bus,212400
+PA All Crossings,2015,Aug,Bus,259248
+PA All Crossings,2015,Jul,Bus,269205
+PA All Crossings,2015,Mar,Bus,247405
+PA All Crossings,2015,Jun,Bus,258920
+PA All Crossings,2015,Jan,Bus,220716
+PA All Crossings,2015,Oct,Bus,259664
+PA All Crossings,2015,Dec,Bus,249656
+PA All Crossings,2015,Sep,Bus,246142
+PA All Crossings,2015,May,Bus,254964
+PA All Crossings,2015,Nov,Bus,238194
+PA All Crossings,2015,Aug,Total vehicles,10621922
+PA All Crossings,2015,Nov,Total vehicles,9660462
+PA All Crossings,2015,Jul,Total vehicles,10417186
+PA All Crossings,2015,May,Total vehicles,10250813
+PA All Crossings,2015,Oct,Total vehicles,10053023
+PA All Crossings,2015,Apr,Total vehicles,9657045
+PA All Crossings,2015,Jun,Total vehicles,10037382
+PA All Crossings,2015,Mar,Total vehicles,9246617
+PA All Crossings,2015,Feb,Total vehicles,7912951
+PA All Crossings,2015,Sep,Total vehicles,9698285
+PA All Crossings,2015,Jan,Total vehicles,8403740
+PA All Crossings,2015,Dec,Total vehicles,9987341
+PA All Crossings,2015,Apr,Truck,612201
+PA All Crossings,2015,Aug,Truck,622238
+PA All Crossings,2015,Nov,Truck,588116
+PA All Crossings,2015,Mar,Truck,600832
+PA All Crossings,2015,Sep,Truck,622218
+PA All Crossings,2015,Jul,Truck,644134
+PA All Crossings,2015,Feb,Truck,518123
+PA All Crossings,2015,Dec,Truck,616398
+PA All Crossings,2015,Jan,Truck,538771
+PA All Crossings,2015,May,Truck,614575
+PA All Crossings,2015,Jun,Truck,641848
+PA All Crossings,2015,Oct,Truck,645390
+PA All Crossings,2014,Jun,Automobile,9099134
+PA All Crossings,2014,Apr,Automobile,8680283
+PA All Crossings,2014,May,Automobile,9269061
+PA All Crossings,2014,Oct,Automobile,8970784
+PA All Crossings,2014,Feb,Automobile,6785435
+PA All Crossings,2014,Jul,Automobile,9264996
+PA All Crossings,2014,Nov,Automobile,8578702
+PA All Crossings,2014,Mar,Automobile,8524299
+PA All Crossings,2014,Dec,Automobile,8888799
+PA All Crossings,2014,Sep,Automobile,8766974
+PA All Crossings,2014,Aug,Automobile,9554892
+PA All Crossings,2014,Jan,Automobile,7581418
+PA All Crossings,2014,Apr,Bus,249720
+PA All Crossings,2014,Jun,Bus,254437
+PA All Crossings,2014,Jan,Bus,225163
+PA All Crossings,2014,Sep,Bus,247833
+PA All Crossings,2014,Nov,Bus,234049
+PA All Crossings,2014,Jul,Bus,266166
+PA All Crossings,2014,Oct,Bus,265523
+PA All Crossings,2014,Feb,Bus,205029
+PA All Crossings,2014,May,Bus,259101
+PA All Crossings,2014,Aug,Bus,262970
+PA All Crossings,2014,Mar,Bus,240845
+PA All Crossings,2014,Dec,Bus,247547
+PA All Crossings,2014,Jan,Total vehicles,8370824
+PA All Crossings,2014,Jun,Total vehicles,9953134
+PA All Crossings,2014,Nov,Total vehicles,9368540
+PA All Crossings,2014,Sep,Total vehicles,9614471
+PA All Crossings,2014,Feb,Total vehicles,7495565
+PA All Crossings,2014,Oct,Total vehicles,9871399
+PA All Crossings,2014,Aug,Total vehicles,10402744
+PA All Crossings,2014,Mar,Total vehicles,9362953
+PA All Crossings,2014,Jul,Total vehicles,10137337
+PA All Crossings,2014,May,Total vehicles,10158379
+PA All Crossings,2014,Apr,Total vehicles,9545689
+PA All Crossings,2014,Dec,Total vehicles,9736618
+PA All Crossings,2014,Jan,Truck,564243
+PA All Crossings,2014,Jul,Truck,606175
+PA All Crossings,2014,Dec,Truck,600272
+PA All Crossings,2014,Nov,Truck,555789
+PA All Crossings,2014,Sep,Truck,599664
+PA All Crossings,2014,Mar,Truck,597809
+PA All Crossings,2014,Oct,Truck,635092
+PA All Crossings,2014,Jun,Truck,599563
+PA All Crossings,2014,May,Truck,630217
+PA All Crossings,2014,Feb,Truck,505101
+PA All Crossings,2014,Aug,Truck,584882
+PA All Crossings,2014,Apr,Truck,615686
+PA All Crossings,2013,Sep,Automobile,8752102
+PA All Crossings,2013,Jun,Automobile,9178849
+PA All Crossings,2013,Aug,Automobile,9545880
+PA All Crossings,2013,Mar,Automobile,8794256
+PA All Crossings,2013,Nov,Automobile,8610969
+PA All Crossings,2013,May,Automobile,9227283
+PA All Crossings,2013,Jul,Automobile,9348192
+PA All Crossings,2013,Oct,Automobile,9049069
+PA All Crossings,2013,Feb,Automobile,7353012
+PA All Crossings,2013,Jan,Automobile,8216417
+PA All Crossings,2013,Dec,Automobile,8615632
+PA All Crossings,2013,Apr,Automobile,8760101
+PA All Crossings,2013,Dec,Bus,240576
+PA All Crossings,2013,Apr,Bus,251224
+PA All Crossings,2013,Aug,Bus,262242
+PA All Crossings,2013,Feb,Bus,210454
+PA All Crossings,2013,Jan,Bus,234474
+PA All Crossings,2013,Jul,Bus,263429
+PA All Crossings,2013,Mar,Bus,243226
+PA All Crossings,2013,Nov,Bus,235548
+PA All Crossings,2013,Oct,Bus,261268
+PA All Crossings,2013,Jun,Bus,247917
+PA All Crossings,2013,Sep,Bus,237511
+PA All Crossings,2013,May,Bus,260353
+PA All Crossings,2013,Mar,Total vehicles,9633352
+PA All Crossings,2013,Sep,Total vehicles,9574425
+PA All Crossings,2013,Oct,Total vehicles,9961383
+PA All Crossings,2013,Jun,Total vehicles,10033977
+PA All Crossings,2013,Feb,Total vehicles,8107473
+PA All Crossings,2013,Nov,Total vehicles,9420135
+PA All Crossings,2013,May,Total vehicles,10138080
+PA All Crossings,2013,Jan,Total vehicles,9062629
+PA All Crossings,2013,Apr,Total vehicles,9638288
+PA All Crossings,2013,Dec,Total vehicles,9432914
+PA All Crossings,2013,Jul,Total vehicles,10245252
+PA All Crossings,2013,Aug,Total vehicles,10439855
+PA All Crossings,2013,Jul,Truck,633631
+PA All Crossings,2013,Apr,Truck,626963
+PA All Crossings,2013,May,Truck,650444
+PA All Crossings,2013,Jun,Truck,607211
+PA All Crossings,2013,Oct,Truck,651046
+PA All Crossings,2013,Nov,Truck,573618
+PA All Crossings,2013,Dec,Truck,576706
+PA All Crossings,2013,Aug,Truck,631733
+PA All Crossings,2013,Sep,Truck,584812
+PA All Crossings,2013,Jan,Truck,611738
+PA All Crossings,2013,Feb,Truck,544007
+PA All Crossings,2013,Mar,Truck,595870
+PA All Crossings,2012,Jan,Automobile,8213612
+PA All Crossings,2012,Dec,Automobile,8943461
+PA All Crossings,2012,Nov,Automobile,8148620
+PA All Crossings,2012,Oct,Automobile,8448028
+PA All Crossings,2012,Sep,Automobile,8803800
+PA All Crossings,2012,Aug,Automobile,9545488
+PA All Crossings,2012,Jul,Automobile,9320529
+PA All Crossings,2012,Jun,Automobile,9279150
+PA All Crossings,2012,May,Automobile,9309400
+PA All Crossings,2012,Apr,Automobile,8926153
+PA All Crossings,2012,Mar,Automobile,8922026
+PA All Crossings,2012,Feb,Automobile,8035177
+PA All Crossings,2012,Jan,Bus,230837
+PA All Crossings,2012,Dec,Bus,243866
+PA All Crossings,2012,Nov,Bus,248481
+PA All Crossings,2012,Oct,Bus,237126
+PA All Crossings,2012,Sep,Bus,234841
+PA All Crossings,2012,Aug,Bus,263985
+PA All Crossings,2012,Jul,Bus,257661
+PA All Crossings,2012,Jun,Bus,252521
+PA All Crossings,2012,May,Bus,261968
+PA All Crossings,2012,Apr,Bus,248262
+PA All Crossings,2012,Mar,Bus,252206
+PA All Crossings,2012,Feb,Bus,225141
+PA All Crossings,2012,Feb,Total vehicles,8838547
+PA All Crossings,2012,Nov,Total vehicles,9041461
+PA All Crossings,2012,Dec,Total vehicles,9782562
+PA All Crossings,2012,Oct,Total vehicles,9281599
+PA All Crossings,2012,Sep,Total vehicles,9620325
+PA All Crossings,2012,Aug,Total vehicles,10459447
+PA All Crossings,2012,Jul,Total vehicles,10194820
+PA All Crossings,2012,Jun,Total vehicles,10173255
+PA All Crossings,2012,May,Total vehicles,10229589
+PA All Crossings,2012,Apr,Total vehicles,9790675
+PA All Crossings,2012,Mar,Total vehicles,9813501
+PA All Crossings,2012,Jan,Total vehicles,9026493
+PA All Crossings,2012,Mar,Truck,639269
+PA All Crossings,2012,Jan,Truck,582044
+PA All Crossings,2012,Feb,Truck,578229
+PA All Crossings,2012,Apr,Truck,616260
+PA All Crossings,2012,May,Truck,658221
+PA All Crossings,2012,Jun,Truck,641584
+PA All Crossings,2012,Jul,Truck,616630
+PA All Crossings,2012,Aug,Truck,649974
+PA All Crossings,2012,Sep,Truck,581684
+PA All Crossings,2012,Oct,Truck,596445
+PA All Crossings,2012,Nov,Truck,644360
+PA All Crossings,2012,Dec,Truck,595235
+PA All Crossings,2011,Apr,Automobile,9154369
+PA All Crossings,2011,Mar,Automobile,9115286
+PA All Crossings,2011,Feb,Automobile,7786178
+PA All Crossings,2011,Jan,Automobile,7943315
+PA All Crossings,2011,May,Automobile,9613655
+PA All Crossings,2011,Jun,Automobile,9571519
+PA All Crossings,2011,Jul,Automobile,9917576
+PA All Crossings,2011,Aug,Automobile,9347570
+PA All Crossings,2011,Sep,Automobile,8985654
+PA All Crossings,2011,Dec,Automobile,9125590
+PA All Crossings,2011,Nov,Automobile,8844310
+PA All Crossings,2011,Oct,Automobile,9023450
+PA All Crossings,2011,May,Bus,274926
+PA All Crossings,2011,Jan,Bus,235698
+PA All Crossings,2011,Feb,Bus,225739
+PA All Crossings,2011,Mar,Bus,268014
+PA All Crossings,2011,Apr,Bus,264736
+PA All Crossings,2011,Dec,Bus,248627
+PA All Crossings,2011,Nov,Bus,247247
+PA All Crossings,2011,Oct,Bus,257228
+PA All Crossings,2011,Sep,Bus,259279
+PA All Crossings,2011,Aug,Bus,275933
+PA All Crossings,2011,Jul,Bus,277006
+PA All Crossings,2011,Jun,Bus,275851
+PA All Crossings,2011,Feb,Total vehicles,8565091
+PA All Crossings,2011,May,Total vehicles,10544784
+PA All Crossings,2011,Jun,Total vehicles,10530674
+PA All Crossings,2011,Jul,Total vehicles,10819025
+PA All Crossings,2011,Aug,Total vehicles,10308747
+PA All Crossings,2011,Sep,Total vehicles,9901992
+PA All Crossings,2011,Oct,Total vehicles,9920966
+PA All Crossings,2011,Nov,Total vehicles,9721711
+PA All Crossings,2011,Dec,Total vehicles,9993084
+PA All Crossings,2011,Apr,Total vehicles,10046333
+PA All Crossings,2011,Mar,Total vehicles,10048222
+PA All Crossings,2011,Jan,Total vehicles,8749156
+PA All Crossings,2011,Dec,Truck,618867
+PA All Crossings,2011,Jan,Truck,570143
+PA All Crossings,2011,Feb,Truck,553174
+PA All Crossings,2011,Mar,Truck,664922
+PA All Crossings,2011,Apr,Truck,627228
+PA All Crossings,2011,May,Truck,656203
+PA All Crossings,2011,Jun,Truck,683304
+PA All Crossings,2011,Jul,Truck,624443
+PA All Crossings,2011,Aug,Truck,685244
+PA All Crossings,2011,Sep,Truck,657059
+PA All Crossings,2011,Oct,Truck,640288
+PA All Crossings,2011,Nov,Truck,630154
