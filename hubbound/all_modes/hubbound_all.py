@@ -13,6 +13,7 @@ pio.renderers.default = 'browser'
 
 # path = '/Users/Work/Desktop/GitHub/td-trends/hubbound/all_modes/'
 path = 'C:/Users/M_Free/Desktop/td-trends/hubbound/all_modes/'
+path = 'C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/hubbound/all_modes/'
 
 df = pd.read_csv(path + 'hubbound_all.csv')
 df['hover'] = '<i>' + df['mode'] + ': </i>' + df['entries'].map('{:,.0f}'.format) + ' (' + df['%'].map('{:.0%}'.format) + ')'
@@ -76,6 +77,7 @@ fig.update_layout(template = 'plotly_white',
                   yaxis = {'title':{'text': '<b>Daily Entries</b>',
                                     'font_size': 14},
                            'tickfont_size': 12,
+                           'rangemode': 'tozero',
                            'fixedrange': True,
                            'showgrid': True},
                   font = {'family': 'Arial',

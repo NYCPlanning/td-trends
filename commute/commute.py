@@ -305,6 +305,8 @@ dest['% DEST'] = dest['PWGTP'] / dest['TOTAL']
 
 # dest.to_csv(path+'annotations/dest.csv',index=False)
 
+path='C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/commute/'
+dest=pd.read_csv(path+'annotations/dest.csv')
 dest['HOVER']='<b>Residence: </b>'+dest['RES']+'<br><b>Workplace: </b>'+dest['DEST']+'<br><b>Commuters: </b>'+dest['PWGTP'].map('{:,.0f}'.format)+'<br><b>Percentage: </b>'+dest['% DEST'].map('{:.0%}'.format)
 
 dest_colors = {'Same Boro':'rgba(237,102,93,0.8)',
@@ -349,7 +351,7 @@ fig.update_layout(barmode = 'stack',
                   yaxis = {'title': {'text': '<b>Number of Commuters</b>',
                                      'font_size': 14},
                            'tickfont_size': 12,
-                           'range': [0,1300000],
+                           'rangemode': 'tozero',
                            'fixedrange': True,
                            'showgrid': True},
                   hoverlabel = {'font_size': 14}, 
@@ -385,6 +387,8 @@ tm['% TM'] = tm['PWGTP'] / tm['TOTAL']
 
 # tm.to_csv(path + 'annotations/tm.csv',index = False)
 
+path='C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/commute/'
+tm=pd.read_csv(path+'annotations/tm.csv')
 tm['HOVER']='<b>Residence: </b>'+tm['RES']+'<br><b>Travel Mode: </b>'+tm['TM']+'<br><b>Commuters: </b>'+tm['PWGTP'].map('{:,.0f}'.format)+'<br><b>Percentage: </b>'+tm['% TM'].map('{:.0%}'.format)
 
 tm_colors = {'Drive Alone': 'rgba(237,102,93,0.8)',
@@ -435,7 +439,7 @@ fig.update_layout(barmode = 'stack',
                                      'font_size': 14},
                            'tickfont_size': 12,
                            'tickformat': ',.0%',
-                           'range': [0,1.1],
+                           'rangemode': 'tozero',
                            'fixedrange': True,
                            'showgrid': True},
                   hoverlabel = {'font_size': 14}, 
@@ -550,6 +554,8 @@ tt = tt.set_index('DEST').loc[sorter].reset_index()
 
 # tt.to_csv(path + 'annotations/tt.csv', index = False)
 
+path='C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/commute/'
+tt=pd.read_csv(path+'annotations/tt.csv')
 tt['HOVER']='<b>Travel Time: </b>'+tt['TT']+'<br><b>Commuters: </b>'+tt['PWGTP'].map('{:,.0f}'.format)+'<br><b>Percentage: </b>'+tt['% TT'].map('{:.0%}'.format)
 
 boro_li = ['Bronx','Brooklyn','Manhattan','Queens','Staten Island']
@@ -605,7 +611,7 @@ fig.update_layout(barmode = 'stack',
                   yaxis = {'title': {'text': '<b>Number of Commuters</b>',
                                      'font_size': 14},
                            'tickfont_size': 12,
-                           'range': [0,750000],
+                           'rangemode': 'tozero',
                            'fixedrange': True,
                            'showgrid': True},
                   hoverlabel = {'font_size': 14},
