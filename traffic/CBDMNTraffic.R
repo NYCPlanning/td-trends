@@ -10,8 +10,8 @@ df=df %>%
   select(Date,TBTA_CBDInbound_Avg,PANYNJ_CBDInbound_Avg,ERB_Inbound_Avg,TPEP_CBD_Speed_Avg)
 colnames(df)=c('Date','MTA Bridges & Tunnels','PANYNJ Bridges & Tunnels','East River Bridges','Taxi Speed')
 
-dfcolors=c('MTA Bridges & Tunnels'='rgba(109,204,218,0.6)',
-           'PANYNJ Bridges & Tunnels'='rgba(255,158,74,0.6)',
+dfcolors=c('MTA Bridges & Tunnels'='rgba(114,158,206,0.6)',
+           'PANYNJ Bridges & Tunnels'='rgba(109,204,218,0.6)',
            'East River Bridges'='rgba(173,139,201,0.6)',
            'Taxi Speed'='rgba(237,102,93,0.8)')
 
