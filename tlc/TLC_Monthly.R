@@ -10,7 +10,7 @@ df=df %>%
 
 dfcolors=c('Yellow Taxi'='rgba(255,158,74,0.6)',
            'Green Taxi'='rgba(103,191,92,0.6)',
-           'For-Hire Vehicle'='rgba(114,158,206,0.6)',
+           'For-Hire Vehicle'='rgba(109,204,218,0.6)',
            'Unique Drivers'='rgba(173,139,201,0.8)',
            'Unique Vehicles'='rgba(237,102,93,0.8)')
 
