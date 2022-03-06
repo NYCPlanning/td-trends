@@ -54,7 +54,7 @@ p=p %>%
             type='bar',
             x=df[['Date']],
             y=df[['Subway']],
-            marker=list(color='rgba(114,158,206,0.5)'),
+            marker=list(color='rgba(114,158,206,0.6)'),
             showlegend=T,
             hovertext=paste0('<b>Daily Ridership: </b>',format(df[['Subway']],trim=T,big.mark=','),' (',format(round(df[['SubwayPctPrior']]*100,1),trim=T,nsmall=1),'%)'),
             hoverinfo='text')
