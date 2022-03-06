@@ -4,7 +4,7 @@ import urllib.request
 import shutil
 import datetime
 
-path='C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/traffic/'
+path='C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/traffic/mta/'
 
 tlist=pd.read_csv(path+'tlist.csv')
 tlist['time']=[datetime.datetime.strptime(x,'%A, %B %d, %Y').strftime('%Y%m%d') for x in tlist['time']]
