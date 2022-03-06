@@ -12,7 +12,8 @@ colnames(df)=c('Date','MTA Bridges & Tunnels','PANYNJ Bridges & Tunnels','East R
 
 dfcolors=c('MTA Bridges & Tunnels'='rgba(114,158,206,0.8)',
            'PANYNJ Bridges & Tunnels'='rgba(255,158,74,0.8)',
-           'East River Bridges'='rgba(103,191,92,0.8)')
+           'East River Bridges'='rgba(103,191,92,0.8)',
+           'Taxi Speed'='rgba(237,102,93,0.8)')
 
 p=plot_ly()
 p=p %>%
@@ -22,7 +23,7 @@ p=p %>%
             x=df[['Date']],
             y=df[['Taxi Speed']],
             yaxis='y2',
-            line=list(color='rgba(237,102,93,0.8)',
+            line=list(color=dfcolors['Taxi Speed'],
                       width=3),
             showlegend=T,
             hovertext=paste0('<b>Taxi Speed: </b>',format(round(df[['Taxi Speed']],2),trim=T,nsmall=2)),
