@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title> Bus </title>
+    <title> PANYNJ Crossings </title>
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
     <script src="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js"></script>
     <link href="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css" rel="stylesheet" />
@@ -32,7 +32,7 @@
             position: absolute;
             top: 1rem;
             left: 1rem;
-            width: 13rem;
+            width: 16rem;
             height: auto;
             max-height: 90%;
             padding-top: 1rem;
@@ -72,7 +72,7 @@
         }
 
         .itemgroup2 {
-            margin-left: 1.4rem;
+            margin-left: 0rem;
         }
 
         .item2-input {
@@ -123,7 +123,7 @@
     <nav id="legend">
         <div class="container g-0">
             <div class="row g-0 justify-content-between" id="header">
-                <div class="col-auto"> Bus Ridership 2020 </div>
+                <div class="col-auto"> PANYNJ Bridges&Tunnels </div>
                 <div class="col-auto">
                     <i class="bi bi-chevron-down" id='chevron'></i>
                 </div>
@@ -150,7 +150,7 @@
             style: 'mapbox://styles/mapbox/light-v10', // light base map
             hash: true, // make sure it's on to get the url with map view
             attributionControl: true, // show the credit bar
-            customAttribution: '<b> Data Sources: <a href="https://new.mta.info/agency/new-york-city-transit/subway-bus-ridership-2020" target="blank">MTA</a></b> | <b><a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/bus/top10bus.geojson" target="blank"> Download Map Data </a> </b>', // add overall credit to the beggining
+            customAttribution: '<b>Data Source: <a href="https://www1.nyc.gov/html/dot/html/about/datafeeds.shtml#ferry" target="blank">NYC DOT</a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/ferry/ferryld.geojson" target="blank">Download Map Data</a></b>', // add overall credit to the beggining
             preserveDrawingBuffer: true, // make sure it's on to allow printing
             center: [-74.0197, 40.721], // testing to get the centroid of bounds
             zoom: 10, // set the initial zoom of the map view
@@ -181,111 +181,23 @@
 
 
 
-            // Add all bus routes
+
+
+            // Add panynj crossings
             // Set layer contents
             var layerContent = {
-                'sourceid': 'busroute', // source id
+                'sourceid': 'panynj', // source id
                 'sourcetype': 'geojson', // source type
-                'sourcedata': 'busroute.geojson', // data source
-                'layerid': 'busroute', // layer id
+                'sourcedata': 'panynjcrossings.geojson', // data source
+                'layerid': 'panynj', // layer id
                 'layertype': 'line', // symbology type
-                'layername': 'Other Bus Routes', // layer name for the legend
-                'layerlinecap': 'round', // line endings; butt/round/square
-                'layerlinejoin': 'round', // line joining; bevel/round/miter
-                'layervisibility': 'visible', // visibility of the layer
-                'layercat': [''], // categories
-                'layercolor': ['rgba(200,200,200,1)'], // color for each category; use rgba
-                'layerwidth': 1, // line width
-                'layeroutlinecolor': 'rgba(255,255,255,0)', // outline color; for legend only
-            };
-
-            // Add layer content to the overall layer content list
-            layerContentList.push(layerContent);
-
-            // Add data source
-            map.addSource(layerContent['sourceid'], {
-                'type': layerContent['sourcetype'],
-                'data': layerContent['sourcedata'],
-            });
-
-            // Add line layer
-            map.addLayer({
-                'id': layerContent['layerid'],
-                'type': layerContent['layertype'],
-                'source': layerContent['sourceid'],
-                'layout': {
-                    'line-cap': layerContent['layerlinecap'],
-                    'line-join': layerContent['layerlinejoin'],
-                    'visibility': layerContent['layervisibility'],
-                },
-                'paint': {
-                    'line-color': layerContent['layercolor'][0],
-                    'line-width': layerContent['layerwidth'],
-                },
-            });
-
-
-
-            // Add subway lines
-            // Set layer contents
-            var layerContent = {
-                'sourceid': 'subwayline', // source id
-                'sourcetype': 'geojson', // source type
-                'sourcedata': 'subwayline.geojson', // data source
-                'layerid': 'subwayline', // layer id
-                'layertype': 'line', // symbology type
-                'layername': 'Subway Lines', // layer name for the legend
-                'layerlinecap': 'round', // line endings; butt/round/square
-                'layerlinejoin': 'round', // line joining; bevel/round/miter
-                'layervisibility': 'visible', // visibility of the layer
-                'layercat': [''], // categories
-                'layercolor': ['rgba(100,100,100,1)'], // color for each category; use rgba
-                'layerwidth': 1.5, // line width
-                'layeroutlinecolor': 'rgba(255,255,255,0)', // outline color; for legend only
-            };
-
-            // Add layer content to the overall layer content list
-            layerContentList.push(layerContent);
-
-            // Add data source
-            map.addSource(layerContent['sourceid'], {
-                'type': layerContent['sourcetype'],
-                'data': layerContent['sourcedata'],
-            });
-
-            // Add line layer
-            map.addLayer({
-                'id': layerContent['layerid'],
-                'type': layerContent['layertype'],
-                'source': layerContent['sourceid'],
-                'layout': {
-                    'line-cap': layerContent['layerlinecap'],
-                    'line-join': layerContent['layerlinejoin'],
-                    'visibility': layerContent['layervisibility'],
-                },
-                'paint': {
-                    'line-color': layerContent['layercolor'][0],
-                    'line-width': layerContent['layerwidth'],
-                },
-            });
-
-
-
-            // Add top10bus
-            // Set layer contents
-            var layerContent = {
-                'sourceid': 'top10bus', // source id
-                'sourcetype': 'geojson', // source type
-                'sourcedata': 'top10bus.geojson', // data source
-                'layerid': 'top10bus', // layer id
-                'layertype': 'line', // symbology type
-                'layername': 'Top 10 Bus Routes', // layer name for the legend
+                'layername': 'Inbound Crossings', // layer name for the legend
                 'layerlinecap': 'round', // line endings; butt/round/square
                 'layerlinejoin': 'round', // line joining; bevel/round/miter
                 'layervisibility': 'visible', // visibility of the layer
                 'layercat': [''], // categories
                 'layercolor': ['rgba(255,158,74,0.8)'], // color for each category; use rgba
-                'layerwidth': 2.5, // line width
+                'layerwidth': 10, // line width
                 'layeroutlinecolor': 'rgba(255,255,255,0)', // outline color; for legend only
             };
 
@@ -313,6 +225,8 @@
                     'line-width': layerContent['layerwidth'],
                 },
             });
+
+
 
 
 
@@ -326,32 +240,34 @@
                 maxWidth: 'none', // max width of the popoup; 'none' to fit to the content                
             });
 
-            // Add top10bus popup
+
+
+
+            // Add panynj popup
             // Add click event
-            map.on('click', 'top10bus', function (e) {
+            map.on('click', 'panynj', function (e) {
                 var coordinates = e.lngLat; // get pointer coordinates
-                var description = "<b>Route: </b><span>" + e.features[0].properties.route_shor + "</span><br>"; // description in the popup
-                description += "<b>Long Name: </b><span>" + e.features[0].properties.route_long + "</span><br>";
-                description += "<b>Annual Ridership 2020: </b><span>" + e.features[0].properties.ridership.toLocaleString() + "</span><br>";
-                description += "<b>Rank: </b><span>" + e.features[0].properties.rank + "</span><br>";
+                var description = "<b>Crossing: </b><span>" + e.features[0].properties.Crossing + "</span><br>"; // description in the popup
+                description += "<b>2021 Annual Auto Crossings: </b><span>" + e.features[0].properties.Auto2021.toLocaleString() + "</span><br>";
+                description += "<b>2021 Annual Truck Crossings: </b><span>" + e.features[0].properties.Truck2021.toLocaleString() + "</span><br>";
                 popup.setLngLat(coordinates).setHTML(description).addTo(map); //add popup
             });
             // Add hover events
-            map.on('mouseenter', 'top10bus', function () {
+            map.on('mouseenter', 'panynj', function () {
                 map.getCanvas().style.cursor = 'pointer'; // mouse becoming pointer
             });
-            map.on('mouseleave', 'top10bus', function () {
+            map.on('mouseleave', 'panynj', function () {
                 map.getCanvas().style.cursor = '';
             });
 
 
-
             // Add layer selector and legend
-            var layerOrder = ['top10bus', 'busroute', 'subwayline']; // set layer order in the legend
+            var layerOrder = ['panynj']; // set layer order in the legend
             var layerContentListOrder = []; // create ordered layer content list
             for (var i = 0; i < layerOrder.length; i++) {
                 layerContentListOrder.push(layerContentList.filter(e => e.layerid == layerOrder[i])[0]);
             };
+
 
             var filterLegend = document.getElementById('legends');
             for (var i = 0; i < layerContentListOrder.length; i++) {
@@ -360,20 +276,10 @@
                 itemgroup1.className = 'itemgroup1';
                 var item1 = document.createElement('div'); // create level-1 item
                 item1.className = 'item1';
-                var input1 = document.createElement('input'); // create level-1 checkbox
-                input1.type = 'checkbox';
-                input1.className = 'item1-input';
-                input1.id = layerContentListOrder[i]['layerid'];
-                if (layerContentListOrder[i]['layervisibility'] === 'visible') {
-                    input1.checked = true;
-                } else {
-                    input1.checked = false;
-                };
                 var label1 = document.createElement('label'); // create level-1 checkbox label
                 label1.className = 'item1-label';
                 label1.setAttribute('for', layerContentListOrder[i]['layerid']);
                 label1.textContent = layerContentListOrder[i]['layername'];
-                item1.appendChild(input1);
                 item1.appendChild(label1);
                 itemgroup1.appendChild(item1);
 
@@ -405,20 +311,8 @@
                 };
                 itemgroup1.appendChild(itemgroup2);
                 filterLegend.appendChild(itemgroup1);
-
-                // Create layer selector click event
-                input1.addEventListener('click', function (e) {
-                    var clickedLayer = this.id;
-                    var vis = map.getLayoutProperty(clickedLayer, 'visibility');
-                    if (vis === 'visible') {
-                        map.setLayoutProperty(clickedLayer, 'visibility', 'none'); // set layer visibility
-                        document.getElementById(clickedLayer + '-cat').style.display = 'none'; // set legend visibility
-                    } else {
-                        map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
-                        document.getElementById(clickedLayer + '-cat').style.display = 'block';
-                    };
-                });
             };
+
 
 
 

@@ -1,0 +1,13 @@
+{
+"type": "FeatureCollection",
+"name": "panynjcrossing",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "id": 1, "Crossing": "George Washington Bridge", "Auto2021": 45107088, "Truck2021": 3887376 }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ -73.9410274721523, 40.849412748726394 ], [ -73.964651482049632, 40.853950353250745 ], [ -73.964651482049632, 40.853950353250745 ] ] ] } },
+{ "type": "Feature", "properties": { "id": 2, "Crossing": "Lincoln Tunnel", "Auto2021": 15631752, "Truck2021": 870595 }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ -73.999476988774717, 40.758555197254879 ], [ -74.021030579827098, 40.767481701688808 ], [ -74.021030579827098, 40.767481701688808 ] ] ] } },
+{ "type": "Feature", "properties": { "id": 3, "Crossing": "Holland Tunnel", "Auto2021": 13647628, "Truck2021": 335758 }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ -74.010492678782981, 40.725713844611533 ], [ -74.034116688680314, 40.729213939998772 ] ] ] } },
+{ "type": "Feature", "properties": { "id": 4, "Crossing": "Goethals Bridge", "Auto2021": 15316471, "Truck2021": 1655843 }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ -74.206067628135301, 40.641334074021117 ], [ -74.187221507880125, 40.630013589845795 ] ] ] } },
+{ "type": "Feature", "properties": { "id": 5, "Crossing": "Outerbridge Crossing", "Auto2021": 13380761, "Truck2021": 741987 }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ -74.256553995354054, 40.524047974167502 ], [ -74.232876897794043, 40.525500691660831 ] ] ] } },
+{ "type": "Feature", "properties": { "id": 6, "Crossing": "Bayonne Bridge", "Auto2021": 3421729, "Truck2021": 198664 }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ -74.139601874446583, 40.648101275798119 ], [ -74.145653867993317, 40.632874106931141 ] ] ] } }
+]
+}
