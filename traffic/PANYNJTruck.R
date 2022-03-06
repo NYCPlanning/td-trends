@@ -12,8 +12,8 @@ df=df %>%
   select(Date,Automobiles,Trucks)
 
 
-dfcolors=c('Automobiles'='rgba(255,158,74,0.6)',
-           'Trucks'='rgba(103,191,92,0.6)')
+dfcolors=c('Automobiles'='rgba(255,158,74,0.8)',
+           'Trucks'='rgba(103,191,92,0.8)')
 
 p=plot_ly()
 p=p %>%
