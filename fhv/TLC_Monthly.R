@@ -8,14 +8,14 @@ df=read.csv(paste0(path,'fhv/TLC_Monthly.csv'),stringsAsFactors=F,check.names=F)
 df=df %>%
   mutate(Date=as.Date(paste0(YearMonth,'-01'),'%Y-%m-%d'))
 
-dfcolors=c('Yellow Taxi'='rgba(255,158,74,0.8)',
-           'Green Taxi'='rgba(103,191,92,0.8)',
-           'For-Hire Vehicle'='rgba(114,158,206,0.8',
+dfcolors=c('Yellow Taxi'='rgba(255,158,74,0.6)',
+           'Green Taxi'='rgba(103,191,92,0.6)',
+           'For-Hire Vehicle'='rgba(114,158,206,0.6)',
            'Unique Drivers'='rgba(173,139,201,0.8)',
            'Unique Vehicles'='rgba(237,102,93,0.8)')
 
 p=plot_ly()
-for (i in c('Unique Drivers','Unique Vehicles')){
+for (i in c('Unique Vehicles','Unique Drivers')){
   p=p %>%
     add_trace(name=i,
               type='scatter',
@@ -89,7 +89,7 @@ p=p %>%
                     zeroline=T,
                     zerolinecolor='rgba(0,0,0,0.2)',
                     zerolinewidth=2),
-         yaxis2=list(title=list(text='<b>Number of Drivers/Vehicles</b>',
+         yaxis2=list(title=list(text='<b>Number of Drivers / Vehicles</b>',
                                 font=list(size=14)),
                      tickfont=list(size=12),
                      side='right',

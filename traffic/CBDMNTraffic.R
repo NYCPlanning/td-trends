@@ -10,9 +10,9 @@ df=df %>%
   select(Date,TBTA_CBDInbound_Avg,PANYNJ_CBDInbound_Avg,ERB_Inbound_Avg,TPEP_CBD_Speed_Avg)
 colnames(df)=c('Date','MTA Bridges & Tunnels','PANYNJ Bridges & Tunnels','East River Bridges','Taxi Speed')
 
-dfcolors=c('MTA Bridges & Tunnels'='rgba(114,158,206,0.8)',
-           'PANYNJ Bridges & Tunnels'='rgba(255,158,74,0.8)',
-           'East River Bridges'='rgba(103,191,92,0.8)',
+dfcolors=c('MTA Bridges & Tunnels'='rgba(109,204,218,0.6)',
+           'PANYNJ Bridges & Tunnels'='rgba(255,158,74,0.6)',
+           'East River Bridges'='rgba(173,139,201,0.6)',
            'Taxi Speed'='rgba(237,102,93,0.8)')
 
 p=plot_ly()
@@ -28,7 +28,7 @@ p=p %>%
             showlegend=T,
             hovertext=paste0('<b>Taxi Speed: </b>',format(round(df[['Taxi Speed']],2),trim=T,nsmall=2)),
             hoverinfo='text')
-for (i in c('MTA Bridges & Tunnels','PANYNJ Bridges & Tunnels','East River Bridges')){
+for (i in c('East River Bridges','MTA Bridges & Tunnels','PANYNJ Bridges & Tunnels')){
   p=p %>%
     add_trace(name=i,
               type='scatter',

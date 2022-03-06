@@ -9,13 +9,13 @@ df=df %>%
   mutate(Date=as.Date(paste0(yearmonth,'01'),'%Y%m%d')) %>%
   filter(Date>=as.Date('20150101','%Y%m%d'))
 
-dfcolors=c('BillyBey'='rgba(255,158,74,0.8)',
-           'Liberty Landing Ferry'='rgba(103,191,92,0.8)',
-           'NY Waterway'='rgba(173,139,201,0.8)',
-           'NYC Ferry'='rgba(237,102,93,0.8)',
-           'New York Water Taxi'='rgba(205,204,93,0.8)',
-           'SeaStreak'='rgba(237,151,202,0.8)',
-           'Staten Island Ferry'='rgba(114,158,206,0.8')
+dfcolors=c('BillyBey'='rgba(255,158,74,0.6)',
+           'Liberty Landing Ferry'='rgba(103,191,92,0.6)',
+           'NY Waterway'='rgba(173,139,201,0.6)',
+           'NYC Ferry'='rgba(237,102,93,0.6)',
+           'New York Water Taxi'='rgba(205,204,93,0.6)',
+           'SeaStreak'='rgba(237,151,202,0.6)',
+           'Staten Island Ferry'='rgba(114,158,206,0.6)')
 
 p=plot_ly()
 for (i in c('Staten Island Ferry','BillyBey','Liberty Landing Ferry','NY Waterway','New York Water Taxi','SeaStreak','NYC Ferry')){
