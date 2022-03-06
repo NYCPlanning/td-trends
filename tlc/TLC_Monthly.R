@@ -4,7 +4,7 @@ library(plotly)
 # path='C:/Users/Y_Ma2/Desktop/GITHUB/td-trends/'
 path='C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/'
 
-df=read.csv(paste0(path,'fhv/TLC_Monthly.csv'),stringsAsFactors=F,check.names=F)
+df=read.csv(paste0(path,'tlc/TLC_Monthly.csv'),stringsAsFactors=F,check.names=F)
 df=df %>%
   mutate(Date=as.Date(paste0(YearMonth,'-01'),'%Y-%m-%d'))
 
@@ -24,7 +24,7 @@ for (i in c('Unique Vehicles','Unique Drivers')){
               y=df[[i]],
               yaxis='y2',
               line=list(color=dfcolors[i],
-                        width=2),
+                        width=3),
               showlegend=T,
               hovertext=paste0('<b>',i,': </b>',format(df[[i]],trim=T,big.mark=',')),
               hoverinfo='text')
@@ -117,7 +117,7 @@ p=p %>%
 p=p %>%
   config(displayModeBar=F)
 p
-htmlwidgets::saveWidget(p,paste0(path,'fhv/TLC_Monthly.html'))
+htmlwidgets::saveWidget(p,paste0(path,'tlc/TLC_Monthly.html'))
 
 
 
