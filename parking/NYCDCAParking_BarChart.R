@@ -41,11 +41,22 @@ fig <- fig %>% layout(margin = list(b=160),
                                        font=list(size=12, 
                                                  color="grey")))
 
+fig=fig %>%
+  add_trace(name = "Manhattan",
+            type = "scatter",
+            mode="lines",
+            x=df[['Year']],
+            y=df[['Manhattan']],
+            line=list(color="grey",
+                      width = 3),
+            showlegend=T)
+           
+
 fig
 
 path = "C:/Users/S_Sanich/Desktop/td-trends/parking"
 
-htmlwidgets::saveWidget(p,paste0(path,"Borough_Parking_Bar_Chart.html"))
+htmlwidgets::saveWidget(fig,paste0(path,"Borough_Parking_Bar_Chart.html"))
 
 
 
