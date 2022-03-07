@@ -33,13 +33,20 @@ fig=fig.add_trace(go.Scattergl(name='NYC Population',
                                          'size': 8},
                                hovertext=['<b>NYC Population: </b>'+'{:,.0f}'.format(x) for x in df['NYC Population']],
                                hoverinfo='text'))
+fig=fig.add_trace(go.Scattergl(name='',
+                               mode='none',
+                               x=df['Year'],
+                               y=df['Manhattan'],
+                               showlegend=False,
+                               hovertext=['<b>Total Vehicles: </b>'+'{:,.0f}'.format(x) for x in df['Total Vehicles']],
+                               hoverinfo='text'))
 for i in ['Staten Island','Queens','Manhattan','Brooklyn','Bronx']:
     fig=fig.add_trace(go.Bar(name=i,
                              x=df['Year'],
                              y=df[i],
                              marker={'color': dfcolors[i]},
                              width=0.5,
-                             hovertext=['<b>'+str(i)+': </b>'+'{:,.0f}'.format(x) for x in df[i]],
+                             hovertext=['<b>'+str(i)+': </b>'+'{:,.0f}'.format(x)+' ('+'{:,.0%}'.format(y)+')' for x,y in zip(df[i],df[i+' Pct'])],
                              hoverinfo='text'))
 fig=fig.add_trace(go.Scattergl(name='',
                                mode='none',
