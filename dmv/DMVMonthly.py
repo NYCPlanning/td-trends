@@ -8,7 +8,7 @@ import plotly.graph_objects as go
 pio.renderers.default = "browser"
 pd.set_option('display.max_columns', None)
 path='C:/Users/Y_Ma2/Desktop/GITHUB/td-trends/'
-path='C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/'
+# path='C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/'
 
 
 
@@ -47,7 +47,7 @@ fig.update_layout(
             'xanchor':'center',
             'y':1,
             'yanchor':'bottom'},
-    margin={'b':120,
+    margin={'b':150,
             'l':80,
             'r':40,
             't':120},
@@ -80,7 +80,7 @@ fig.add_annotation(
     y=0,
     yanchor='top',
     yref='paper',
-    yshift=-80)
+    yshift=-110)
 fig.write_html(path+'dmv/DMVMonthly.html',
                include_plotlyjs='cdn',
                config={'displayModeBar':False})
