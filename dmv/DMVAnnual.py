@@ -102,7 +102,7 @@ fig.update_layout(
     dragmode=False,
     hovermode='x unified')
 fig.add_annotation(
-    text='Data Source: <a href="https://dmv.ny.gov/about-dmv/statistical-summaries" target="blank">NYS DMV</a>; <a href="https://data.census.gov/cedsci/" target="blank">ACS 1-Year Estimates</a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/dmv/DMVAnnual.csv" target="blank">Download Chart Data</a>',
+    text='Data Source: <a href="https://dmv.ny.gov/about-dmv/statistical-summaries" target="blank">NYS DMV</a>; <a href="https://data.census.gov/cedsci/table?t=Populations%20and%20People&g=0500000US36005,36047,36061,36081,36085&d=ACS%201-Year%20Estimates%20Data%20Profiles&tid=ACSDP1Y2019.DP05" target="blank">Census Bureau</a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/dmv/DMVAnnual.csv" target="blank">Download Chart Data</a>',
     font_size=14,
     showarrow=False,
     x=1,
