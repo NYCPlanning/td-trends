@@ -4,61 +4,109 @@ library(tibble)
 
 url = "https://raw.githubusercontent.com/NYCPlanning/td-trends/main/parking/Two_Year_Citywide_Average.csv"
 
-df=read.csv(url, fileEncoding = 'UTF-8-BOM', stringsAsFactors = F)
+df=read.csv(url, fileEncoding = 'UTF-8-BOM', stringsAsFactors = F, check.names=F)
 
 df=df %>%
   arrange("Year")
-  
+
+dfcolors=c('Bronx'='rgba(114,158,206,0.8)',
+           'Brooklyn'='rgba(255,158,74,0.8)',
+           'Manhattan'='rgba(103,191,92,0.8)',
+           'Queens'='rgba(237,102,93,0.8)',
+           'Staten Island'='rgba(173,139,201,0.8)')
 
 p=plot_ly()
 
 p=p %>%
   add_trace(type="scatter",
-            mode="lines",
-            x=df[["Year"]], y=df[["Bronx"]],
-            name="Bronx",
-            color = "#729ece",
-            hovertemplate='%{y:,.0f}') %>%
-  add_trace(type="scatter",
-            mode="lines",
-            x=df[["Year"]], y=df[["Brooklyn"]],
-            name="Brooklyn",
-            color="#ff9e4a",
-            hovertemplate='%{y:,.0f}') %>%
-  add_trace(type="scatter",
-            mode="lines",
-            x=df[["Year"]], y=df[["Manhattan"]],
-            name="Manhattan",
-            color = "#67bf5c",
-            hovertemplate='%{y:,.0f}') %>%
-  add_trace(type="scatter",
-            mode="lines",
-            x=df[["Year"]], y=df[["Queens"]],
-            name="Queens",
-            color="#ad8bc9",
-            hovertemplate='%{y:,.0f}') %>%
-  add_trace(type="scatter",
-            mode="lines",
-            x=df[["Year"]], y=df[["Staten.Island"]],
-            name="Staten Island",
-            color = "#ed665d",
-            hovertemplate='%{y:,.0f}') %>%
-  layout(title = "<b>NYC DCA Public Parking Spaces 2005-2021, by Borough</b>", 
-         xaxis=list(title="<b>Year</b>"), yaxis=list(title="<b>Parking Capacity</b>")) %>%
-  layout(margin = list(b=160),
-         annotations=list(x=1, y=-0.2,
-                          text= "Data Source: DCA | <a href='https://raw.githubusercontent.com/NYCPlanning/td-trends/main/parking/Off-Street_Parking_By_Borough.csv' target='blank'>Download Chart Data</a>", 
-                          showarrow=F,
-                          xref="paper", yref="paper",
-                          xanchor="right", yanchor="top",
-                          xshift=0, yshift=0,
-                          font=list(size=12, color="grey"))) %>%
-  config(displayModeBar = F)
+            mode="none",
+            x=df[["Year"]], 
+            y=df[["Bronx"]],
+            showlegend=F,
+            hovertext=paste0('<b>Year: </b>',df[['Year']]),
+            hoverinfo='text')
+for (i in c('Bronx','Brooklyn','Manhattan','Queens','Staten Island')){
+p=p %>%
+  add_trace(name=i,
+            type='scatter',
+            mode='lines+markers',
+            x=df[['Year']],
+            y=df[[i]],
+            line=list(color=dfcolors[i],
+                      width=2),
+            marker=list(color=dfcolors[i],
+                        size=6),
+            showlegend=T,
+            hovertext=paste0('<b>',i,': </b>',format(df[[i]],trim=T,big.mark=','),
+                             ' (',format(round(df[[paste0(i,' Pct')]]*100,0),trim=T,nsmall=0),'%)'),
+            hoverinfo='text')
+}
 
+p=p %>%
+  add_trace(type='scatter',
+            mode='none',
+            x=df[['Year']],
+            y=df[['Staten.Island']],
+            showlegend=F,
+            hovertext=paste0('<b>Total: </b>',format(df[['Total']],trim=T,big.mark=',')),
+            hoverinfo='text')
 
-
+p=p %>%
+  layout(template='plotly_white',
+         title=list(text=paste0('<b>NYC DCA Public Parking Spaces 2005-2021, by Borough</b>'),
+                    font=list(size=20),
+                    x=0.5,
+                    xanchor='center',
+                    y=0.95,
+                    yanchor='top'),
+         legend=list(orientation='h',
+                     title=list(text=''),
+                     font=list(size=16),
+                     x=0.5,
+                     xanchor='center',
+                     y=1,
+                     yanchor='bottom'),
+         margin=list(b=120,
+                     l=80,
+                     r=40,
+                     t=150),
+         xaxis=list(title=list(text='<b>Year</b>',
+                               font=list(size=14)),
+                    tickfont=list(size=12),
+                    range=c(min(df[['Year']])-0.5,max(df[['Year']])+0.5),
+                    fixedrange=T,
+                    showgrid=F),
+         yaxis=list(title=list(text='<b>Parking Capacity</b>',
+                               font=list(size=14)),
+                    tickfont=list(size=12),
+                    rangemode='tozero',
+                    fixedrange=T,
+                    showgrid=T,
+                    zeroline=T,
+                    zerolinecolor='rgba(0,0,0,0.2)',
+                    zerolinewidth=2),
+         hoverlabel=list(font=list(size=14)),
+         font=list(family='Arial',
+                   color='black'),
+         dragmode=F,
+         hovermode='x unified')
+p=p %>% 
+  add_annotations(text='Data Source: DCA | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/parking/Two_Year_Citywide_Average.csv" target="blank">Download Chart Data</a>',
+                  font=list(size=14),
+                  showarrow=F,
+                  x=1,
+                  xanchor='right',
+                  xref='paper',
+                  y=0,
+                  yanchor='top',
+                  yref='paper',
+                  yshift=-80)
+p=p %>%
+  config(displayModeBar=F)
 p
 
 path = "C:/Users/S_Sanich/Desktop/td-trends/parking"
 
 htmlwidgets::saveWidget(p,paste0(path,"Borough_Parking.html"))
+  
+ 
