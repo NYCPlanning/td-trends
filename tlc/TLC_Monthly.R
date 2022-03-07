@@ -29,6 +29,14 @@ for (i in c('Unique Vehicles','Unique Drivers')){
               hovertext=paste0('<b>',i,': </b>',format(df[[i]],trim=T,big.mark=',')),
               hoverinfo='text')
 }
+p=p %>%
+  add_trace(type='scatter',
+            mode='none',
+            x=df[['Date']],
+            y=df[['Green Taxi']],
+            showlegend=F,
+            hovertext=paste0('<b>Total Trips: </b>',format(df[['Total Trips']],trim=T,big.mark=',')),
+            hoverinfo='text')
 for (i in c('For-Hire Vehicle','Yellow Taxi','Green Taxi')){
   p=p %>%
     add_trace(name=i,
@@ -42,7 +50,8 @@ for (i in c('For-Hire Vehicle','Yellow Taxi','Green Taxi')){
               orientation='v',
               fill='tonexty',
               fillcolor=dfcolors[i],
-              hovertext=paste0('<b>',i,': </b>',format(df[[i]],trim=T,big.mark=',')),
+              hovertext=paste0('<b>',i,': </b>',format(df[[i]],trim=T,big.mark=','),
+                               ' (',format(round(df[[paste0(i,' Pct')]]*100,0),trim=T,nsmall=0),'%)'),
               hoverinfo='text')
 }
 p=p %>%

@@ -33,7 +33,8 @@ for (i in c('Bronx','Brooklyn','Manhattan','Queens','Staten Island')){
               marker=list(color=dfcolors[i],
                           size=6),
               showlegend=T,
-              hovertext=paste0('<b>',i,': </b>',format(df[[i]],trim=T,big.mark=',')),
+              hovertext=paste0('<b>',i,': </b>',format(df[[i]],trim=T,big.mark=','),
+                               ' (',format(round(df[[paste0(i,' Pct')]]*100,0),trim=T,nsmall=0),'%)'),
               hoverinfo='text')
 }
 p=p %>%

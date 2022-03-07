@@ -18,6 +18,14 @@ dfcolors=c('BillyBey'='rgba(255,158,74,0.6)',
            'Staten Island Ferry'='rgba(114,158,206,0.6)')
 
 p=plot_ly()
+p=p %>%
+  add_trace(type='scatter',
+            mode='none',
+            x=df[['Date']],
+            y=df[['Staten Island Ferry']],
+            showlegend=F,
+            hovertext=paste0('<b>Total: </b>',format(df[['Total']],trim=T,big.mark=',')),
+            hoverinfo='text')
 for (i in c('Staten Island Ferry','BillyBey','Liberty Landing Ferry','NY Waterway','New York Water Taxi','SeaStreak','NYC Ferry')){
   p=p %>%
     add_trace(name=i,
@@ -31,7 +39,8 @@ for (i in c('Staten Island Ferry','BillyBey','Liberty Landing Ferry','NY Waterwa
               orientation='v',
               fill='tonexty',
               fillcolor=dfcolors[i],
-              hovertext=paste0('<b>',i,': </b>',format(df[[i]],trim=T,big.mark=',')),
+              hovertext=paste0('<b>',i,': </b>',format(df[[i]],trim=T,big.mark=','),
+                               ' (',format(round(df[[paste0(i,' Pct')]]*100,0),trim=T,nsmall=0),'%)'),
               hoverinfo='text')
 }
 p=p %>%

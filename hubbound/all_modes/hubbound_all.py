@@ -16,7 +16,7 @@ path = 'C:/Users/M_Free/Desktop/td-trends/hubbound/all_modes/'
 path = 'C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/hubbound/all_modes/'
 
 df = pd.read_csv(path + 'hubbound_all.csv')
-df['hover'] = '<i>' + df['mode'] + ': </i>' + df['entries'].map('{:,.0f}'.format) + ' (' + df['%'].map('{:.0%}'.format) + ')'
+df['hover'] = '<b>' + df['mode'] + ': </b>' + df['entries'].map('{:,.0f}'.format) + ' (' + df['%'].map('{:.0%}'.format) + ')'
 
 df_total = df[['year', 'entries']].groupby('year').sum().reset_index()
 df_total['year'] = df_total['year'].astype(str)
@@ -29,6 +29,13 @@ mode_colors = {'Auto': 'rgba(237,102,93,0.8)',
                'Other': 'rgba(237,151,202,0.8)'}
 
 fig = go.Figure()
+
+fig = fig.add_trace(go.Scatter(x = df_total['year'],
+                               y = df_total['y'],
+                               mode = 'none',
+                               showlegend = False,
+                               hoverinfo = 'text',
+                               hovertext = '<b>Year: </b>' + df_total['year']))
 
 for mode, color in mode_colors.items():
     fig = fig.add_trace(go.Scatter(name = mode,
@@ -47,7 +54,7 @@ fig = fig.add_trace(go.Scatter(x = df_total['year'],
                                mode = 'none',
                                showlegend = False,
                                hoverinfo = 'text',
-                               hovertext = '<b>' + df_total['year'] + ' Total Entries: ' + df_total['entries'].map('{:,.0f}'.format)))
+                               hovertext = '<b>Total Entries: </b>' + df_total['entries'].map('{:,.0f}'.format)))
 
 fig.update_layout(template = 'plotly_white',
                   title = {'text': '<b>Daily Entries into the Manhattan Hub</b>',

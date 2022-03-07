@@ -20,7 +20,7 @@ p=p %>%
   add_trace(type='scatter',
             mode='none',
             x=df[['Date']],
-            y=df[['Manhattan']],
+            y=df[['ManhattanSpeed']],
             showlegend=F,
             hovertext=paste0('<b>Month: </b>',format(df[['Date']],'%b %Y')),
             hoverinfo='text')
@@ -30,15 +30,23 @@ for (i in c('Bronx','Brooklyn','Manhattan','Queens','Staten Island')){
               type='scatter',
               mode='lines+markers',
               x=df[['Date']],
-              y=df[[i]],
+              y=df[[paste0(i,'Speed')]],
               line=list(color=dfcolors[i],
                         width=2),
               marker=list(color=dfcolors[i],
                           size=6),
               showlegend=T,
-              hovertext=paste0('<b>',i,': </b>',format(round(df[[i]],2),trim=T,nsmall=2)),
+              hovertext=paste0('<b>',i,': </b>',format(round(df[[paste0(i,'Speed')]],2),trim=T,nsmall=2)),
               hoverinfo='text')
 }
+p=p %>%
+  add_trace(type='scatter',
+            mode='none',
+            x=df[['Date']],
+            y=df[['ManhattanSpeed']],
+            showlegend=F,
+            hovertext=paste0('<b>Average: </b>',format(round(df[['AvgSpeed']],2),trim=T,nsmall=2)),
+            hoverinfo='text')
 p=p %>%
   layout(template='plotly_white',
          title=list(text=paste0('<b> Monthly Bus Speed</b>'),
