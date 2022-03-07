@@ -32,7 +32,7 @@
             position: absolute;
             top: 1rem;
             left: 1rem;
-            width: 11rem;
+            width: 17rem;
             height: auto;
             max-height: 90%;
             padding-top: 1rem;
@@ -72,7 +72,7 @@
         }
 
         .itemgroup2 {
-            margin-left: 0rem;
+            margin-left: 1.4rem;
         }
 
         .item2-input {
@@ -150,7 +150,7 @@
             style: 'mapbox://styles/mapbox/light-v10', // light base map
             hash: true, // make sure it's on to get the url with map view
             attributionControl: true, // show the credit bar
-            customAttribution: '<b>Data Source: <a href="https://data.cityofnewyork.us/Health/Open-Streets-Locations/uiay-nctu" target="blank">NYC DOT Open Streets</a>; <a href="https://data.cityofnewyork.us/Transportation/Open-Restaurant-Applications/pitm-atqc" target="blank">NYC DOT Open Restaurants</a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/peds/download" target="blank">Download Map Data</a></b>', // add overall credit to the beggining
+            customAttribution: '<b>Data Source: <a href="https://data.cityofnewyork.us/Health/Open-Streets-Locations/uiay-nctu" target="blank">NYC DOT Open Streets</a>; <a href="https://data.cityofnewyork.us/Transportation/Open-Restaurant-Applications/pitm-atqc" target="blank">NYC DOT Open Restaurants</a> | <a href="https://github.com/NYCPlanning/td-trends/tree/main/peds/download" target="blank">Download Map Data</a></b>', // add overall credit to the beggining
             preserveDrawingBuffer: true, // make sure it's on to allow printing
             center: [-74.0197, 40.721], // testing to get the centroid of bounds
             zoom: 10, // set the initial zoom of the map view
@@ -183,19 +183,73 @@
 
 
 
-            // Add public parking
+            // Add open streets
             // Set layer contents
             var layerContent = {
-                'sourceid': 'publicparking', // source id
+                'sourceid': 'openstreets', // source id
                 'sourcetype': 'geojson', // source type
-                'sourcedata': 'publicparking.geojson', // data source
-                'layerid': 'publicparking', // layer id
-                'layertype': 'circle', // symbology type
-                'layername': 'Type', // layer name for the legend 
+                'sourcedata': 'download/openstreets.geojson', // data source
+                'layerid': 'openstreets', // layer id
+                'layertype': 'line', // symbology type
+                'layername': 'Open Streets', // layer name for the legend 
+                'layerlinecap': 'round', // line endings; butt/round/square
+                'layerlinejoin': 'round', // line joining; bevel/round/miter
                 'layervisibility': 'visible', // visibility of the layer
                 'layercolname': 'Type', // category column name
-                'layercat': ['DCWP', 'DOT'], // categories
-                'layercolor': ['rgba(237,102,93,0.8)', 'rgba(103,191,92,0.8)'], // color for each category; use rgba
+                'layercat': ['Limited Local Access', 'Full Closure', 'Full Closure: Schools'], // categories
+                'layercolor': ['rgba(237,102,93,0.8)', 'rgba(103,191,92,0.8)', 'rgba(103,191,92,0.8)'], // color for each category; use rgba
+                'layerwidth': 3, // line width
+                'layeroutlinecolor': 'rgba(255,255,255,0)', // outline color; for legend only
+            };
+
+            // Generate layer colors
+            var layerColor = ['match', ['get', layerContent['layercolname']]];
+            for (var i = 0; i < layerContent.layercat.length; i++) {
+                layerColor.push(layerContent.layercat[i]);
+                layerColor.push(layerContent.layercolor[i]);
+            };
+            layerColor.push('#000000');
+
+            // Add layer content to the overall layer content list
+            layerContentList.push(layerContent);
+
+            // Add data source
+            map.addSource(layerContent['sourceid'], {
+                'type': layerContent['sourcetype'],
+                'data': layerContent['sourcedata'],
+            });
+
+            // Add line layer
+            map.addLayer({
+                'id': layerContent['layerid'],
+                'type': layerContent['layertype'],
+                'source': layerContent['sourceid'],
+                'layout': {
+                    'line-cap': layerContent['layerlinecap'],
+                    'line-join': layerContent['layerlinejoin'],
+                    'visibility': layerContent['layervisibility'],
+                },
+                'paint': {
+                    'line-color': layerColor,
+                    'line-width': layerContent['layerwidth'],
+                },
+            });
+
+
+
+            // Add open restaurants
+            // Set layer contents
+            var layerContent = {
+                'sourceid': 'openrestaurants', // source id
+                'sourcetype': 'geojson', // source type
+                'sourcedata': 'download/openrestaurants.geojson', // data source
+                'layerid': 'openrestaurants', // layer id
+                'layertype': 'circle', // symbology type
+                'layername': 'Open Restaurants', // layer name for the legend 
+                'layervisibility': 'none', // visibility of the layer
+                'layercolname': 'Type', // category column name
+                'layercat': ['Sidewalk', 'Roadway', 'Both', 'Open Streets'], // categories
+                'layercolor': ['rgba(237,102,93,0.8)', 'rgba(103,191,92,0.8)', 'rgba(103,191,92,0.8)', 'rgba(103,191,92,0.8)'], // color for each category; use rgba
                 'layeropacity': 1, // circle opacity
                 'layerradius': 3, // circle radius; change size based on zoom level
                 'layerstrokecolor': 'rgba(0,0,0,1)', // circle stroke color
@@ -243,7 +297,6 @@
 
 
 
-
             // Add popup
             var popup = new mapboxgl.Popup({
                 closeButton: true, // close button
@@ -278,10 +331,8 @@
 
 
 
-
-
             // Add layer selector and legend
-            var layerOrder = ['publicparking']; // set layer order in the legend
+            var layerOrder = ['openstreets', 'openrestaurants']; // set layer order in the legend
             var layerContentListOrder = []; // create ordered layer content list
             for (var i = 0; i < layerOrder.length; i++) {
                 layerContentListOrder.push(layerContentList.filter(e => e.layerid == layerOrder[i])[0]);
@@ -294,10 +345,20 @@
                 itemgroup1.className = 'itemgroup1';
                 var item1 = document.createElement('div'); // create level-1 item
                 item1.className = 'item1';
+                var input1 = document.createElement('input'); // create level-1 checkbox
+                input1.type = 'checkbox';
+                input1.className = 'item1-input';
+                input1.id = layerContentListOrder[i]['layerid'];
+                if (layerContentListOrder[i]['layervisibility'] === 'visible') {
+                    input1.checked = true;
+                } else {
+                    input1.checked = false;
+                };
                 var label1 = document.createElement('label'); // create level-1 checkbox label
                 label1.className = 'item1-label';
                 label1.setAttribute('for', layerContentListOrder[i]['layerid']);
                 label1.textContent = layerContentListOrder[i]['layername'];
+                item1.appendChild(input1);
                 item1.appendChild(label1);
                 itemgroup1.appendChild(item1);
 
@@ -349,6 +410,19 @@
                 };
                 itemgroup1.appendChild(itemgroup2);
                 filterLegend.appendChild(itemgroup1);
+
+                // Create layer selector click event
+                input1.addEventListener('click', function (e) {
+                    var clickedLayer = this.id;
+                    var vis = map.getLayoutProperty(clickedLayer, 'visibility');
+                    if (vis === 'visible') {
+                        map.setLayoutProperty(clickedLayer, 'visibility', 'none'); // set layer visibility
+                        document.getElementById(clickedLayer + '-cat').style.display = 'none'; // set legend visibility
+                    } else {
+                        map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
+                        document.getElementById(clickedLayer + '-cat').style.display = 'block';
+                    };
+                });
             };
 
 
