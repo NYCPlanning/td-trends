@@ -1,0 +1,14 @@
+{
+"type": "FeatureCollection",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "id": 2, "name": "Prospect Park West", "latitude": 40.671288, "longitude": -73.971382, "site": 100009425 }, "geometry": { "type": "Point", "coordinates": [ -73.971382, 40.671288 ] } },
+{ "type": "Feature", "properties": { "id": 4, "name": "Williamsburg Bridge Bike Path", "latitude": 40.71053, "longitude": -73.96145, "site": 100009427 }, "geometry": { "type": "Point", "coordinates": [ -73.96145, 40.71053 ] } },
+{ "type": "Feature", "properties": { "id": 5, "name": "Ed Koch Queensboro Bridge Shared Path", "latitude": 40.751038, "longitude": -73.94082, "site": 100009428 }, "geometry": { "type": "Point", "coordinates": [ -73.94082, 40.751038 ] } },
+{ "type": "Feature", "properties": { "id": 7, "name": "Staten Island Ferry", "latitude": 40.643387, "longitude": -74.072075, "site": 100010017 }, "geometry": { "type": "Point", "coordinates": [ -74.072075, 40.643387 ] } },
+{ "type": "Feature", "properties": { "id": 8, "name": "Pulaski Bridge", "latitude": 40.742563, "longitude": -73.951492, "site": 100010018 }, "geometry": { "type": "Point", "coordinates": [ -73.951492, 40.742563 ] } },
+{ "type": "Feature", "properties": { "id": 9, "name": "Kent Ave btw North 8th St and North 9th St", "latitude": 40.720959, "longitude": -73.96093, "site": 100010019 }, "geometry": { "type": "Point", "coordinates": [ -73.96093, 40.720959 ] } },
+{ "type": "Feature", "properties": { "id": 22, "name": "Manhattan Bridge Bike Comprehensive", "latitude": 40.7156, "longitude": -73.99475, "site": 100062893 }, "geometry": { "type": "Point", "coordinates": [ -73.99475, 40.7156 ] } },
+{ "type": "Feature", "properties": { "id": 25, "name": "Comprehensive Brooklyn Bridge Counter", "latitude": 40.711644, "longitude": -74.004109, "site": 300020904 }, "geometry": { "type": "Point", "coordinates": [ -74.004109, 40.711644 ] } }
+]
+}

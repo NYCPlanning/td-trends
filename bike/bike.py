@@ -117,7 +117,7 @@ counter_list = [100009425, 100009427, 100009428, 100010017, 100010018, 100010019
 counts = counts[counts.site.isin(counter_list)]
 counts = counts.groupby(['site', pd.Grouper(key = 'date', freq = 'M')])['counts'].sum().reset_index()
 # time = counts.groupby(['site']).agg({'date': ['min','max'], 'counts':'sum'})
-counts = counts[counts['date'] > '2016-05-31']
+counts = counts[counts['date'] > '2017-05-31']
 
 counts = pd.merge(counts, counters[['name', 'site']], how = 'inner', on = 'site')
 counts['name'] = counts['name'].replace({'Ed Koch Queensboro Bridge Shared Path': 'Queensboro Bridge',
