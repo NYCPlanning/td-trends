@@ -197,7 +197,7 @@
                 'layervisibility': 'visible', // visibility of the layer
                 'layercolname': 'Type', // category column name
                 'layercat': ['Limited Local Access', 'Full Closure', 'Full Closure: Schools'], // categories
-                'layercolor': ['rgba(237,102,93,0.8)', 'rgba(103,191,92,0.8)', 'rgba(103,191,92,0.8)'], // color for each category; use rgba
+                'layercolor': ['rgba(255,158,74,0.8)', 'rgba(103,191,92,0.8)', 'rgba(173,139,201,0.8)'], // color for each category; use rgba
                 'layerwidth': 3, // line width
                 'layeroutlinecolor': 'rgba(255,255,255,0)', // outline color; for legend only
             };
@@ -249,7 +249,7 @@
                 'layervisibility': 'none', // visibility of the layer
                 'layercolname': 'Type', // category column name
                 'layercat': ['Sidewalk', 'Roadway', 'Both', 'Open Streets'], // categories
-                'layercolor': ['rgba(237,102,93,0.8)', 'rgba(103,191,92,0.8)', 'rgba(103,191,92,0.8)', 'rgba(103,191,92,0.8)'], // color for each category; use rgba
+                'layercolor': ['rgba(237,102,93,0.8)', 'rgba(114,158,206,0.8)', 'rgba(109,204,218,0.8)', 'rgba(103,191,92,0.8)'], // color for each category; use rgba
                 'layeropacity': 1, // circle opacity
                 'layerradius': 3, // circle radius; change size based on zoom level
                 'layerstrokecolor': 'rgba(0,0,0,1)', // circle stroke color
@@ -310,22 +310,42 @@
 
 
 
-            // Add public parking popup
+            // Add open streets popup
             // Add click event
-            map.on('click', 'publicparking', function (e) {
-                var coordinates = e.features[0].geometry.coordinates.slice(); // get point coordinates
+            map.on('click', 'openstreets', function (e) {
+                var coordinates = e.lngLat; // get pointer coordinates
                 var description = "<b>Type: </b><span>" + e.features[0].properties.Type + "</span><br>"; // description in the popup
-                description += "<b>Borough: </b><span>" + e.features[0].properties.Boro + "</span><br>";
-                description += "<b>Address: </b><span>" + e.features[0].properties.Address + "</span><br>";
-                description += "<b>Facility Type: </b><span>" + e.features[0].properties.FacType + "</span><br>";
-                description += "<b>Spaces: </b><span>" + e.features[0].properties.Spaces.toLocaleString() + "</span><br>";
+                description += "<b>Organization Name: </b><span>" + e.features[0].properties['Organization Name'] + "</span><br>";
+                description += "<b>Borough Name: </b><span>" + e.features[0].properties['Borough Name'] + "</span><br>";
+                description += "<b>On Street: </b><span>" + e.features[0].properties['Approved On Street'] + "</span><br>";
+                description += "<b>From Street: </b><span>" + e.features[0].properties['Approved From Street'] + "</span><br>";
+                description += "<b>To Street: </b><span>" + e.features[0].properties['Approved To Street'] + "</span><br>";
                 popup.setLngLat(coordinates).setHTML(description).addTo(map); //add popup
             });
             // Add hover events
-            map.on('mouseenter', 'publicparking', function () {
+            map.on('mouseenter', 'openstreets', function () {
                 map.getCanvas().style.cursor = 'pointer'; // mouse becoming pointer
             });
-            map.on('mouseleave', 'publicparking', function () {
+            map.on('mouseleave', 'openstreets', function () {
+                map.getCanvas().style.cursor = '';
+            });
+            
+            // Add open restaurants popup
+            // Add click event
+            map.on('click', 'openrestaurants', function (e) {
+                var coordinates = e.features[0].geometry.coordinates.slice(); // get point coordinates
+                var description = "<b>Type: </b><span>" + e.features[0].properties.Type + "</span><br>"; // description in the popup
+                description += "<b>Restaurant Name: </b><span>" + e.features[0].properties['Restaurant Name'] + "</span><br>";
+                description += "<b>Doing Business As: </b><span>" + e.features[0].properties['Doing Business As (DBA)'] + "</span><br>";
+                description += "<b>Business Address: </b><span>" + e.features[0].properties['Business Address'] + "</span><br>";
+                description += "<b>Food Service Establishment Permit: </b><span>" + e.features[0].properties['Food Service Establishment Permit #'] + "</span><br>";
+               popup.setLngLat(coordinates).setHTML(description).addTo(map); //add popup
+            });
+            // Add hover events
+            map.on('mouseenter', 'openrestaurants', function () {
+                map.getCanvas().style.cursor = 'pointer'; // mouse becoming pointer
+            });
+            map.on('mouseleave', 'openrestaurants', function () {
                 map.getCanvas().style.cursor = '';
             });
 
