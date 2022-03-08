@@ -18,13 +18,13 @@ df['Date']=[datetime.datetime.strptime(str(x)+'01','%Y%m%d') for x in df['YearMo
 
 
 fig=go.Figure()
-fig=fig.add_trace(go.Scattergl(name='',
-                               mode='none',
-                               x=df['Date'],
-                               y=df['Counts'],
-                               showlegend=False,
-                               hovertext=['<b>Month: </b>'+datetime.datetime.strftime(x,'%b %Y') for x in df['Date']],
-                               hoverinfo='text'))
+fig=fig.add_trace(go.Scatter(name='',
+                             mode='none',
+                             x=df['Date'],
+                             y=df['Counts'],
+                             showlegend=False,
+                             hovertext=['<b>Month: </b>'+datetime.datetime.strftime(x,'%b %Y') for x in df['Date']],
+                             hoverinfo='text'))
 fig=fig.add_trace(go.Bar(name='Counts',
                          x=df['Date'],
                          y=df['Counts'],
@@ -80,7 +80,7 @@ fig.add_annotation(
     y=0,
     yanchor='top',
     yref='paper',
-    yshift=-110)
+    yshift=-100)
 fig.write_html(path+'dmv/DMVMonthly.html',
                include_plotlyjs='cdn',
                config={'displayModeBar':False})

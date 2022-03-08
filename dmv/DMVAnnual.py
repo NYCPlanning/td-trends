@@ -7,7 +7,7 @@ import plotly.graph_objects as go
 pio.renderers.default = "browser"
 pd.set_option('display.max_columns', None)
 path='C:/Users/Y_Ma2/Desktop/GITHUB/td-trends/'
-path='C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/'
+# path='C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/'
 
 
 
@@ -22,24 +22,24 @@ dfcolors={'Bronx':'rgba(114,158,206,0.8)',
 
 
 fig=go.Figure()
-fig=fig.add_trace(go.Scattergl(name='NYC Population',
-                               mode='lines+markers',
-                               x=df['Year'],
-                               y=df['NYC Population'],
-                               yaxis='y2',
-                               line={'color':dfcolors['NYC Population'],
-                                     'width':3},
-                               marker = {'color': dfcolors['NYC Population'],
-                                         'size': 8},
-                               hovertext=['<b>NYC Population: </b>'+'{:,.0f}'.format(x) for x in df['NYC Population']],
-                               hoverinfo='text'))
-fig=fig.add_trace(go.Scattergl(name='',
-                               mode='none',
-                               x=df['Year'],
-                               y=df['Manhattan'],
-                               showlegend=False,
-                               hovertext=['<b>Total Vehicles: </b>'+'{:,.0f}'.format(x) for x in df['Total Vehicles']],
-                               hoverinfo='text'))
+fig=fig.add_trace(go.Scatter(name='NYC Population',
+                             mode='lines+markers',
+                             x=df['Year'],
+                             y=df['NYC Population'],
+                             yaxis='y2',
+                             line={'color':dfcolors['NYC Population'],
+                                   'width':3},
+                             marker = {'color': dfcolors['NYC Population'],
+                                       'size': 8},
+                             hovertext=['<b>NYC Population: </b>'+'{:,.0f}'.format(x) for x in df['NYC Population']],
+                             hoverinfo='text'))
+fig=fig.add_trace(go.Scatter(name='',
+                             mode='none',
+                             x=df['Year'],
+                             y=df['Manhattan'],
+                             showlegend=False,
+                             hovertext=['<b>Total Vehicles: </b>'+'{:,.0f}'.format(x) for x in df['Total Vehicles']],
+                             hoverinfo='text'))
 for i in ['Staten Island','Queens','Manhattan','Brooklyn','Bronx']:
     fig=fig.add_trace(go.Bar(name=i,
                              x=df['Year'],
@@ -48,13 +48,13 @@ for i in ['Staten Island','Queens','Manhattan','Brooklyn','Bronx']:
                              width=0.5,
                              hovertext=['<b>'+str(i)+': </b>'+'{:,.0f}'.format(x)+' ('+'{:,.0%}'.format(y)+')' for x,y in zip(df[i],df[i+' Pct'])],
                              hoverinfo='text'))
-fig=fig.add_trace(go.Scattergl(name='',
-                               mode='none',
-                               x=df['Year'],
-                               y=df['Manhattan'],
-                               showlegend=False,
-                               hovertext=['<b>Year: </b>'+str(x) for x in df['Year']],
-                               hoverinfo='text'))
+fig=fig.add_trace(go.Scatter(name='',
+                             mode='none',
+                             x=df['Year'],
+                             y=df['Manhattan'],
+                             showlegend=False,
+                             hovertext=['<b>Year: </b>'+str(x) for x in df['Year']],
+                             hoverinfo='text'))
 fig.update_layout(
     template='plotly_white',
     title={'text':'<b>NYS Standard Vehicle Annual Registrations</b>',

@@ -1,8 +1,8 @@
 library(tidyverse)
 library(plotly)
 
-# path='C:/Users/Y_Ma2/Desktop/GITHUB/td-trends/'
-path='C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/'
+path='C:/Users/Y_Ma2/Desktop/GITHUB/td-trends/'
+# path='C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/'
 
 df=read.csv(paste0(path,'bus/BusRidership2008-2020.csv'),stringsAsFactors=F,check.names=F)
 
@@ -43,7 +43,7 @@ p=p %>%
             x=df[['Year']],
             y=df[['Staten Island']],
             showlegend=F,
-            hovertext=paste0('<b>Total: </b>',format(df[['Total']],trim=T,big.mark=',')),
+            hovertext=paste0('<b>Total Ridership: </b>',format(df[['Total']],trim=T,big.mark=',')),
             hoverinfo='text')
 p=p %>%
   layout(template='plotly_white',

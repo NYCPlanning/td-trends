@@ -7,7 +7,7 @@ import plotly.graph_objects as go
 pio.renderers.default = "browser"
 pd.set_option('display.max_columns', None)
 path='C:/Users/Y_Ma2/Desktop/GITHUB/td-trends/'
-path='C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/'
+# path='C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/'
 
 
 
@@ -21,24 +21,24 @@ dfcolors={'PATH':'rgba(237,102,93,0.8)',
 
 
 fig=go.Figure()
-fig=fig.add_trace(go.Scattergl(name='',
-                               mode='none',
-                               x=df['Year'],
-                               y=df['Amtrak'],
-                               showlegend=False,
-                               hovertext=['<b>Year: </b>'+str(x) for x in df['Year']],
-                               hoverinfo='text'))
+fig=fig.add_trace(go.Scatter(name='',
+                             mode='none',
+                             x=df['Year'],
+                             y=df['Amtrak'],
+                             showlegend=False,
+                             hovertext=['<b>Year: </b>'+str(x) for x in df['Year']],
+                             hoverinfo='text'))
 for i in ['PATH','NJT','LIRR','MNR','Amtrak','NJ Bus']:
-    fig=fig.add_trace(go.Scattergl(name=i,
-                                   mode='lines+markers',
-                                   x=df['Year'],
-                                   y=df[i],
-                                   line={'color':dfcolors[i],
-                                         'width':2},
-                                   marker = {'color': dfcolors[i],
-                                             'size': 6},
-                                   hovertext=['<b>'+str(i)+': </b>'+'{:,.0f}'.format(x) for x in df[i]],
-                                   hoverinfo='text'))
+    fig=fig.add_trace(go.Scatter(name=i,
+                                 mode='lines+markers',
+                                 x=df['Year'],
+                                 y=df[i],
+                                 line={'color':dfcolors[i],
+                                       'width':2},
+                                 marker = {'color': dfcolors[i],
+                                           'size': 6},
+                                 hovertext=['<b>'+str(i)+': </b>'+'{:,.0f}'.format(x) for x in df[i]],
+                                 hoverinfo='text'))
 fig.update_layout(
     template='plotly_white',
     title={'text':'<b>Daily Entries into the Manhattan Hub</b>',
