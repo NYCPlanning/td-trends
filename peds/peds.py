@@ -56,7 +56,7 @@ fig.update_layout(
            'yanchor':'top'},
     legend={'orientation':'v',
             'title_text':'',
-            'font_size':16,
+            'font_size':14,
             'x':1,
             'xanchor':'left',
             'y':0.5,
