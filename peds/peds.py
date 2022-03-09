@@ -48,7 +48,7 @@ for i in ['AM','PM','Sat']:
                                  hoverinfo='text'))
 fig.update_layout(
     template='plotly_white',
-    title={'text':'<b>Average Peak Hour Pedestrian Counts*</b>',
+    title={'text':'<b>Average Peak Hour Pedestrian Counts</b>',
            'font_size':20,
            'x':0.5,
            'xanchor':'center',
@@ -84,17 +84,6 @@ fig.update_layout(
     dragmode=False,
     hovermode='x unified')
 fig.add_annotation(
-    text='*AM: Weekday 7-9AM; PM: Weekday 4-7PM; Sat: Saturday 12-2PM',
-    font_size=14,
-    showarrow=False,
-    x=1,
-    xanchor='right',
-    xref='paper',
-    y=0,
-    yanchor='top',
-    yref='paper',
-    yshift=-80)
-fig.add_annotation(
     text='Data Source: <a href="https://www1.nyc.gov/html/dot/html/about/datafeeds.shtml#Pedestrians" target="blank">NYC DOT</a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/peds/pedcounts.csv" target="blank">Download Chart Data</a>',
     font_size=14,
     showarrow=False,
@@ -104,7 +93,7 @@ fig.add_annotation(
     y=0,
     yanchor='top',
     yref='paper',
-    yshift=-100)
+    yshift=-80)
 fig.write_html(path+'peds/pedcounts.html',
                include_plotlyjs='cdn',
                config={'displayModeBar':False})
