@@ -7,7 +7,7 @@ import plotly.graph_objects as go
 pio.renderers.default = "browser"
 pd.set_option('display.max_columns', None)
 path='C:/Users/Y_Ma2/Desktop/GITHUB/td-trends/'
-# path='C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/'
+path='C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/'
 
 
 
@@ -22,17 +22,17 @@ dfcolors={'Bronx':'rgba(114,158,206,0.8)',
 
 
 fig=go.Figure()
-fig=fig.add_trace(go.Scatter(name='NYC Population',
-                             mode='lines+markers',
-                             x=df['Year'],
-                             y=df['NYC Population'],
-                             yaxis='y2',
-                             line={'color':dfcolors['NYC Population'],
-                                   'width':3},
-                             marker = {'color': dfcolors['NYC Population'],
-                                       'size': 8},
-                             hovertext=['<b>NYC Population: </b>'+'{:,.0f}'.format(x) for x in df['NYC Population']],
-                             hoverinfo='text'))
+# fig=fig.add_trace(go.Scatter(name='NYC Population',
+#                              mode='lines+markers',
+#                              x=df['Year'],
+#                              y=df['Estimated NYC Population'],
+#                              yaxis='y2',
+#                              line={'color':dfcolors['NYC Population'],
+#                                    'width':3},
+#                              marker = {'color': dfcolors['NYC Population'],
+#                                        'size': 8},
+#                              hovertext=['<b>NYC Population: </b>'+'{:,.0f}'.format(x) for x in df['NYC Population']],
+#                              hoverinfo='text'))
 fig=fig.add_trace(go.Scatter(name='',
                              mode='none',
                              x=df['Year'],
@@ -87,14 +87,14 @@ fig.update_layout(
            'rangemode':'tozero',
            'fixedrange':True,
            'showgrid':True},
-    yaxis2={'title':{'text':'<b>NYC Population</b>',
-                     'font_size':14},
-            'tickfont_size':12,
-            'side':'right',
-            'overlaying':'y',
-            'rangemode':'tozero',
-            'fixedrange':True,
-            'showgrid':False},
+    # yaxis2={'title':{'text':'<b>NYC Population</b>',
+    #                  'font_size':14},
+    #         'tickfont_size':12,
+    #         'side':'right',
+    #         'overlaying':'y',
+    #         'rangemode':'tozero',
+    #         'fixedrange':True,
+    #         'showgrid':False},
     barmode='stack',             
     hoverlabel={'font_size':14},
     font={'family':'Arial',
