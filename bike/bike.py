@@ -375,7 +375,7 @@ fig.add_annotation(text = 'Data Source: <a href="https://ride.citibikenyc.com/sy
                    y=0,
                    yanchor='top',
                    yref='paper',
-                   yshift=-100)
+                   yshift=-80)
 fig
 
 # fig.write_html(path + 'citibike.html', include_plotlyjs='cdn', config={'displayModeBar':False})
