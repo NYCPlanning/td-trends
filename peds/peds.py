@@ -33,13 +33,24 @@ for i in ['AM','PM','Sat']:
                                  y=df['May '+i],
                                  line={'color':dfcolors[i],
                                        'width':2},
+                                 marker = {'color':dfcolors[i],
+                                           'size':4},
+                                 hovertext=['<b>May '+str(i)+': </b>'+'{:,.0f}'.format(x) for x in df['May '+i]],
+                                 hoverinfo='text'))
+    fig=fig.add_trace(go.Scatter(name='Sept '+i,
+                                 mode='lines+markers',
+                                 x=df['Year'],
+                                 y=df['Sept '+i],
+                                 line={'color':dfcolors[i],
+                                       'width':2,
+                                       'dash':'dot'},
                                  marker = {'color': dfcolors[i],
-                                           'size': 6},
-                                 hovertext=['<b>'+str(i)+': </b>'+'{:,.0f}'.format(x) for x in df['May '+i]],
+                                           'size':4},
+                                 hovertext=['<b>Sept '+str(i)+': </b>'+'{:,.0f}'.format(x) for x in df['Sept '+i]],
                                  hoverinfo='text'))
 fig.update_layout(
     template='plotly_white',
-    title={'text':'<b>Daily Entries into the Manhattan Hub</b>',
+    title={'text':'<b>Average Peak Hour Pedestrian Counts*</b>',
            'font_size':20,
            'x':0.5,
            'xanchor':'center',
@@ -63,7 +74,7 @@ fig.update_layout(
            'range':[min(df['Year'])-0.5,max(df['Year'])+0.5],
            'fixedrange':True,
            'showgrid':False},
-    yaxis={'title':{'text':'<b>Daily Entries</b>',
+    yaxis={'title':{'text':'<b>Hourly Total</b>',
                     'font_size':14},
            'tickfont_size':12,
            'rangemode':'tozero',
@@ -75,7 +86,7 @@ fig.update_layout(
     dragmode=False,
     hovermode='x unified')
 fig.add_annotation(
-    text='Data Source: <a href="https://www.nymtc.org/Data-and-Modeling/Transportation-Data-and-Statistics/Publications/Hub-Bound-Travel" target="blank">NYMTC Hub Bound Travel </a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/hubbound/transit/hubbound.csv" target="blank">Download Chart Data</a>',
+    text='*AM: Weekday 7-9AM; PM: Weekday 4-7PM; Sat: Saturday 12-2PM',
     font_size=14,
     showarrow=False,
     x=1,
@@ -85,6 +96,17 @@ fig.add_annotation(
     yanchor='top',
     yref='paper',
     yshift=-80)
-fig.write_html(path+'hubbound/transit/hubbound.html',
+fig.add_annotation(
+    text='Data Source: <a href="https://www1.nyc.gov/html/dot/html/about/datafeeds.shtml#Pedestrians" target="blank">NYC DOT</a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/peds/pedcounts.csv" target="blank">Download Chart Data</a>',
+    font_size=14,
+    showarrow=False,
+    x=1,
+    xanchor='right',
+    xref='paper',
+    y=0,
+    yanchor='top',
+    yref='paper',
+    yshift=-100)
+fig.write_html(path+'peds/pedcounts.html',
                include_plotlyjs='cdn',
                config={'displayModeBar':False})
