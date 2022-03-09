@@ -151,7 +151,7 @@ fig.update_layout(
     margin={'b':120,
             'l':80,
             'r':40,
-            't':120},
+            't':80},
     xaxis={'title':{'text':'<b>Month</b>',
                     'font_size':14},
            'tickfont_size':12,
@@ -181,7 +181,7 @@ fig.add_annotation(
     y=0,
     yanchor='top',
     yref='paper',
-    yshift=-100)
+    yshift=-80)
 fig.write_html(path+'peds/timessquare.html',
                include_plotlyjs='cdn',
                config={'displayModeBar':False})
