@@ -257,45 +257,78 @@ fig
 
 
 #%% CITI BIKE
-
+path='C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/bike/annotations/'
 citibike = pd.read_csv(path + 'citibike.csv')
-citibike['12M Rolling Avg'] = citibike['Avg Daily Rides'].rolling(window = 12).mean()
-citibike['Hover'] = '<b>Date: </b>' + citibike['Date2']+'<br><b>Average Daily Rides: </b>' + citibike['Avg Daily Rides'].map('{:,.0f}'.format) + '<br><b>12-Month Rolling Average: </b>' + citibike['12M Rolling Avg'].map('{:,.0f}'.format) + '<br><b>Fleet Size: </b>' + citibike['Fleet Size'].map('{:,.0f}'.format)
+citibike['date']=[datetime.datetime.strptime(x,'%Y-%m') for x in citibike['YearMonth']]
+
+# citibike['12M Rolling Avg'] = citibike['Avg Daily Rides'].rolling(window = 12).mean()
+# citibike['Hover'] = '<b>Month: </b>' + citibike['date']+'<br><b>Average Daily Rides: </b>' + citibike['Avg Daily Rides'].map('{:,.0f}'.format) + '<br><b>12-Month Rolling Average: </b>' + citibike['12M Rolling Avg'].map('{:,.0f}'.format) + '<br><b>Fleet Size: </b>' + citibike['Fleet Size'].map('{:,.0f}'.format)
 
 fig = go.Figure()
 
-fig = fig.add_trace(go.Bar(x = citibike['Date'],
+fig=fig.add_trace(go.Scatter(name='',
+                             mode='none',
+                             x=citibike['date'],
+                             y=citibike['Avg Daily Rides'],
+                             showlegend=False,
+                             hovertext=['<b>Month: </b>'+datetime.datetime.strftime(x,'%b %Y') for x in citibike['date']],
+                             hoverinfo='text'))
+
+fig = fig.add_trace(go.Bar(x = citibike['date'],
                            y = citibike['Avg Daily Rides'],
-                           marker = {'color': '#729ece'},
+                           marker = {'color': 'rgba(114,158,206,0.5)'},
                            name = 'Average Daily Rides',
-                           opacity = .5,
                            hoverinfo = 'text', 
-                           hovertext = citibike['Hover']))
+                           hovertext ='<b>Average Daily Rides: </b>' + citibike['Avg Daily Rides'].map('{:,.0f}'.format)))
 
-fig = fig.add_trace(go.Scatter(x = citibike['Date'],
-                               y = citibike['12M Rolling Avg'], 
-                               marker = {'color': '#ff9e4a'},
-                               name = '12-Month Rolling Average',
-                               mode = 'lines',
-                               hoverinfo = 'none'))
+# fig = fig.add_trace(go.Scatter(x = citibike['Date'],
+#                                y = citibike['12M Rolling Avg'], 
+#                                marker = {'color': '#ff9e4a'},
+#                                name = '12-Month Rolling Average',
+#                                mode = 'lines',
+#                                hoverinfo = 'none'))
 
-fig = fig.add_trace(go.Scatter(x = citibike['Date'],
-                               y = citibike['Fleet Size'], 
-                               marker = {'color': '#ed97ca'},
-                               name = 'Fleet Size',
-                               mode = 'lines',
-                               hoverinfo = 'none'))
+# fig = fig.add_trace(go.Scatter(x = citibike['Date'],
+#                                y = citibike['Fleet Size'], 
+#                                marker = {'color': '#ed97ca'},
+#                                name = 'Fleet Size',
+#                                mode = 'lines',
+#                                hoverinfo = 'none'))
+
+fig=fig.add_trace(go.Scatter(name='Active Stations',
+                             mode='lines',
+                             x=citibike['date'],y=citibike['Active Stations'],
+                             yaxis='y2',
+                             line={'color':'rgba(237,151,202,0.8)',
+                                   'width':3},
+                             hovertext=['<b>Active Stations: </b>'+'{:,.0f}'.format(x) for x in citibike['Active Stations']],
+                             hoverinfo='text'))
+
+fig=fig.add_trace(go.Scatter(name='',
+                             mode='none',
+                             x=citibike['date'],
+                             y=citibike['Avg Daily Rides'],
+                             showlegend=False,
+                             hovertext=['<b>Annual Membership: </b>'+'{:,.0f}'.format(x) for x in citibike['Annual Membership']],
+                             hoverinfo='text'))
+
+fig=fig.add_trace(go.Scatter(name='',
+                             mode='none',
+                             x=citibike['date'],
+                             y=citibike['Avg Daily Rides'],
+                             showlegend=False,
+                             hovertext=['<b>Fleet Size: </b>'+'{:,.0f}'.format(x) for x in citibike['Fleet Size']],
+                             hoverinfo='text'))
     
-fig.update_layout(barmode = 'stack',
-                  template = 'plotly_white',
-                  title = {'text': '<b>Citi Bike Operations<b>',
+fig.update_layout(template = 'plotly_white',
+                  title = {'text': '<b>Citi Bike Statistics<b>',
                            'font_size': 20,
                            'x': .5,
                            'xanchor': 'center',
                            'y': .95,
                            'yanchor': 'top'},
-                  legend = {'traceorder': 'normal',
-                            'orientation': 'h',
+                  legend = {'orientation': 'h',
+                            'title_text':'',
                             'font_size': 16,
                             'x': .5,
                             'xanchor': 'center',
@@ -305,27 +338,44 @@ fig.update_layout(barmode = 'stack',
                             'l': 80,
                             'r': 80,
                             't': 120},
-                  xaxis = {'tickfont_size': 14,
-                           'fixedrange': True, 
-                           'showgrid': False},
-                  yaxis = {'tickfont_size': 12,
-                           'rangemode': 'nonnegative',
-                           'fixedrange': True,
-                           'showgrid': True},
+                  xaxis = {'title':{'text':'<b>Month</b>',
+                                    'font_size':14},
+                           'tickfont_size':12,
+                           'tickformat':'%b %Y',
+                           'dtick':'M6',
+                           'range':[min(citibike['date'])-datetime.timedelta(days=15),max(citibike['date'])+datetime.timedelta(days=15)],
+                           'fixedrange':True,
+                           'showgrid':False},
+                  yaxis = {'title':{'text':'<b>Ridership</b>',
+                                    'font_size':14},
+                           'tickfont_size':12,
+                           'rangemode':'tozero',
+                           'fixedrange':True,
+                           'showgrid':True},
+                  yaxis2={'title':{'text':'<b>Stations</b>',
+                                   'font_size':14},
+                          'tickfont_size':12,
+                          'side':'right',
+                          'overlaying':'y',
+                          'rangemode':'tozero',
+                          'fixedrange':True,
+                          'showgrid':False},
                   hoverlabel = {'font_size': 14}, 
                   font = {'family': 'Arial',
                           'color': 'black'},
-                  dragmode = False)
+                  dragmode = False,
+                  hovermode = 'x unified')
 
-fig.add_annotation(text = 'Data Source: <a href="https://ride.citibikenyc.com/system-data/operating-reports" target="blank">Citi Bike Monthly Operating Reports</a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/bike/annotations/citibike.csv" target="blank">Download Chart Data</a>',
+fig.add_annotation(text = 'Data Source: <a href="https://ride.citibikenyc.com/system-data/operating-reports" target="blank">Citi Bike</a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/bike/annotations/citibike.csv" target="blank">Download Chart Data</a>',
                    font_size = 14,
                    showarrow = False, 
                    x = 1, 
                    xanchor = 'right',
                    xref = 'paper',
-                   y = -.1,
-                   yanchor = 'top',
-                   yref = 'paper')
+                   y=0,
+                   yanchor='top',
+                   yref='paper',
+                   yshift=-100)
 fig
 
 # fig.write_html(path + 'citibike.html', include_plotlyjs='cdn', config={'displayModeBar':False})
