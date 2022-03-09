@@ -83,6 +83,17 @@ fig.update_layout(
           'color':'black'},
     dragmode=False,
     hovermode='x unified')
+# fig.add_annotation(
+#     text='*AM: Weekday 7-9AM; PM: Weekday 4-7PM; Sat: Saturday 12-2PM',
+#     font_size=14,
+#     showarrow=False,
+#     x=1,
+#     xanchor='right',
+#     xref='paper',
+#     y=0,
+#     yanchor='top',
+#     yref='paper',
+#     yshift=-80)
 fig.add_annotation(
     text='Data Source: <a href="https://www1.nyc.gov/html/dot/html/about/datafeeds.shtml#Pedestrians" target="blank">NYC DOT</a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/peds/pedcounts.csv" target="blank">Download Chart Data</a>',
     font_size=14,
