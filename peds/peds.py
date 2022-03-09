@@ -1,18 +1,90 @@
-# -*- coding: utf-8 -*-
-"""
-Travel Conditions and Trends Update for Pedestrians
+import pandas as pd
+import plotly.io as pio
+import plotly.graph_objects as go
 
-Source(s): NYC DOT Pedestrian Counts
-Date: January 2022 
-"""
-import pandas as pd 
-import geopandas as gpd 
 
-path =path = 'C:/Users/M_Free/Desktop/td-trends/peds/annotations/'
-# path = '/Users/Work/Desktop/GitHub/td-trends/peds/annotations/'
-local_path = 'C:/Users/M_Free/OneDrive - NYC O365 HOSTED/Data/Travel Trends Update/Dec 2021/'
-# local_path = '/Users/Work/OneDrive - NYC O365 HOSTED/Data/Travel Trends Update/Dec 2021/' 
 
-#%% COUNTS
+pio.renderers.default = "browser"
+pd.set_option('display.max_columns', None)
+path='C:/Users/Y_Ma2/Desktop/GITHUB/td-trends/'
+path='C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/'
 
-#%% OPEN STREETS
+
+
+df=pd.read_csv(path+'peds/pedcounts.csv')
+dfcolors={'AM':'rgba(114,158,206,0.8)',
+          'PM':'rgba(255,158,74,0.8)',
+          'Sat':'rgba(103,191,92,0.8)'}
+
+
+
+fig=go.Figure()
+fig=fig.add_trace(go.Scatter(name='',
+                             mode='none',
+                             x=df['Year'],
+                             y=df['May AM'],
+                             showlegend=False,
+                             hovertext=['<b>Year: </b>'+str(x) for x in df['Year']],
+                             hoverinfo='text'))
+for i in ['AM','PM','Sat']:
+    fig=fig.add_trace(go.Scatter(name='May '+i,
+                                 mode='lines+markers',
+                                 x=df['Year'],
+                                 y=df['May '+i],
+                                 line={'color':dfcolors[i],
+                                       'width':2},
+                                 marker = {'color': dfcolors[i],
+                                           'size': 6},
+                                 hovertext=['<b>'+str(i)+': </b>'+'{:,.0f}'.format(x) for x in df['May '+i]],
+                                 hoverinfo='text'))
+fig.update_layout(
+    template='plotly_white',
+    title={'text':'<b>Daily Entries into the Manhattan Hub</b>',
+           'font_size':20,
+           'x':0.5,
+           'xanchor':'center',
+           'y':0.95,
+           'yanchor':'top'},
+    legend={'orientation':'h',
+            'title_text':'',
+            'font_size':16,
+            'x':0.5,
+            'xanchor':'center',
+            'y':1,
+            'yanchor':'bottom'},
+    margin={'b':120,
+            'l':80,
+            'r':40,
+            't':120},
+    xaxis={'title':{'text':'<b>Year</b>',
+                    'font_size':14},
+           'tickfont_size':12,
+           'dtick':'M12',
+           'range':[min(df['Year'])-0.5,max(df['Year'])+0.5],
+           'fixedrange':True,
+           'showgrid':False},
+    yaxis={'title':{'text':'<b>Daily Entries</b>',
+                    'font_size':14},
+           'tickfont_size':12,
+           'rangemode':'tozero',
+           'fixedrange':True,
+           'showgrid':True},
+    hoverlabel={'font_size':14},
+    font={'family':'Arial',
+          'color':'black'},
+    dragmode=False,
+    hovermode='x unified')
+fig.add_annotation(
+    text='Data Source: <a href="https://www.nymtc.org/Data-and-Modeling/Transportation-Data-and-Statistics/Publications/Hub-Bound-Travel" target="blank">NYMTC Hub Bound Travel </a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/hubbound/transit/hubbound.csv" target="blank">Download Chart Data</a>',
+    font_size=14,
+    showarrow=False,
+    x=1,
+    xanchor='right',
+    xref='paper',
+    y=0,
+    yanchor='top',
+    yref='paper',
+    yshift=-80)
+fig.write_html(path+'hubbound/transit/hubbound.html',
+               include_plotlyjs='cdn',
+               config={'displayModeBar':False})
