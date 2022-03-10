@@ -946,14 +946,15 @@ dest_rc_reg = pd.merge(dest_rc_reg, dest_rc_reg_total, how = 'inner', on = ['RES
 dest_rc_reg['% DEST'] = dest_rc_reg['PWGTP'] / dest_rc_reg['TOTAL']
 
 # dest_rc_reg.to_csv(path + 'annotations/dest_rc_reg.csv', index = False)
-
+path='C:/Users/Y_Ma2/Desktop/GITHUB/td-trends/commute/'
+dest_rc_reg=pd.read_csv(path+'annotations/dest_rc_reg.csv')
 dest_rc_reg['HOVER']='<b>Destination: </b>'+dest_rc_reg['POW']+'<br><b>Commuters: </b>'+dest_rc_reg['PWGTP'].map('{:,.0f}'.format)+'<br><b>Percentage: </b>'+dest_rc_reg['% DEST'].map('{:.0%}'.format)
 
-boro_colors = {'Bronx': '#729ece',
-               'Brooklyn': '#ff9e4a',
-               'Manhattan': '#67bf5c',
-               'Staten Island': '#ed665d',
-               'Queens': '#ad8bc9'}
+boro_colors = {'Bronx':'rgba(114,158,206,0.8)',
+               'Brooklyn':'rgba(255,158,74,0.8)',
+               'Manhattan':'rgba(103,191,92,0.8)',
+               'Queens':'rgba(237,102,93,0.8)',
+               'Staten Island':'rgba(173,139,201,0.8)'}
 
 fig = go.Figure()
     
@@ -982,9 +983,9 @@ fig.update_layout(barmode = 'stack',
                             'xanchor': 'center',
                             'y': 1,
                             'yanchor': 'bottom'},
-                  margin = {'b': 120,
+                  margin = {'b': 160,
                             'l': 80,
-                            'r': 80,
+                            'r': 40,
                             't': 120},
                   xaxis = {'title': {'text': '<b>Place of Residence</b>',
                                      'font_size': 14},
@@ -1009,15 +1010,16 @@ fig.add_annotation(text = 'Data Source: <a href="https://www.census.gov/programs
                    x = 1, 
                    xanchor = 'right',
                    xref = 'paper',
-                   y = -.1,
-                   yanchor = 'top',
-                   yref = 'paper')
+                   y=0,
+                   yanchor='top',
+                   yref='paper',
+                   yshift=-120)
 
 fig   
 
-# fig.write_html(path + 'annotations/dest_rc_reg.html',
-#               include_plotlyjs='cdn',
-#               config={'displayModeBar':False})
+fig.write_html(path + 'annotations/dest_rc_reg.html',
+              include_plotlyjs='cdn',
+              config={'displayModeBar':False})
 
 # https://nycplanning.github.io/td-trends/commute/annotations/dest_rc_reg.html'
 #%% REGIONAL IN-COMMUTERS: DESTINATION (ALL WORKERS LIVING IN NYC)
