@@ -39,15 +39,16 @@ chs = chs.replace({1:'Once a Week or More',
                    7:'Never or Unable'})
 
 # chs.to_csv(path + 'chs.csv',index=False)
-
+path = 'C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/bike/annotations/'
+chs=pd.read_csv(path+'chs.csv')
 chs['hover'] = '<b>Frequency: </b>'+ chs['cyclingfreq'] + '<br><b>Adults: </b>' + chs['wt21_dual'].map('{:,.0f}'.format) +'<br><b>Percentage: </b>' + chs['%'].map('{:.0%}'.format)
 
-chs_colors = {'Once a Week or More': '#729ece',
-              'Several Times a Month': '#ff9e4a',
-              'At Least Once a Month': '#67bf5c',
-              'A Few Times a Year': '#ed665d',
-              'Never or Unable': 'a5acaf'}
-                
+chs_colors = {'Once a Week or More': 'rgba(237,102,93,0.8)',
+              'Several Times a Month': 'rgba((255,158,74,0.8)',
+              'At Least Once a Month': 'rgba(173,139,201,0.8)',
+              'A Few Times a Year': 'rgba(114,158,206,0.8)',
+              'Never or Unable': 'rgba(162,162,162,0.8)'}
+
 fig = go.Figure()
 
 fig = fig.add_trace(go.Pie(labels = chs['cyclingfreq'],
@@ -55,8 +56,11 @@ fig = fig.add_trace(go.Pie(labels = chs['cyclingfreq'],
                            hole = .5,
                            sort = False,
                            direction = 'clockwise',
+                           pull=0.05,
                            marker = {'colors': list(chs_colors.values())},
-                           textinfo = 'none',
+                           textinfo = 'text',
+                           text= chs['%'].map('{:.0%}'.format),
+                           textfont={'size':14},
                            hoverinfo = 'text',
                            hovertext = chs['hover']))
 
@@ -74,25 +78,25 @@ fig.update_layout(template = 'plotly_white',
                             'xanchor': 'center',
                             'y': 1,
                             'yanchor': 'bottom'},
-                  margin = {'b': 120, 
+                  margin = {'b': 40, 
                             'l': 80,
                             'r': 80,
-                            't': 120},
+                            't': 200},
                   hoverlabel = {'font_size': 14}, 
                   font = {'family': 'Arial',
                           'color': 'black'},
                   dragmode = False)
 
-fig.add_annotation(text = 'Data Source: <a href="https://www1.nyc.gov/site/doh/data/data-sets/community-health-survey-public-use-data.page" target="blank">NYC DOHMH Community Health Survey 2020</a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/bike/chs.csv" target="blank">Download Chart Data</a>',
+fig.add_annotation(text = 'Data Source: <a href="https://www1.nyc.gov/site/doh/data/data-sets/community-health-survey-public-use-data.page" target="blank">NYC DOHMH 2020</a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/bike/annotations/chs.csv" target="blank">Download Chart Data</a>',
                    font_size = 14,
                    showarrow = False, 
                    x = 1, 
                    xanchor = 'right',
                    xref = 'paper',
-                   y = -.1,
-                   yanchor = 'top',
-                   yref = 'paper')
-
+                   y=0,
+                   yanchor='top',
+                   yref='paper',
+                   yshift=0)
 fig.add_annotation(text = f'N = {chs["wt21_dual"].sum():,.0f}',
                    font_size = 14,
                    showarrow = False, 
