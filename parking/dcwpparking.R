@@ -64,7 +64,7 @@ p=p %>%
          margin=list(b=120,
                      l=80,
                      r=40,
-                     t=150),
+                     t=160),
          xaxis=list(title=list(text='<b>Year</b>',
                                font=list(size=14)),
                     tickfont=list(size=12),

@@ -7,7 +7,7 @@ import plotly.graph_objects as go
 pio.renderers.default = "browser"
 pd.set_option('display.max_columns', None)
 path='C:/Users/Y_Ma2/Desktop/GITHUB/td-trends/'
-path='C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/'
+# path='C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/'
 
 
 
@@ -73,7 +73,7 @@ fig.update_layout(
     margin={'b':120,
             'l':80,
             'r':80,
-            't':150},
+            't':160},
     xaxis={'title':{'text':'<b>Year</b>',
                     'font_size':14},
            'tickfont_size':12,

@@ -986,7 +986,7 @@ fig.update_layout(barmode = 'stack',
                   margin = {'b': 160,
                             'l': 80,
                             'r': 40,
-                            't': 120},
+                            't': 160},
                   xaxis = {'title': {'text': '<b>Place of Residence</b>',
                                      'font_size': 14},
                            'categoryorder': 'total descending',
@@ -1017,9 +1017,9 @@ fig.add_annotation(text = 'Data Source: <a href="https://www.census.gov/programs
 
 fig   
 
-# fig.write_html(path + 'annotations/dest_rc_reg.html',
-#               include_plotlyjs='cdn',
-#               config={'displayModeBar':False})
+fig.write_html(path + 'annotations/dest_rc_reg.html',
+              include_plotlyjs='cdn',
+              config={'displayModeBar':False})
 
 # https://nycplanning.github.io/td-trends/commute/annotations/dest_rc_reg.html'
 #%% REGIONAL IN-COMMUTERS: DESTINATION (ALL WORKERS LIVING IN NYC)
