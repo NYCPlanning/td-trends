@@ -44,7 +44,7 @@ chs=pd.read_csv(path+'chs.csv')
 chs['hover'] = '<b>Frequency: </b>'+ chs['cyclingfreq'] + '<br><b>Adults: </b>' + chs['wt21_dual'].map('{:,.0f}'.format) +'<br><b>Percentage: </b>' + chs['%'].map('{:.0%}'.format)
 
 chs_colors = {'Once a Week or More': 'rgba(237,102,93,0.8)',
-              'Several Times a Month': 'rgba((255,158,74,0.8)',
+              'Several Times a Month': 'rgba(255,158,74,0.8)',
               'At Least Once a Month': 'rgba(173,139,201,0.8)',
               'A Few Times a Year': 'rgba(114,158,206,0.8)',
               'Never or Unable': 'rgba(162,162,162,0.8)'}
