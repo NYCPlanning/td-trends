@@ -969,7 +969,7 @@ for boro, color in boro_colors.items():
 
 fig.update_layout(barmode = 'stack',
                   template = 'plotly_white',
-                  title = {'text': '<b>Destination of Work by Place of Residence for Regional In-Commuters</b>',
+                  title = {'text': '<b>Destination of Work by Place of Residence<br>for Regional In-Commuters</b>',
                            'font_size': 20,
                            'x': 0.5,
                            'xanchor': 'center',
@@ -1017,9 +1017,9 @@ fig.add_annotation(text = 'Data Source: <a href="https://www.census.gov/programs
 
 fig   
 
-fig.write_html(path + 'annotations/dest_rc_reg.html',
-              include_plotlyjs='cdn',
-              config={'displayModeBar':False})
+# fig.write_html(path + 'annotations/dest_rc_reg.html',
+#               include_plotlyjs='cdn',
+#               config={'displayModeBar':False})
 
 # https://nycplanning.github.io/td-trends/commute/annotations/dest_rc_reg.html'
 #%% REGIONAL IN-COMMUTERS: DESTINATION (ALL WORKERS LIVING IN NYC)
