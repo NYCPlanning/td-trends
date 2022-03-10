@@ -53,7 +53,7 @@ fig.update_layout(template = 'plotly_white',
                           'color': 'black'},
                   dragmode = False)
 
-fig.add_annotation(text = 'Data Source: NYC DCP 2021 | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/micromobility/micromobility.csv" target="blank">Download Chart Data</a>',
+fig.add_annotation(text = 'Data Source: NYC DCP (2021) | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/micromobility/micromobility.csv" target="blank">Download Chart Data</a>',
                    font_size = 14,
                    showarrow = False, 
                    x = 1, 
