@@ -13,8 +13,8 @@ path='C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/'
 
 # Bi-Annual Ped Counts
 df=pd.read_csv(path+'peds/pedcounts.csv')
-dfcolors={'AM':'rgba(114,158,206,0.8)',
-          'PM':'rgba(255,158,74,0.8)',
+dfcolors={'AM':'rgba(255,158,74,0.8)',
+          'PM':'rgba(173,139,201,0.8)',
           'Sat':'rgba(103,191,92,0.8)'}
 fig=go.Figure()
 fig=fig.add_trace(go.Scatter(name='',
@@ -26,24 +26,20 @@ fig=fig.add_trace(go.Scatter(name='',
                              hoverinfo='text'))
 for i in ['AM','PM','Sat']:
     fig=fig.add_trace(go.Scatter(name='May '+i,
-                                 mode='lines+markers',
+                                 mode='lines',
                                  x=df['Year'],
                                  y=df['May '+i],
                                  line={'color':dfcolors[i],
                                        'width':2},
-                                 marker = {'color':dfcolors[i],
-                                           'size':4},
                                  hovertext=['<b>May '+str(i)+': </b>'+'{:,.0f}'.format(x) for x in df['May '+i]],
                                  hoverinfo='text'))
     fig=fig.add_trace(go.Scatter(name='Sept '+i,
-                                 mode='lines+markers',
+                                 mode='lines',
                                  x=df['Year'],
                                  y=df['Sept '+i],
                                  line={'color':dfcolors[i],
                                        'width':2,
                                        'dash':'dot'},
-                                 marker = {'color': dfcolors[i],
-                                           'size':4},
                                  hovertext=['<b>Sept '+str(i)+': </b>'+'{:,.0f}'.format(x) for x in df['Sept '+i]],
                                  hoverinfo='text'))
 fig.update_layout(
