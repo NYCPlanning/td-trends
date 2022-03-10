@@ -193,7 +193,6 @@
                 'layercolname': 'name', // category column name
                 'layercat': ['New York City', 'Long Island', 'Lower Hudson Valley', 'Mid Hudson Valley', 'Inner New Jersey', 'Outer New Jersey', 'Connecticut'], // categories
                 'layercolor': ['rgba(57,115,124,1)', 'rgba(60,183,204,1)', 'rgba(134,180,169,1)', 'rgba(152,217,228,1)', 'rgba(50,162,81,1)', 'rgba(172,217,141,1)', 'rgba(255,185,119,1)'], // color for each category; use rgba
-                'layeropacity': 1, // fill opacity
                 'layeroutlinecolor': 'rgba(255,255,255,0.5)', // outline color; can only be set to 1px width; to change the outline width, add another line layer
             };
 
@@ -224,19 +223,18 @@
                 },
                 'paint': {
                     'fill-color': layerColor,
-                    'fill-opacity': layerContent['layeropacity'],
                     'fill-outline-color': layerContent['layeroutlinecolor'],
                 },
             });
 
 
 
-            // Add subregion abel
+            // Add subregion label
             // Set layer contents
             var layerContent = {
-                'sourceid': 'subregion', // source id
+                'sourceid': 'subregionpt', // source id
                 'sourcetype': 'geojson', // source type
-                'sourcedata': 'subregion.geojson', // data source
+                'sourcedata': 'subregionpt.geojson', // data source
                 'layerid': 'subregion-label', // layer id
                 'layertype': 'symbol', // symbology type
                 'layername': 'Subregion Label', // layer name for the legend
@@ -248,8 +246,16 @@
                 'layeranchor': 'center',
                 'layersize': 12,
                 'layercolor': ['rgba(0,0,0,1)'], // color for each category; use rgba
-                'layeropacity': 0.5, // circle opacity
             };
+
+            // Add layer content to the overall layer content list
+            layerContentList.push(layerContent);
+
+            // Add data source
+            map.addSource(layerContent['sourceid'], {
+                'type': layerContent['sourcetype'],
+                'data': layerContent['sourcedata'],
+            });
 
             // Add label layer
             map.addLayer({
@@ -265,7 +271,6 @@
                 },
                 'paint': {
                     'text-color': layerContent['layercolor'][0],
-                    'text-opacity': layerContent['layeropacity'],
                 },
             });
 
