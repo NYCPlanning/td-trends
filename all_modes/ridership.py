@@ -7,11 +7,13 @@ Source: See Excel Notes (TD Trends: All Modes: Ridership)
 import pandas as pd
 import plotly.graph_objects as go
 import plotly.io as pio
+import datetime
 
 pio.renderers.default = 'browser'
 
 path = 'C:/Users/M_Free/Desktop/td-trends/all_modes/annotations/'
 path='C:/Users/Y_Ma2/Desktop/GITHUB/td-trends/all_modes/annotations/'
+path='C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/all_modes/annotations/'
 
 
 
@@ -135,6 +137,7 @@ df = pd.read_csv(path + 'ridership_covid.csv')
 df['hover'] = '<b>' + df['mode'] + ': </b>' + df['% of 2019'].map('{:.0%}'.format) + ' (' + df['ridership'].map('{:,.0f}'.format) + ')'
 #df_total['date'] = df_total['date'].astype(str)
 # df_total['y'] = [0 for i in range(df_total['date'].size)]
+df['date']=[datetime.datetime.strptime(str(x)+'-01','%Y-%m-%d') for x in df['date']]
 
 fig = go.Figure()
 
@@ -143,7 +146,7 @@ fig = fig.add_trace(go.Scatter(x = df.loc[df['mode'] == 'Commuter Rail (LIRR+MNR
                                mode = 'none',
                                showlegend = False,
                                hoverinfo = 'text',
-                               hovertext = ['<b>Month: </b>' + str(x) for x in df.loc[df['mode'] == 'Commuter Rail (LIRR+MNR)', 'date']]))
+                               hovertext = ['<b>Month: </b>' + datetime.datetime.strftime(x,'%b %Y') for x in df.loc[df['mode'] == 'Commuter Rail (LIRR+MNR)', 'date']]))
 
 for mode, color in mode_colors.items():
     fig = fig.add_trace(go.Scatter(name = mode,
@@ -185,8 +188,8 @@ fig.update_layout(template = 'plotly_white',
                   xaxis = {'title': {'text': '<b>Month</b>',
                                      'font_size': 14},
                            'tickfont_size': 12,
-                           'dtick': 'M1',
-                           'range': [df['date'].iloc[0], df['date'].iloc[-1]],
+                           'dtick': 'M2',
+                           'range':[min(df['date'])-datetime.timedelta(days=15),max(df['date'])+datetime.timedelta(days=15)],
                            'fixedrange': True,
                            'showgrid': False},
                   yaxis = {'title':{'text': '<b>Percent of 2019</b>',
@@ -201,20 +204,21 @@ fig.update_layout(template = 'plotly_white',
                   hovermode = 'x unified',
                   hoverlabel = {'font_size': 14})
 
-fig.add_annotation(text = '<a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/all_modes/annotations/ridership_covid.csv" target="blank">Download Chart Data</a>',
+fig.add_annotation(text = 'Data Source: <a href="https://github.com/NYCPlanning/td-trends/raw/main/all_modes/annotations/data_source.xlsx" target="blank">MTA; NYC TLC; NYC DOT; Citi Bike</a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/all_modes/annotations/ridership_covid.csv" target="blank">Download Chart Data</a>',
                     font_size = 14,
                     showarrow = False,
                     x = 1,
                     xanchor = 'right',
                     xref = 'paper',
-                    y = -0.1,
+                    y = 0,
                     yanchor = 'top',
-                    yref = 'paper')
+                    yref = 'paper',
+                    yshift = -80)
 
 fig
 
-# fig.write_html(path + 'ridership_covid.html',
-#               include_plotlyjs='cdn',
-#               config={'displayModeBar':False})
+fig.write_html(path + 'ridership_covid.html',
+              include_plotlyjs='cdn',
+              config={'displayModeBar':False})
 
 # https://nycplanning.github.io/td-trends/all_modes/annotations/ridership_covid.html')   
