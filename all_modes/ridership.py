@@ -13,6 +13,10 @@ pio.renderers.default = 'browser'
 path = 'C:/Users/M_Free/Desktop/td-trends/all_modes/annotations/'
 path='C:/Users/Y_Ma2/Desktop/GITHUB/td-trends/all_modes/annotations/'
 
+
+
+#%% Annual Ridership
+
 mode_colors = {'Subway (NYCT)': 'rgba(114,158,206,0.8)',
                'Bus (NYCT+MTA)': 'rgba(103,191,92,0.8)',
                'Commuter Rail (LIRR+MNR)': 'rgba(168,120,110,0.8)',               
@@ -20,8 +24,6 @@ mode_colors = {'Subway (NYCT)': 'rgba(114,158,206,0.8)',
                'For-Hire Vehicle': 'rgba(237,102,93,0.8)',
                'Ferry': 'rgba(237,151,202,0.8)',             
                'Citi Bike': 'rgba(109,204,218,0.8)'}
-
-#%% Annual Ridership
 
 df = pd.read_csv(path + 'ridership_annual.csv')
 # df_total = df[['date', 'ridership']].groupby('date').sum().reset_index()
@@ -119,15 +121,29 @@ fig.write_html(path + 'ridership_annual.html',
 
 #%% Monthly Ridership as % of 2019 
 
-df = pd.read_csv(path + 'ridership_covid.csv')
-df_total = df[['date', 'ridership']].groupby('date').sum().reset_index()
-df_total.columns = ['date', 'total']
-df['hover'] = '<i>' + df['mode'] + ': </i>' + df['% of 2019'].map('{:.0%}'.format) + ' (' + df['ridership'].map('{:,.0f}'.format) + ')'
+mode_colors = {'Subway (NYCT+SIR)': 'rgba(114,158,206,0.8)',
+               'Bus (NYCT+MTA)': 'rgba(103,191,92,0.8)',
+               'Commuter Rail (LIRR+MNR)': 'rgba(168,120,110,0.8)',               
+               'Taxi (Yellow+Green)': 'rgba(255,158,74,0.8)',
+               'For-Hire Vehicle': 'rgba(237,102,93,0.8)',
+               'Ferry': 'rgba(237,151,202,0.8)',             
+               'Citi Bike': 'rgba(109,204,218,0.8)'}
 
+df = pd.read_csv(path + 'ridership_covid.csv')
+# df_total = df[['date', 'ridership']].groupby('date').sum().reset_index()
+# df_total.columns = ['date', 'total']
+df['hover'] = '<b>' + df['mode'] + ': </b>' + df['% of 2019'].map('{:.0%}'.format) + ' (' + df['ridership'].map('{:,.0f}'.format) + ')'
 #df_total['date'] = df_total['date'].astype(str)
-df_total['y'] = [0 for i in range(df_total['date'].size)]
+# df_total['y'] = [0 for i in range(df_total['date'].size)]
 
 fig = go.Figure()
+
+fig = fig.add_trace(go.Scatter(x = df.loc[df['mode'] == 'Commuter Rail (LIRR+MNR)', 'date'],
+                               y = df.loc[df['mode'] == 'Commuter Rail (LIRR+MNR)', '% of 2019'],
+                               mode = 'none',
+                               showlegend = False,
+                               hoverinfo = 'text',
+                               hovertext = ['<b>Month: </b>' + str(x) for x in df.loc[df['mode'] == 'Commuter Rail (LIRR+MNR)', 'date']]))
 
 for mode, color in mode_colors.items():
     fig = fig.add_trace(go.Scatter(name = mode,
@@ -136,15 +152,17 @@ for mode, color in mode_colors.items():
                                    mode = 'lines+markers',
                                    line = {'color': color,
                                            'width': 2},
+                                   marker = {'color': color,
+                                             'size': 6},    
                                    hoverinfo = 'text',
                                    hovertext = df.loc[df['mode'] == mode, 'hover']))
 
-fig = fig.add_trace(go.Scatter(x = df_total['date'],
-                               y = df_total['y'],
-                               mode = 'none',
-                               showlegend = False,
-                               hoverinfo = 'text',
-                               hovertext = '<b>Total Ridership: ' + df_total['total'].map('{:,.0f}'.format)))
+# fig = fig.add_trace(go.Scatter(x = df_total['date'],
+#                                y = df_total['y'],
+#                                mode = 'none',
+#                                showlegend = False,
+#                                hoverinfo = 'text',
+#                                hovertext = '<b>Total Ridership: ' + df_total['total'].map('{:,.0f}'.format)))
 
 fig.update_layout(template = 'plotly_white',
                   title = {'text': '<b>Monthly Ridership as Percent of 2019 </b>',
@@ -162,9 +180,9 @@ fig.update_layout(template = 'plotly_white',
                             'yanchor': 'bottom'},
                   margin = {'b': 120,
                             'l': 80,
-                            'r': 80,
+                            'r': 40,
                             't': 120},
-                  xaxis = {'title': {'text': '<b>Date</b>',
+                  xaxis = {'title': {'text': '<b>Month</b>',
                                      'font_size': 14},
                            'tickfont_size': 12,
                            'dtick': 'M1',
