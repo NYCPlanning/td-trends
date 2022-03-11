@@ -98,7 +98,7 @@ fig.update_layout(template = 'plotly_white',
                   hovermode = 'x unified',
                   hoverlabel = {'font_size': 14})
 
-fig.add_annotation(text = 'Data Source: <a href="https://www.nymtc.org/Data-and-Modeling/Transportation-Data-and-Statistics/Publications/Hub-Bound-Travel" target="blank">MTA; NYC TLC; NYC DOT; Citi Bike</a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/all_modes/annotations/ridership_annual.csv" target="blank">Download Chart Data</a>',
+fig.add_annotation(text = 'Data Source: <a href="https://github.com/NYCPlanning/td-trends/raw/main/all_modes/annotations/data_source.xlsx" target="blank">MTA; NYC TLC; NYC DOT; Citi Bike</a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/all_modes/annotations/ridership_annual.csv" target="blank">Download Chart Data</a>',
                     font_size = 14,
                     showarrow = False,
                     x = 1,
