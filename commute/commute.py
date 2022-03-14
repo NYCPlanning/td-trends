@@ -12,7 +12,7 @@ import plotly.subplots as ps
 pio.renderers.default = 'browser'
 
 path = 'C:/Users/M_Free/Desktop/td-trends/commute/'
-local_path = 'C:/Users/M_Free/OneDrive - NYC O365 HOSTED/Data/Travel Trends Update/Dec 2021/'
+local_path = 'C:/Users/M_Free/OneDrive - NYC O365 HOSTED/Projects/Conditions & Trends/Dec 2021/'
 
 # import pums files 
 col_list = ['SERIALNO', 
@@ -152,14 +152,65 @@ regional_commuters = regional_commuters[~regional_commuters.PUMA.isin(nyc)]
 regional_commuters = regional_commuters[regional_commuters.POWPUMA.isin(nyc)]
 
 # add plain text columns for residence & work locations 
-regional_commuters['RES'] = np.select([regional_commuters['ST'] == 36,
-                                       regional_commuters['ST'] == 9,
-                                       regional_commuters['ST'] == 34,
-                                       regional_commuters['ST'] == 42],
-                                      ['New York',
-                                       'Connecticut',
-                                       'New Jersey',
-                                       'Pennsylvania'])
+regional_commuters['STATE RES'] = np.select([regional_commuters['ST'] == 36,
+                                             regional_commuters['ST'] == 34,
+                                             regional_commuters['ST'] == 9,
+                                             regional_commuters['ST'] == 42],
+                                            ['New York',
+                                             'New Jersey',
+                                             'Connecticut',
+                                             'Pennsylvania'])
+
+li = list(range(3200,3314))
+hu = list(range(2700,3108)) 
+
+lower hudson valley 
+    putnam
+    rockland 
+    westchester
+
+mid hudson valley
+    dutchess
+    orange 
+    sullivan 
+    ulster 
+    
+inj = list(range())
+    bergen 301 -308  3
+    passaic 400-503
+    hudson 601-703
+    middlesex 901-907
+    somerset 1001-1003
+    essex 1301 - 1404
+    morris 1501-1504
+    union 1800-1904
+    8
+onj = list(range())
+    hunterdon 800
+    monmouth 1101-1106
+    ocean 1201-1205
+    sussex 1600
+    warren 1700
+    mercer 2301-3
+   
+    6
+m_inj = []     
+m_onj = [800, 1101, 1102, 1103, 1104, 1105, 1106, 1201, 1202, 1203, 1204, 1205, 1600, 1700, 2301, 2301, 2303]    
+m_ct = [101, 500, 900] #fairfield, litchfield, new haven counties
+    
+
+regional_commuters['METRO RES'] = np.select([(regional_commuters['ST'] == 36) & (regional_commuters.PUMA.isin(li)),
+                                             (regional_commuters['ST'] == 36) & (regional_commuters.PUMA.isin(hu)),
+                                             (regional_commuters['ST'] == 9) & (regional_commuters.PUMA.isin(inj)),
+                                             (regional_commuters['ST'] == 9) & (regional_commuters.PUMA.isin(onj)),
+                                             regional_commuters['ST'] == 9,
+                                             regional_commuters['ST'] == 42],
+                                            ['Long Island',
+                                             'Lower Hudson & Upstate',
+                                             'Inner New Jersey',
+                                             'Outer New Jersey',
+                                             'Connecticut',
+                                             'Pennsylvania'])
 
 regional_commuters['POW'] = np.select([regional_commuters.POWPUMA.isin(bronx),
                                        regional_commuters.POWPUMA.isin(brooklyn),
@@ -554,8 +605,8 @@ tt = tt.set_index('DEST').loc[sorter].reset_index()
 
 # tt.to_csv(path + 'annotations/tt.csv', index = False)
 
-path='C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/commute/'
-tt=pd.read_csv(path+'annotations/tt.csv')
+# path='C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/commute/'
+# tt=pd.read_csv(path+'annotations/tt.csv')
 tt['HOVER']='<b>Travel Time: </b>'+tt['TT']+'<br><b>Commuters: </b>'+tt['PWGTP'].map('{:,.0f}'.format)+'<br><b>Percentage: </b>'+tt['% TT'].map('{:.0%}'.format)
 
 boro_li = ['Bronx','Brooklyn','Manhattan','Queens','Staten Island']
@@ -845,6 +896,11 @@ boro_colors = {'Bronx': '#729ece',
                'Queens': '#ad8bc9'}
 
 fig = go.Figure()
+
+fig = ps.make_subplots(rows = 1, 
+                       cols = 2,
+                       shared_yaxes = True,
+                       subplot_titles = ['New York', 'Non-New York'])
     
 for boro, color in boro_colors.items():
     fig = fig.add_trace(go.Bar(name = boro,
