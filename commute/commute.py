@@ -950,7 +950,7 @@ dest_rc_reg = pd.merge(dest_rc_reg, dest_rc_reg_total, how = 'inner', on = ['RES
 dest_rc_reg['% DEST'] = dest_rc_reg['PWGTP'] / dest_rc_reg['TOTAL']
 
 # dest_rc_reg.to_csv(path + 'annotations/dest_rc_reg.csv', index = False)
-path='C:/Users/Y_Ma2/Desktop/GITHUB/td-trends/commute/'
+path='C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/commute/'
 dest_rc_reg=pd.read_csv(path+'annotations/dest_rc_reg.csv')
 dest_rc_reg['HOVER']='<b>Destination: </b>'+dest_rc_reg['POW']+'<br><b>Commuters: </b>'+dest_rc_reg['PWGTP'].map('{:,.0f}'.format)+'<br><b>Percentage: </b>'+dest_rc_reg['% DEST'].map('{:.0%}'.format)
 
@@ -1021,9 +1021,9 @@ fig.add_annotation(text = 'Data Source: <a href="https://www.census.gov/programs
 
 fig   
 
-fig.write_html(path + 'annotations/dest_rc_reg.html',
-              include_plotlyjs='cdn',
-              config={'displayModeBar':False})
+# fig.write_html(path + 'annotations/dest_rc_reg.html',
+#               include_plotlyjs='cdn',
+#               config={'displayModeBar':False})
 
 # https://nycplanning.github.io/td-trends/commute/annotations/dest_rc_reg.html'
 #%% REGIONAL IN-COMMUTERS: DESTINATION (ALL WORKERS LIVING IN NYC)
