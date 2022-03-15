@@ -1,0 +1,13 @@
+{
+"type": "FeatureCollection",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "statefp": "34", "geoid": "INJ", "name": "Inner New Jersey" }, "geometry": { "type": "Point", "coordinates": [ -74.424464429500915, 40.727192005592293 ] } },
+{ "type": "Feature", "properties": { "statefp": "36", "geoid": "NYC", "name": "New York City" }, "geometry": { "type": "Point", "coordinates": [ -73.867611679067508, 40.685799500000911 ] } },
+{ "type": "Feature", "properties": { "statefp": "36", "geoid": "LI", "name": "Long Island" }, "geometry": { "type": "Point", "coordinates": [ -72.985678821713577, 40.876494493744701 ] } },
+{ "type": "Feature", "properties": { "statefp": "09", "geoid": "CT", "name": "Connecticut" }, "geometry": { "type": "Point", "coordinates": [ -73.138604957330386, 41.518735000001413 ] } },
+{ "type": "Feature", "properties": { "statefp": "36", "geoid": "LHV", "name": "Lower Hudson Valley" }, "geometry": { "type": "Point", "coordinates": [ -73.696676428471733, 41.205229500001245 ] } },
+{ "type": "Feature", "properties": { "statefp": "36", "geoid": "MHV", "name": "Mid Hudson Valley" }, "geometry": { "type": "Point", "coordinates": [ -74.500781036422424, 41.659838500001513 ] } },
+{ "type": "Feature", "properties": { "statefp": "34", "geoid": "ONJ", "name": "Outer New Jersey" }, "geometry": { "type": "Point", "coordinates": [ -74.907750560286559, 40.432650511314371 ] } }
+]
+}

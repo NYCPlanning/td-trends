@@ -1,8 +1,8 @@
 library(tidyverse)
 library(plotly)
 
-# path='C:/Users/Y_Ma2/Desktop/GITHUB/td-trends/'
-path='C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/'
+path='C:/Users/Y_Ma2/Desktop/GITHUB/td-trends/'
+# path='C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/'
 
 df=read.csv(paste0(path,'bus/BusSpeed2015-2021.csv'),stringsAsFactors=F,check.names=F)
 df=df %>%
@@ -65,7 +65,7 @@ p=p %>%
          margin=list(b=120,
                      l=80,
                      r=40,
-                     t=150),
+                     t=160),
          xaxis=list(title=list(text='<b>Month</b>',
                                font=list(size=14)),
                     tickfont=list(size=12),
@@ -76,7 +76,7 @@ p=p %>%
          yaxis=list(title=list(text='<b>Speed (mph)</b>',
                                font=list(size=14)),
                     tickfont=list(size=12),
-                    rangemode='tozero',
+                    range=c(5,15),
                     fixedrange=T,
                     showgrid=T,
                     zeroline=T,

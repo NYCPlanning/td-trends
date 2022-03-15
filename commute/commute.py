@@ -11,8 +11,9 @@ import plotly.subplots as ps
 
 pio.renderers.default = 'browser'
 
-path = 'C:/Users/M_Free/Desktop/td-trends/commute/'
-local_path = 'C:/Users/M_Free/OneDrive - NYC O365 HOSTED/Projects/Conditions & Trends/Dec 2021/'
+#path = 'C:/Users/M_Free/Desktop/td-trends/commute/'
+path = '/Users/Work/Desktop/GitHub/td-trends/commute/'
+local_path = '/Users/Work/OneDrive - NYC O365 HOSTED/Projects/Conditions & Trends/Dec 2021/Input/'
 
 # import pums files 
 col_list = ['SERIALNO', 
@@ -152,7 +153,7 @@ regional_commuters = regional_commuters[~regional_commuters.PUMA.isin(nyc)]
 regional_commuters = regional_commuters[regional_commuters.POWPUMA.isin(nyc)]
 
 # add plain text columns for residence & work locations 
-regional_commuters['STATE RES'] = np.select([regional_commuters['ST'] == 36,
+regional_commuters['RES_STATE'] = np.select([regional_commuters['ST'] == 36,
                                              regional_commuters['ST'] == 34,
                                              regional_commuters['ST'] == 9,
                                              regional_commuters['ST'] == 42],
@@ -161,56 +162,29 @@ regional_commuters['STATE RES'] = np.select([regional_commuters['ST'] == 36,
                                              'Connecticut',
                                              'Pennsylvania'])
 
-li = list(range(3200,3314))
-hu = list(range(2700,3108)) 
+# create dictionary with PUMAs for each regional geography 
+reg_df = pd.read_csv(local_path + 'regional_pumas.csv')
 
-lower hudson valley 
-    putnam
-    rockland 
-    westchester
+li = reg_df['li'].dropna().to_list()
+lhv = reg_df['lhv'].dropna().to_list()
+mhv = reg_df['mhv'].dropna().to_list()
+inj = reg_df['inj'].dropna().to_list()
+onj = reg_df['onj'].dropna().to_list()
+ct = reg_df['ct'].dropna().to_list()
 
-mid hudson valley
-    dutchess
-    orange 
-    sullivan 
-    ulster 
-    
-inj = list(range())
-    bergen 301 -308  3
-    passaic 400-503
-    hudson 601-703
-    middlesex 901-907
-    somerset 1001-1003
-    essex 1301 - 1404
-    morris 1501-1504
-    union 1800-1904
-    8
-onj = list(range())
-    hunterdon 800
-    monmouth 1101-1106
-    ocean 1201-1205
-    sussex 1600
-    warren 1700
-    mercer 2301-3
-   
-    6
-m_inj = []     
-m_onj = [800, 1101, 1102, 1103, 1104, 1105, 1106, 1201, 1202, 1203, 1204, 1205, 1600, 1700, 2301, 2301, 2303]    
-m_ct = [101, 500, 900] #fairfield, litchfield, new haven counties
-    
-
-regional_commuters['METRO RES'] = np.select([(regional_commuters['ST'] == 36) & (regional_commuters.PUMA.isin(li)),
-                                             (regional_commuters['ST'] == 36) & (regional_commuters.PUMA.isin(hu)),
-                                             (regional_commuters['ST'] == 9) & (regional_commuters.PUMA.isin(inj)),
-                                             (regional_commuters['ST'] == 9) & (regional_commuters.PUMA.isin(onj)),
-                                             regional_commuters['ST'] == 9,
-                                             regional_commuters['ST'] == 42],
-                                            ['Long Island',
-                                             'Lower Hudson & Upstate',
-                                             'Inner New Jersey',
-                                             'Outer New Jersey',
-                                             'Connecticut',
-                                             'Pennsylvania'])
+regional_commuters['RES_REG'] = np.select([(regional_commuters['ST'] == 36) & (regional_commuters.PUMA.isin(li)),
+                                           (regional_commuters['ST'] == 36) & (regional_commuters.PUMA.isin(lhv)),
+                                           (regional_commuters['ST'] == 36) & (regional_commuters.PUMA.isin(mhv)),
+                                           (regional_commuters['ST'] == 34) & (regional_commuters.PUMA.isin(inj)),
+                                           (regional_commuters['ST'] == 34) & (regional_commuters.PUMA.isin(onj)),
+                                           (regional_commuters['ST'] == 9) & (regional_commuters.PUMA.isin(ct))],
+                                          ['Long Island',
+                                           'Lower Hudson Valley',
+                                           'Mid Hudson Valley',
+                                           'Inner New Jersey',
+                                           'Outer New Jersey',
+                                           'Connecticut'],
+                                          default = 'Other')                                          
 
 regional_commuters['POW'] = np.select([regional_commuters.POWPUMA.isin(bronx),
                                        regional_commuters.POWPUMA.isin(brooklyn),
@@ -877,17 +851,17 @@ fig
 
 # https://nycplanning.github.io/td-trends/commute/annotations/tt_60.html
 
-#%% REGIONAL IN-COMMUTERS: DESTINATION
+#%% REGIONAL IN-COMMUTERS (BY STATE): DESTINATION 
 
-dest_rc = regional_commuters[['RES','POW', 'PWGTP']].groupby(['RES', 'POW']).sum().reset_index()
-dest_rc_total = dest_rc[['RES', 'PWGTP']].groupby(['RES']).sum().reset_index()
-dest_rc_total.columns = ['RES', 'TOTAL']
-dest_rc = pd.merge(dest_rc, dest_rc_total, how = 'inner', on = ['RES'])
-dest_rc['% DEST'] = dest_rc['PWGTP'] / dest_rc['TOTAL']
+dest_rc_state = regional_commuters[['RES_STATE','POW', 'PWGTP']].groupby(['RES_STATE', 'POW']).sum().reset_index()
+dest_rc_state_total = dest_rc_state[['RES_STATE', 'PWGTP']].groupby(['RES_STATE']).sum().reset_index()
+dest_rc_state_total.columns = ['RES_STATE', 'TOTAL']
+dest_rc_state = pd.merge(dest_rc_state, dest_rc_state_total, how = 'inner', on = ['RES_STATE'])
+dest_rc_state['% DEST'] = dest_rc_state['PWGTP'] / dest_rc_state['TOTAL']
 
-# dest_rc.to_csv(path + 'annotations/dest_rc.csv', index = False)
+# dest_rc_state.to_csv(path + 'annotations/dest_rc_state.csv', index = False)
 
-dest_rc['HOVER']='<b>Destination: </b>'+dest_rc['POW']+'<br><b>Commuters: </b>'+dest_rc['PWGTP'].map('{:,.0f}'.format)+'<br><b>Percentage: </b>'+dest_rc['% DEST'].map('{:.0%}'.format)
+dest_rc_state['HOVER']='<b>Destination: </b>'+dest_rc_state['POW']+'<br><b>Commuters: </b>'+dest_rc_state['PWGTP'].map('{:,.0f}'.format)+'<br><b>Percentage: </b>'+dest_rc_state['% DEST'].map('{:.0%}'.format)
 
 boro_colors = {'Bronx': '#729ece',
                'Brooklyn': '#ff9e4a',
@@ -904,12 +878,12 @@ fig = ps.make_subplots(rows = 1,
     
 for boro, color in boro_colors.items():
     fig = fig.add_trace(go.Bar(name = boro,
-                               x = dest_rc.loc[dest_rc['POW'] == boro, 'RES'],
-                               y = dest_rc.loc[dest_rc['POW'] == boro, 'PWGTP'],
+                               x = dest_rc_state.loc[dest_rc_state['POW'] == boro, 'RES_STATE'],
+                               y = dest_rc_state.loc[dest_rc_state['POW'] == boro, 'PWGTP'],
                                marker = {'color': color},
                                width = .5,
                                hoverinfo = 'text',
-                               hovertext = dest_rc.loc[dest_rc['POW'] == boro, 'HOVER']))
+                               hovertext = dest_rc_state.loc[dest_rc_state['POW'] == boro, 'HOVER']))
 
 fig.update_layout(barmode = 'stack',
                   template = 'plotly_white',
@@ -948,7 +922,7 @@ fig.update_layout(barmode = 'stack',
                           'color': 'black'},
                   dragmode=False)
 
-fig.add_annotation(text = 'Data Source: <a href="https://www.census.gov/programs-surveys/acs/microdata/access.2019.html" target="blank">Census Bureau 2019 ACS 5-Year PUMS</a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/commute/annotations/dest_rc.csv" target="blank">Download Chart Data</a>',
+fig.add_annotation(text = 'Data Source: <a href="https://www.census.gov/programs-surveys/acs/microdata/access.2019.html" target="blank">Census Bureau 2019 ACS 5-Year PUMS</a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/commute/annotations/dest_rc_state.csv" target="blank">Download Chart Data</a>',
                    font_size = 14,
                    showarrow = False, 
                    x = 1, 
@@ -960,12 +934,98 @@ fig.add_annotation(text = 'Data Source: <a href="https://www.census.gov/programs
 
 fig   
 
-# fig.write_html(path + 'annotations/dest_rc.html',
+# fig.write_html(path + 'annotations/dest_rc_state.html',
 #               include_plotlyjs='cdn',
 #               config={'displayModeBar':False})
 
-# https://nycplanning.github.io/td-trends/commute/annotations/dest_rc.html'
+# https://nycplanning.github.io/td-trends/commute/annotations/dest_rc_state.html'
 
+#%% REGIONAL IN-COMMUTERS (BY REGIONAL GEOGRAPHY): DESTINATION 
+
+dest_rc_reg = regional_commuters[['RES_REG','POW', 'PWGTP']].groupby(['RES_REG', 'POW']).sum().reset_index()
+dest_rc_reg = dest_rc_reg[dest_rc_reg.RES_REG != 'Other']
+dest_rc_reg_total = dest_rc_reg[['RES_REG', 'PWGTP']].groupby(['RES_REG']).sum().reset_index()
+dest_rc_reg_total.columns = ['RES_REG', 'TOTAL']
+dest_rc_reg = pd.merge(dest_rc_reg, dest_rc_reg_total, how = 'inner', on = ['RES_REG'])
+dest_rc_reg['% DEST'] = dest_rc_reg['PWGTP'] / dest_rc_reg['TOTAL']
+
+# dest_rc_reg.to_csv(path + 'annotations/dest_rc_reg.csv', index = False)
+path='C:/Users/Y_Ma2/Desktop/GITHUB/td-trends/commute/'
+dest_rc_reg=pd.read_csv(path+'annotations/dest_rc_reg.csv')
+dest_rc_reg['HOVER']='<b>Destination: </b>'+dest_rc_reg['POW']+'<br><b>Commuters: </b>'+dest_rc_reg['PWGTP'].map('{:,.0f}'.format)+'<br><b>Percentage: </b>'+dest_rc_reg['% DEST'].map('{:.0%}'.format)
+
+boro_colors = {'Bronx':'rgba(114,158,206,0.8)',
+               'Brooklyn':'rgba(255,158,74,0.8)',
+               'Manhattan':'rgba(103,191,92,0.8)',
+               'Queens':'rgba(237,102,93,0.8)',
+               'Staten Island':'rgba(173,139,201,0.8)'}
+
+fig = go.Figure()
+    
+for boro, color in boro_colors.items():
+    fig = fig.add_trace(go.Bar(name = boro,
+                               x = dest_rc_reg.loc[dest_rc_reg['POW'] == boro, 'RES_REG'],
+                               y = dest_rc_reg.loc[dest_rc_reg['POW'] == boro, 'PWGTP'],
+                               marker = {'color': color},
+                               width = .5,
+                               hoverinfo = 'text',
+                               hovertext = dest_rc_reg.loc[dest_rc_reg['POW'] == boro, 'HOVER']))
+
+fig.update_layout(barmode = 'stack',
+                  template = 'plotly_white',
+                  title = {'text': '<b>Destination of Work by Place of Residence<br>for Regional In-Commuters</b>',
+                           'font_size': 20,
+                           'x': 0.5,
+                           'xanchor': 'center',
+                           'y': 0.95,
+                           'yanchor': 'top'},
+                  legend = {'traceorder': 'normal',
+                            'orientation': 'h',
+                            'title_text': '',
+                            'font_size': 16,
+                            'x': 0.5,
+                            'xanchor': 'center',
+                            'y': 1,
+                            'yanchor': 'bottom'},
+                  margin = {'b': 160,
+                            'l': 80,
+                            'r': 40,
+                            't': 160},
+                  xaxis = {'title': {'text': '<b>Place of Residence</b>',
+                                     'font_size': 14},
+                           'categoryorder': 'total descending',
+                           'tickfont_size':14,
+                           'fixedrange':True,
+                           'showgrid':False},
+                  yaxis = {'title': {'text': '<b>Number of Commuters</b>',
+                                     'font_size': 14},
+                           'tickfont_size': 12,
+                          'rangemode': 'nonnegative',
+                          'fixedrange': True,
+                          'showgrid': True},
+                  hoverlabel = {'font_size': 14},
+                  font = {'family': 'Arial',
+                          'color': 'black'},
+                  dragmode=False)
+
+fig.add_annotation(text = 'Data Source: <a href="https://www.census.gov/programs-surveys/acs/microdata/access.2019.html" target="blank">Census Bureau 2019 ACS 5-Year PUMS</a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/commute/annotations/dest_rc_reg.csv" target="blank">Download Chart Data</a>',
+                   font_size = 14,
+                   showarrow = False, 
+                   x = 1, 
+                   xanchor = 'right',
+                   xref = 'paper',
+                   y=0,
+                   yanchor='top',
+                   yref='paper',
+                   yshift=-120)
+
+fig   
+
+fig.write_html(path + 'annotations/dest_rc_reg.html',
+              include_plotlyjs='cdn',
+              config={'displayModeBar':False})
+
+# https://nycplanning.github.io/td-trends/commute/annotations/dest_rc_reg.html'
 #%% REGIONAL IN-COMMUTERS: DESTINATION (ALL WORKERS LIVING IN NYC)
  
 work_nyc_total = dest_rc_total.copy() # defined in destination cell

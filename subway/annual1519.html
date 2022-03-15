@@ -201,7 +201,6 @@
                 'layercolname': 'Pct1519Cat', // category column name
                 'layercat': ['>15%', '5%~15%', '-5%~5%', '-15%~-5%', '<-15%'], // categories
                 'layercolor': ['rgba(0,115,0,1)', 'rgba(126,184,6,1)', 'rgba(246,222,137,1)', 'rgba(226,117,15,1)', 'rgba(122,17,17,1)'], // color for each category; use rgba
-                'layeropacity': 1, // circle opacity
                 'layerradius': 3, // circle radius; change size based on zoom level
                 'layeroutlinecolor': 'rgba(255,255,255,0)', // outline color; can only be set to 1px width; to change the outline width, add another line layer
             };
@@ -233,7 +232,6 @@
                 },
                 'paint': {
                     'circle-color': layerColor,
-                    'circle-opacity': layerContent['layeropacity'],
                     'circle-radius': layerContent['layerradius'],
                 },
             });

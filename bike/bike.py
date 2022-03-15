@@ -9,7 +9,7 @@ import pyreadstat
 import pandas as pd
 import plotly.graph_objects as go
 import plotly.io as pio
-from datetime import datetime
+import datetime
 
 pio.renderers.default = 'browser'
 
@@ -39,15 +39,16 @@ chs = chs.replace({1:'Once a Week or More',
                    7:'Never or Unable'})
 
 # chs.to_csv(path + 'chs.csv',index=False)
-
+path = 'C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/bike/annotations/'
+chs=pd.read_csv(path+'chs.csv')
 chs['hover'] = '<b>Frequency: </b>'+ chs['cyclingfreq'] + '<br><b>Adults: </b>' + chs['wt21_dual'].map('{:,.0f}'.format) +'<br><b>Percentage: </b>' + chs['%'].map('{:.0%}'.format)
 
-chs_colors = {'Once a Week or More': '#729ece',
-              'Several Times a Month': '#ff9e4a',
-              'At Least Once a Month': '#67bf5c',
-              'A Few Times a Year': '#ed665d',
-              'Never or Unable': 'a5acaf'}
-                
+chs_colors = {'Once a Week or More': 'rgba(237,102,93,0.8)',
+              'Several Times a Month': 'rgba(255,158,74,0.8)',
+              'At Least Once a Month': 'rgba(173,139,201,0.8)',
+              'A Few Times a Year': 'rgba(114,158,206,0.8)',
+              'Never or Unable': 'rgba(162,162,162,0.8)'}
+
 fig = go.Figure()
 
 fig = fig.add_trace(go.Pie(labels = chs['cyclingfreq'],
@@ -55,8 +56,11 @@ fig = fig.add_trace(go.Pie(labels = chs['cyclingfreq'],
                            hole = .5,
                            sort = False,
                            direction = 'clockwise',
+                           pull=0.05,
                            marker = {'colors': list(chs_colors.values())},
-                           textinfo = 'none',
+                           textinfo = 'text',
+                           text= chs['%'].map('{:.0%}'.format),
+                           textfont={'size':14},
                            hoverinfo = 'text',
                            hovertext = chs['hover']))
 
@@ -74,25 +78,25 @@ fig.update_layout(template = 'plotly_white',
                             'xanchor': 'center',
                             'y': 1,
                             'yanchor': 'bottom'},
-                  margin = {'b': 120, 
+                  margin = {'b': 40, 
                             'l': 80,
                             'r': 80,
-                            't': 120},
+                            't': 200},
                   hoverlabel = {'font_size': 14}, 
                   font = {'family': 'Arial',
                           'color': 'black'},
                   dragmode = False)
 
-fig.add_annotation(text = 'Data Source: <a href="https://www1.nyc.gov/site/doh/data/data-sets/community-health-survey-public-use-data.page" target="blank">NYC DOHMH Community Health Survey 2020</a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/bike/chs.csv" target="blank">Download Chart Data</a>',
+fig.add_annotation(text = 'Data Source: <a href="https://www1.nyc.gov/site/doh/data/data-sets/community-health-survey-public-use-data.page" target="blank">NYC DOHMH 2020</a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/bike/annotations/chs.csv" target="blank">Download Chart Data</a>',
                    font_size = 14,
                    showarrow = False, 
                    x = 1, 
                    xanchor = 'right',
                    xref = 'paper',
-                   y = -.1,
-                   yanchor = 'top',
-                   yref = 'paper')
-
+                   y=0,
+                   yanchor='top',
+                   yref='paper',
+                   yshift=0)
 fig.add_annotation(text = f'N = {chs["wt21_dual"].sum():,.0f}',
                    font_size = 14,
                    showarrow = False, 
@@ -106,26 +110,25 @@ fig
 
 #%% BIKE COUNTS
 
-parser = lambda x: datetime.strptime(x, '%m/%d/%Y %I:%M:%S %p') # 8/31/2012  12:00:00 AM                 
+parser = lambda x: datetime.datetime.strptime(x, '%m/%d/%Y %I:%M:%S %p') # 8/31/2012  12:00:00 AM                 
 counts = pd.read_csv(local_path + 'bicycle_counts.csv', parse_dates = ['date'], date_parser = parser)
 
 counters = pd.read_csv(local_path + 'bicycle_counters.csv', usecols = ['name', 'site', 'latitude','longitude'])
 
 # active counters
-counter_list = [100009425, 100009427, 100009428, 100010017, 100010018, 100010019, 100057320, 100062893, 300020904]
+counter_list = [100009425, 100009427, 100009428, 100010017, 100010018, 100010019, 100062893, 300020904]
 
 counts = counts[counts.site.isin(counter_list)]
 counts = counts.groupby(['site', pd.Grouper(key = 'date', freq = 'M')])['counts'].sum().reset_index()
 # time = counts.groupby(['site']).agg({'date': ['min','max'], 'counts':'sum'})
-counts = counts[counts['date'] > '2013-12-31']
+counts = counts[counts['date'] > '2017-05-31']
 
 counts = pd.merge(counts, counters[['name', 'site']], how = 'inner', on = 'site')
 counts['name'] = counts['name'].replace({'Ed Koch Queensboro Bridge Shared Path': 'Queensboro Bridge',
-                                         'Kent Ave btw North 8th St and North 9th St': 'Kent Ave btw N 8 St and N 9 St',
+                                         'Kent Ave btw North 8th St and North 9th St': 'Kent Avenue',
                                          'Manhattan Bridge Bike Comprehensive': 'Manhattan Bridge',
                                          'Williamsburg Bridge Bike Path': 'Williamsburg Bridge',
-                                         'Comprehensive Brooklyn Bridge Counter': 'Brooklyn Bridge',
-                                         'Columbus Ave at 86th St.': 'Columbus Ave at 86 St'})
+                                         'Comprehensive Brooklyn Bridge Counter': 'Brooklyn Bridge'})
 
 counts_total = counts[['date', 'counts']].groupby(['date']).sum().reset_index()
 counts_total.columns = ['date', 'total']
@@ -135,52 +138,69 @@ counts['%'] = counts['counts']/ counts['total']
 
 # counts.to_csv(path + 'counts.csv', index = False)
 
-counts['hover'] = '<i>' + counts['name'] + ': </i>' + counts['counts'].map('{:,.0f}'.format) + ' (' + counts['%'].map('{:.0%}'.format) + ')'
+counts['hover'] = '<b>' + counts['name'] + ': </b>' + counts['counts'].map('{:,.0f}'.format) + ' (' + counts['%'].map('{:.0%}'.format) + ')'
 
-counter_colors = {'Williamsburg Bridge':'#cdcc5d',
-                  'Manhattan Bridge': '#ff9e4a',
-                  'Brooklyn Bridge': '#ed665d',
-                  'Queensboro Bridge': '#67bf5c',
-                  'Staten Island Ferry':'#6dccda',
-                  'Prospect Park West': '#ed97ca',
-                  'Kent Ave btw N 8 St and N 9 St': '#729ece',      
-                  'Pulaski Bridge':'#ad8bc9',                 
-                  'Columbus Ave at 86 St': '#a2a2a2'}
+# counter_colors = {'Williamsburg Bridge':'#cdcc5d',
+#                   'Manhattan Bridge': '#ff9e4a',
+#                   'Brooklyn Bridge': '#ed665d',
+#                   'Queensboro Bridge': '#67bf5c',
+#                   'Staten Island Ferry':'#6dccda',
+#                   'Prospect Park West': '#ed97ca',
+#                   'Kent Ave btw N 8 St and N 9 St': '#729ece',      
+#                   'Pulaski Bridge':'#ad8bc9',                 
+#                   'Columbus Ave at 86 St': '#a2a2a2'}
+counter_colors = {'Williamsburg Bridge':'rgba(205,204,93,0.5)',
+                  'Manhattan Bridge': 'rgba(255,158,74,0.5)',
+                  'Brooklyn Bridge': 'rgba(237,102,93,0.5)',
+                  'Queensboro Bridge': 'rgba(103,191,92,0.5)',
+                  'Staten Island Ferry':'rgba(109,204,218,0.5)',
+                  'Prospect Park West': 'rgba(237,151,202,0.5)',
+                  'Kent Avenue': 'rgba(114,158,206,0.5)',      
+                  'Pulaski Bridge':'rgba(173,139,201,0.5)'}
 
 hover_title = counts[['date', 'total']].groupby('date').first().reset_index()
 
 fig = go.Figure()
 
-for counter, color in counter_colors.items():
-    fig = fig.add_trace(go.Scatter(name = counter,
-                                    x = counts.loc[counts['name'] == counter, 'date'],
-                                    y = counts.loc[counts['name'] == counter, 'counts'],
-                                    mode = 'lines',
-                                    stackgroup = 'one',
-                                    line = {'color': color,
-                                            'width': .5},
-                                    hoverinfo = 'text',
-                                    hovertext = counts.loc[counts['name'] == counter, 'hover']))
-    
-#for a 100% opacity fill chart with rgba colors
+fig = fig.add_trace(go.Scatter(x = hover_title['date'],
+                               y = hover_title['total'],
+                               mode = 'none',
+                               showlegend = False,
+                               hoverinfo = 'text',
+                               hovertext = '<b>Total Trips: </b>' + hover_title['total'].map('{:,.0f}'.format)))
+
+
 # for counter, color in counter_colors.items():
 #     fig = fig.add_trace(go.Scatter(name = counter,
 #                                     x = counts.loc[counts['name'] == counter, 'date'],
 #                                     y = counts.loc[counts['name'] == counter, 'counts'],
-#                                     stackgroup = 'one',
-#                                     fill = 'tonexty',
-#                                     fillcolor = color,
-#                                     line_color = color,
 #                                     mode = 'lines',
+#                                     stackgroup = 'one',
+#                                     line = {'color': color,
+#                                             'width': .5},
 #                                     hoverinfo = 'text',
 #                                     hovertext = counts.loc[counts['name'] == counter, 'hover']))
+
+# for a 100% opacity fill chart with rgba colors
+for counter, color in counter_colors.items():
+    fig = fig.add_trace(go.Scatter(name = counter,
+                                    x = counts.loc[counts['name'] == counter, 'date'],
+                                    y = counts.loc[counts['name'] == counter, 'counts'],
+                                    mode = 'none',
+                                    stackgroup = 'one',
+                                    groupnorm = '',
+                                    orientation = 'v',
+                                    fill = 'tonexty',
+                                    fillcolor = color,
+                                    hoverinfo = 'text',
+                                    hovertext = counts.loc[counts['name'] == counter, 'hover']))
     
 fig = fig.add_trace(go.Scatter(x = hover_title['date'],
                                y = hover_title['total'],
                                mode = 'none',
                                showlegend = False,
                                hoverinfo = 'text',
-                               hovertext = '<b>' + hover_title['date'].map('{:%B %Y}'.format) + ' <br>Total Trips: ' + hover_title['total'].map('{:,.0f}'.format)))
+                               hovertext = '<b>Month: </b>' + hover_title['date'].map('{:%B %Y}'.format)))
 
 fig.update_layout(template = 'plotly_white',
                   title = {'text': '<b>Automatic Bicycle Counts</b>',
@@ -198,84 +218,121 @@ fig.update_layout(template = 'plotly_white',
                             'yanchor': 'bottom'},
                   margin = {'b': 120,
                             'l': 80,
-                            'r': 80,
-                            't': 120},
-                  xaxis = {'title': {'text': '<b>Year</b>',
+                            'r': 40,
+                            't': 180},
+                  xaxis = {'title': {'text': '<b>Month</b>',
                                      'font_size': 14},
                            'tickfont_size': 12,
-                           'dtick': 'M12',
+                           'tickformat':'%b %Y',
+                           'dtick': 'M2',
+                           'range':[min(counts['date'])-datetime.timedelta(days=15),max(counts['date'])+datetime.timedelta(days=15)],
                            'fixedrange': True,
                            'showgrid': False},
                   yaxis = {'title':{'text': '<b>Counts</b>',
                                     'font_size': 14},
                            'tickfont_size': 12,
-                           'rangemode': 'nonnegative',
+                           'rangemode': 'tozero',
                            'fixedrange': True,
                            'showgrid': True},
                   font = {'family': 'Arial',
                           'color': 'black'},
+                  hoverlabel = {'font_size': 14},
                   dragmode = False,
-                  hovermode = 'x unified',
-                  hoverlabel = {'font_size': 14})
+                  hovermode = 'x unified')
 
-fig.add_annotation(text = 'Data Source: <a href="https://data.cityofnewyork.us/Transportation/Bicycle-Counts/uczf-rk3c" target="blank">NYC DOT Bicycle Counts </a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/bike/annotations/counts.csv" target="blank">Download Chart Data</a>',
+fig.add_annotation(text = 'Data Source: <a href="https://data.cityofnewyork.us/Transportation/Bicycle-Counts/uczf-rk3c" target="blank">NYC DOT</a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/bike/annotations/counts.csv" target="blank">Download Chart Data</a>',
                    font_size = 14,
                    showarrow = False,
                    x = 1,
                    xanchor = 'right',
                    xref = 'paper',
-                   y = -0.1,
+                   y = 0,
                    yanchor = 'top',
-                   yref = 'paper')
+                   yref = 'paper',
+                   yshift = -100)
 
 fig
 
 # fig.write_html(path + 'counts.html',
-#                include_plotlyjs = 'cdn',
-#                config = {'displayModeBar': False})
+#                 include_plotlyjs = 'cdn',
+#                 config = {'displayModeBar': False})
 
-# print('Chart Available at: https://nycplanning.github.io/td-trends/bike/annotations/counts.html')  
+# print('Chart Available at: https://nycplanning.github.io/td-trends/bike/annotations/counts.html')
+
 
 #%% CITI BIKE
-
+path='C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/bike/annotations/'
 citibike = pd.read_csv(path + 'citibike.csv')
-citibike['12M Rolling Avg'] = citibike['Avg Daily Rides'].rolling(window = 12).mean()
-citibike['Hover'] = '<b>Date: </b>' + citibike['Date2']+'<br><b>Average Daily Rides: </b>' + citibike['Avg Daily Rides'].map('{:,.0f}'.format) + '<br><b>12-Month Rolling Average: </b>' + citibike['12M Rolling Avg'].map('{:,.0f}'.format) + '<br><b>Fleet Size: </b>' + citibike['Fleet Size'].map('{:,.0f}'.format)
+citibike['date']=[datetime.datetime.strptime(x,'%Y-%m') for x in citibike['YearMonth']]
+
+# citibike['12M Rolling Avg'] = citibike['Avg Daily Rides'].rolling(window = 12).mean()
+# citibike['Hover'] = '<b>Month: </b>' + citibike['date']+'<br><b>Average Daily Rides: </b>' + citibike['Avg Daily Rides'].map('{:,.0f}'.format) + '<br><b>12-Month Rolling Average: </b>' + citibike['12M Rolling Avg'].map('{:,.0f}'.format) + '<br><b>Fleet Size: </b>' + citibike['Fleet Size'].map('{:,.0f}'.format)
 
 fig = go.Figure()
 
-fig = fig.add_trace(go.Bar(x = citibike['Date'],
+fig=fig.add_trace(go.Scatter(name='',
+                             mode='none',
+                             x=citibike['date'],
+                             y=citibike['Avg Daily Rides'],
+                             showlegend=False,
+                             hovertext=['<b>Month: </b>'+datetime.datetime.strftime(x,'%b %Y') for x in citibike['date']],
+                             hoverinfo='text'))
+
+fig = fig.add_trace(go.Bar(x = citibike['date'],
                            y = citibike['Avg Daily Rides'],
-                           marker = {'color': '#729ece'},
+                           marker = {'color': 'rgba(114,158,206,0.5)'},
                            name = 'Average Daily Rides',
-                           opacity = .5,
                            hoverinfo = 'text', 
-                           hovertext = citibike['Hover']))
+                           hovertext ='<b>Average Daily Rides: </b>' + citibike['Avg Daily Rides'].map('{:,.0f}'.format)))
 
-fig = fig.add_trace(go.Scatter(x = citibike['Date'],
-                               y = citibike['12M Rolling Avg'], 
-                               marker = {'color': '#ff9e4a'},
-                               name = '12-Month Rolling Average',
-                               mode = 'lines',
-                               hoverinfo = 'none'))
+# fig = fig.add_trace(go.Scatter(x = citibike['Date'],
+#                                y = citibike['12M Rolling Avg'], 
+#                                marker = {'color': '#ff9e4a'},
+#                                name = '12-Month Rolling Average',
+#                                mode = 'lines',
+#                                hoverinfo = 'none'))
 
-fig = fig.add_trace(go.Scatter(x = citibike['Date'],
-                               y = citibike['Fleet Size'], 
-                               marker = {'color': '#ed97ca'},
-                               name = 'Fleet Size',
-                               mode = 'lines',
-                               hoverinfo = 'none'))
+# fig = fig.add_trace(go.Scatter(x = citibike['Date'],
+#                                y = citibike['Fleet Size'], 
+#                                marker = {'color': '#ed97ca'},
+#                                name = 'Fleet Size',
+#                                mode = 'lines',
+#                                hoverinfo = 'none'))
+
+fig=fig.add_trace(go.Scatter(name='Active Stations',
+                             mode='lines',
+                             x=citibike['date'],y=citibike['Active Stations'],
+                             yaxis='y2',
+                             line={'color':'rgba(237,151,202,0.8)',
+                                   'width':3},
+                             hovertext=['<b>Active Stations: </b>'+'{:,.0f}'.format(x) for x in citibike['Active Stations']],
+                             hoverinfo='text'))
+
+fig=fig.add_trace(go.Scatter(name='',
+                             mode='none',
+                             x=citibike['date'],
+                             y=citibike['Avg Daily Rides'],
+                             showlegend=False,
+                             hovertext=['<b>Annual Membership: </b>'+'{:,.0f}'.format(x) for x in citibike['Annual Membership']],
+                             hoverinfo='text'))
+
+fig=fig.add_trace(go.Scatter(name='',
+                             mode='none',
+                             x=citibike['date'],
+                             y=citibike['Avg Daily Rides'],
+                             showlegend=False,
+                             hovertext=['<b>Fleet Size: </b>'+'{:,.0f}'.format(x) for x in citibike['Fleet Size']],
+                             hoverinfo='text'))
     
-fig.update_layout(barmode = 'stack',
-                  template = 'plotly_white',
-                  title = {'text': '<b>Citi Bike Operations<b>',
+fig.update_layout(template = 'plotly_white',
+                  title = {'text': '<b>Citi Bike Statistics<b>',
                            'font_size': 20,
                            'x': .5,
                            'xanchor': 'center',
                            'y': .95,
                            'yanchor': 'top'},
-                  legend = {'traceorder': 'normal',
-                            'orientation': 'h',
+                  legend = {'orientation': 'h',
+                            'title_text':'',
                             'font_size': 16,
                             'x': .5,
                             'xanchor': 'center',
@@ -285,27 +342,44 @@ fig.update_layout(barmode = 'stack',
                             'l': 80,
                             'r': 80,
                             't': 120},
-                  xaxis = {'tickfont_size': 14,
-                           'fixedrange': True, 
-                           'showgrid': False},
-                  yaxis = {'tickfont_size': 12,
-                           'rangemode': 'nonnegative',
-                           'fixedrange': True,
-                           'showgrid': True},
+                  xaxis = {'title':{'text':'<b>Month</b>',
+                                    'font_size':14},
+                           'tickfont_size':12,
+                           'tickformat':'%b %Y',
+                           'dtick':'M6',
+                           'range':[min(citibike['date'])-datetime.timedelta(days=15),max(citibike['date'])+datetime.timedelta(days=15)],
+                           'fixedrange':True,
+                           'showgrid':False},
+                  yaxis = {'title':{'text':'<b>Ridership</b>',
+                                    'font_size':14},
+                           'tickfont_size':12,
+                           'rangemode':'tozero',
+                           'fixedrange':True,
+                           'showgrid':True},
+                  yaxis2={'title':{'text':'<b>Stations</b>',
+                                   'font_size':14},
+                          'tickfont_size':12,
+                          'side':'right',
+                          'overlaying':'y',
+                          'rangemode':'tozero',
+                          'fixedrange':True,
+                          'showgrid':False},
                   hoverlabel = {'font_size': 14}, 
                   font = {'family': 'Arial',
                           'color': 'black'},
-                  dragmode = False)
+                  dragmode = False,
+                  hovermode = 'x unified')
 
-fig.add_annotation(text = 'Data Source: <a href="https://ride.citibikenyc.com/system-data/operating-reports" target="blank">Citi Bike Monthly Operating Reports</a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/bike/annotations/citibike.csv" target="blank">Download Chart Data</a>',
+fig.add_annotation(text = 'Data Source: <a href="https://ride.citibikenyc.com/system-data/operating-reports" target="blank">Citi Bike</a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/bike/annotations/citibike.csv" target="blank">Download Chart Data</a>',
                    font_size = 14,
                    showarrow = False, 
                    x = 1, 
                    xanchor = 'right',
                    xref = 'paper',
-                   y = -.1,
-                   yanchor = 'top',
-                   yref = 'paper')
+                   y=0,
+                   yanchor='top',
+                   yref='paper',
+                   yshift=-100)
 fig
 
 # fig.write_html(path + 'citibike.html', include_plotlyjs='cdn', config={'displayModeBar':False})

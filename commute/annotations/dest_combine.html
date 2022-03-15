@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Regional Commuters</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: sans-serif;
+        }
+
+        #chart {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 60%;
+            border-right-style: solid;
+            border-right-width: 0.1rem;
+            border-right-color: rgba(0, 0, 0, 0.5);
+        }
+
+        #map {
+            position: absolute;
+            left: 60%;
+            top: 0;
+            height: 100%;
+            width: 40%;
+            border-left-style: solid;
+            border-left-width: 0.1rem;
+            border-left-color: rgba(0, 0, 0, 0.5);
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <iframe src="https://nycplanning.github.io/td-trends/commute/annotations/dest_rc_reg.html" id="chart">
+        </iframe>
+    </div>
+    <div>
+        <iframe src="https://nycplanning.github.io/td-trends/commute/annotations/subregion.html#6.3/41.027/-73.717" id="map">
+        </iframe>
+    </div>
+</body>
+
+</html>

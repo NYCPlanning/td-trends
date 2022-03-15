@@ -1,8 +1,8 @@
 library(tidyverse)
 library(plotly)
 
-# path='C:/Users/Y_Ma2/Desktop/GITHUB/td-trends/'
-path='C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/'
+path='C:/Users/Y_Ma2/Desktop/GITHUB/td-trends/'
+# path='C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/'
 
 df=read.csv(paste0(path,'ferry/FerryByOperator.csv'),stringsAsFactors=F,check.names=F)
 df=df %>%
@@ -24,7 +24,7 @@ p=p %>%
             x=df[['Date']],
             y=df[['Staten Island Ferry']],
             showlegend=F,
-            hovertext=paste0('<b>Total: </b>',format(df[['Total']],trim=T,big.mark=',')),
+            hovertext=paste0('<b>Total Ridership: </b>',format(df[['Total']],trim=T,big.mark=',')),
             hoverinfo='text')
 for (i in c('Staten Island Ferry','BillyBey','Liberty Landing Ferry','NY Waterway','New York Water Taxi','SeaStreak','NYC Ferry')){
   p=p %>%
