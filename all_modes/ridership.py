@@ -103,7 +103,7 @@ fig.update_layout(template = 'plotly_white',
                   hovermode = 'x unified',
                   hoverlabel = {'font_size': 14})
 
-fig.add_annotation(text = '* Ridership; ** Trips; *** Vehicles',
+fig.add_annotation(text = '*Ridership; **Trips; ***Vehicles',
                     font_size = 14,
                     showarrow = False,
                     x = 1,
@@ -217,7 +217,7 @@ fig.update_layout(template = 'plotly_white',
                   hovermode = 'x unified',
                   hoverlabel = {'font_size': 14})
 
-fig.add_annotation(text = '* Ridership; ** Trips; *** Vehicles',
+fig.add_annotation(text = '*Ridership; **Trips; ***Vehicles',
                     font_size = 14,
                     showarrow = False,
                     x = 1,
