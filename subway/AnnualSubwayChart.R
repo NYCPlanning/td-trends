@@ -1,8 +1,8 @@
 library(tidyverse)
 library(plotly)
 
-# path='C:/Users/Y_Ma2/Desktop/GITHUB/td-trends/'
-path='C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/'
+path='C:/Users/Y_Ma2/Desktop/GITHUB/td-trends/'
+# path='C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/'
 
 df=read.csv(paste0(path,'subway/SubwayRidership1904-2020.csv'),stringsAsFactors=F)
 
@@ -101,7 +101,7 @@ p=p %>%
                   yanchor='top',
                   yref='y')
 p=p %>% 
-  add_annotations(text='*Reported by Fiscal Year Before 1940',
+  add_annotations(text='*Reported by Fiscal Year before 1940',
                   font=list(size=14),
                   showarrow=F,
                   x=1,

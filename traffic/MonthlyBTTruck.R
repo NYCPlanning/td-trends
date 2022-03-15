@@ -50,7 +50,7 @@ p=p %>%
             hoverinfo='text')
 p=p %>%
   layout(template='plotly_white',
-         title=list(text=paste0('<b>Monthly Bridges and Tunnels Truck Traffic</b>'),
+         title=list(text=paste0('<b>Monthly Bridges and Tunnels Truck Traffic*</b>'),
                     font=list(size=20),
                     x=0.5,
                     xanchor='center',
@@ -88,7 +88,8 @@ p=p %>%
          yaxis2=list(title=list(text='<b>Number of Trucks</b>',
                                 font=list(size=14,
                                           color=dfcolors['Truck'])),
-                     tickfont=list(size=12),
+                     tickfont=list(size=12,
+                                   color=dfcolors['Truck']),
                      side='right',
                      overlaying='y',
                      rangemode='tozero',
@@ -101,7 +102,7 @@ p=p %>%
          dragmode=F,
          hovermode='x unified')
 p=p %>% 
-  add_annotations(text='Data Source: <a href="https://new.mta.info/transparency/board-and-committee-meetings" target="blank">MTA</a>; <a href="https://www.panynj.gov/bridges-tunnels/en/traffic---volume-information---b-t.html" target="blank">PANYNJ</a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/traffic/MonthlyBTTruck.csv" target="blank">Download Chart Data</a>',
+  add_annotations(text='*MTA and PANYNJ (inbound only) bridges and tunnels',
                   font=list(size=14),
                   showarrow=F,
                   x=1,
@@ -111,6 +112,17 @@ p=p %>%
                   yanchor='top',
                   yref='paper',
                   yshift=-80)
+p=p %>% 
+  add_annotations(text='Data Source: <a href="https://new.mta.info/transparency/board-and-committee-meetings" target="blank">MTA</a>; <a href="https://www.panynj.gov/bridges-tunnels/en/traffic---volume-information---b-t.html" target="blank">PANYNJ</a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/traffic/MonthlyBTTruck.csv" target="blank">Download Chart Data</a>',
+                  font=list(size=14),
+                  showarrow=F,
+                  x=1,
+                  xanchor='right',
+                  xref='paper',
+                  y=0,
+                  yanchor='top',
+                  yref='paper',
+                  yshift=-100)
 p=p %>%
   config(displayModeBar=F)
 p
