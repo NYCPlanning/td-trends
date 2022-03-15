@@ -53,7 +53,7 @@ p=p %>%
             hoverinfo='text')
 p=p %>%
   layout(template='plotly_white',
-         title=list(text=paste0('<b>Ferry Ridership by Operator</b>'),
+         title=list(text=paste0('<b>Monthly Ferry Ridership by Operator</b>'),
                     font=list(size=20),
                     x=0.5,
                     xanchor='center',
