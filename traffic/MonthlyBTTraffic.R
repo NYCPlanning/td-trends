@@ -4,8 +4,9 @@ library(plotly)
 # path='C:/Users/Y_Ma2/Desktop/GITHUB/td-trends/'
 path='C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/'
 
-df=read.csv(paste0(path,'traffic/AnnualBTTraffic.csv'),stringsAsFactors=F,check.names=F)
-
+df=read.csv(paste0(path,'traffic/MonthlyBTTraffic.csv'),stringsAsFactors=F,check.names=F)
+df=df %>%
+  mutate(Date=as.Date(paste0(YearMonth,'01'),'%Y%m%d'))
 
 dfcolors=c('MTA'='rgba(173,139,201,0.8)',
            'PANYNJ'='rgba(109,204,218,0.8)')
@@ -14,40 +15,36 @@ p=plot_ly()
 p=p %>%
   add_trace(type='scatter',
             mode='none',
-            x=df[['Year']],
+            x=df[['Date']],
             y=df[['PANYNJ']],
             showlegend=F,
-            hovertext=paste0('<b>Year: </b>',df[['Year']]),
+            hovertext=paste0('<b>Month: </b>',format(df[['Date']],'%b %Y')),
             hoverinfo='text')
 p=p %>%
   add_trace(name='MTA Bridges & Tunnels',
             type='scatter',
-            mode='lines+markers',
-            x=df[['Year']],
+            mode='lines',
+            x=df[['Date']],
             y=df[['MTA']],
             line=list(color=dfcolors['MTA'],
                       width=3),
-            marker=list(color=dfcolors['MTA'],
-                        size=8),
             showlegend=T,
             hovertext=paste0('<b>MTA: </b>',format(df[['MTA']],trim=T,big.mark=',')),
             hoverinfo='text')
 p=p %>%
-  add_trace(name='PANYNJ Bridges & Tunnels Inbound Only',
+  add_trace(name='PANYNJ Bridges & Tunnels (Inbound Only)',
             type='scatter',
-            mode='lines+markers',
-            x=df[['Year']],
+            mode='lines',
+            x=df[['Date']],
             y=df[['PANYNJ']],
             line=list(color=dfcolors['PANYNJ'],
                       width=3),
-            marker=list(color=dfcolors['PANYNJ'],
-                        size=8),
             showlegend=T,
             hovertext=paste0('<b>PANYNJ Inbound: </b>',format(df[['PANYNJ']],trim=T,big.mark=',')),
             hoverinfo='text')
 p=p %>%
   layout(template='plotly_white',
-         title=list(text=paste0('<b>Annual Bridges and Tunnels Traffic Volume</b>'),
+         title=list(text=paste0('<b>Monthly Bridges and Tunnels Traffic Volume</b>'),
                     font=list(size=20),
                     x=0.5,
                     xanchor='center',
@@ -64,11 +61,12 @@ p=p %>%
                      l=80,
                      r=40,
                      t=120),
-         xaxis=list(title=list(text='<b>Year</b>',
+         xaxis=list(title=list(text='<b>Month</b>',
                                font=list(size=14)),
                     tickfont=list(size=12),
-                    range=c(min(df[['Year']])-0.5,max(df[['Year']])+0.5),
-                    fixedrange=T,
+                    tickformat='%b %Y',
+                    dtick='M6',
+                    range=c(min(df[['Date']])-15,max(df[['Date']])+15),                    fixedrange=T,
                     showgrid=F),
          yaxis=list(title=list(text='<b>Vehicles</b>',
                                font=list(size=14)),
@@ -98,7 +96,7 @@ p=p %>%
 p=p %>%
   config(displayModeBar=F)
 p
-htmlwidgets::saveWidget(p,paste0(path,'traffic/AnnualBTTraffic.html'))
+htmlwidgets::saveWidget(p,paste0(path,'traffic/MonthlyBTTraffic.html'))
 
 
 
