@@ -9,8 +9,8 @@ df=df %>%
   mutate(Date=as.Date(paste0(YearMonth,'01'),'%Y%m%d'))
 
 
-dfcolors=c('Auto'='rgba(237,102,93,0.8)',
-           'Truck'='rgba(168,120,110,0.8)')
+dfcolors=c('Auto'='rgba(162,162,162,0.8)',
+           'Truck'='rgba(237,102,93,0.8)')
 
 p=plot_ly()
 p=p %>%
@@ -24,23 +24,27 @@ p=p %>%
 p=p %>%
   add_trace(name='Auto',
             type='scatter',
-            mode='lines',
+            mode='lines+markers',
             x=df[['Date']],
             y=df[['Auto']],
             line=list(color=dfcolors['Auto'],
                       width=3),
+            marker=list(color=dfcolors['Auto'],
+                        size=8),
             showlegend=T,
             hovertext=paste0('<b>Auto: </b>',format(df[['Auto']],trim=T,big.mark=',')),
             hoverinfo='text')
 p=p %>%
   add_trace(name='Truck',
             type='scatter',
-            mode='lines',
+            mode='lines+markers',
             x=df[['Date']],
             y=df[['Truck']],
             yaxis='y2',
             line=list(color=dfcolors['Truck'],
                       width=3),
+            marker=list(color=dfcolors['Truck'],
+                        size=8),
             showlegend=T,
             hovertext=paste0('<b>Truck: </b>',format(df[['Truck']],trim=T,big.mark=',')),
             hoverinfo='text')
@@ -72,7 +76,8 @@ p=p %>%
                     fixedrange=T,
                     showgrid=F),
          yaxis=list(title=list(text='<b>Number of Automobiles</b>',
-                               font=list(size=14)),
+                               font=list(size=14,
+                                         color=dfcolors['Auto'])),
                     tickfont=list(size=12),
                     rangemode='tozero',
                     fixedrange=T,
@@ -81,7 +86,8 @@ p=p %>%
                     zerolinecolor='rgba(0,0,0,0.2)',
                     zerolinewidth=2),
          yaxis2=list(title=list(text='<b>Number of Trucks</b>',
-                                font=list(size=14)),
+                                font=list(size=14,
+                                          color=dfcolors['Truck'])),
                      tickfont=list(size=12),
                      side='right',
                      overlaying='y',
@@ -95,7 +101,7 @@ p=p %>%
          dragmode=F,
          hovermode='x unified')
 p=p %>% 
-  add_annotations(text='Data Source: <a href="https://www.panynj.gov/bridges-tunnels/en/traffic---volume-information---b-t.html" target="blank">PANYNJ</a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/traffic/PANYNJ Bridges&Tunnels Inbound.csv" target="blank">Download Chart Data</a>',
+  add_annotations(text='Data Source: <a href="https://new.mta.info/transparency/board-and-committee-meetings" target="blank">MTA</a>; <a href="https://www.panynj.gov/bridges-tunnels/en/traffic---volume-information---b-t.html" target="blank">PANYNJ</a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/traffic/MonthlyBTTruck.csv" target="blank">Download Chart Data</a>',
                   font=list(size=14),
                   showarrow=F,
                   x=1,
@@ -108,7 +114,7 @@ p=p %>%
 p=p %>%
   config(displayModeBar=F)
 p
-htmlwidgets::saveWidget(p,paste0(path,'traffic/PANYNJTruck.html'))
+htmlwidgets::saveWidget(p,paste0(path,'traffic/MonthlyBTTruck.html'))
 
 
 
