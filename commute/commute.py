@@ -10,16 +10,17 @@ import plotly.io as pio
 import plotly.subplots as ps
 
 pio.renderers.default = 'browser'
-
-#path = 'C:/Users/M_Free/Desktop/td-trends/commute/'
-path = '/Users/Work/Desktop/GitHub/td-trends/commute/'
-local_path = '/Users/Work/OneDrive - NYC O365 HOSTED/Projects/Conditions & Trends/Dec 2021/Input/'
+path = 'C:/Users/M_Free/Desktop/td-trends/commute/'
+# path = '/Users/Work/Desktop/GitHub/td-trends/commute/'
+local_path = 'C:/Users/M_Free/OneDrive - NYC O365 HOSTED/Projects/Conditions & Trends/Dec 2021/Input/'
+#local_path = '/Users/Work/OneDrive - NYC O365 HOSTED/Projects/Conditions & Trends/Dec 2021/Input/'
 
 # import pums files 
 col_list = ['SERIALNO', 
             'ST', 
             'PUMA', 
-            'PWGTP', 
+            'PWGTP',
+            'POWSP',
             'POWPUMA',
             'JWRIP',
             'JWTRNS', 
@@ -64,11 +65,14 @@ nyc_commuters['RES'] = np.select([nyc_commuters.PUMA.isin(bronx),
                                   'Queens',
                                   'Staten Island'])
 
-nyc_commuters['POW'] = np.select([nyc_commuters.POWPUMA.isin(bronx), 
-                                  nyc_commuters.POWPUMA.isin(brooklyn),
-                                  nyc_commuters.POWPUMA.isin(manhattan), 
-                                  nyc_commuters.POWPUMA.isin(queens),  
-                                  nyc_commuters.POWPUMA.isin(si)],
+# test_df = nyc_commuters[['POWSP', 'PWGTP']].groupby(['POWSP']).sum()
+# test_df['PWGTP'].sum()
+
+nyc_commuters['POW'] = np.select([(nyc_commuters['POWSP'] == 36) & (nyc_commuters.POWPUMA.isin(bronx)), 
+                                  (nyc_commuters['POWSP'] == 36) & (nyc_commuters.POWPUMA.isin(brooklyn)),
+                                  (nyc_commuters['POWSP'] == 36) & (nyc_commuters.POWPUMA.isin(manhattan)), 
+                                  (nyc_commuters['POWSP'] == 36) & (nyc_commuters.POWPUMA.isin(queens)),  
+                                  (nyc_commuters['POWSP'] == 36) & (nyc_commuters.POWPUMA.isin(si))],
                                  ['Bronx', 
                                   'Brooklyn', 
                                   'Manhattan', 
@@ -76,6 +80,8 @@ nyc_commuters['POW'] = np.select([nyc_commuters.POWPUMA.isin(bronx),
                                   'Staten Island'],
                                  default = 'Region')
 
+
+    
 nyc_commuters['DEST'] = np.select([nyc_commuters['POW'] == 'Region',
                                    nyc_commuters['RES'] == nyc_commuters['POW']],
                                   ['Region',
@@ -164,7 +170,6 @@ regional_commuters['RES_STATE'] = np.select([regional_commuters['ST'] == 36,
 
 # create dictionary with PUMAs for each regional geography 
 reg_df = pd.read_csv(local_path + 'regional_pumas.csv')
-
 
 li = reg_df['li'].dropna().to_list()
 lhv = reg_df['lhv'].dropna().to_list()
@@ -580,8 +585,8 @@ tt = tt.set_index('DEST').loc[sorter].reset_index()
 
 # tt.to_csv(path + 'annotations/tt.csv', index = False)
 
-path='C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/commute/'
-tt=pd.read_csv(path+'annotations/tt.csv')
+# path='C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/commute/'
+# tt=pd.read_csv(path+'annotations/tt.csv')
 tt['HOVER']='<b>Travel Time: </b>'+tt['TT']+'<br><b>Commuters: </b>'+tt['PWGTP'].map('{:,.0f}'.format)+'<br><b>Percentage: </b>'+tt['% TT'].map('{:.0%}'.format)
 
 boro_li = ['Bronx','Brooklyn','Manhattan','Queens','Staten Island']
@@ -871,6 +876,11 @@ boro_colors = {'Bronx': '#729ece',
                'Queens': '#ad8bc9'}
 
 fig = go.Figure()
+
+fig = ps.make_subplots(rows = 1, 
+                       cols = 2,
+                       shared_yaxes = True,
+                       subplot_titles = ['New York', 'Non-New York'])
     
 for boro, color in boro_colors.items():
     fig = fig.add_trace(go.Bar(name = boro,
