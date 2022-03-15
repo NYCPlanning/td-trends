@@ -10,16 +10,17 @@ import plotly.io as pio
 import plotly.subplots as ps
 
 pio.renderers.default = 'browser'
-
-#path = 'C:/Users/M_Free/Desktop/td-trends/commute/'
-path = '/Users/Work/Desktop/GitHub/td-trends/commute/'
-local_path = '/Users/Work/OneDrive - NYC O365 HOSTED/Projects/Conditions & Trends/Dec 2021/Input/'
+path = 'C:/Users/M_Free/Desktop/td-trends/commute/'
+# path = '/Users/Work/Desktop/GitHub/td-trends/commute/'
+local_path = 'C:/Users/M_Free/OneDrive - NYC O365 HOSTED/Projects/Conditions & Trends/Dec 2021/Input/'
+#local_path = '/Users/Work/OneDrive - NYC O365 HOSTED/Projects/Conditions & Trends/Dec 2021/Input/'
 
 # import pums files 
 col_list = ['SERIALNO', 
             'ST', 
             'PUMA', 
-            'PWGTP', 
+            'PWGTP',
+            'POWSP',
             'POWPUMA',
             'JWRIP',
             'JWTRNS', 
@@ -64,11 +65,14 @@ nyc_commuters['RES'] = np.select([nyc_commuters.PUMA.isin(bronx),
                                   'Queens',
                                   'Staten Island'])
 
-nyc_commuters['POW'] = np.select([nyc_commuters.POWPUMA.isin(bronx), 
-                                  nyc_commuters.POWPUMA.isin(brooklyn),
-                                  nyc_commuters.POWPUMA.isin(manhattan), 
-                                  nyc_commuters.POWPUMA.isin(queens),  
-                                  nyc_commuters.POWPUMA.isin(si)],
+# test_df = nyc_commuters[['POWSP', 'PWGTP']].groupby(['POWSP']).sum()
+# test_df['PWGTP'].sum()
+
+nyc_commuters['POW'] = np.select([(nyc_commuters['POWSP'] == 36) & (nyc_commuters.POWPUMA.isin(bronx)), 
+                                  (nyc_commuters['POWSP'] == 36) & (nyc_commuters.POWPUMA.isin(brooklyn)),
+                                  (nyc_commuters['POWSP'] == 36) & (nyc_commuters.POWPUMA.isin(manhattan)), 
+                                  (nyc_commuters['POWSP'] == 36) & (nyc_commuters.POWPUMA.isin(queens)),  
+                                  (nyc_commuters['POWSP'] == 36) & (nyc_commuters.POWPUMA.isin(si))],
                                  ['Bronx', 
                                   'Brooklyn', 
                                   'Manhattan', 
@@ -76,6 +80,8 @@ nyc_commuters['POW'] = np.select([nyc_commuters.POWPUMA.isin(bronx),
                                   'Staten Island'],
                                  default = 'Region')
 
+
+    
 nyc_commuters['DEST'] = np.select([nyc_commuters['POW'] == 'Region',
                                    nyc_commuters['RES'] == nyc_commuters['POW']],
                                   ['Region',
