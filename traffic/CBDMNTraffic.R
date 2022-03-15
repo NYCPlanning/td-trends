@@ -4,7 +4,7 @@ library(plotly)
 # path='C:/Users/Y_Ma2/Desktop/GITHUB/td-trends/'
 path='C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/'
 
-df=read.csv(paste0(path,'traffic/CBDMN2019_2021.csv'),stringsAsFactors=F,check.names=F)
+df=read.csv(paste0(path,'traffic/CBDMNTraffic.csv'),stringsAsFactors=F,check.names=F)
 df=df %>%
   mutate(Date=as.Date(Date,'%m/%d/%Y')) %>%
   select(Date,TBTA_CBDInbound_Avg,PANYNJ_CBDInbound_Avg,ERB_Inbound_Avg,
@@ -14,9 +14,9 @@ colnames(df)=c('Date','MTA Bridges & Tunnels','PANYNJ Bridges & Tunnels',
                'East River Bridges','Total Inbound Volume','MTA Bridges & Tunnels Pct',
                'PANYNJ Bridges & Tunnels Pct','East River Bridges Pct','Taxi Speed')
 
-dfcolors=c('MTA Bridges & Tunnels'='rgba(114,158,206,0.6)',
+dfcolors=c('MTA Bridges & Tunnels'='rgba(173,139,201,0.6)',
            'PANYNJ Bridges & Tunnels'='rgba(109,204,218,0.6)',
-           'East River Bridges'='rgba(173,139,201,0.6)',
+           'East River Bridges'='rgba(114,158,206,0.6)',
            'Taxi Speed'='rgba(237,102,93,0.8)')
 
 p=plot_ly()
@@ -116,7 +116,7 @@ p=p %>%
          dragmode=F,
          hovermode='x unified')
 p=p %>% 
-  add_annotations(text='Data Source: NYC DOT | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/traffic/CBDMN2019_2021.csv" target="blank">Download Chart Data</a>',
+  add_annotations(text='Data Source: NYC DOT | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/traffic/CBDMNTraffic.csv" target="blank">Download Chart Data</a>',
                   font=list(size=14),
                   showarrow=F,
                   x=1,
