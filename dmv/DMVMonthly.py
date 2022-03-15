@@ -29,7 +29,7 @@ fig=fig.add_trace(go.Bar(name='Counts',
                          x=df['Date'],
                          y=df['Counts'],
                          showlegend=False,
-                         marker={'color':'rgba(114,158,206,0.8)'},
+                         marker={'color':'rgba(109,204,218,0.8)'},
                          hovertext=['<b>Vehicle Registrations: </b>'+'{:,.0f}'.format(x) for x in df['Counts']],
                          hoverinfo='text'))
 fig.update_layout(
