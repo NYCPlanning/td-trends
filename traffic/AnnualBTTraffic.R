@@ -26,9 +26,9 @@ p=p %>%
             x=df[['Year']],
             y=df[['MTA']],
             line=list(color=dfcolors['MTA'],
-                      width=2),
+                      width=3),
             marker=list(color=dfcolors['MTA'],
-                        size=6),
+                        size=8),
             showlegend=T,
             hovertext=paste0('<b>MTA: </b>',format(df[['MTA']],trim=T,big.mark=',')),
             hoverinfo='text')
@@ -39,9 +39,9 @@ p=p %>%
             x=df[['Year']],
             y=df[['PANYNJ']],
             line=list(color=dfcolors['PANYNJ'],
-                      width=2),
+                      width=3),
             marker=list(color=dfcolors['PANYNJ'],
-                        size=6),
+                        size=8),
             showlegend=T,
             hovertext=paste0('<b>PANYNJ Inbound: </b>',format(df[['PANYNJ']],trim=T,big.mark=',')),
             hoverinfo='text')
