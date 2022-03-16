@@ -6,8 +6,8 @@ import plotly.graph_objects as go
 
 pio.renderers.default = "browser"
 pd.set_option('display.max_columns', None)
-path='C:/Users/Y_Ma2/Desktop/GITHUB/td-trends/'
-# path='C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/'
+# path='C:/Users/Y_Ma2/Desktop/GITHUB/td-trends/'
+path='C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/'
 
 
 
@@ -33,19 +33,23 @@ fig=go.Figure()
 #                                        'size': 8},
 #                              hovertext=['<b>NYC Population: </b>'+'{:,.0f}'.format(x) for x in df['NYC Population']],
 #                              hoverinfo='text'))
+
 fig=fig.add_trace(go.Scatter(name='',
                              mode='none',
                              x=df['Year'],
                              y=df['Manhattan'],
                              showlegend=False,
-                             hovertext=['<b>Total Vehicles: </b>'+'{:,.0f}'.format(x) for x in df['Total Vehicles']],
+                             hovertext=['<b>Year: </b>'+str(x) for x in df['Year']],
                              hoverinfo='text'))
-for i in ['Staten Island','Queens','Manhattan','Brooklyn','Bronx']:
-    fig=fig.add_trace(go.Bar(name=i,
-                             x=df['Year'],
-                             y=df[i],
-                             marker={'color': dfcolors[i]},
-                             width=0.5,
+for i in ['Bronx','Brooklyn','Manhattan','Queens','Staten Island']:
+    fig=fig.add_trace(go.Scatter(name=i,
+                                 mode='lines+markers',
+                                 x=df['Year'],
+                                 y=df[i],
+                                 line={'color':dfcolors[i],
+                                       'width':2},
+                                 marker={'color': dfcolors[i],
+                                         'size': 6},
                              hovertext=['<b>'+str(i)+': </b>'+'{:,.0f}'.format(x)+' ('+'{:,.0%}'.format(y)+')' for x,y in zip(df[i],df[i+' Pct'])],
                              hoverinfo='text'))
 fig=fig.add_trace(go.Scatter(name='',
@@ -53,7 +57,7 @@ fig=fig.add_trace(go.Scatter(name='',
                              x=df['Year'],
                              y=df['Manhattan'],
                              showlegend=False,
-                             hovertext=['<b>Year: </b>'+str(x) for x in df['Year']],
+                             hovertext=['<b>Total Vehicles: </b>'+'{:,.0f}'.format(x) for x in df['Total Vehicles']],
                              hoverinfo='text'))
 fig.update_layout(
     template='plotly_white',
@@ -102,7 +106,8 @@ fig.update_layout(
     dragmode=False,
     hovermode='x unified')
 fig.add_annotation(
-    text='Data Source: <a href="https://dmv.ny.gov/about-dmv/statistical-summaries" target="blank">NYS DMV</a>; <a href="https://data.census.gov/cedsci/table?t=Populations%20and%20People&g=0500000US36005,36047,36061,36081,36085&d=ACS%201-Year%20Estimates%20Data%20Profiles&tid=ACSDP1Y2019.DP05" target="blank">Census Bureau</a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/dmv/DMVAnnual.csv" target="blank">Download Chart Data</a>',
+    # text='Data Source: <a href="https://dmv.ny.gov/about-dmv/statistical-summaries" target="blank">NYS DMV</a>; <a href="https://data.census.gov/cedsci/table?t=Populations%20and%20People&g=0500000US36005,36047,36061,36081,36085&d=ACS%201-Year%20Estimates%20Data%20Profiles&tid=ACSDP1Y2019.DP05" target="blank">Census Bureau</a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/dmv/DMVAnnual.csv" target="blank">Download Chart Data</a>',
+    text='Data Source: <a href="https://dmv.ny.gov/about-dmv/statistical-summaries" target="blank">NYS DMV</a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/dmv/DMVAnnual.csv" target="blank">Download Chart Data</a>',
     font_size=14,
     showarrow=False,
     x=1,

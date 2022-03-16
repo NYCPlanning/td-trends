@@ -13,19 +13,20 @@ pio.renderers.default = 'browser'
 
 path = 'C:/Users/M_Free/Desktop/td-trends/all_modes/annotations/'
 path='C:/Users/Y_Ma2/Desktop/GITHUB/td-trends/all_modes/annotations/'
-path='C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/all_modes/annotations/'
+# path='C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/all_modes/annotations/'
 
 
 
 #%% Annual Ridership
 
-mode_colors = {'Subway (NYCT)': 'rgba(114,158,206,0.8)',
-               'Bus (NYCT+MTA)': 'rgba(103,191,92,0.8)',
-               'Commuter Rail (LIRR+MNR)': 'rgba(168,120,110,0.8)',               
-               'Taxi (Yellow+Green)': 'rgba(255,158,74,0.8)',
-               'For-Hire Vehicle': 'rgba(237,102,93,0.8)',
-               'Ferry': 'rgba(237,151,202,0.8)',             
-               'Citi Bike': 'rgba(109,204,218,0.8)'}
+mode_colors = {'Subway*': 'rgba(114,158,206,0.8)',
+               'Commuter Rail*': 'rgba(168,120,110,0.8)',               
+               'Bus*': 'rgba(103,191,92,0.8)',
+               'Ferry*': 'rgba(237,151,202,0.8)',             
+               'Taxi**': 'rgba(255,158,74,0.8)',
+               'For-Hire Vehicle**': 'rgba(237,102,93,0.8)',
+               'Citi Bike**': 'rgba(109,204,218,0.8)',
+               'Bridges & Tunnels Traffic***': 'rgba(173,139,201,0.8)'}
 
 df = pd.read_csv(path + 'ridership_annual.csv')
 # df_total = df[['date', 'ridership']].groupby('date').sum().reset_index()
@@ -35,28 +36,28 @@ df = pd.read_csv(path + 'ridership_annual.csv')
 # df['hover'] = '<i>' + df['mode'] + ': </i>' + df['ridership'].map('{:,.0f}'.format) + ' (' + df['%'].map('{:.0%}'.format) + ')'
 # df_total['date'] = df_total['date'].astype(str)
 # df_total['y'] = [0 for i in range(df_total['date'].size)]
-df['hover'] = '<b>' + df['mode'] + ': </b>' + df['ridership'].map('{:,.0f}'.format)
+df['hover'] = '<b>' + df['Mode'] + ': </b>' + df['Value'].map('{:,.0f}'.format)
 
 fig = go.Figure()
 
-fig = fig.add_trace(go.Scatter(x = df.loc[df['mode'] == 'Citi Bike', 'date'],
-                               y = df.loc[df['mode'] == 'Citi Bike', 'ridership'],
+fig = fig.add_trace(go.Scatter(x = df.loc[df['Mode'] == 'Citi Bike', 'Year'],
+                               y = df.loc[df['Mode'] == 'Citi Bike', 'Value'],
                                mode = 'none',
                                showlegend = False,
                                hoverinfo = 'text',
-                               hovertext = ['<b>Year: </b>' + str(x) for x in df.loc[df['mode'] == 'Citi Bike', 'date']]))
+                               hovertext = ['<b>Year: </b>' + str(x) for x in df.loc[df['Mode'] == 'Citi Bike', 'Year']]))
 
 for mode, color in mode_colors.items():
     fig = fig.add_trace(go.Scatter(name = mode,
-                                   x = df.loc[df['mode'] == mode, 'date'],
-                                   y = df.loc[df['mode'] == mode, 'ridership'],
+                                   x = df.loc[df['Mode'] == mode, 'Year'],
+                                   y = df.loc[df['Mode'] == mode, 'Value'],
                                    mode = 'lines+markers',
                                    line = {'color': color,
                                            'width': 2},
                                    marker = {'color': color,
                                              'size': 6},    
                                    hoverinfo = 'text',
-                                   hovertext = df.loc[df['mode'] == mode, 'hover']))
+                                   hovertext = df.loc[df['Mode'] == mode, 'hover']))
 
 # fig = fig.add_trace(go.Scatter(x = df_total['date'],
 #                                y = df_total['y'],
@@ -66,7 +67,7 @@ for mode, color in mode_colors.items():
 #                                hovertext = '<b>Total Ridership: ' + df_total['total'].map('{:,.0f}'.format)))
 
 fig.update_layout(template = 'plotly_white',
-                  title = {'text': '<b>Annual Ridership by Mode</b>',
+                  title = {'text': '<b>Annual Trends by Mode</b>',
                            'font_size': 20,
                            'x': 0.5,
                            'xanchor':'center',
@@ -87,10 +88,10 @@ fig.update_layout(template = 'plotly_white',
                                      'font_size': 14},
                            'tickfont_size': 12,
                            'dtick': 'M12',
-                           'range': [min(df['date'])-0.5, max(df['date'])+0.5],
+                           'range': [min(df['Year'])-0.5, max(df['Year'])+0.5],
                            'fixedrange': True,
                            'showgrid': False},
-                  yaxis = {'title':{'text': '<b>Ridership</b>',
+                  yaxis = {'title':{'text': '<b>Ridership / Trips / Vehicles</b>',
                                     'font_size': 14},
                            'tickfont_size': 12,
                            'rangemode': 'tozero',
@@ -102,7 +103,7 @@ fig.update_layout(template = 'plotly_white',
                   hovermode = 'x unified',
                   hoverlabel = {'font_size': 14})
 
-fig.add_annotation(text = 'Data Source: <a href="https://github.com/NYCPlanning/td-trends/raw/main/all_modes/annotations/data_source.xlsx" target="blank">MTA; NYC TLC; NYC DOT; Citi Bike</a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/all_modes/annotations/ridership_annual.csv" target="blank">Download Chart Data</a>',
+fig.add_annotation(text = '*Ridership; **Trips; ***Vehicles',
                     font_size = 14,
                     showarrow = False,
                     x = 1,
@@ -112,6 +113,17 @@ fig.add_annotation(text = 'Data Source: <a href="https://github.com/NYCPlanning/
                     yanchor = 'top',
                     yref = 'paper',
                     yshift = -80)
+
+fig.add_annotation(text = 'Data Source: <a href="https://github.com/NYCPlanning/td-trends/raw/main/all_modes/annotations/data_source.xlsx" target="blank">MTA; NYC DOT; NYC TLC; Citi Bike; PANYNJ</a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/all_modes/annotations/ridership_annual.csv" target="blank">Download Chart Data</a>',
+                    font_size = 14,
+                    showarrow = False,
+                    x = 1,
+                    xanchor = 'right',
+                    xref = 'paper',
+                    y = 0,
+                    yanchor = 'top',
+                    yref = 'paper',
+                    yshift = -100)
 
 fig
 
@@ -123,42 +135,43 @@ fig.write_html(path + 'ridership_annual.html',
 
 #%% Monthly Ridership as % of 2019 
 
-mode_colors = {'Subway (NYCT+SIR)': 'rgba(114,158,206,0.8)',
-               'Bus (NYCT+MTA)': 'rgba(103,191,92,0.8)',
-               'Commuter Rail (LIRR+MNR)': 'rgba(168,120,110,0.8)',               
-               'Taxi (Yellow+Green)': 'rgba(255,158,74,0.8)',
-               'For-Hire Vehicle': 'rgba(237,102,93,0.8)',
-               'Ferry': 'rgba(237,151,202,0.8)',             
-               'Citi Bike': 'rgba(109,204,218,0.8)'}
+mode_colors = {'Subway*': 'rgba(114,158,206,0.8)',
+               'Commuter Rail*': 'rgba(168,120,110,0.8)',               
+               'Bus*': 'rgba(103,191,92,0.8)',
+               'Ferry*': 'rgba(237,151,202,0.8)',             
+               'Taxi**': 'rgba(255,158,74,0.8)',
+               'For-Hire Vehicle**': 'rgba(237,102,93,0.8)',
+               'Citi Bike**': 'rgba(109,204,218,0.8)',
+               'Bridges & Tunnels Traffic***': 'rgba(173,139,201,0.8)'}
 
 df = pd.read_csv(path + 'ridership_covid.csv')
 # df_total = df[['date', 'ridership']].groupby('date').sum().reset_index()
 # df_total.columns = ['date', 'total']
-df['hover'] = '<b>' + df['mode'] + ': </b>' + df['% of 2019'].map('{:.0%}'.format) + ' (' + df['ridership'].map('{:,.0f}'.format) + ')'
+df['hover'] = '<b>' + df['Mode'] + ': </b>' + df['% of 2019'].map('{:.0%}'.format) + ' (' + df['Value'].map('{:,.0f}'.format) + ')'
 #df_total['date'] = df_total['date'].astype(str)
 # df_total['y'] = [0 for i in range(df_total['date'].size)]
-df['date']=[datetime.datetime.strptime(str(x)+'-01','%Y-%m-%d') for x in df['date']]
+df['YearMonth']=[datetime.datetime.strptime(str(x)+'-01','%Y-%m-%d') for x in df['YearMonth']]
 
 fig = go.Figure()
 
-fig = fig.add_trace(go.Scatter(x = df.loc[df['mode'] == 'Commuter Rail (LIRR+MNR)', 'date'],
-                               y = df.loc[df['mode'] == 'Commuter Rail (LIRR+MNR)', '% of 2019'],
+fig = fig.add_trace(go.Scatter(x = df.loc[df['Mode'] == 'Commuter Rail*', 'YearMonth'],
+                               y = df.loc[df['Mode'] == 'Commuter Rail*', '% of 2019'],
                                mode = 'none',
                                showlegend = False,
                                hoverinfo = 'text',
-                               hovertext = ['<b>Month: </b>' + datetime.datetime.strftime(x,'%b %Y') for x in df.loc[df['mode'] == 'Commuter Rail (LIRR+MNR)', 'date']]))
+                               hovertext = ['<b>Month: </b>' + datetime.datetime.strftime(x,'%b %Y') for x in df.loc[df['Mode'] == 'Commuter Rail*', 'YearMonth']]))
 
 for mode, color in mode_colors.items():
     fig = fig.add_trace(go.Scatter(name = mode,
-                                   x = df.loc[df['mode'] == mode, 'date'],
-                                   y = df.loc[df['mode'] == mode, '% of 2019'],
+                                   x = df.loc[df['Mode'] == mode, 'YearMonth'],
+                                   y = df.loc[df['Mode'] == mode, '% of 2019'],
                                    mode = 'lines+markers',
                                    line = {'color': color,
                                            'width': 2},
                                    marker = {'color': color,
                                              'size': 6},    
                                    hoverinfo = 'text',
-                                   hovertext = df.loc[df['mode'] == mode, 'hover']))
+                                   hovertext = df.loc[df['Mode'] == mode, 'hover']))
 
 # fig = fig.add_trace(go.Scatter(x = df_total['date'],
 #                                y = df_total['y'],
@@ -168,7 +181,7 @@ for mode, color in mode_colors.items():
 #                                hovertext = '<b>Total Ridership: ' + df_total['total'].map('{:,.0f}'.format)))
 
 fig.update_layout(template = 'plotly_white',
-                  title = {'text': '<b>Monthly Ridership as Percent of 2019 </b>',
+                  title = {'text': '<b>Monthly Trends by Mode During Pandemic</b>',
                            'font_size': 20,
                            'x': 0.5,
                            'xanchor':'center',
@@ -189,7 +202,7 @@ fig.update_layout(template = 'plotly_white',
                                      'font_size': 14},
                            'tickfont_size': 12,
                            'dtick': 'M2',
-                           'range':[min(df['date'])-datetime.timedelta(days=15),max(df['date'])+datetime.timedelta(days=15)],
+                           'range':[min(df['YearMonth'])-datetime.timedelta(days=15),max(df['YearMonth'])+datetime.timedelta(days=15)],
                            'fixedrange': True,
                            'showgrid': False},
                   yaxis = {'title':{'text': '<b>Percent of 2019</b>',
@@ -204,7 +217,7 @@ fig.update_layout(template = 'plotly_white',
                   hovermode = 'x unified',
                   hoverlabel = {'font_size': 14})
 
-fig.add_annotation(text = 'Data Source: <a href="https://github.com/NYCPlanning/td-trends/raw/main/all_modes/annotations/data_source.xlsx" target="blank">MTA; NYC TLC; NYC DOT; Citi Bike</a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/all_modes/annotations/ridership_covid.csv" target="blank">Download Chart Data</a>',
+fig.add_annotation(text = '*Ridership; **Trips; ***Vehicles',
                     font_size = 14,
                     showarrow = False,
                     x = 1,
@@ -214,6 +227,17 @@ fig.add_annotation(text = 'Data Source: <a href="https://github.com/NYCPlanning/
                     yanchor = 'top',
                     yref = 'paper',
                     yshift = -80)
+
+fig.add_annotation(text = 'Data Source: <a href="https://github.com/NYCPlanning/td-trends/raw/main/all_modes/annotations/data_source.xlsx" target="blank">MTA; NYC DOT; NYC TLC; Citi Bike; PANYNJ</a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/all_modes/annotations/ridership_annual.csv" target="blank">Download Chart Data</a>',
+                    font_size = 14,
+                    showarrow = False,
+                    x = 1,
+                    xanchor = 'right',
+                    xref = 'paper',
+                    y = 0,
+                    yanchor = 'top',
+                    yref = 'paper',
+                    yshift = -100)
 
 fig
 

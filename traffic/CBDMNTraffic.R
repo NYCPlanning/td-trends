@@ -1,8 +1,8 @@
 library(tidyverse)
 library(plotly)
 
-# path='C:/Users/Y_Ma2/Desktop/GITHUB/td-trends/'
-path='C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/'
+path='C:/Users/Y_Ma2/Desktop/GITHUB/td-trends/'
+# path='C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/'
 
 df=read.csv(paste0(path,'traffic/CBDMNTraffic.csv'),stringsAsFactors=F,check.names=F)
 df=df %>%
@@ -21,7 +21,7 @@ dfcolors=c('MTA Bridges & Tunnels'='rgba(173,139,201,0.6)',
 
 p=plot_ly()
 p=p %>%
-  add_trace(name='Taxi Speed',
+  add_trace(name='Taxi Speed*',
             type='scatter',
             mode='lines',
             x=df[['Date']],
@@ -102,8 +102,10 @@ p=p %>%
                     zerolinecolor='rgba(0,0,0,0.2)',
                     zerolinewidth=2),
          yaxis2=list(title=list(text='<b>Speed (mph)</b>',
-                                font=list(size=14)),
-                     tickfont=list(size=12),
+                                font=list(size=14,
+                                          color=dfcolors['Taxi Speed'])),
+                     tickfont=list(size=12,
+                                   color=dfcolors['Taxi Speed']),
                      side='right',
                      overlaying='y',
                      rangemode='tozero',
@@ -116,7 +118,7 @@ p=p %>%
          dragmode=F,
          hovermode='x unified')
 p=p %>% 
-  add_annotations(text='Data Source: NYC DOT | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/traffic/CBDMNTraffic.csv" target="blank">Download Chart Data</a>',
+  add_annotations(text='*Taxi speed data was missing from 3/1/2020 to 3/9/2020',
                   font=list(size=14),
                   showarrow=F,
                   x=1,
@@ -126,6 +128,17 @@ p=p %>%
                   yanchor='top',
                   yref='paper',
                   yshift=-80)
+p=p %>% 
+  add_annotations(text='Data Source: NYC DOT | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/traffic/CBDMNTraffic.csv" target="blank">Download Chart Data</a>',
+                  font=list(size=14),
+                  showarrow=F,
+                  x=1,
+                  xanchor='right',
+                  xref='paper',
+                  y=0,
+                  yanchor='top',
+                  yref='paper',
+                  yshift=-100)
 p=p %>%
   config(displayModeBar=F)
 p
