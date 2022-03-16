@@ -16,6 +16,8 @@ local_path = 'C:/Users/M_Free/OneDrive - NYC O365 HOSTED/Projects/Conditions & T
 #local_path = '/Users/Work/OneDrive - NYC O365 HOSTED/Projects/Conditions & Trends/Dec 2021/Input/'
 
 # import pums files 
+files = ['csv_pny.csv', 'csv_pct.csv', 'csv_pnj.csv', 'csv_ppa.csv']
+
 col_list = ['SERIALNO', 
             'ST', 
             'PUMA', 
@@ -28,28 +30,47 @@ col_list = ['SERIALNO',
             'ADJINC', 
             'WAGP']
 
+for file in files: 
+    pums_list.read_csv(local_path + file, usecols = col_list)
+    
+    
+
+
 pums_ny = pd.read_csv(local_path + 'csv_pny.csv', 
                       usecols=col_list, 
-                      dtype={'SERIALNO': str})
+                      dtype={'SERIALNO': str,
+                             'POWSP': 'Int64',
+                             'POWPUMA': 'Int64'})
 pums_ct = pd.read_csv(local_path + 'csv_pct.csv', 
                       usecols=col_list, 
-                      dtype={'SERIALNO': str})
+                      dtype={'SERIALNO': str,
+                             'POWSP': 'Int64',
+                             'POWPUMA': 'Int64'})
 pums_nj = pd.read_csv(local_path + 'csv_pnj.csv', 
                       usecols=col_list, 
-                      dtype={'SERIALNO': str})
+                      dtype={'SERIALNO': str,
+                             'POWSP': 'Int64',
+                             'POWPUMA': 'Int64'})
 pums_pa = pd.read_csv(local_path + 'csv_ppa.csv', 
                       usecols=col_list, 
-                      dtype={'SERIALNO': str})
+                      dtype={'SERIALNO': str,
+                             'POWSP': 'Int64',
+                             'POWPUMA': 'Int64'})
 
-# assign puma codes for each boro 
-bronx = list(range(3700,3711))
-brooklyn = list(range(4000,4019))
-manhattan = list(range(3800,3811))
-queens = list(range(4100,4115))
-si = list(range(3900,3904))
-nyc = bronx + brooklyn + manhattan + queens + si
+# create dictionary with puma codes for nyc, the region and their subgeos
+codes_df = pd.read_excel(local_path + 'puma_codes.xlsx', dtype = str)
+codes_df.to_dict(orient = 'list')
+
+codes_dict = {}
+for col in codes_df.columns: 
+        codes_dict[col] = codes_df[col].dropna().to_list()
+
+#%% WORKERS LIVING IN NYC
 
 # create primary dataset for workers living in nyc
+codes_dict['si']
+
+nyc_commuters = pums_ny[pums_ny.PUMA.isin(nyc)]
 nyc_commuters = pums_ny[pums_ny.PUMA.isin(nyc)]
 nyc_commuters = nyc_commuters[nyc_commuters.POWPUMA.notna()]
 
@@ -65,20 +86,46 @@ nyc_commuters['RES'] = np.select([nyc_commuters.PUMA.isin(bronx),
                                   'Queens',
                                   'Staten Island'])
 
-# test_df = nyc_commuters[['POWSP', 'PWGTP']].groupby(['POWSP']).sum()
-# test_df['PWGTP'].sum()
+test_df = nyc_commuters[['POWSP', 'PWGTP']].groupby(['POWSP']).sum()
+test_df['PWGTP'].sum()
+
+nyc_commuters['POWSPPUMA'] = nyc_commuters.POWSP.astype(str) + nyc_commuters.POWPUMA.astype(str)
+nyc_commuters['POWSPPUMA'] = nyc_commuters.POWSPPUMA.astype(int)
+
+nyc_commuters.dtypes
+nyc_commuters['POW'] = np.select([(nyc_commuters['POWSP'] == 36) & (nyc_commuters.POWPUMA.isin(bronx)), 
+                                  (nyc_commuters['POWSP'] == 36) & (nyc_commuters.POWPUMA.isin(brooklyn)),
+                                  (nyc_commuters['POWSP'] == 36) & (nyc_commuters.POWPUMA.isin(manhattan)), 
+                                  (nyc_commuters['POWSP'] == 36) & (nyc_commuters.POWPUMA.isin(queens)),  
+                                  (nyc_commuters['POWSP'] == 36) & (nyc_commuters.POWPUMA.isin(si)),
+                                  nyc_commuters.POWSPPUMA.isin(region)],
+                                  ['Bronx', 
+                                  'Brooklyn', 
+                                  'Manhattan', 
+                                  'Queens', 
+                                  'Staten Island',
+                                  'Region'],
+                                 default = 'Other')
+                                 
+
 
 nyc_commuters['POW'] = np.select([(nyc_commuters['POWSP'] == 36) & (nyc_commuters.POWPUMA.isin(bronx)), 
                                   (nyc_commuters['POWSP'] == 36) & (nyc_commuters.POWPUMA.isin(brooklyn)),
                                   (nyc_commuters['POWSP'] == 36) & (nyc_commuters.POWPUMA.isin(manhattan)), 
                                   (nyc_commuters['POWSP'] == 36) & (nyc_commuters.POWPUMA.isin(queens)),  
-                                  (nyc_commuters['POWSP'] == 36) & (nyc_commuters.POWPUMA.isin(si))],
+                                  (nyc_commuters['POWSP'] == 36) & (nyc_commuters.POWPUMA.isin(si)),
+                                  (nyc_commuters['POWSP'] == 36) & (~nyc_commuters.POWPUMA.isin(nyc)),
+                                  nyc_commuters['POWSP'] == 34,
+                                  nyc_commuters['POWSP'] == 9],
                                  ['Bronx', 
                                   'Brooklyn', 
                                   'Manhattan', 
                                   'Queens', 
-                                  'Staten Island'],
-                                 default = 'Region')
+                                  'Staten Island',
+                                  'New York State',
+                                  'New Jersey',
+                                  'Connecticut'],
+                                 default = 'Other')
 
 
     
@@ -152,6 +199,8 @@ nyc_commuters = nyc_commuters.drop(columns = ['SERIALNO',
                                               'INC'])
 
 # nyc_commuters.to_csv(path + 'nyc_commuters.csv', index = False)
+
+#%% WORKERS LIVING OUTSIDE OF NYC
 
 # create secondary dataset for workers living outside of nyc 
 regional_commuters = pd.concat([pums_ny, pums_ct, pums_nj, pums_pa])
