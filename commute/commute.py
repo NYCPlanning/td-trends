@@ -15,8 +15,11 @@ path = 'C:/Users/M_Free/Desktop/td-trends/commute/'
 local_path = 'C:/Users/M_Free/OneDrive - NYC O365 HOSTED/Projects/Conditions & Trends/Dec 2021/Input/'
 #local_path = '/Users/Work/OneDrive - NYC O365 HOSTED/Projects/Conditions & Trends/Dec 2021/Input/'
 
-# import pums files 
-files = ['csv_pny.csv', 'csv_pct.csv', 'csv_pnj.csv', 'csv_ppa.csv']
+# import ny, nj, ct, and pa pums files as one df
+file_list = ['csv_pny.csv', 
+             'csv_pct.csv', 
+             'csv_pnj.csv', 
+             'csv_ppa.csv']
 
 col_list = ['SERIALNO', 
             'ST', 
@@ -30,33 +33,30 @@ col_list = ['SERIALNO',
             'ADJINC', 
             'WAGP']
 
-for file in files: 
-    pums_list.read_csv(local_path + file, usecols = col_list)
+pums_list = []
+
+for file in file_list: 
+    df = pd.read_csv(local_path + file, 
+                     usecols = col_list, 
+                     dtype = {'SERIALNO': str,
+                              'ST': str, 
+                              'PUMA': str,
+                              'POWSP': str,
+                              'POWPUMA': str})
+    pums_list.append(df)
+
+pums_df = pd.concat(pums_list, axis = 0, ignore_index = True)
+
+# add leading zeros 
+pums_df['ST'] = pums_df['ST'].apply(lambda x: x.zfill(3))
+pums_df['PUMA'] = pums_df['PUMA'].apply(lambda x: x.zfill(4))
+pums_df['POWSP'] = pums_df['POWSP'].apply(lambda x: x.zfill(3))
+pums_df['POWPUMA'] = pums_df['POWPUMA'].apply(lambda x: x.zfill(4))
+
+# add columns with combined state and puma codes
+pums_df['STPUMA'] = pums_df['ST'] + pums_df['PUMA']
+pums_df['POWSPPUMA'] = pums_df['POWSP'] + pums_df['POWPUMA']
     
-    
-
-
-pums_ny = pd.read_csv(local_path + 'csv_pny.csv', 
-                      usecols=col_list, 
-                      dtype={'SERIALNO': str,
-                             'POWSP': 'Int64',
-                             'POWPUMA': 'Int64'})
-pums_ct = pd.read_csv(local_path + 'csv_pct.csv', 
-                      usecols=col_list, 
-                      dtype={'SERIALNO': str,
-                             'POWSP': 'Int64',
-                             'POWPUMA': 'Int64'})
-pums_nj = pd.read_csv(local_path + 'csv_pnj.csv', 
-                      usecols=col_list, 
-                      dtype={'SERIALNO': str,
-                             'POWSP': 'Int64',
-                             'POWPUMA': 'Int64'})
-pums_pa = pd.read_csv(local_path + 'csv_ppa.csv', 
-                      usecols=col_list, 
-                      dtype={'SERIALNO': str,
-                             'POWSP': 'Int64',
-                             'POWPUMA': 'Int64'})
-
 # create dictionary with puma codes for nyc, the region and their subgeos
 codes_df = pd.read_excel(local_path + 'puma_codes.xlsx', dtype = str)
 codes_df.to_dict(orient = 'list')
