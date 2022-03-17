@@ -337,7 +337,8 @@
             // Add click event
             function onClick(e) {
                 var coordinates = e.lngLat; // get pointer coordinates
-                var description = "<b>" + chosenLayerFull + ": </b><span>" + e.features[0].properties[chosenLayer].toLocaleString() + "</span><br>"; // description in the popup
+                var description = "<b>Census Tract: </b><span>" + e.features[0].properties.GEOID + "</span><br>";// description in the popup
+                description += "<b>" + chosenLayerFull + ": </b><span>" + e.features[0].properties[chosenLayer].toLocaleString() + "</span><br>";
                 popup.setLngLat(coordinates).setHTML(description).addTo(map); //add popup
             }
             map.on('click', 'onstparking', onClick);
@@ -473,7 +474,8 @@
                 // Add click event
                 function onClick(e) {
                     var coordinates = e.lngLat; // get pointer coordinates
-                    var description = "<b>" + chosenLayerFull + ": </b><span>" + e.features[0].properties[chosenLayer].toLocaleString() + "</span><br>"; // description in the popup
+                    var description = "<b>Census Tract: </b><span>" + e.features[0].properties.GEOID + "</span><br>";// description in the popup
+                    description += "<b>" + chosenLayerFull + ": </b><span>" + e.features[0].properties[chosenLayer].toLocaleString() + "</span><br>";
                     popup.setLngLat(coordinates).setHTML(description).addTo(map); //add popup
                 }
                 map.on('click', 'onstparking', onClick);
@@ -508,7 +510,8 @@
                 // Add click event
                 function onClick(e) {
                     var coordinates = e.lngLat; // get pointer coordinates
-                    var description = "<b>" + chosenLayerFull + ": </b><span>" + e.features[0].properties[chosenLayer].toLocaleString() + "</span><br>"; // description in the popup
+                    var description = "<b>Census Tract: </b><span>" + e.features[0].properties.GEOID + "</span><br>";// description in the popup
+                    description += "<b>" + chosenLayerFull + ": </b><span>" + e.features[0].properties[chosenLayer].toLocaleString() + "</span><br>";
                     popup.setLngLat(coordinates).setHTML(description).addTo(map); //add popup
                 }
                 map.on('click', 'onstparking', onClick);
