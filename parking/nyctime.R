@@ -10,9 +10,9 @@ path='C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/'
 
 df=read.csv(paste0(path,'parking/countytime.csv'),stringsAsFactors=F,check.names=F)
 
-dfcolors=c('Free'='rgba(168,120,110,0.6)',
+dfcolors=c('Free'='rgba(237,151,202,0.6)',
            'Metered'='rgba(109,204,218,0.6)',
-           'No'='rgba(205,204,93,0.6)')
+           'No'='rgba(162,162,162,0.6)')
 
 p=plot_ly()
 p=p %>%
