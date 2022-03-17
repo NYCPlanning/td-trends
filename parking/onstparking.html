@@ -234,13 +234,15 @@
         mapboxgl.accessToken = 'pk.eyJ1IjoibWF5aWp1biIsImEiOiJjaXg4ZmlyY20wMDBjMm9tcjI0bjQ0Z21zIn0.Io0XJ4JelN903V9HGo4TfQ'; // still need to find a way to store the token
 
         var chosenLayer = document.getElementById('dow').value + document.getElementById('tod').value;
+        var chosenLayerFull = document.getElementById('dow').selectedOptions[0].textContent + ' ' + document.getElementById('tod').selectedOptions[0].textContent
 
         // Initialize the map
         var map = new mapboxgl.Map({ // creating a new map
             container: 'mainmap', // same as the div id to place the map
             style: 'mapbox://styles/mapbox/light-v10', // light base map
             hash: true, // make sure it's on to get the url with map view
-            attributionControl: false, // show the credit bar
+            attributionControl: true, // show the credit bar
+            customAttribution: '<b>Data Source: <a href="https://data.cityofnewyork.us/Transportation/Parking-Regulation-Locations-and-Signs/xswq-wnv9" target="blank">NYC DOT</a>; NYC DCP | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/parking/onstparking.geojson" target="blank">Download Map Data</a></b>', // add overall credit to the beggining
             preserveDrawingBuffer: true, // make sure it's on to allow printing
             center: [-74.0197, 40.721], // testing to get the centroid of bounds
             zoom: 10, // set the initial zoom of the map view
@@ -335,7 +337,7 @@
             // Add click event
             function onClick(e) {
                 var coordinates = e.lngLat; // get pointer coordinates
-                var description = "<b>NTA: </b><span>" + e.features[0].properties[chosenLayer].toLocaleString() + "</span><br>"; // description in the popup
+                var description = "<b>" + chosenLayerFull + ": </b><span>" + e.features[0].properties[chosenLayer].toLocaleString() + "</span><br>"; // description in the popup
                 popup.setLngLat(coordinates).setHTML(description).addTo(map); //add popup
             }
             map.on('click', 'onstparking', onClick);
@@ -445,6 +447,7 @@
             // Day of Week Event
             dow.addEventListener('change', function () {
                 var chosenLayer = document.getElementById('dow').value + document.getElementById('tod').value;
+                var chosenLayerFull = document.getElementById('dow').selectedOptions[0].textContent + ' ' + document.getElementById('tod').selectedOptions[0].textContent
 
                 // Generate layer colors
                 var layerColor = ['match', ['get', chosenLayer + 'cat']];
@@ -470,7 +473,7 @@
                 // Add click event
                 function onClick(e) {
                     var coordinates = e.lngLat; // get pointer coordinates
-                    var description = "<b>NTA: </b><span>" + e.features[0].properties[chosenLayer].toLocaleString() + "</span><br>"; // description in the popup
+                    var description = "<b>" + chosenLayerFull + ": </b><span>" + e.features[0].properties[chosenLayer].toLocaleString() + "</span><br>"; // description in the popup
                     popup.setLngLat(coordinates).setHTML(description).addTo(map); //add popup
                 }
                 map.on('click', 'onstparking', onClick);
@@ -479,6 +482,7 @@
             // Time of Day Event
             tod.addEventListener('change', function () {
                 var chosenLayer = document.getElementById('dow').value + document.getElementById('tod').value;
+                var chosenLayerFull = document.getElementById('dow').selectedOptions[0].textContent + ' ' + document.getElementById('tod').selectedOptions[0].textContent
 
                 // Generate layer colors
                 var layerColor = ['match', ['get', chosenLayer + 'cat']];
@@ -504,7 +508,7 @@
                 // Add click event
                 function onClick(e) {
                     var coordinates = e.lngLat; // get pointer coordinates
-                    var description = "<b>NTA: </b><span>" + e.features[0].properties[chosenLayer].toLocaleString() + "</span><br>"; // description in the popup
+                    var description = "<b>" + chosenLayerFull + ": </b><span>" + e.features[0].properties[chosenLayer].toLocaleString() + "</span><br>"; // description in the popup
                     popup.setLngLat(coordinates).setHTML(description).addTo(map); //add popup
                 }
                 map.on('click', 'onstparking', onClick);
