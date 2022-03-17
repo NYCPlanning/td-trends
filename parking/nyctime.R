@@ -96,6 +96,7 @@ p=p %>%
                   x=1,
                   xanchor='right',
                   xref='paper',
+                  xshift=140,
                   y=0,
                   yanchor='top',
                   yref='paper',
