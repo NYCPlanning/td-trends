@@ -8,7 +8,7 @@ path='C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/'
 
 
 
-df=read.csv(paste0(path,'parking/dcwpparking.csv'),stringsAsFactors=F,check.names=F)
+df=read.csv(paste0(path,'parking/countytime.csv'),stringsAsFactors=F,check.names=F)
 
 dfcolors=c('Bronx'='rgba(114,158,206,0.8)',
            'Brooklyn'='rgba(255,158,74,0.8)',
@@ -20,23 +20,20 @@ p=plot_ly()
 p=p %>%
   add_trace(type="scatter",
             mode="none",
-            x=df[["Year"]], 
-            y=df[["Staten Island"]],
+            x=df[["time"]], 
+            y=df[["Manhattan"]],
             showlegend=F,
-            hovertext=paste0('<b>Year: </b>',df[['Year']]),
+            hovertext=paste0('<b>Time: </b>',df[['time']]),
             hoverinfo='text')
-
 for (i in c('Bronx','Brooklyn','Manhattan','Queens','Staten Island')){
   p=p %>%
     add_trace(name=i,
-              mode="lines+markers",
+              mode="lines",
               type='scatter',
-              x=df[['Year']],
+              x=df[['time']],
               y=df[[i]],
               line=list(color=dfcolors[i],
                         width=2),
-              marker=list(color=dfcolors[i],
-                          size=6),
               showlegend=T,
               hovertext=paste0('<b>',i,': </b>',format(df[[i]],trim=T,big.mark=','),
                                ' (',format(round(df[[paste0(i,' Pct')]]*100,0),trim=T,nsmall=0),'%)'),
@@ -45,35 +42,35 @@ for (i in c('Bronx','Brooklyn','Manhattan','Queens','Staten Island')){
 p=p %>%
   add_trace(type='scatter',
             mode='none',
-            x=df[['Year']],
-            y=df[['Staten Island']],
+            x=df[['time']],
+            y=df[['Manhattan']],
             showlegend=F,
-            hovertext=paste0('<b>Total: </b>',format(df[['Total']],trim=T,big.mark=',')),
+            hovertext=paste0('<b>Total: </b>',format(df[['Allowed']],trim=T,big.mark=',')),
             hoverinfo='text')
 p=p %>%
   layout(template='plotly_white',
-         title=list(text=paste0('<b>DCWP Public Parking Spaces</b>'),
+         title=list(text=paste0('<b>Free / Metered Parking Spaces</b>'),
                     font=list(size=20),
                     x=0.5,
                     xanchor='center',
                     y=0.95,
                     yanchor='top'),
-         legend=list(orientation='h',
+         legend=list(orientation='v',
                      title=list(text=''),
-                     font=list(size=16),
-                     x=0.5,
-                     xanchor='center',
-                     y=1,
-                     yanchor='bottom'),
-         margin=list(b=120,
+                     font=list(size=14),
+                     x=1,
+                     xanchor='left',
+                     y=0.5,
+                     yanchor='middle'),
+         margin=list(b=140,
                      l=80,
                      r=40,
-                     t=160),
-         xaxis=list(title=list(text='<b>Year</b>',
+                     t=60),
+         xaxis=list(title=list(text='<b>Time</b>',
                                font=list(size=14)),
                     tickfont=list(size=12),
-                    dtick='M12',
-                    range=c(min(df[['Year']])-0.5,max(df[['Year']])+0.5),
+                    categoryarray=df[['time']],
+                    range=c(-1,nrow(df)),
                     fixedrange=T,
                     showgrid=F),
          yaxis=list(title=list(text='<b>Spaces</b>',
@@ -85,13 +82,14 @@ p=p %>%
                     zeroline=T,
                     zerolinecolor='rgba(0,0,0,0.2)',
                     zerolinewidth=2),
+         barmode='stack',
          hoverlabel=list(font=list(size=14)),
          font=list(family='Arial',
                    color='black'),
          dragmode=F,
          hovermode='x unified')
 p=p %>% 
-  add_annotations(text='Data Source: <a href="https://data.cityofnewyork.us/Business/Legally-Operating-Businesses/w7w3-xahh" target="blank">NYC DCWP</a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/parking/dcwpparking.csv" target="blank">Download Chart Data</a>',
+  add_annotations(text='Data Source: <a href="https://data.cityofnewyork.us/Transportation/Parking-Regulation-Locations-and-Signs/xswq-wnv9" target="blank">NYC DOT</a>; <a href="https://github.com/NYCPlanning/td-parking/blob/master/onstparking/ONSTPARKING.pdf" target="blank">NYC DCP</a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/parking/countytime.csv" target="blank">Download Chart Data</a>',
                   font=list(size=14),
                   showarrow=F,
                   x=1,
@@ -100,11 +98,11 @@ p=p %>%
                   y=0,
                   yanchor='top',
                   yref='paper',
-                  yshift=-80)
+                  yshift=-100)
 p=p %>%
   config(displayModeBar=F)
 p
 
-htmlwidgets::saveWidget(p,paste0(path,"parking/dcwpparking.html"))
+htmlwidgets::saveWidget(p,paste0(path,"parking/countytime.html"))
   
  

@@ -99,7 +99,7 @@ fig.update_layout(
     #         'rangemode':'tozero',
     #         'fixedrange':True,
     #         'showgrid':False},
-    barmode='stack',             
+    #barmode='stack',             
     hoverlabel={'font_size':14},
     font={'family':'Arial',
           'color':'black'},
