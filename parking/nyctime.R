@@ -64,7 +64,7 @@ p=p %>%
                      xanchor='left',
                      y=0.5,
                      yanchor='middle'),
-         margin=list(b=120,
+         margin=list(b=100,
                      l=80,
                      r=40,
                      t=60),
