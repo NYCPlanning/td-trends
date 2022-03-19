@@ -17,11 +17,11 @@
             font-family: sans-serif;
         }
 
-        #chart1 {
+        #chart {
             position: absolute;
             left: 0;
             top: 0;
-            height: 50%;
+            height: 100%;
             width: 50%;
             border-bottom-style: solid;
             border-bottom-width: 0.1rem;
@@ -35,7 +35,7 @@
             position: absolute;
             right: 0;
             top: 0;
-            height: 50%;
+            height: 100%;
             width: 50%;
             border-bottom-style: solid;
             border-bottom-width: 0.1rem;
@@ -44,31 +44,16 @@
             border-left-width: 0.1rem;
             border-left-color: rgba(0, 0, 0, 0.5);
         }
-
-        #chart2 {
-            position: absolute;
-            right: 0;
-            bottom: 0;
-            height: 50%;
-            width: 100%;
-            border-top-style: solid;
-            border-top-width: 0.1rem;
-            border-top-color: rgba(0, 0, 0, 0.5);
-        }
     </style>
 </head>
 
 <body>
     <div>
-        <iframe src="https://nycplanning.github.io/td-trends/peds/pedcounts" id="chart1">
+        <iframe src="https://nycplanning.github.io/td-trends/peds/pedcounts" id="chart">
         </iframe>
     </div>
     <div>
         <iframe src="https://nycplanning.github.io/td-trends/peds/pedloc#9.01/40.7334/-74.0546" id="map">
-        </iframe>
-    </div>
-    <div>
-        <iframe src="https://nycplanning.github.io/td-trends/peds/timessquare" id="chart2">
         </iframe>
     </div>
 </body>

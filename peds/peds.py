@@ -13,34 +13,27 @@ path='C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/'
 
 # Bi-Annual Ped Counts
 df=pd.read_csv(path+'peds/pedcounts.csv')
-dfcolors={'AM':'rgba(255,158,74,0.8)',
-          'PM':'rgba(173,139,201,0.8)',
-          'Sat':'rgba(103,191,92,0.8)'}
+dfcolors={'Weekday AM Peak':'rgba(255,158,74,0.8)',
+          'Weekday PM Peak':'rgba(173,139,201,0.8)',
+          'Saturday Midday':'rgba(103,191,92,0.8)'}
 fig=go.Figure()
 fig=fig.add_trace(go.Scatter(name='',
                              mode='none',
                              x=df['Year'],
-                             y=df['May AM'],
+                             y=df['Weekday AM Peak'],
                              showlegend=False,
                              hovertext=['<b>Year: </b>'+str(x) for x in df['Year']],
                              hoverinfo='text'))
-for i in ['AM','PM','Sat']:
-    fig=fig.add_trace(go.Scatter(name='May '+i,
-                                 mode='lines',
+for i in ['Weekday AM Peak','Weekday PM Peak','Saturday Midday']:
+    fig=fig.add_trace(go.Scatter(name=i,
+                                 mode='lines+markers',
                                  x=df['Year'],
-                                 y=df['May '+i],
+                                 y=df[i],
                                  line={'color':dfcolors[i],
                                        'width':2},
-                                 hovertext=['<b>May '+str(i)+': </b>'+'{:,.0f}'.format(x) for x in df['May '+i]],
-                                 hoverinfo='text'))
-    fig=fig.add_trace(go.Scatter(name='Sept '+i,
-                                 mode='lines',
-                                 x=df['Year'],
-                                 y=df['Sept '+i],
-                                 line={'color':dfcolors[i],
-                                       'width':2,
-                                       'dash':'dot'},
-                                 hovertext=['<b>Sept '+str(i)+': </b>'+'{:,.0f}'.format(x) for x in df['Sept '+i]],
+                                 marker = {'color': dfcolors[i],
+                                           'size': 6},
+                                 hovertext=['<b>'+str(i)+': </b>'+'{:,.0f}'.format(x) for x in df[i]],
                                  hoverinfo='text'))
 fig.update_layout(
     template='plotly_white',
@@ -50,17 +43,17 @@ fig.update_layout(
            'xanchor':'center',
            'y':0.95,
            'yanchor':'top'},
-    legend={'orientation':'v',
+    legend={'orientation':'h',
             'title_text':'',
-            'font_size':14,
-            'x':1,
-            'xanchor':'left',
-            'y':0.5,
-            'yanchor':'middle'},
-    margin={'b':100,
+            'font_size':16,
+            'x':0.5,
+            'xanchor':'center',
+            'y':1,
+            'yanchor':'bottom'},
+    margin={'b':120,
             'l':80,
-            'r':80,
-            't':60},
+            'r':40,
+            't':120},
     xaxis={'title':{'text':'<b>Year</b>',
                     'font_size':14},
            'tickfont_size':12,
@@ -71,7 +64,6 @@ fig.update_layout(
     yaxis={'title':{'text':'<b>Hourly Total</b>',
                     'font_size':14},
            'tickfont_size':12,
-           'range':[90000,250000],
            'rangemode':'tozero',
            'fixedrange':True,
            'showgrid':True},
@@ -80,19 +72,8 @@ fig.update_layout(
           'color':'black'},
     dragmode=False,
     hovermode='x unified')
-# fig.add_annotation(
-#     text='*AM: Weekday 7-9AM; PM: Weekday 4-7PM; Sat: Saturday 12-2PM',
-#     font_size=14,
-#     showarrow=False,
-#     x=1,
-#     xanchor='right',
-#     xref='paper',
-#     y=0,
-#     yanchor='top',
-#     yref='paper',
-#     yshift=-80)
 fig.add_annotation(
-    text='Data Source: <a href="https://www1.nyc.gov/html/dot/html/about/datafeeds.shtml#Pedestrians" target="blank">NYC DOT</a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/peds/pedcounts.csv" target="blank">Download Chart Data</a>',
+    text='Data Source: <a href="https://data.ny.gov/Transportation/Bi-Annual-Pedestrian-Counts/2de2-6x2h/about" target="blank">NYC DOT</a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/peds/pedcounts.csv" target="blank">Download Chart Data</a>',
     font_size=14,
     showarrow=False,
     x=1,

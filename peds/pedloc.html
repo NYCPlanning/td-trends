@@ -250,12 +250,11 @@
             // Add click event
             map.on('click', 'pedloc', function (e) {
                 var coordinates = e.features[0].geometry.coordinates.slice(); // get point coordinates
-                var description = "<b>Location ID: </b><span>" + e.features[0].properties.Loc + "</span><br>"; // description in the popup
-                description += "<b>Borough: </b><span>" + e.features[0].properties.Borough + "</span><br>";
-                description += "<b>Street Name: </b><span>" + e.features[0].properties.Street_Nam + "</span><br>";
-                description += "<b>From Street: </b><span>" + e.features[0].properties.From_Stree + "</span><br>";
-                description += "<b>To Street: </b><span>" + e.features[0].properties.To_Street + "</span><br>";
-                description += "<b>Index: </b><span>" + e.features[0].properties.Index + "</span><br>";
+                var description = "<b>Location ID: </b><span>" + e.features[0].properties.loc + "</span><br>"; // description in the popup
+                description += "<b>Borough: </b><span>" + e.features[0].properties.borough + "</span><br>";
+                description += "<b>Street Name: </b><span>" + e.features[0].properties.street + "</span><br>";
+                description += "<b>From Street: </b><span>" + e.features[0].properties.from + "</span><br>";
+                description += "<b>To Street: </b><span>" + e.features[0].properties.to + "</span><br>";
               popup.setLngLat(coordinates).setHTML(description).addTo(map); //add popup
             });
             // Add hover events
