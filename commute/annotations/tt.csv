@@ -1,51 +1,66 @@
 DEST,RES,TT,PWGTP,TOTAL,% TT
-Same Boro,Bronx,0,17814,247237,0.072052322
-Same Boro,Bronx,30 to 60 Mins,111927,247237,0.452711366
-Same Boro,Bronx,Less Than 30 Mins,103892,247237,0.420212185
-Same Boro,Bronx,More Than 60 Mins,13604,247237,0.055024127
-Same Boro,Brooklyn,0,54770,585147,0.093600412
-Same Boro,Brooklyn,30 to 60 Mins,284881,585147,0.486853731
-Same Boro,Brooklyn,Less Than 30 Mins,215188,585147,0.367750326
-Same Boro,Brooklyn,More Than 60 Mins,30308,585147,0.051795532
-Same Boro,Manhattan,0,65890,755468,0.08721746
-Same Boro,Manhattan,30 to 60 Mins,336079,755468,0.444861993
-Same Boro,Manhattan,Less Than 30 Mins,340108,755468,0.450195111
-Same Boro,Manhattan,More Than 60 Mins,13391,755468,0.017725436
-Same Boro,Queens,0,32145,474285,0.067775704
-Same Boro,Queens,30 to 60 Mins,216535,474285,0.456550386
-Same Boro,Queens,Less Than 30 Mins,194376,474285,0.409829533
-Same Boro,Queens,More Than 60 Mins,31229,474285,0.065844376
-Same Boro,Staten Island,0,6175,105314,0.05863418
-Same Boro,Staten Island,30 to 60 Mins,31226,105314,0.296503789
-Same Boro,Staten Island,Less Than 30 Mins,62812,105314,0.596425926
-Same Boro,Staten Island,More Than 60 Mins,5101,105314,0.048436105
-Other Boro,Bronx,30 to 60 Mins,191021,272263,0.701604698
-Other Boro,Bronx,Less Than 30 Mins,21775,272263,0.079977816
-Other Boro,Bronx,More Than 60 Mins,59467,272263,0.218417486
-Other Boro,Brooklyn,30 to 60 Mins,437328,566614,0.771827029
-Other Boro,Brooklyn,Less Than 30 Mins,49384,566614,0.087156336
-Other Boro,Brooklyn,More Than 60 Mins,79902,566614,0.141016636
-Other Boro,Manhattan,30 to 60 Mins,58888,82262,0.715859084
-Other Boro,Manhattan,Less Than 30 Mins,12765,82262,0.155174929
-Other Boro,Manhattan,More Than 60 Mins,10609,82262,0.128965987
-Other Boro,Queens,30 to 60 Mins,365997,511291,0.715829146
-Other Boro,Queens,Less Than 30 Mins,43707,511291,0.085483609
-Other Boro,Queens,More Than 60 Mins,101587,511291,0.198687245
-Other Boro,Staten Island,30 to 60 Mins,45808,91071,0.502992171
-Other Boro,Staten Island,Less Than 30 Mins,7883,91071,0.086558839
-Other Boro,Staten Island,More Than 60 Mins,37380,91071,0.41044899
-Region,Bronx,30 to 60 Mins,34069,59439,0.573175861
-Region,Bronx,Less Than 30 Mins,16203,59439,0.272598799
-Region,Bronx,More Than 60 Mins,9167,59439,0.15422534
-Region,Brooklyn,30 to 60 Mins,23297,45827,0.508368429
-Region,Brooklyn,Less Than 30 Mins,6342,45827,0.138390032
-Region,Brooklyn,More Than 60 Mins,16188,45827,0.353241539
-Region,Manhattan,30 to 60 Mins,29074,52425,0.554582737
-Region,Manhattan,Less Than 30 Mins,10726,52425,0.204597043
-Region,Manhattan,More Than 60 Mins,12625,52425,0.240820219
-Region,Queens,30 to 60 Mins,69099,115405,0.59875222
-Region,Queens,Less Than 30 Mins,26895,115405,0.233048828
-Region,Queens,More Than 60 Mins,19411,115405,0.168198952
-Region,Staten Island,30 to 60 Mins,10595,16373,0.647101936
-Region,Staten Island,Less Than 30 Mins,3295,16373,0.201245954
-Region,Staten Island,More Than 60 Mins,2483,16373,0.15165211
+Same Borough,Bronx,0,17814,247215,0.07205873430010315
+Same Borough,Bronx,30 to 59 Mins,82999,247215,0.3357361001557349
+Same Borough,Bronx,60 to 89 Mins,33446,247215,0.13529114333677164
+Same Borough,Bronx,90 Mins or More,9064,247215,0.03666444188257185
+Same Borough,Bronx,Less than 30 Mins,103892,247215,0.42024958032481846
+Same Borough,Brooklyn,0,54770,585139,0.0936016912220857
+Same Borough,Brooklyn,30 to 59 Mins,225878,585139,0.3860245172514565
+Same Borough,Brooklyn,60 to 89 Mins,68532,585139,0.11712088922461159
+Same Borough,Brooklyn,90 Mins or More,20779,585139,0.03551122041087673
+Same Borough,Brooklyn,Less than 30 Mins,215180,585139,0.3677416818909695
+Same Borough,Manhattan,0,65890,755468,0.08721745990564789
+Same Borough,Manhattan,30 to 59 Mins,305518,755468,0.4044089226810401
+Same Borough,Manhattan,60 to 89 Mins,35917,755468,0.04754271524406063
+Same Borough,Manhattan,90 Mins or More,8035,755468,0.010635791324053434
+Same Borough,Manhattan,Less than 30 Mins,340108,755468,0.4501951108451979
+Same Borough,Queens,0,32145,474285,0.06777570448148265
+Same Borough,Queens,30 to 59 Mins,169406,474285,0.3571818632256976
+Same Borough,Queens,60 to 89 Mins,56276,474285,0.11865439556384874
+Same Borough,Queens,90 Mins or More,22082,474285,0.046558503853168454
+Same Borough,Queens,Less than 30 Mins,194376,474285,0.40982953287580254
+Same Borough,Staten Island,0,6175,105314,0.05863417969120915
+Same Borough,Staten Island,30 to 59 Mins,25233,105314,0.23959777427502515
+Same Borough,Staten Island,60 to 89 Mins,7386,105314,0.07013312570028676
+Same Borough,Staten Island,90 Mins or More,3708,105314,0.03520899405587102
+Same Borough,Staten Island,Less than 30 Mins,62812,105314,0.5964259262776079
+Different Borough,Bronx,30 to 59 Mins,106785,272263,0.392212676713325
+Different Borough,Bronx,60 to 89 Mins,104699,272263,0.38455096726327115
+Different Borough,Bronx,90 Mins or More,39004,272263,0.1432585404553685
+Different Borough,Bronx,Less than 30 Mins,21775,272263,0.07997781556803532
+Different Borough,Brooklyn,30 to 59 Mins,308745,566426,0.54507561446685
+Different Borough,Brooklyn,60 to 89 Mins,160530,566426,0.2834086005938993
+Different Borough,Brooklyn,90 Mins or More,47907,566426,0.08457768534636476
+Different Borough,Brooklyn,Less than 30 Mins,49244,566426,0.08693809959288593
+Different Borough,Manhattan,30 to 59 Mins,43864,81779,0.5363724183470084
+Different Borough,Manhattan,60 to 89 Mins,18538,81779,0.22668411205810782
+Different Borough,Manhattan,90 Mins or More,6779,81779,0.08289414152777608
+Different Borough,Manhattan,Less than 30 Mins,12598,81779,0.1540493280671077
+Different Borough,Queens,30 to 59 Mins,245563,511116,0.480444752267587
+Different Borough,Queens,60 to 89 Mins,158513,511116,0.3101311639627795
+Different Borough,Queens,90 Mins or More,63447,511116,0.1241342474115465
+Different Borough,Queens,Less than 30 Mins,43593,511116,0.08528983635808701
+Different Borough,Staten Island,30 to 59 Mins,24101,91018,0.264793777055088
+Different Borough,Staten Island,60 to 89 Mins,32434,91018,0.3563470961787778
+Different Borough,Staten Island,90 Mins or More,26623,91018,0.29250258190687556
+Different Borough,Staten Island,Less than 30 Mins,7860,91018,0.0863565448592586
+Region,Bronx,30 to 59 Mins,23832,56955,0.4184356070582038
+Region,Bronx,60 to 89 Mins,10700,56955,0.1878676147836011
+Region,Bronx,90 Mins or More,6746,56955,0.11844438591870775
+Region,Bronx,Less than 30 Mins,15677,56955,0.27525239223948733
+Region,Brooklyn,30 to 59 Mins,11707,37981,0.30823306390037125
+Region,Brooklyn,60 to 89 Mins,12676,37981,0.3337458202785603
+Region,Brooklyn,90 Mins or More,9796,37981,0.25791843290066085
+Region,Brooklyn,Less than 30 Mins,3802,37981,0.10010268292040757
+Region,Manhattan,30 to 59 Mins,18416,43030,0.4279804787357657
+Region,Manhattan,60 to 89 Mins,11497,43030,0.2671856844062282
+Region,Manhattan,90 Mins or More,6929,43030,0.1610271903323263
+Region,Manhattan,Less than 30 Mins,6188,43030,0.14380664652567976
+Region,Queens,30 to 59 Mins,49346,109823,0.4493230015570509
+Region,Queens,60 to 89 Mins,21998,109823,0.20030412572958306
+Region,Queens,90 Mins or More,13470,109823,0.12265190351747812
+Region,Queens,Less than 30 Mins,25009,109823,0.22772096919588794
+Region,Staten Island,30 to 59 Mins,7775,15572,0.4992936039044439
+Region,Staten Island,60 to 89 Mins,3522,15572,0.2261751862316979
+Region,Staten Island,90 Mins or More,1304,15572,0.08374004623683534
+Region,Staten Island,Less than 30 Mins,2971,15572,0.19079116362702286
