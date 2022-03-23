@@ -2,7 +2,6 @@ import pandas as pd
 import geopandas as gpd
 import shapely
 import numpy as np
-
 import plotly.express as px
 import plotly.io as pio
 import plotly.graph_objects as go
@@ -50,3 +49,15 @@ df['Pct21Cat']=np.where(df['Pct21']>=0.6,'>=60%',
                         '<30%'))))
 df=gpd.GeoDataFrame(df,geometry=[shapely.geometry.Point(x,y) for x,y in zip(df['Long'],df['Lat'])],crs=4326)
 df.to_file(path+'subway/septwkd.geojson',driver='GeoJSON')
+
+
+
+df=pd.read_csv(path+'subway/Historical.csv')
+for i in df.columns[8:]:
+    df[i+'cat']=np.where(df[i]>=2000000,'>=2.0M',
+               np.where(df[i]>=1500000,'1.5M~1.9M',
+               np.where(df[i]>=1000000,'1.0M~1.4M',
+               np.where(df[i]>=500000,'0.5M~0.9M',
+               np.where(df[i]>0,'<0.5M','NA')))))
+df=gpd.GeoDataFrame(df,geometry=[shapely.geometry.Point(x,y) for x,y in zip(df['Longitude'],df['Latitude'])],crs=4326)
+df.to_file(path+'subway/Historical.geojson',driver='GeoJSON')
