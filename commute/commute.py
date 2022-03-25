@@ -586,15 +586,27 @@ fig.add_annotation(text = 'Data Source: <a href="https://www.census.gov/programs
                    x = 1, 
                    xanchor = 'right',
                    xref = 'paper',
-                   y = -.1,
+                   y = 0,
                    yanchor = 'top',
-                   yref = 'paper')
+                   yref = 'paper',
+                   yshift = -100)
 
 fig.add_annotation(text = f'N = {tm_not_mn["PWGTP"].sum():,.0f}',
                    font_size = 14,
                    showarrow = False, 
                    x = .5,
                    y = .5)
+
+fig.add_annotation(text = '<i>*Other includes walked, taxi, bicycle, ferry, motorcycle and other',
+                   font_size = 14,
+                   showarrow = False, 
+                   x = 1, 
+                   xanchor = 'right',
+                   xref = 'paper',
+                   y = 0,
+                   yanchor = 'top',
+                   yref = 'paper',
+                   yshift = -80)
 fig
 
 # fig.write_html(path + 'annotations/tm_not_mn.html',
@@ -618,6 +630,10 @@ tt = tt.set_index('DEST').loc[sorter].reset_index()
 # tt.to_csv(path + 'annotations/tt.csv', index = False)
 # tt = pd.read_csv(path + 'annotations/tt.csv')
 
+tt['DEST_TITLE'] = tt['DEST']
+tt['DEST_TITLE'] = tt['DEST_TITLE'].str.replace(' ', '<br>')
+
+
 tt['HOVER']='<b>Travel Time: </b>'+tt['TT']+'<br><b>Commuters: </b>'+tt['PWGTP'].map('{:,.0f}'.format)+'<br><b>Percentage: </b>'+tt['% TT'].map('{:.0%}'.format)
 
 boro_li = ['Bronx','Brooklyn','Manhattan','Queens','Staten Island']
@@ -638,7 +654,7 @@ count = 0
 for boro in range(0, len(boro_li)):
     for time in range(0, len(tt_li)):
         fig = fig.add_trace(go.Bar(name = tt_li[time],
-                                    x = tt.loc[(tt['RES'] == boro_li[boro]) & (tt['TT'] == tt_li[time]), 'DEST'],
+                                    x = tt.loc[(tt['RES'] == boro_li[boro]) & (tt['TT'] == tt_li[time]), 'DEST_TITLE'],
                                     y = tt.loc[(tt['RES'] == boro_li[boro]) & (tt['TT'] == tt_li[time]), 'PWGTP'],
                                     marker = {'color': tt_colors[tt_li[time]]},
                                     hoverinfo = 'text',
@@ -709,13 +725,13 @@ fig
 #               config={'displayModeBar': True,
 #                       'displaylogo': False,
 #                       'modeBarButtonsToRemove': ['zoom', 
-#                                                  'pan', 
-#                                                  'select', 
-#                                                  'zoomIn', 
-#                                                  'zoomOut', 
-#                                                  'autoScale', 
-#                                                  'resetScale', 
-#                                                  'lasso2d']})
+#                                                   'pan', 
+#                                                   'select', 
+#                                                   'zoomIn', 
+#                                                   'zoomOut', 
+#                                                   'autoScale', 
+#                                                   'resetScale', 
+#                                                   'lasso2d']})
 
 # https://nycplanning.github.io/td-trends/commute/annotations/tt.html
 
@@ -882,7 +898,7 @@ fig.add_annotation(text = 'Data Source: <a href="https://www.census.gov/programs
                    x = 1, 
                    xanchor = 'right',
                    xref = 'paper',
-                   y = -.1,
+                   y = -.125,
                    yanchor = 'top',
                    yref = 'paper')
 
@@ -943,8 +959,8 @@ fig.update_layout(barmode = 'stack',
                             'y': 1,
                             'yanchor': 'bottom'},
                   margin = {'b': 120,
-                            'l': 40,
-                            'r': 80,
+                            'l': 80,
+                            'r': 40,
                             't': 120},
                   xaxis = {'title': {'text': '<b>Subregion of Residence</b>',
                                      'font_size': 14},
