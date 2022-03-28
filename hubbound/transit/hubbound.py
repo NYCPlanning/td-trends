@@ -6,14 +6,14 @@ import plotly.graph_objects as go
 
 pio.renderers.default = "browser"
 pd.set_option('display.max_columns', None)
-path='C:/Users/Y_Ma2/Desktop/GITHUB/td-trends/'
-# path='C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/'
+# path='C:/Users/Y_Ma2/Desktop/GITHUB/td-trends/'
+path='C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/'
 
 
 
 df=pd.read_csv(path+'hubbound/transit/hubbound.csv')
 dfcolors={'PATH':'rgba(237,102,93,0.8)',
-          'NJT':'rgba(114,158,206,0.8)',
+          'NJT Rail':'rgba(114,158,206,0.8)',
           'LIRR':'rgba(168,120,110,0.8)',
           'MNR':'rgba(103,191,92,0.8)',
           'Amtrak':'rgba(237,151,202,0.8)',
@@ -28,7 +28,7 @@ fig=fig.add_trace(go.Scatter(name='',
                              showlegend=False,
                              hovertext=['<b>Year: </b>'+str(x) for x in df['Year']],
                              hoverinfo='text'))
-for i in ['PATH','NJT','LIRR','MNR','Amtrak','NJ Bus']:
+for i in ['LIRR','MNR','PATH','NJT Rail','Amtrak','NJ Bus']:
     fig=fig.add_trace(go.Scatter(name=i,
                                  mode='lines+markers',
                                  x=df['Year'],
