@@ -447,19 +447,19 @@ tm_colors = {'Drive Alone': 'rgba(237,102,93,0.8)',
              'Subway': 'rgba(114,158,206,0.8)',
              'Rail': 'rgba(168,120,110,0.8)',
              'Bus': 'rgba(103,191,92,0.8)',
-             'Other': 'rgba(237,151,202,0.8)',
+             'Other*': 'rgba(237,151,202,0.8)',
              'Work From Home': 'rgba(109,204,218,0.8)'}
 
 fig = go.Figure()
 
 for mode, color in tm_colors.items():
     fig = fig.add_trace(go.Bar(name = mode,
-                               x = tm.loc[tm['TM'] == mode, 'RES'],
-                               y = tm.loc[tm['TM'] == mode, '% TM'],
+                               x = tm.loc[tm['TM'] == mode.replace('*',''), 'RES'],
+                               y = tm.loc[tm['TM'] == mode.replace('*',''), '% TM'],
                                marker = {'color': color},
                                width = .5,
                                hoverinfo = 'text',
-                               hovertext = tm.loc[tm['TM'] == mode, 'HOVER']))
+                               hovertext = tm.loc[tm['TM'] == mode.replace('*',''), 'HOVER']))
     
 fig.update_layout(barmode = 'stack',
                   template = 'plotly_white',
@@ -521,8 +521,8 @@ fig.add_annotation(text = 'Data Source: <a href="https://www.census.gov/programs
 fig
 
 # fig.write_html(path + 'annotations/tm.html',
-#                include_plotlyjs = 'cdn',
-#                config = {'displayModeBar': True,
+#                 include_plotlyjs = 'cdn',
+#                 config = {'displayModeBar': True,
 #                         'displaylogo': False,
 #                         'modeBarButtonsToRemove': ['select',                                                   
 #                                                   'lasso2d']})
