@@ -107,6 +107,9 @@ fig
 
 fig.write_html(path + 'annotations/entries.html',
               include_plotlyjs='cdn',
-              config={'displayModeBar':False})
+               config={'displayModeBar':True,
+                       'displaylogo':False,
+                       'modeBarButtonsToRemove':['select', 
+                                                 'lasso2d']})
 
 # https://nycplanning.github.io/td-trends/hubbound/all_modes/annotations/entries.html')   
