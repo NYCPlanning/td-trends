@@ -468,7 +468,7 @@
                     yref: 'y',
                 },
                 {
-                    text: '*Reported by Fiscal Year before 1940',
+                    text: '<i>*Reported by Fiscal Year before 1940</i>',
                     font: { size: 14 },
                     showarrow: false,
                     x: 1,
@@ -505,7 +505,8 @@
             };
             var config = {
                 responsive: true,
-                displayModeBar: false
+                displayModeBar: true,
+                displaylogo:false,
             };
             Plotly.react('chart',
                 [trace1, trace2],
