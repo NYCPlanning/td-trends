@@ -44,7 +44,7 @@ p=p %>%
             hoverinfo='text')
 p=p %>%
   layout(template='plotly_white',
-         title=list(text=paste0('<b>Monthly Bridges and Tunnels Traffic Volume</b>'),
+         title=list(text=paste0('<b>Monthly Bridges & Tunnels Traffic Volume</b>'),
                     font=list(size=20),
                     x=0.5,
                     xanchor='center',
@@ -68,7 +68,7 @@ p=p %>%
                     dtick='M6',
                     range=c(min(df[['Date']])-15,max(df[['Date']])+15),                    fixedrange=T,
                     showgrid=F),
-         yaxis=list(title=list(text='<b>Vehicles</b>',
+         yaxis=list(title=list(text='<b>Vehicles (Including Trucks & Buses)</b>',
                                font=list(size=14)),
                     tickfont=list(size=12),
                     rangemode='tozero',
