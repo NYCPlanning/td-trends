@@ -1,8 +1,8 @@
 library(tidyverse)
 library(plotly)
 
-path='C:/Users/Y_Ma2/Desktop/GITHUB/td-trends/'
-# path='C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/'
+# path='C:/Users/Y_Ma2/Desktop/GITHUB/td-trends/'
+path='C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/'
 
 df=read.csv(paste0(path,'bus/BusSpeed2015-2021.csv'),stringsAsFactors=F,check.names=F)
 df=df %>%
@@ -99,7 +99,9 @@ p=p %>%
                   yref='paper',
                   yshift=-80)
 p=p %>%
-  config(displayModeBar=F)
+  config(displayModeBar=T,
+         displaylogo=F,
+         modeBarButtonsToRemove=c('select','lasso2d'))
 p
 htmlwidgets::saveWidget(p,paste0(path,'bus/BusSpeedChart.html'))
 

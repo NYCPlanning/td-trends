@@ -123,7 +123,9 @@ p=p %>%
                   yref='paper',
                   yshift=-80)
 p=p %>%
-  config(displayModeBar=F)
+  config(displayModeBar=T,
+         displaylogo=F,
+         modeBarButtonsToRemove=c('select','lasso2d'))
 p
 htmlwidgets::saveWidget(p,paste0(path,'bus/DailyBusChart.html'))
 
