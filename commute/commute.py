@@ -246,6 +246,7 @@ live_work_di = {'Type': ['People Living in NYC',
 
 flows = pd.DataFrame(live_work_di)
 # flows.to_csv(path + 'annotations/flows.csv', index = False)
+flows = pd.read_csv(path + 'annotations/flows.csv')
 
 fig = go.Figure()
 
@@ -271,9 +272,9 @@ fig.add_shape(type = 'circle',
 
 fig.add_trace(go.Scatter(x = [.5, 1.5, 2.5],
                          y = [1, 1, 1],
-                         text = [str('{:,}'.format(round(live_nyc - live_work_nyc, -2))) +'<br>People Living in NYC<br>& Working in the Region<br>(Out-Commuters)',
-                                 str('{:,}'.format(round(live_work_nyc, -2))) + '<br>People Living<br>& Working in NYC',
-                                 str('{:,}'.format(round(work_nyc - live_work_nyc, -2))) + '<br>People Living in the Region<br>& Working in NYC<br>(In-Commuters)'],
+                         text = ['<b>'+str('{:,}'.format(round(list(flows.loc[flows['Type']=='People Living in NYC & Working Elsewhere in the Region (Out-Commuters)','Workers'])[0], -2))) +'</b><br>People Living<br>in NYC<br>& Working<br>Elsewhere in<br>the Region<br>(Out-Commuters)',
+                                 '<b>'+str('{:,}'.format(round(list(flows.loc[flows['Type']=='People Living & Working in NYC','Workers'])[0], -2))) + '</b><br>People Living<br>& Working<br>in NYC',
+                                 '<b>'+str('{:,}'.format(round(list(flows.loc[flows['Type']=='People Living Elsewhere in the Region & Working in NYC (In-Commuters)','Workers'])[0], -2))) + '</b><br>People Living<br>Elsewhere in<br>the Region<br>& Working<br>in NYC<br>(In-Commuters)'],
                          mode = 'text',
                          textfont = {'size': 16,
                                      'family': 'Arial',
@@ -282,7 +283,7 @@ fig.add_trace(go.Scatter(x = [.5, 1.5, 2.5],
 
 fig.add_annotation(x = 0,
                    y = 2,
-                   text = str('{:,}'.format(round(live_nyc, -2))) + '<br>People Living in NYC',
+                   text = '<b>'+str('{:,}'.format(round(list(flows.loc[flows['Type']=='People Living in NYC','Workers'])[0], -2))) + '</b><br>People Living<br>in NYC',
                    font = {'size': 16,
                            'family': 'Arial',
                            'color': '#729ece'},
@@ -290,31 +291,29 @@ fig.add_annotation(x = 0,
 
 fig.add_annotation(x = 3,
                    y = 0,
-                   text = str('{:,}'.format(round(work_nyc, -2))) + '<br>People Working in NYC',
+                   text = '<b>'+str('{:,}'.format(round(list(flows.loc[flows['Type']=='People Working in NYC','Workers'])[0], -2))) + '</b><br>People Working<br>in NYC',
                    font = {'size': 16,
                            'family': 'Arial',
                            'color': '#ff9e4a'},
                    showarrow = False)
 
-fig.update_xaxes(showticklabels = False, 
-                 showgrid = False,
-                 zeroline = False)
-
-fig.update_yaxes(showticklabels = False, 
-                  showgrid = False, 
-                  zeroline = False)
-
 fig.update_layout(template = 'plotly_white',
-                  title = {'text': '<b>Commuting Flows for NYC Metro Workers<b>',
+                  title = {'text': '<b>Commuting Flows for NYC Metro Region Workers</b>',
                             'font_size': 20,
                             'x': .5,
                             'xanchor': 'center',
                             'y': .95,
                             'yanchor': 'top'},
                   margin = {'b': 120, 
-                            'l': 200,
-                            'r': 200,
-                            't': 120}, 
+                            'l': 80,
+                            'r': 80,
+                            't': 120},
+                  xaxis={'showticklabels':False,
+                         'showgrid':False,
+                         'zeroline':False},
+                  yaxis={'showticklabels':False,
+                         'showgrid':False,
+                         'zeroline':False},                
                   font = {'family': 'Arial',
                           'color': 'black'},
                   dragmode = False)
@@ -322,12 +321,13 @@ fig.update_layout(template = 'plotly_white',
 fig.add_annotation(text = 'Data Source: <a href="https://www.census.gov/programs-surveys/acs/microdata/access.2019.html" target="blank">Census Bureau 2019 ACS 5-Year PUMS</a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/commute/annotations/flows.csv" target="blank">Download Chart Data</a>',
                    font_size = 14,
                    showarrow = False, 
-                   x = 1, 
-                   xanchor = 'right',
-                   xref = 'paper',
-                   y = -.1,
-                   yanchor = 'top',
-                   yref = 'paper')
+                   x=1,
+                   xanchor='right',
+                   xref='paper',
+                   y=0,
+                   yanchor='top',
+                   yref='paper',
+                   yshift=-80)
 
 fig
 
@@ -336,13 +336,13 @@ fig
 #               config={'displayModeBar': True,
 #                       'displaylogo': False,
 #                       'modeBarButtonsToRemove': ['zoom', 
-#                                                  'pan', 
-#                                                  'select', 
-#                                                  'zoomIn', 
-#                                                  'zoomOut', 
-#                                                  'autoScale', 
-#                                                  'resetScale', 
-#                                                  'lasso2d']})
+#                                                   'pan', 
+#                                                   'select', 
+#                                                   'zoomIn', 
+#                                                   'zoomOut', 
+#                                                   'autoScale', 
+#                                                   'resetScale', 
+#                                                   'lasso2d']})
 
 # https://nycplanning.github.io/td-trends/commute/annotations/flows.html
 
