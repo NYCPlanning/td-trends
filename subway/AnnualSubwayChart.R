@@ -123,7 +123,8 @@ p=p %>%
                   yref='paper',
                   yshift=-100)
 p=p %>%
-  config(displayModeBar=F)
+  config(displayModeBar=T,
+         displaylogo=F)
 p
 htmlwidgets::saveWidget(p,paste0(path,'subway/AnnualSubwayChart.html'))
 

@@ -92,7 +92,7 @@ fig.write_html(path+'hubbound/transit/hubbound.html',
                config={'displayModeBar':True,
                        'displaylogo':False,
                        'modeBarButtonsToRemove':['select', 
-                                                 'lasso2d']})
+                                                 'zoomOut2d']})
 
 
 
