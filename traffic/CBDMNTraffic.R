@@ -15,9 +15,9 @@ colnames(df)=c('Date','MTA Bridges & Tunnels','PANYNJ Bridges & Tunnels',
                'PANYNJ Bridges & Tunnels Pct','East River Bridges Pct','Taxi Speed')
 
 dfcolors=c('MTA Bridges & Tunnels'='rgba(173,139,201,0.6)',
-           'PANYNJ Bridges & Tunnels'='rgba(109,204,218,0.6)',
+           'PANYNJ Bridges & Tunnels'='rgba(103,191,92,0.6)',
            'East River Bridges'='rgba(114,158,206,0.6)',
-           'Taxi Speed'='rgba(237,102,93,0.8)')
+           'Taxi Speed'='rgba(168,120,110,0.8)')
 
 p=plot_ly()
 p=p %>%
@@ -40,7 +40,7 @@ p=p %>%
             showlegend=F,
             hovertext=paste0('<b>Total Inbound Volume: </b>',format(df[['Total Inbound Volume']],trim=T,big.mark=',')),
             hoverinfo='text')
-for (i in c('East River Bridges','MTA Bridges & Tunnels','PANYNJ Bridges & Tunnels')){
+for (i in c('East River Bridges','PANYNJ Bridges & Tunnels','MTA Bridges & Tunnels')){
   p=p %>%
     add_trace(name=i,
               type='scatter',

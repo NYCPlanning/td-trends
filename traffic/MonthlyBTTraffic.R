@@ -9,7 +9,7 @@ df=df %>%
   mutate(Date=as.Date(paste0(YearMonth,'01'),'%Y%m%d'))
 
 dfcolors=c('MTA'='rgba(173,139,201,0.8)',
-           'PANYNJ'='rgba(109,204,218,0.8)')
+           'PANYNJ'='rgba(103,191,92,0.8)')
 
 p=plot_ly()
 p=p %>%
