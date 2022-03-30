@@ -64,7 +64,7 @@ p=p %>%
             hoverinfo='text')
 p=p %>%
   layout(template='plotly_white',
-         title=list(text=paste0('<b>TLC Monthly Statistics</b>'),
+         title=list(text=paste0('<b>Taxi and For-Hire Vehicle Monthly Statistics</b>'),
                     font=list(size=20),
                     x=0.5,
                     xanchor='center',
