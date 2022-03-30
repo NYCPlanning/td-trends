@@ -17,7 +17,7 @@ colnames(df)=c('Date','MTA Bridges & Tunnels','PANYNJ Bridges & Tunnels',
 dfcolors=c('MTA Bridges & Tunnels'='rgba(173,139,201,0.6)',
            'PANYNJ Bridges & Tunnels'='rgba(103,191,92,0.6)',
            'East River Bridges'='rgba(114,158,206,0.6)',
-           'Taxi Speed'='rgba(168,120,110,0.8)')
+           'Taxi Speed'='rgba(237,102,93,0.8)')
 
 p=plot_ly()
 p=p %>%
