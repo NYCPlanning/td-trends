@@ -1,8 +1,8 @@
 library(tidyverse)
 library(plotly)
 
-path='C:/Users/Y_Ma2/Desktop/GITHUB/td-trends/'
-# path='C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/'
+# path='C:/Users/Y_Ma2/Desktop/GITHUB/td-trends/'
+path='C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/'
 
 df=read.csv(paste0(path,'traffic/CBDMNTraffic.csv'),stringsAsFactors=F,check.names=F)
 df=df %>%
@@ -118,7 +118,7 @@ p=p %>%
          dragmode=F,
          hovermode='x unified')
 p=p %>% 
-  add_annotations(text='*Taxi speed data was missing from 3/1/2020 to 3/9/2020',
+  add_annotations(text='<i>*Taxi speed data was missing from 3/1/2020 to 3/9/2020</i>',
                   font=list(size=14),
                   showarrow=F,
                   x=1,
@@ -140,7 +140,8 @@ p=p %>%
                   yref='paper',
                   yshift=-100)
 p=p %>%
-  config(displayModeBar=F)
+  config(displayModeBar=T,
+         displaylogo=F)
 p
 htmlwidgets::saveWidget(p,paste0(path,'traffic/CBDMNTraffic.html'))
 
