@@ -196,6 +196,7 @@
                 'layercolname': 'Type', // category column name
                 'layercat': ['DCWP', 'DOT'], // categories
                 'layercolor': ['rgba(237,151,202,1)', 'rgba(109,204,218,1)'], // color for each category; use rgba
+                'layersortkey': [1, 2], // drawing orders; higher value on top
                 'layerradius': 3, // circle radius; change size based on zoom level
                 'layerstrokecolor': 'rgba(0,0,0,1)', // circle stroke color
                 'layerstrokeopacity': 1, // circle stroke opacity
@@ -210,6 +211,14 @@
                 layerColor.push(layerContent.layercolor[i]);
             };
             layerColor.push('#000000');
+
+            // Generate layer sort key
+            var layerSortKey = ['match', ['get', layerContent['layercolname']]];
+            for (var i = 0; i < layerContent.layercat.length; i++) {
+                layerSortKey.push(layerContent.layercat[i]);
+                layerSortKey.push(layerContent.layersortkey[i]);
+            };
+            layerSortKey.push(0);
 
             // Add layer content to the overall layer content list
             layerContentList.push(layerContent);
@@ -227,6 +236,7 @@
                 'source': layerContent['sourceid'],
                 'layout': {
                     'visibility': layerContent['layervisibility'],
+                    'circle-sort-key': layerSortKey,
                 },
                 'paint': {
                     'circle-color': layerColor,
