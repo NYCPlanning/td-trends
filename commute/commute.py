@@ -304,10 +304,10 @@ fig.update_layout(template = 'plotly_white',
                             'xanchor': 'center',
                             'y': .95,
                             'yanchor': 'top'},
-                  margin = {'b': 120, 
+                  margin = {'b': 80, 
                             'l': 200,
                             'r': 200,
-                            't': 120},
+                            't': 80},
                   xaxis={'showticklabels':False,
                          'showgrid':False,
                          'zeroline':False},
@@ -327,7 +327,7 @@ fig.add_annotation(text = 'Data Source: <a href="https://www.census.gov/programs
                    y=0,
                    yanchor='top',
                    yref='paper',
-                   yshift=-80)
+                   yshift=-40)
 
 fig
 
