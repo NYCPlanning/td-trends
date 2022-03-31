@@ -618,7 +618,8 @@ fig
 
 #%% NYC COMMUTERS: TRAVEL TIME
 
-tt = nyc_commuters[['RES', 'DEST', 'TT', 'PWGTP']].groupby(['RES', 'DEST', 'TT']).sum().reset_index()
+tt = nyc_commuters[['RES', 'DEST', 'TT', 'PWGTP']].groupby(['RES', 'DEST', 'TT']).sum().reset_index() 
+tt = tt.loc[tt['TT'] != '0']
 tt_total = tt[['RES','DEST','PWGTP']].groupby(['RES','DEST']).sum().reset_index()
 tt_total.columns = ['RES','DEST','TOTAL']
 tt = pd.merge(tt, tt_total, how='inner', on=['RES','DEST'])
