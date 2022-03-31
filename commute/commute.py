@@ -1000,7 +1000,6 @@ fig
 
 # https://nycplanning.github.io/td-trends/commute/annotations/dest_rc.html'
 
-
 #%% REGIONAL IN-COMMUTERS: DESTINATION (ALL WORKERS LIVING IN NYC)
  
 work_nyc_total = dest_rc_total.copy()
@@ -1080,4 +1079,106 @@ fig
 #               config = {'displayModeBar': True,
 #                         'displaylogo': False})
 
-# https://nycplanning.github.io/td-trends/commute/annotations/work_nyc_total.html')                            
+# https://nycplanning.github.io/td-trends/commute/annotations/work_nyc_total.html')         
+
+#%% REGIONAL IN-COMMUTERS: TRAVEL MODE (MANHATTAN vs. NOT MANHATTAN)                    
+
+reg_commuters['MN'] = np.select([reg_commuters['POW'] == 'Manhattan'],
+                                ['Manhattan Bound'], 
+                                default='Non-Manhattan Bound')
+
+tm_reg_not_mn = reg_commuters[['MN', 'TM', 'PWGTP']].groupby(['MN', 'TM']).sum()
+tm_reg_not_mn_total = tm_reg_not_mn.groupby(['MN']).sum().reset_index()
+
+
+tm_reg_not_mn_total.columns = ['MN', 'TOTAL']
+tm_reg_not_mn = pd.merge(tm_reg_not_mn, tm_reg_not_mn_total, how = 'inner', on = ['MN']) #losing tm column here, fix
+tm_reg_not_mn['% TM'] = tm_reg_not_mn['PWGTP'] / tm_reg_not_mn['TOTAL']
+
+sorter = ['Subway','Rail','Bus','Drive Alone','Carpool', 'Other', 'Work From Home']
+tm_reg_not_mn = tm_reg_not_mn.set_index('TM').loc[sorter].reset_index()
+
+# tm_reg_not_mn.to_csv(path + 'annotations/tm_reg_not_mn.csv', index = False)
+# tm_reg_not_mn = pd.read_csv(path + 'annotations/tm_reg_not_mn.csv')
+
+tm_reg_not_mn['HOVER']='<b>Travel Mode: </b>' + tm_reg_not_mn['TM'] + '<br><b>Commuters: </b>' + tm_reg_not_mn['PWGTP'].map('{:,.0f}'.format) + '<br><b>Percentage: </b>' + tm_reg_not_mn['% TM'].map('{:.0%}'.format)
+
+fig = go.Figure()
+
+for mode, color in tm_colors.items():
+    fig = fig.add_trace(go.Bar(name = mode,
+                               x = tm_reg_not_mn.loc[tm_reg_not_mn['TM'] == mode, 'MN'],
+                               y = tm_reg_not_mn.loc[tm_reg_not_mn['TM'] == mode, '% TM'],
+                               marker = {'color': color},
+                               width = .5,
+                               hoverinfo = 'text',
+                               hovertext = tm_reg_not_mn.loc[tm_reg_not_mn['TM'] == mode, 'HOVER']))
+    
+fig.update_layout(barmode = 'stack',
+                  template = 'plotly_white',
+                  title = {'text': '<b>Travel Mode to Work for Regional In-Commuters<b>',
+                           'font_size': 20,
+                           'x': .5,
+                           'xanchor': 'center',
+                           'y': .95,
+                           'yanchor': 'top'},
+                  legend = {'traceorder': 'normal',
+                            'orientation': 'h',
+                            'font_size': 16,
+                            'x': .5,
+                            'xanchor': 'center',
+                            'y': 1,
+                            'yanchor': 'bottom'},
+                  margin = {'b': 120, 
+                            'l': 80,
+                            'r': 40,
+                            't': 120},
+                  xaxis = {'title': {'text': '<b>Destination of Work</b>',
+                                     'font_size': 14},
+                           'tickfont_size': 14,
+                           'fixedrange': True, 
+                           'showgrid': False},
+                  yaxis = {'title': {'text': '<b>Percent of Commuters</b>',
+                                     'font_size': 14},
+                           'tickfont_size': 12,
+                           'tickformat': ',.0%',
+                           'rangemode': 'tozero',
+                           'fixedrange': True,
+                           'showgrid': True},
+                  hoverlabel = {'font_size': 14}, 
+                  font = {'family': 'Arial',
+                          'color': 'black'},
+                  dragmode = False)
+
+fig.add_annotation(text = '<i>*Other includes walked, taxi, bicycle, ferry, motorcycle and other',
+                   font_size = 14,
+                   showarrow = False, 
+                   x = 1, 
+                   xanchor = 'right',
+                   xref = 'paper',
+                   y = 0,
+                   yanchor = 'top',
+                   yref = 'paper',
+                   yshift = -80)
+
+fig.add_annotation(text = 'Data Source: <a href="https://www.census.gov/programs-surveys/acs/microdata/access.2019.html" target="blank">Census Bureau 2019 ACS 5-Year PUMS</a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/commute/annotations/tm_reg_not_mn.csv" target="blank">Download Chart Data</a>',
+                   font_size = 14,
+                   showarrow = False, 
+                   x = 1, 
+                   xanchor = 'right',
+                   xref = 'paper',
+                   y = 0,
+                   yanchor = 'top',
+                   yref = 'paper',
+                   yshift = -100)
+fig
+
+# fig.write_html(path + 'annotations/tm_reg_not_mn.html',
+#                include_plotlyjs = 'cdn',
+#                config = {'displayModeBar': True,
+#                         'displaylogo': False,
+#                         'modeBarButtonsToRemove': ['select',                                                   
+#                                                   'lasso2d']})
+# https://nycplanning.github.io/td-trends/commute/annotations/tm_reg_not_mn.html
+
+#%% REGIONAL IN-COMMUTERS: TRAVEL TIME  
