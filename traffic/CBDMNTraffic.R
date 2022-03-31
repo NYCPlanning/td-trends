@@ -129,7 +129,7 @@ p=p %>%
                   yref='paper',
                   yshift=-80)
 p=p %>% 
-  add_annotations(text='Data Source: NYC DOT | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/traffic/CBDMNTraffic.csv" target="blank">Download Chart Data</a>',
+  add_annotations(text='Data Source: NYC DOT',
                   font=list(size=14),
                   showarrow=F,
                   x=1,
