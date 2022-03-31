@@ -62,7 +62,7 @@ p=p %>%
                      xanchor='center',
                      y=1,
                      yanchor='bottom'),
-         margin=list(b=120,
+         margin=list(b=160,
                      l=80,
                      r=40,
                      t=160),
@@ -98,7 +98,7 @@ p=p %>%
                   y=0,
                   yanchor='top',
                   yref='paper',
-                  yshift=-80)
+                  yshift=-120)
 p=p %>%
   config(displayModeBar=T,
          displaylogo=F)
