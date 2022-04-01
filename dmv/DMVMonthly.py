@@ -7,8 +7,8 @@ import plotly.graph_objects as go
 
 pio.renderers.default = "browser"
 pd.set_option('display.max_columns', None)
-path='C:/Users/Y_Ma2/Desktop/GITHUB/td-trends/'
-# path='C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/'
+# path='C:/Users/Y_Ma2/Desktop/GITHUB/td-trends/'
+path='C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/'
 
 
 
@@ -83,7 +83,10 @@ fig.add_annotation(
     yshift=-120)
 fig.write_html(path+'dmv/DMVMonthly.html',
                include_plotlyjs='cdn',
-               config={'displayModeBar':False})
+               config={'displayModeBar':True,
+                       'displaylogo':False,
+                       'modeBarButtonsToRemove':['select',
+                                                 'lasso2d']})
 
 
 

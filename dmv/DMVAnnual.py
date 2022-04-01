@@ -119,7 +119,9 @@ fig.add_annotation(
     yshift=-80)
 fig.write_html(path+'dmv/DMVAnnual.html',
                include_plotlyjs='cdn',
-               config={'displayModeBar':False})
-
+               config={'displayModeBar':True,
+                       'displaylogo':False,
+                       'modeBarButtonsToRemove':['select',
+                                                 'lasso2d']})
 
 
