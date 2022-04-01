@@ -640,9 +640,9 @@ tt['HOVER']='<b>Travel Time: </b>'+tt['TT']+'<br><b>Commuters: </b>'+tt['PWGTP']
 boro_li = ['Bronx','Brooklyn','Manhattan','Queens','Staten Island']
 tt_li = ['Less than 30 Mins','30 to 59 Mins', '60 to 89 Mins', '90 Mins or More']
 
-tt_colors = {'Less than 30 Mins':'rgba(109,204,218,0.8)',
+tt_colors = {'Less than 30 Mins':'rgba(237,102,93,0.8)',
              '30 to 59 Mins':'rgba(173,139,201,0.8)',
-             '60 to 89 Mins':'rgba(237,102,93,0.8)',
+             '60 to 89 Mins':'rgba(109,204,218,0.8)',
              '90 Mins or More': 'rgba(103,191,92,0.8)'}
 
 fig = ps.make_subplots(rows = 1,
