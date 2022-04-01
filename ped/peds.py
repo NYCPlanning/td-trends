@@ -12,7 +12,7 @@ path='C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/'
 
 
 # Bi-Annual Ped Counts
-df=pd.read_csv(path+'peds/pedcounts.csv')
+df=pd.read_csv(path+'ped/pedcounts.csv')
 dfcolors={'Weekday AM Peak':'rgba(255,158,74,0.8)',
           'Weekday PM Peak':'rgba(173,139,201,0.8)',
           'Saturday Midday':'rgba(103,191,92,0.8)'}
@@ -73,7 +73,7 @@ fig.update_layout(
     dragmode=False,
     hovermode='x unified')
 fig.add_annotation(
-    text='Data Source: <a href="https://data.ny.gov/Transportation/Bi-Annual-Pedestrian-Counts/2de2-6x2h/about" target="blank">NYC DOT</a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/peds/pedcounts.csv" target="blank">Download Chart Data</a>',
+    text='Data Source: <a href="https://data.ny.gov/Transportation/Bi-Annual-Pedestrian-Counts/2de2-6x2h/about" target="blank">NYC DOT</a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/ped/pedcounts.csv" target="blank">Download Chart Data</a>',
     font_size=14,
     showarrow=False,
     x=1,
@@ -83,9 +83,12 @@ fig.add_annotation(
     yanchor='top',
     yref='paper',
     yshift=-80)
-fig.write_html(path+'peds/pedcounts.html',
+fig.write_html(path+'ped/pedcounts.html',
                include_plotlyjs='cdn',
-               config={'displayModeBar':False})
+               config={'displayModeBar':True,
+                       'displaylogo':False,
+                       'modeBarButtonsToRemove':['select',
+                                                 'lasso2d']})
 
 
 
@@ -93,7 +96,7 @@ fig.write_html(path+'peds/pedcounts.html',
 
 
 # Times Square Ped Counts
-df=pd.read_csv(path+'peds/timessquare.csv')
+df=pd.read_csv(path+'ped/timessquare.csv')
 df['Date']=[datetime.datetime.strptime(str(x)+'01','%Y%m%d') for x in df['YearMonth']]
 
 fig=go.Figure()
@@ -150,7 +153,7 @@ fig.update_layout(
     dragmode=False,
     hovermode='x unified')
 fig.add_annotation(
-    text='Data Source: <a href="https://www.timessquarenyc.org/do-business/market-research-data/pedestrian-counts" target="blank">Times Square Alliance</a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/peds/timessquare.csv" target="blank">Download Chart Data</a>',
+    text='Data Source: <a href="https://www.timessquarenyc.org/do-business/market-research-data/pedestrian-counts" target="blank">Times Square Alliance</a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/ped/timessquare.csv" target="blank">Download Chart Data</a>',
     font_size=14,
     showarrow=False,
     x=1,
@@ -160,6 +163,9 @@ fig.add_annotation(
     yanchor='top',
     yref='paper',
     yshift=-80)
-fig.write_html(path+'peds/timessquare.html',
+fig.write_html(path+'ped/timessquare.html',
                include_plotlyjs='cdn',
-               config={'displayModeBar':False})
+               config={'displayModeBar':True,
+                       'displaylogo':False,
+                       'modeBarButtonsToRemove':['select',
+                                                 'lasso2d']})
