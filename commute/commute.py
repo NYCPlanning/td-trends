@@ -959,10 +959,10 @@ fig.update_layout(barmode = 'stack',
                             'xanchor': 'center',
                             'y': 1,
                             'yanchor': 'bottom'},
-                  margin = {'b': 120,
+                  margin = {'b': 180,
                             'l': 80,
                             'r': 40,
-                            't': 120},
+                            't': 160},
                   xaxis = {'title': {'text': '<b>Subregion of Residence</b>',
                                      'font_size': 14},
                            'categoryorder': 'total descending',
@@ -989,9 +989,9 @@ fig.add_annotation(text = 'Data Source: <a href="https://www.census.gov/programs
                    y = 0 ,
                    yanchor = 'top',
                    yref = 'paper',
-                   yshift = -80)
+                   yshift = -140)
 
-fig   
+fig
 
 # fig.write_html(path + 'annotations/dest_rc.html',
 #               include_plotlyjs='cdn',
