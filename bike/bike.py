@@ -524,11 +524,11 @@ fig.update_layout(
            'tickfont_size':12,
            'range':[0,1800000],
            'fixedrange':True,
-           'showgrid':False},
+           'showgrid':True},
     yaxis={'tickfont_size':14,
            'categoryorder':'total ascending',
            'fixedrange':True,
-           'showgrid':True},
+           'showgrid':False},
     hoverlabel={'font_size':14},
     font={'family':'Arial',
           'color':'black'},
@@ -546,12 +546,12 @@ fig.add_annotation(
     yref='paper',
     yshift=-80)
 
-fig.write_html(path+'cmspurpose.html',
-               include_plotlyjs='cdn',
-               config={'displayModeBar':True,
-                       'displaylogo':False,
-                       'modeBarButtonsToRemove':['select',
-                                                 'lasso2d']})
+# fig.write_html(path+'cmspurpose.html',
+#                include_plotlyjs='cdn',
+#                config={'displayModeBar':True,
+#                        'displaylogo':False,
+#                        'modeBarButtonsToRemove':['select',
+#                                                  'lasso2d']})
 
 
 
