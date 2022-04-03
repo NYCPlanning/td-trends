@@ -67,7 +67,7 @@ p=p %>%
             hoverinfo='text')
 p=p %>%
   layout(template='plotly_white',
-         title=list(text=paste0('<b>Manhattan CBD Daily Traffic Volumn and Speed <br>(7-Day Moving Average)</b>'),
+         title=list(text=paste0('<b>Manhattan CBD Daily Traffic Volumn and Speed </b><br>(7-Day Moving Average)'),
                     font=list(size=20),
                     x=0.5,
                     xanchor='center',
