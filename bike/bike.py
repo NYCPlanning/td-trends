@@ -517,7 +517,7 @@ fig=fig.add_trace(go.Bar(orientation='h',
 
 fig.update_layout(
     template='plotly_white',
-    title={'text':'<b>Bike Trip Purpose</b><br><br><sup>(Unweighted N = '+'{:,.0f}'.format(sum(cms['count']))+'; Weighted N = '+'{:,.0f}'.format(sum(cms['weight']))+')</sup>',
+    title={'text':'<b>Bicycle Trip Purpose</b><br><br><sup>(Unweighted N = '+'{:,.0f}'.format(sum(cms['count']))+'; Weighted N = '+'{:,.0f}'.format(sum(cms['weight']))+')</sup>',
            'font_size':20,
            'x':0.5,
            'xanchor':'center',
