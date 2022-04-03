@@ -1,0 +1,7 @@
+purpose,detail,count,weight,%
+Recreation,For recreation/exercise,775,1743787.92578,0.4256571360875431
+Errands,To run errands,315,842522.7809299999,0.20565908773497335
+Commute,To commute to work or school,198,487742.05191000004,0.11905741626958886
+Transit,To connect to/from public transportation,136,481963.35689000005,0.11764684177473662
+Appointment,"To get to an appointment (e.g. doctor, meeting, conference)",177,454277.33705999993,0.11088870809559132
+Other,Other,32,86402.63905,0.021090810037566857

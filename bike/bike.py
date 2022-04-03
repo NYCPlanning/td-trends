@@ -10,6 +10,7 @@ import pandas as pd
 import plotly.graph_objects as go
 import plotly.io as pio
 import datetime
+import numpy as np
 
 pio.renderers.default = 'browser'
 
@@ -385,4 +386,174 @@ fig
 
 # fig.write_html(path + 'citibike.html', include_plotlyjs='cdn', config={'displayModeBar':False})
 # print('Chart Available at: https://nycplanning.github.io/td-trends/bike/annotations/citibike.html')
+
+
+
+
+#%% CMS Bike Frequency
+
+path = 'C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/bike/annotations/'
+cms=pd.read_csv('C:/Users/mayij/Desktop/Citywide_Mobility_Survey_-_Person_Survey_2019.csv',usecols=['weight','bike_freq'])
+cms=cms.groupby(['bike_freq'],as_index=False).agg({'weight':['count','sum']}).reset_index(drop=True)
+cms=cms[np.isin(cms['bike_freq'],[1,2,3,4,5,6])].reset_index(drop=True)
+cms.columns=['bikefreq','count','weight']
+cms['%'] = cms['weight'] / sum(cms['weight'])
+cms['bikefreq'] = cms['bikefreq'].replace({1:'Once a Week or More',
+                                           2:'Several Times a Month',
+                                           3:'At Least Once a Month',
+                                           4:'A Few Times a Year',
+                                           5:'Never',
+                                           6:'Physically Unable to Ride a Bike'})
+# cms.to_csv(path + 'cmsfreq.csv',index=False)
+
+cms=pd.read_csv(path+'cmsfreq.csv')
+cms['hover'] = '<b>Frequency: </b>'+ cms['bikefreq'] + '<br><b>Persons: </b>' + cms['weight'].map('{:,.0f}'.format) +'<br><b>Percentage: </b>' + cms['%'].map('{:.0%}'.format)
+
+cms_colors = {'Once a Week or More': 'rgba(237,102,93,0.8)',
+              'Several Times a Month': 'rgba(255,158,74,0.8)',
+              'At Least Once a Month': 'rgba(237,151,202,0.8)',
+              'A Few Times a Year': 'rgba(173,139,201,0.8)',
+              'Never': 'rgba(114,158,206,0.8)',
+              'Physically Unable to Ride a Bike': 'rgba(162,162,162,0.8)'}
+
+fig = go.Figure()
+
+fig = fig.add_trace(go.Pie(labels = cms['bikefreq'],
+                           values = cms['%'],
+                           hole = .5,
+                           sort = False,
+                           direction = 'clockwise',
+                           pull=0.05,
+                           marker = {'colors': list(cms_colors.values())},
+                           textinfo = 'text',
+                           text= cms['%'].map('{:.0%}'.format),
+                           textfont={'size':14},
+                           hoverinfo = 'text',
+                           hovertext = cms['hover']))
+
+fig.update_layout(template = 'plotly_white',
+                  title = {'text': '<b>Frequency of Bicycle Travel<b>',
+                           'font_size': 20,
+                           'x': .5,
+                           'xanchor': 'center',
+                           'y': .95,
+                           'yanchor': 'top'},
+                  legend = {'traceorder': 'normal',
+                            'orientation': 'h',
+                            'font_size': 16,
+                            'x': .5,
+                            'xanchor': 'center',
+                            'y': 1,
+                            'yanchor': 'bottom'},
+                  margin = {'b': 40, 
+                            'l': 80,
+                            'r': 80,
+                            't': 220},
+                  hoverlabel = {'font_size': 14}, 
+                  font = {'family': 'Arial',
+                          'color': 'black'},
+                  dragmode = False)
+
+fig.add_annotation(text = 'Data Source: <a href="https://www1.nyc.gov/html/dot/html/about/citywide-mobility-survey.shtml" target="blank">NYC DOT 2019</a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/bike/annotations/cmsfreq.csv" target="blank">Download Chart Data</a>',
+                   font_size = 14,
+                   showarrow = False, 
+                   x = 1, 
+                   xanchor = 'right',
+                   xref = 'paper',
+                   y=0,
+                   yanchor='top',
+                   yref='paper',
+                   yshift=0)
+fig.add_annotation(text = f'Unweighted N = {cms["count"].sum():,.0f}<br>Weighted N = {cms["weight"].sum():,.0f}',
+                   font_size = 14,
+                   showarrow = False, 
+                   x = .5,
+                   y = .5)
+                  
+fig
+
+# fig.write_html(path+'cmsfreq.html',
+#                include_plotlyjs='cdn',
+#                config={'displayModeBar':True,
+#                        'displaylogo':False})
+# print('Chart Available at: https://nycplanning.github.io/td-trends/bike/annotations/cmsfreq.html')
+
+
+#%% CMS Bike Frequency
+
+path = 'C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/bike/annotations/'
+df=pd.DataFrame(columns=['purpose','count','weight'])
+cms=pd.read_csv('C:/Users/mayij/Desktop/Citywide_Mobility_Survey_-_Person_Survey_2019.csv',usecols=['weight','bike_purpose_errands','bike_purpose_transit','bike_purpose_recreation','bike_purpose_commute','bike_purpose_appointment','bike_purpose_other'])
+for i in ['errands','transit','recreation','commute','appointment','other']:
+    df=df.append({'purpose':i,'count':cms.loc[cms['bike_purpose_'+i]==1,'weight'].count(),'weight':cms.loc[cms['bike_purpose_'+i]==1,'weight'].sum()},ignore_index=True)
+df['%'] = df['weight'] / sum(df['weight'])
+df['purpose']=['Errands','Transit','Recreation','Commute','Appointment','Other']
+df['detail']=['To run errands','To connect to/from public transportation','For recreation/exercise',
+              'To commute to work or school','To get to an appointment (e.g. doctor, meeting, conference)','Other']
+df=df[['purpose','detail','count','weight','%']].sort_values(['weight'],ascending=False).reset_index(drop=True)
+# df.to_csv(path + 'cmspurpose.csv',index=False)
+
+cms=pd.read_csv(path+'cmspurpose.csv')
+cms['hover'] = '<b>Purpose: </b>'+ cms['detail'] + '<br><b>Persons: </b>' + cms['weight'].map('{:,.0f}'.format) +'<br><b>Percentage: </b>' + cms['%'].map('{:.0%}'.format)
+
+fig = go.Figure()
+
+fig=fig.add_trace(go.Bar(name='Counts',
+                         orientation='h',
+                         y=cms['purpose'],
+                         x=cms['weight'],
+                         showlegend=False,
+                         marker={'color':'rgba(109,204,218,0.8)'},
+                         hovertext=cms['hover'],
+                         hoverinfo='text'))
+
+fig.update_layout(
+    template='plotly_white',
+    title={'text':'<b>Reason for Riding a Bicycle</b><br>(Multiple Choice)',
+           'font_size':20,
+           'x':0.5,
+           'xanchor':'center',
+           'y':0.95,
+           'yanchor':'top'},
+    margin={'b':120,
+            'l':80,
+            'r':40,
+            't':120},
+    xaxis={'title':{'text':'<b>Persons</b>',
+                    'font_size':14},
+           'tickfont_size':12,
+           'range':[0,1800000],
+           'fixedrange':True,
+           'showgrid':False},
+    yaxis={'tickfont_size':14,
+           'categoryorder':'total ascending',
+           'fixedrange':True,
+           'showgrid':True},
+    hoverlabel={'font_size':14},
+    font={'family':'Arial',
+          'color':'black'},
+    dragmode=False)
+
+fig.add_annotation(
+    text = 'Data Source: <a href="https://www1.nyc.gov/html/dot/html/about/citywide-mobility-survey.shtml" target="blank">NYC DOT 2019</a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/bike/annotations/cmspurpose.csv" target="blank">Download Chart Data</a>',
+    font_size=14,
+    showarrow=False,
+    x=1,
+    xanchor='right',
+    xref='paper',
+    y=0,
+    yanchor='top',
+    yref='paper',
+    yshift=-80)
+
+fig.write_html(path+'cmspurpose.html',
+               include_plotlyjs='cdn',
+               config={'displayModeBar':True,
+                       'displaylogo':False,
+                       'modeBarButtonsToRemove':['select',
+                                                 'lasso2d']})
+
+
+
+
 
