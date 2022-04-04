@@ -523,7 +523,7 @@ fig=fig.add_trace(go.Bar(orientation='h',
                          y=cms['purpose'],
                          x=cms['weight'],
                          showlegend=False,
-                         marker={'color':'rgba(109,204,218,0.6)'},
+                         marker={'color':'rgba(109,204,218,0.8)'},
                          hovertext=cms['hover'],
                          hoverinfo='text'))
 
