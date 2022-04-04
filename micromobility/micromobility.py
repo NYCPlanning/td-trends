@@ -5,6 +5,7 @@ import plotly.io as pio
 pio.renderers.default = 'browser'
 
 path = 'C:/Users/Y_Ma2/Desktop/GITHUB/td-trends/micromobility/'
+path = 'C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/micromobility/'
 
 df=pd.read_csv(path+'micromobility.csv')
 df['hover'] = '<b>Type: </b>'+ df['Type'] + '<br><b>Counts: </b>' + df['Counts'].map('{:,.0f}'.format) +'<br><b>Percentage: </b>' + df['Pct'].map('{:.0%}'.format)
@@ -12,7 +13,7 @@ df['hover'] = '<b>Type: </b>'+ df['Type'] + '<br><b>Counts: </b>' + df['Counts']
 dfcolors = {'E-Bikes': 'rgba(237,102,93,0.8)',
             'E-Scooters': 'rgba(255,158,74,0.8)',
             'Other Micromobility': 'rgba(173,139,201,0.8)',
-            'Manual Bikes': 'rgba(162,162,162,0.8)'}
+            'Manual Bikes': 'rgba(114,158,206,0.8)'}
 
 fig = go.Figure()
 
@@ -66,6 +67,10 @@ fig.add_annotation(text = 'Data Source: NYC DCP (2021) | <a href="https://raw.gi
                   
 fig
 
-fig.write_html(path + 'micromobility.html', include_plotlyjs='cdn', config={'displayModeBar':False})
+fig.write_html(path + 'micromobility.html',
+               include_plotlyjs='cdn',
+               config={'displayModeBar':True,
+                       'displaylogo':False})
+
 # print('Chart Available at: https://nycplanning.github.io/td-trends/bike/annotations/chs.html')
 
