@@ -284,7 +284,7 @@ fig=fig.add_trace(go.Scatter(name='',
 
 fig = fig.add_trace(go.Bar(x = citibike['date'],
                            y = citibike['Avg Daily Rides'],
-                           marker = {'color': 'rgba(237,151,202,0.6)'},
+                           marker = {'color': 'rgba(255,158,74,0.6)'},
                            name = 'Average Daily Rides',
                            hoverinfo = 'text', 
                            hovertext ='<b>Average Daily Rides: </b>' + citibike['Avg Daily Rides'].map('{:,.0f}'.format)))
@@ -357,9 +357,9 @@ fig.update_layout(template = 'plotly_white',
                            'showgrid':False},
                   yaxis = {'title':{'text':'<b>Ridership</b>',
                                     'font_size':14,
-                                    'font_color':'rgba(237,151,202,1.0)'},
+                                    'font_color':'rgba(255,158,74,1.0)'},
                            'tickfont_size':12,
-                           'tickfont_color':'rgba(237,151,202,1.0)',
+                           'tickfont_color':'rgba(255,158,74,1.0)',
                            'rangemode':'tozero',
                            'fixedrange':True,
                            'showgrid':True},
@@ -392,11 +392,11 @@ fig.add_annotation(text = 'Data Source: <a href="https://ride.citibikenyc.com/sy
 fig
 
 # fig.write_html(path + 'citibike.html', 
-#                include_plotlyjs='cdn',
-#                config={'displayModeBar':True,
-#                        'displaylogo':False,
-#                        'modeBarButtonsToRemove':['select',
-#                                                  'lasso2d']})
+#                 include_plotlyjs='cdn',
+#                 config={'displayModeBar':True,
+#                         'displaylogo':False,
+#                         'modeBarButtonsToRemove':['select',
+#                                                   'lasso2d']})
 # print('Chart Available at: https://nycplanning.github.io/td-trends/bike/annotations/citibike.html')
 
 
