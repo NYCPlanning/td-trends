@@ -489,7 +489,7 @@ fig
 # print('Chart Available at: https://nycplanning.github.io/td-trends/bike/annotations/cmsfreq.html')
 
 
-#%% CMS Bike Frequency
+#%% CMS Bike Purpose
 
 path = 'C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/bike/annotations/'
 
@@ -521,7 +521,7 @@ fig=fig.add_trace(go.Bar(orientation='h',
                          y=cms['purpose'],
                          x=cms['weight'],
                          showlegend=False,
-                         marker={'color':'rgba(109,204,218,0.8)'},
+                         marker={'color':'rgba(109,204,218,0.6)'},
                          hovertext=cms['hover'],
                          hoverinfo='text'))
 
@@ -564,12 +564,14 @@ fig.add_annotation(
     yref='paper',
     yshift=-80)
 
+fig
+
 # fig.write_html(path+'cmspurpose.html',
-#                include_plotlyjs='cdn',
-#                config={'displayModeBar':True,
-#                        'displaylogo':False,
-#                        'modeBarButtonsToRemove':['select',
-#                                                  'lasso2d']})
+#                 include_plotlyjs='cdn',
+#                 config={'displayModeBar':True,
+#                         'displaylogo':False,
+#                         'modeBarButtonsToRemove':['select',
+#                                                   'lasso2d']})
 
 
 
