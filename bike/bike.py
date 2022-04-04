@@ -284,7 +284,7 @@ fig=fig.add_trace(go.Scatter(name='',
 
 fig = fig.add_trace(go.Bar(x = citibike['date'],
                            y = citibike['Avg Daily Rides'],
-                           marker = {'color': 'rgba(114,158,206,0.5)'},
+                           marker = {'color': 'rgba(114,158,206,0.6)'},
                            name = 'Average Daily Rides',
                            hoverinfo = 'text', 
                            hovertext ='<b>Average Daily Rides: </b>' + citibike['Avg Daily Rides'].map('{:,.0f}'.format)))
@@ -343,7 +343,7 @@ fig.update_layout(template = 'plotly_white',
                             'xanchor': 'center',
                             'y': 1,
                             'yanchor': 'bottom'},
-                  margin = {'b': 120, 
+                  margin = {'b': 140, 
                             'l': 80,
                             'r': 80,
                             't': 120},
@@ -362,8 +362,10 @@ fig.update_layout(template = 'plotly_white',
                            'fixedrange':True,
                            'showgrid':True},
                   yaxis2={'title':{'text':'<b>Stations</b>',
-                                   'font_size':14},
+                                   'font_size':14,
+                                   'font_color':'rgba(237,151,202,1.0)'},
                           'tickfont_size':12,
+                          'tickfont_color':'rgba(237,151,202,1.0)',
                           'side':'right',
                           'overlaying':'y',
                           'rangemode':'tozero',
@@ -387,7 +389,12 @@ fig.add_annotation(text = 'Data Source: <a href="https://ride.citibikenyc.com/sy
                    yshift=-100)
 fig
 
-# fig.write_html(path + 'citibike.html', include_plotlyjs='cdn', config={'displayModeBar':False})
+# fig.write_html(path + 'citibike.html', 
+#                include_plotlyjs='cdn',
+#                config={'displayModeBar':True,
+#                        'displaylogo':False,
+#                        'modeBarButtonsToRemove':['select',
+#                                                  'lasso2d']})
 # print('Chart Available at: https://nycplanning.github.io/td-trends/bike/annotations/citibike.html')
 
 
