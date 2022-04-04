@@ -138,7 +138,9 @@ counts = pd.merge(counts, counts_total, how = 'inner', on = 'date')
 counts['%'] = counts['counts']/ counts['total']
 
 # counts.to_csv(path + 'counts.csv', index = False)
-
+path='C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/bike/annotations/'
+parser = lambda x: datetime.datetime.strptime(x, '%Y-%m-%d')
+counts=pd.read_csv(path+'counts.csv', parse_dates = ['date'], date_parser = parser)
 counts['hover'] = '<b>' + counts['name'] + ': </b>' + counts['counts'].map('{:,.0f}'.format) + ' (' + counts['%'].map('{:.0%}'.format) + ')'
 
 # counter_colors = {'Williamsburg Bridge':'#cdcc5d',
@@ -201,7 +203,7 @@ fig = fig.add_trace(go.Scatter(x = hover_title['date'],
                                mode = 'none',
                                showlegend = False,
                                hoverinfo = 'text',
-                               hovertext = '<b>Month: </b>' + hover_title['date'].map('{:%B %Y}'.format)))
+                               hovertext = '<b>Month: </b>' + hover_title['date'].map('{:%b %y}'.format)))
 
 fig.update_layout(template = 'plotly_white',
                   title = {'text': '<b>Automatic Bicycle Counts</b>',
@@ -217,7 +219,7 @@ fig.update_layout(template = 'plotly_white',
                             'xanchor': 'center',
                             'y': 1,
                             'yanchor': 'bottom'},
-                  margin = {'b': 120,
+                  margin = {'b': 140,
                             'l': 80,
                             'r': 40,
                             't': 180},
@@ -225,7 +227,7 @@ fig.update_layout(template = 'plotly_white',
                                      'font_size': 14},
                            'tickfont_size': 12,
                            'tickformat':'%b %Y',
-                           'dtick': 'M2',
+                           'dtick': 'M3',
                            'range':[min(counts['date'])-datetime.timedelta(days=15),max(counts['date'])+datetime.timedelta(days=15)],
                            'fixedrange': True,
                            'showgrid': False},
@@ -255,8 +257,9 @@ fig.add_annotation(text = 'Data Source: <a href="https://data.cityofnewyork.us/T
 fig
 
 # fig.write_html(path + 'counts.html',
-#                 include_plotlyjs = 'cdn',
-#                 config = {'displayModeBar': False})
+#                 include_plotlyjs='cdn',
+#                 config={'displayModeBar':True,
+#                         'displaylogo':False})
 
 # print('Chart Available at: https://nycplanning.github.io/td-trends/bike/annotations/counts.html')
 
