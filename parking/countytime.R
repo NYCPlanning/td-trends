@@ -33,7 +33,7 @@ for (i in c('Bronx','Brooklyn','Manhattan','Queens','Staten Island')){
               x=df[['time']],
               y=df[[i]],
               line=list(color=dfcolors[i],
-                        width=2),
+                        width=3),
               showlegend=T,
               hovertext=paste0('<b>',i,': </b>',format(df[[i]],trim=T,big.mark=','),
                                ' (',format(round(df[[paste0(i,' Pct')]]*100,0),trim=T,nsmall=0),'%)'),
