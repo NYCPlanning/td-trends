@@ -43,47 +43,58 @@
 2019,Ferry*,40761708
 2020,Ferry*,14681115
 2021,Ferry*,17971895
-2011,Taxi**,176866900
-2012,Taxi**,178513534
-2013,Taxi**,174347005
-2014,Taxi**,180939169
-2015,Taxi**,165340244
-2016,Taxi**,147566064
-2017,Taxi**,125227021
-2018,Taxi**,111576900
-2019,Taxi**,89759570
-2020,Taxi**,26347251
-2021,Taxi**,31893342
-2011,For-Hire Vehicle**,
-2012,For-Hire Vehicle**,
-2013,For-Hire Vehicle**,
-2014,For-Hire Vehicle**,
-2015,For-Hire Vehicle**,63387716
-2016,For-Hire Vehicle**,132113257
-2017,For-Hire Vehicle**,190656655
-2018,For-Hire Vehicle**,258773425
-2019,For-Hire Vehicle**,276070940
-2020,For-Hire Vehicle**,156744240
-2021,For-Hire Vehicle**,186606508
-2011,Citi Bike**,
-2012,Citi Bike**,
-2013,Citi Bike**,6036059
-2014,Citi Bike**,8791987
-2015,Citi Bike**,10068280
-2016,Citi Bike**,13827132
-2017,Citi Bike**,16347284
-2018,Citi Bike**,17742410
-2019,Citi Bike**,20984725
-2020,Citi Bike**,19783517
-2021,Citi Bike**,27293109
-2011,Bridges & Tunnels Traffic***,402724646
-2012,Bridges & Tunnels Traffic***,399005412
-2013,Bridges & Tunnels Traffic***,400215268
-2014,Bridges & Tunnels Traffic***,400434558
-2015,Bridges & Tunnels Traffic***,413907340
-2016,Bridges & Tunnels Traffic***,426187966
-2017,Bridges & Tunnels Traffic***,429391707
-2018,Bridges & Tunnels Traffic***,442546979
-2019,Bridges & Tunnels Traffic***,451624285
-2020,Bridges & Tunnels Traffic***,351013155
-2021,Bridges & Tunnels Traffic***,423349552
+2011,Taxi***,176866900
+2012,Taxi***,178513534
+2013,Taxi***,174347005
+2014,Taxi***,180939169
+2015,Taxi***,165340244
+2016,Taxi***,147566064
+2017,Taxi***,125227021
+2018,Taxi***,111576900
+2019,Taxi***,89759570
+2020,Taxi***,26347251
+2021,Taxi***,31893342
+2011,For-Hire Vehicle***,
+2012,For-Hire Vehicle***,
+2013,For-Hire Vehicle***,
+2014,For-Hire Vehicle***,
+2015,For-Hire Vehicle***,63387716
+2016,For-Hire Vehicle***,132113257
+2017,For-Hire Vehicle***,190656655
+2018,For-Hire Vehicle***,258773425
+2019,For-Hire Vehicle***,276070940
+2020,For-Hire Vehicle***,156744240
+2021,For-Hire Vehicle***,186606508
+2011,Citi Bike***,
+2012,Citi Bike***,
+2013,Citi Bike***,6036059
+2014,Citi Bike***,8791987
+2015,Citi Bike***,10068280
+2016,Citi Bike***,13827132
+2017,Citi Bike***,16347284
+2018,Citi Bike***,17742410
+2019,Citi Bike***,20984725
+2020,Citi Bike***,19783517
+2021,Citi Bike***,27293109
+2011,Bridges & Tunnels**,402724646
+2012,Bridges & Tunnels**,399005412
+2013,Bridges & Tunnels**,400215268
+2014,Bridges & Tunnels**,400434558
+2015,Bridges & Tunnels**,413907340
+2016,Bridges & Tunnels**,426187966
+2017,Bridges & Tunnels**,429391707
+2018,Bridges & Tunnels**,442546979
+2019,Bridges & Tunnels**,451624285
+2020,Bridges & Tunnels**,351013155
+2021,Bridges & Tunnels**,423349552
+2011,Airport*,105463447
+2012,Airport*,108965043
+2013,Airport*,112138635
+2014,Airport*,115736278
+2015,Airport*,122819125
+2016,Airport*,129453626
+2017,Airport*,132270331
+2018,Airport*,137577882
+2019,Airport*,139972418
+2020,Airport*,40768726
+2021,Airport*,75408571

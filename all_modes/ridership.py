@@ -20,13 +20,14 @@ path='C:/Users/Y_Ma2/Desktop/GITHUB/td-trends/all_modes/annotations/'
 #%% Annual Ridership
 
 mode_colors = {'Subway*': 'rgba(114,158,206,0.8)',
-               'Commuter Rail*': 'rgba(168,120,110,0.8)',               
                'Bus*': 'rgba(103,191,92,0.8)',
                'Ferry*': 'rgba(237,151,202,0.8)',             
-               'Taxi**': 'rgba(255,158,74,0.8)',
-               'For-Hire Vehicle**': 'rgba(237,102,93,0.8)',
-               'Citi Bike**': 'rgba(109,204,218,0.8)',
-               'Bridges & Tunnels Traffic***': 'rgba(173,139,201,0.8)'}
+               'Commuter Rail*': 'rgba(168,120,110,0.8)',               
+               'Bridges & Tunnels**': 'rgba(173,139,201,0.8)',
+               'Taxi***': 'rgba(255,158,74,0.8)',
+               'For-Hire Vehicle***': 'rgba(237,102,93,0.8)',
+               'Citi Bike***': 'rgba(109,204,218,0.8)',
+               'Airport*': 'rgba(205,204,93,0.8)'}
 
 df = pd.read_csv(path + 'ridership_annual.csv')
 # df_total = df[['date', 'ridership']].groupby('date').sum().reset_index()
@@ -80,7 +81,7 @@ fig.update_layout(template = 'plotly_white',
                             'xanchor': 'center',
                             'y': 1,
                             'yanchor': 'bottom'},
-                  margin = {'b': 120,
+                  margin = {'b': 140,
                             'l': 80,
                             'r': 40,
                             't': 160},
@@ -91,7 +92,7 @@ fig.update_layout(template = 'plotly_white',
                            'range': [min(df['Year'])-0.5, max(df['Year'])+0.5],
                            'fixedrange': True,
                            'showgrid': False},
-                  yaxis = {'title':{'text': '<b>Ridership / Trips / Vehicles</b>',
+                  yaxis = {'title':{'text': '<b>Ridership / Vehicles / Trips</b>',
                                     'font_size': 14},
                            'tickfont_size': 12,
                            'rangemode': 'tozero',
@@ -103,7 +104,7 @@ fig.update_layout(template = 'plotly_white',
                   hovermode = 'x unified',
                   hoverlabel = {'font_size': 14})
 
-fig.add_annotation(text = '*Ridership; **Trips; ***Vehicles',
+fig.add_annotation(text = '<i>*Ridership; **Vehicles (MTA & PANYNJ Only); ***Trips</i>',
                     font_size = 14,
                     showarrow = False,
                     x = 1,
