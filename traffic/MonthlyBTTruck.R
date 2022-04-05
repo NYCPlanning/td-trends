@@ -1,15 +1,15 @@
 library(tidyverse)
 library(plotly)
 
-path='C:/Users/Y_Ma2/Desktop/GITHUB/td-trends/'
-# path='C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/'
+# path='C:/Users/Y_Ma2/Desktop/GITHUB/td-trends/'
+path='C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/'
 
 df=read.csv(paste0(path,'traffic/MonthlyBTTruck.csv'),stringsAsFactors=F,check.names=F)
 df=df %>%
   mutate(Date=as.Date(paste0(YearMonth,'01'),'%Y%m%d'))
 
 
-dfcolors=c('Auto'='rgba(162,162,162,0.8)',
+dfcolors=c('Automobile'='rgba(162,162,162,0.8)',
            'Truck'='rgba(237,102,93,0.8)')
 
 p=plot_ly()
@@ -22,17 +22,17 @@ p=p %>%
             hovertext=paste0('<b>Month: </b>',format(df[['Date']],'%b %Y')),
             hoverinfo='text')
 p=p %>%
-  add_trace(name='Auto',
+  add_trace(name='Automobile',
             type='scatter',
             mode='lines+markers',
             x=df[['Date']],
-            y=df[['Auto']],
-            line=list(color=dfcolors['Auto'],
+            y=df[['Automobile']],
+            line=list(color=dfcolors['Automobile'],
                       width=3),
-            marker=list(color=dfcolors['Auto'],
+            marker=list(color=dfcolors['Automobile'],
                         size=8),
             showlegend=T,
-            hovertext=paste0('<b>Auto: </b>',format(df[['Auto']],trim=T,big.mark=',')),
+            hovertext=paste0('<b>Automobile: </b>',format(df[['Automobile']],trim=T,big.mark=',')),
             hoverinfo='text')
 p=p %>%
   add_trace(name='Truck',
@@ -77,9 +77,9 @@ p=p %>%
                     showgrid=F),
          yaxis=list(title=list(text='<b>Number of Automobiles</b>',
                                font=list(size=14,
-                                         color=dfcolors['Auto'])),
+                                         color=sub(',0.8',',1.0',dfcolors['Automobile']))),
                     tickfont=list(size=12,
-                                  color=dfcolors['Auto']),
+                                  color=sub(',0.8',',1.0',dfcolors['Automobile'])),
                     rangemode='tozero',
                     fixedrange=T,
                     showgrid=T,
@@ -88,9 +88,9 @@ p=p %>%
                     zerolinewidth=2),
          yaxis2=list(title=list(text='<b>Number of Trucks</b>',
                                 font=list(size=14,
-                                          color=dfcolors['Truck'])),
+                                          color=sub(',0.8',',1.0',dfcolors['Truck']))),
                      tickfont=list(size=12,
-                                   color=dfcolors['Truck']),
+                                   color=sub(',0.8',',1.0',dfcolors['Truck'])),
                      side='right',
                      overlaying='y',
                      rangemode='tozero',
@@ -103,7 +103,7 @@ p=p %>%
          dragmode=F,
          hovermode='x unified')
 p=p %>% 
-  add_annotations(text='*MTA and PANYNJ (inbound only) bridges and tunnels',
+  add_annotations(text='<i>*MTA and PANYNJ (inbound only) bridges and tunnels</i>',
                   font=list(size=14),
                   showarrow=F,
                   x=1,
@@ -125,7 +125,9 @@ p=p %>%
                   yref='paper',
                   yshift=-100)
 p=p %>%
-  config(displayModeBar=F)
+  config(displayModeBar=T,
+         displaylogo=F,
+         modeBarButtonsToRemove=c('select','lasso2d'))
 p
 htmlwidgets::saveWidget(p,paste0(path,'traffic/MonthlyBTTruck.html'))
 
