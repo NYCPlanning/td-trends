@@ -80,7 +80,7 @@ p=p %>%
                      xanchor='center',
                      y=1,
                      yanchor='bottom'),
-         margin=list(b=120,
+         margin=list(b=140,
                      l=80,
                      r=80,
                      t=120),

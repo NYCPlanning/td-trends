@@ -50,7 +50,7 @@ fig.update_layout(
             'xanchor':'center',
             'y':1,
             'yanchor':'bottom'},
-    margin={'b':120,
+    margin={'b':140,
             'l':80,
             'r':40,
             't':120},
