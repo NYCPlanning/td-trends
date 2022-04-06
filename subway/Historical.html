@@ -415,6 +415,8 @@
                     zerolinewidth: 2,
                 },
                 hoverlabel: {
+                    bgcolor: 'rgba(255,255,255,0.95)',
+                    bordercolor: 'rgba(0,0,0,0.1)',
                     font: { size: 14 },
                 },
                 font: {
@@ -506,7 +508,7 @@
             var config = {
                 responsive: true,
                 displayModeBar: true,
-                displaylogo:false,
+                displaylogo: false,
             };
             Plotly.react('chart',
                 [trace1, trace2],
