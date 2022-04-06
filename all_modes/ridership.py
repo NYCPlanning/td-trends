@@ -112,7 +112,9 @@ fig.update_layout(template = 'plotly_white',
                           'color': 'black'},
                   dragmode = False,
                   hovermode = 'x unified',
-                  hoverlabel = {'font_size': 14})
+                  hoverlabel = {'bgcolor':'rgba(255,255,255,0.95)',
+                                'bordercolor':'rgba(0,0,0,0.1)',
+                                'font_size': 14})
 
 fig.add_annotation(text = '<i>*Ridership; **Vehicles (MTA & PANYNJ Only); ***Trips</i>',
                     font_size = 14,
@@ -239,7 +241,9 @@ fig.update_layout(template = 'plotly_white',
                           'color': 'black'},
                   dragmode = False,
                   hovermode = 'x unified',
-                  hoverlabel = {'font_size': 14})
+                  hoverlabel = {'bgcolor':'rgba(255,255,255,0.95)',
+                                'bordercolor':'rgba(0,0,0,0.1)',
+                                'font_size': 14})
 
 fig.add_annotation(text = '<i>*Ridership; **Vehicles (MTA & PANYNJ Only); ***Trips</i>',
                     font_size = 14,

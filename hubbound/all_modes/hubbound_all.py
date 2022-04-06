@@ -90,7 +90,9 @@ fig.update_layout(template = 'plotly_white',
                           'color': 'black'},
                   dragmode = False,
                   hovermode = 'x unified',
-                  hoverlabel = {'font_size': 14})
+                  hoverlabel = {'bgcolor':'rgba(255,255,255,0.95)',
+                                'bordercolor':'rgba(0,0,0,0.1)',
+                                'font_size': 14})
 
 fig.add_annotation(text = 'Data Source: <a href="https://www.nymtc.org/Data-and-Modeling/Transportation-Data-and-Statistics/Publications/Hub-Bound-Travel" target="blank">NYMTC Hub Bound Travel </a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/hubbound/all_modes/hubbound_all.csv" target="blank">Download Chart Data</a>',
                    font_size = 14,
