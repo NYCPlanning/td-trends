@@ -13,21 +13,31 @@ pio.renderers.default = 'browser'
 
 path = 'C:/Users/M_Free/Desktop/td-trends/all_modes/annotations/'
 path='C:/Users/Y_Ma2/Desktop/GITHUB/td-trends/all_modes/annotations/'
-# path='C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/all_modes/annotations/'
+path='C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/all_modes/annotations/'
 
 
 
 #%% Annual Ridership
 
-mode_colors = {'Subway*': 'rgba(114,158,206,0.8)',
-               'Bus*': 'rgba(103,191,92,0.8)',
-               'Ferry*': 'rgba(237,151,202,0.8)',             
-               'Commuter Rail*': 'rgba(168,120,110,0.8)',               
-               'Bridges & Tunnels**': 'rgba(173,139,201,0.8)',
-               'Taxi***': 'rgba(255,158,74,0.8)',
-               'For-Hire Vehicle***': 'rgba(237,102,93,0.8)',
-               'Citi Bike***': 'rgba(109,204,218,0.8)',
-               'Airport*': 'rgba(205,204,93,0.8)'}
+mode_colors = {'Subway': 'rgba(114,158,206,0.8)',
+               'Bus': 'rgba(103,191,92,0.8)',
+               'Ferry': 'rgba(237,151,202,0.8)',             
+               'Commuter Rail': 'rgba(168,120,110,0.8)',               
+               'Bridges & Tunnels': 'rgba(173,139,201,0.8)',
+               'Taxi': 'rgba(255,158,74,0.8)',
+               'For-Hire Vehicle': 'rgba(237,102,93,0.8)',
+               'Citi Bike': 'rgba(109,204,218,0.8)',
+               'Airport': 'rgba(205,204,93,0.8)'}
+
+mode_notes={'Subway': '*',
+            'Bus': '*',
+            'Ferry': '*',             
+            'Commuter Rail': '*',    
+            'Bridges & Tunnels': '**',
+            'Taxi': '***',
+            'For-Hire Vehicle': '***',
+            'Citi Bike': '***',
+            'Airport': '*'}
 
 df = pd.read_csv(path + 'ridership_annual.csv')
 # df_total = df[['date', 'ridership']].groupby('date').sum().reset_index()
@@ -49,7 +59,7 @@ fig = fig.add_trace(go.Scatter(x = df.loc[df['Mode'] == 'Citi Bike', 'Year'],
                                hovertext = ['<b>Year: </b>' + str(x) for x in df.loc[df['Mode'] == 'Citi Bike', 'Year']]))
 
 for mode, color in mode_colors.items():
-    fig = fig.add_trace(go.Scatter(name = mode,
+    fig = fig.add_trace(go.Scatter(name = mode+mode_notes[mode],
                                    x = df.loc[df['Mode'] == mode, 'Year'],
                                    y = df.loc[df['Mode'] == mode, 'Value'],
                                    mode = 'lines+markers',
@@ -129,22 +139,34 @@ fig.add_annotation(text = 'Data Source: <a href="https://github.com/NYCPlanning/
 fig
 
 fig.write_html(path + 'ridership_annual.html',
-              include_plotlyjs='cdn',
-              config={'displayModeBar':False})
+               include_plotlyjs='cdn',
+               config={'displayModeBar':True,
+                       'displaylogo':False,
+                       'modeBarButtonsToRemove':['select',
+                                                 'lasso2d']})
 
 # https://nycplanning.github.io/td-trends/all_modes/annotations/annual_ridership.html')   
 
 #%% Monthly Ridership as % of 2019 
+mode_colors = {'Subway': 'rgba(114,158,206,0.8)',
+               'Bus': 'rgba(103,191,92,0.8)',
+               'Ferry': 'rgba(237,151,202,0.8)',             
+               'Commuter Rail': 'rgba(168,120,110,0.8)',               
+               'Bridges & Tunnels': 'rgba(173,139,201,0.8)',
+               'Taxi': 'rgba(255,158,74,0.8)',
+               'For-Hire Vehicle': 'rgba(237,102,93,0.8)',
+               'Citi Bike': 'rgba(109,204,218,0.8)',
+               'Airport': 'rgba(205,204,93,0.8)'}
 
-mode_colors = {'Subway*': 'rgba(114,158,206,0.8)',
-               'Bus*': 'rgba(103,191,92,0.8)',
-               'Ferry*': 'rgba(237,151,202,0.8)',             
-               'Commuter Rail*': 'rgba(168,120,110,0.8)',               
-               'Bridges & Tunnels**': 'rgba(173,139,201,0.8)',
-               'Taxi***': 'rgba(255,158,74,0.8)',
-               'For-Hire Vehicle***': 'rgba(237,102,93,0.8)',
-               'Citi Bike***': 'rgba(109,204,218,0.8)',
-               'Airport*': 'rgba(205,204,93,0.8)'}
+mode_notes={'Subway': '*',
+            'Bus': '*',
+            'Ferry': '*',             
+            'Commuter Rail': '*',    
+            'Bridges & Tunnels': '**',
+            'Taxi': '***',
+            'For-Hire Vehicle': '***',
+            'Citi Bike': '***',
+            'Airport': '*'}
 
 df = pd.read_csv(path + 'ridership_covid.csv')
 # df_total = df[['date', 'ridership']].groupby('date').sum().reset_index()
@@ -156,15 +178,15 @@ df['YearMonth']=[datetime.datetime.strptime(str(x)+'-01','%Y-%m-%d') for x in df
 
 fig = go.Figure()
 
-fig = fig.add_trace(go.Scatter(x = df.loc[df['Mode'] == 'Commuter Rail*', 'YearMonth'],
-                               y = df.loc[df['Mode'] == 'Commuter Rail*', '% of 2019'],
+fig = fig.add_trace(go.Scatter(x = df.loc[df['Mode'] == 'Commuter Rail', 'YearMonth'],
+                               y = df.loc[df['Mode'] == 'Commuter Rail', '% of 2019'],
                                mode = 'none',
                                showlegend = False,
                                hoverinfo = 'text',
-                               hovertext = ['<b>Month: </b>' + datetime.datetime.strftime(x,'%b %Y') for x in df.loc[df['Mode'] == 'Commuter Rail*', 'YearMonth']]))
+                               hovertext = ['<b>Month: </b>' + datetime.datetime.strftime(x,'%b %Y') for x in df.loc[df['Mode'] == 'Commuter Rail', 'YearMonth']]))
 
 for mode, color in mode_colors.items():
-    fig = fig.add_trace(go.Scatter(name = mode,
+    fig = fig.add_trace(go.Scatter(name = mode+mode_notes[mode],
                                    x = df.loc[df['Mode'] == mode, 'YearMonth'],
                                    y = df.loc[df['Mode'] == mode, '% of 2019'],
                                    mode = 'lines+markers',
@@ -219,7 +241,7 @@ fig.update_layout(template = 'plotly_white',
                   hovermode = 'x unified',
                   hoverlabel = {'font_size': 14})
 
-fig.add_annotation(text = '*Ridership; **Vehicles (MTA & PANYNJ Only); ***Trips',
+fig.add_annotation(text = '<i>*Ridership; **Vehicles (MTA & PANYNJ Only); ***Trips</i>',
                     font_size = 14,
                     showarrow = False,
                     x = 1,
@@ -244,7 +266,10 @@ fig.add_annotation(text = 'Data Source: <a href="https://github.com/NYCPlanning/
 fig
 
 fig.write_html(path + 'ridership_covid.html',
-              include_plotlyjs='cdn',
-              config={'displayModeBar':False})
+               include_plotlyjs='cdn',
+               config={'displayModeBar':True,
+                       'displaylogo':False,
+                       'modeBarButtonsToRemove':['select',
+                                                 'lasso2d']})
 
 # https://nycplanning.github.io/td-trends/all_modes/annotations/ridership_covid.html')   
