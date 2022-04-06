@@ -1,0 +1,49 @@
+RES,MN,TT,PWGTP,TOTAL,% TT
+Inner New Jersey,Manhattan Bound,30 to 59 Mins,105725,302549,0.34944752750794084
+Inner New Jersey,Manhattan Bound,60 to 89 Mins,113206,302549,0.3741741007241802
+Inner New Jersey,Manhattan Bound,90 Mins or More,66348,302549,0.2192967089628457
+Inner New Jersey,Manhattan Bound,Less than 30 Mins,17270,302549,0.05708166280503323
+Inner New Jersey,Non-Manhattan Bound,30 to 59 Mins,21002,66154,0.3174713547177797
+Inner New Jersey,Non-Manhattan Bound,60 to 89 Mins,25180,66154,0.3806270217976237
+Inner New Jersey,Non-Manhattan Bound,90 Mins or More,15026,66154,0.22713668107748586
+Inner New Jersey,Non-Manhattan Bound,Less than 30 Mins,4946,66154,0.07476494240711068
+Long Island,Manhattan Bound,30 to 59 Mins,23898,150963,0.15830369030822122
+Long Island,Manhattan Bound,60 to 89 Mins,63050,150963,0.417652007445533
+Long Island,Manhattan Bound,90 Mins or More,53926,150963,0.3572133569152706
+Long Island,Manhattan Bound,Less than 30 Mins,10089,150963,0.06683094533097514
+Long Island,Non-Manhattan Bound,30 to 59 Mins,62171,149580,0.415637117261666
+Long Island,Non-Manhattan Bound,60 to 89 Mins,39493,149580,0.26402593929669743
+Long Island,Non-Manhattan Bound,90 Mins or More,22485,149580,0.15032089851584438
+Long Island,Non-Manhattan Bound,Less than 30 Mins,25431,149580,0.17001604492579223
+Lower Hudson Valley,Manhattan Bound,30 to 59 Mins,32226,112495,0.28646606515845147
+Lower Hudson Valley,Manhattan Bound,60 to 89 Mins,48926,112495,0.43491710742699674
+Lower Hudson Valley,Manhattan Bound,90 Mins or More,25263,112495,0.22456998088803948
+Lower Hudson Valley,Manhattan Bound,Less than 30 Mins,6080,112495,0.05404684652651229
+Lower Hudson Valley,Non-Manhattan Bound,30 to 59 Mins,25041,60403,0.41456550171349105
+Lower Hudson Valley,Non-Manhattan Bound,60 to 89 Mins,12757,60403,0.21119811929871032
+Lower Hudson Valley,Non-Manhattan Bound,90 Mins or More,7285,60403,0.12060659238779531
+Lower Hudson Valley,Non-Manhattan Bound,Less than 30 Mins,15320,60403,0.2536297866000033
+Mid Hudson Valley,Manhattan Bound,30 to 59 Mins,2230,20582,0.10834709940724906
+Mid Hudson Valley,Manhattan Bound,60 to 89 Mins,3287,20582,0.15970265280342047
+Mid Hudson Valley,Manhattan Bound,90 Mins or More,12853,20582,0.6244776989602565
+Mid Hudson Valley,Manhattan Bound,Less than 30 Mins,2212,20582,0.10747254882907395
+Mid Hudson Valley,Non-Manhattan Bound,30 to 59 Mins,1378,11893,0.11586647607836542
+Mid Hudson Valley,Non-Manhattan Bound,60 to 89 Mins,4124,11893,0.3467585974943244
+Mid Hudson Valley,Non-Manhattan Bound,90 Mins or More,5599,11893,0.4707811317581771
+Mid Hudson Valley,Non-Manhattan Bound,Less than 30 Mins,792,11893,0.06659379466913311
+Outer New Jersey,Manhattan Bound,30 to 59 Mins,2643,39952,0.06615438526231478
+Outer New Jersey,Manhattan Bound,60 to 89 Mins,9288,39952,0.23247897476972368
+Outer New Jersey,Manhattan Bound,90 Mins or More,26298,39952,0.6582398878654385
+Outer New Jersey,Manhattan Bound,Less than 30 Mins,1723,39952,0.04312675210252303
+Outer New Jersey,Non-Manhattan Bound,30 to 59 Mins,3121,12991,0.24024324532368563
+Outer New Jersey,Non-Manhattan Bound,60 to 89 Mins,3889,12991,0.29936109614348394
+Outer New Jersey,Non-Manhattan Bound,90 Mins or More,4929,12991,0.3794165191286275
+Outer New Jersey,Non-Manhattan Bound,Less than 30 Mins,1052,12991,0.08097913940420291
+Western Connecticut,Manhattan Bound,30 to 59 Mins,2755,34112,0.08076336772983114
+Western Connecticut,Manhattan Bound,60 to 89 Mins,11252,34112,0.3298545966228893
+Western Connecticut,Manhattan Bound,90 Mins or More,18311,34112,0.5367905722326454
+Western Connecticut,Manhattan Bound,Less than 30 Mins,1794,34112,0.052591463414634144
+Western Connecticut,Non-Manhattan Bound,30 to 59 Mins,1116,6067,0.18394593703642656
+Western Connecticut,Non-Manhattan Bound,60 to 89 Mins,2050,6067,0.3378935223339377
+Western Connecticut,Non-Manhattan Bound,90 Mins or More,2139,6067,0.35256304598648425
+Western Connecticut,Non-Manhattan Bound,Less than 30 Mins,762,6067,0.12559749464315148
