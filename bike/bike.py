@@ -203,7 +203,7 @@ fig = fig.add_trace(go.Scatter(x = hover_title['date'],
                                mode = 'none',
                                showlegend = False,
                                hoverinfo = 'text',
-                               hovertext = '<b>Month: </b>' + hover_title['date'].map('{:%b %y}'.format)))
+                               hovertext = '<b>Month: </b>' + hover_title['date'].map('{:%b %Y}'.format)))
 
 fig.update_layout(template = 'plotly_white',
                   title = {'text': '<b>Automatic Bicycle Counts</b>',
@@ -239,7 +239,9 @@ fig.update_layout(template = 'plotly_white',
                            'showgrid': True},
                   font = {'family': 'Arial',
                           'color': 'black'},
-                  hoverlabel = {'font_size': 14},
+                  hoverlabel={'bgcolor':'rgba(255,255,255,0.95)',
+                              'bordercolor':'rgba(0,0,0,0.1)',
+                              'font_size':14},
                   dragmode = False,
                   hovermode = 'x unified')
 
@@ -256,10 +258,10 @@ fig.add_annotation(text = 'Data Source: <a href="https://data.cityofnewyork.us/T
 
 fig
 
-# fig.write_html(path + 'counts.html',
-#                 include_plotlyjs='cdn',
-#                 config={'displayModeBar':True,
-#                         'displaylogo':False})
+fig.write_html(path + 'counts.html',
+                include_plotlyjs='cdn',
+                config={'displayModeBar':True,
+                        'displaylogo':False})
 
 # print('Chart Available at: https://nycplanning.github.io/td-trends/bike/annotations/counts.html')
 
@@ -373,7 +375,9 @@ fig.update_layout(template = 'plotly_white',
                           'rangemode':'tozero',
                           'fixedrange':True,
                           'showgrid':False},
-                  hoverlabel = {'font_size': 14}, 
+                  hoverlabel={'bgcolor':'rgba(255,255,255,0.95)',
+                              'bordercolor':'rgba(0,0,0,0.1)',
+                              'font_size':14},
                   font = {'family': 'Arial',
                           'color': 'black'},
                   dragmode = False,
@@ -391,12 +395,13 @@ fig.add_annotation(text = 'Data Source: <a href="https://ride.citibikenyc.com/sy
                    yshift=-100)
 fig
 
-# fig.write_html(path + 'citibike.html', 
-#                 include_plotlyjs='cdn',
-#                 config={'displayModeBar':True,
-#                         'displaylogo':False,
-#                         'modeBarButtonsToRemove':['select',
-#                                                   'lasso2d']})
+fig.write_html(path + 'citibike.html', 
+                include_plotlyjs='cdn',
+                config={'displayModeBar':True,
+                        'displaylogo':False,
+                        'modeBarButtonsToRemove':['select',
+                                                  'lasso2d']})
+
 # print('Chart Available at: https://nycplanning.github.io/td-trends/bike/annotations/citibike.html')
 
 
