@@ -20,20 +20,27 @@ fig=go.Figure()
 fig=fig.add_trace(go.Scatter(name='',
                              mode='none',
                              x=list(range(0,len(df))),
-                             y=df['Weekday AM Peak'],
+                             y=df['Weekday AM Peak (Manhattan)'],
                              showlegend=False,
                              hovertext=['<b>Year: </b>'+str(x) for x in df['Year']],
                              hoverinfo='text'))
 for i in ['Weekday AM Peak','Weekday PM Peak','Saturday Midday']:
-    fig=fig.add_trace(go.Scatter(name=i,
-                                 mode='lines+markers',
+    fig=fig.add_trace(go.Scatter(name=i+' (Manhattan)',
+                                 mode='lines',
                                  x=list(range(0,len(df))),
-                                 y=df[i],
+                                 y=df[i+' (Manhattan)'],
                                  line={'color':dfcolors[i],
-                                       'width':2},
-                                 marker = {'color': dfcolors[i],
-                                           'size': 6},
-                                 hovertext=['<b>'+str(i)+': </b>'+'{:,.0f}'.format(x) for x in df[i]],
+                                       'width':3},
+                                 hovertext=['<b>'+str(i+' (Manhattan)')+': </b>'+'{:,.0f}'.format(x) for x in df[i+' (Manhattan)']],
+                                 hoverinfo='text'))
+    fig=fig.add_trace(go.Scatter(name=i+' (Other Boroughs)',
+                                 mode='lines',
+                                 x=list(range(0,len(df))),
+                                 y=df[i+' (Other Boroughs)'],
+                                 line={'color':dfcolors[i],
+                                       'width':3,
+                                       'dash':'dot'},
+                                 hovertext=['<b>'+str(i+' (Other Boroughs)')+': </b>'+'{:,.0f}'.format(x) for x in df[i+' (Other Boroughs)']],
                                  hoverinfo='text'))
 fig.update_layout(
     template='plotly_white',
@@ -53,7 +60,7 @@ fig.update_layout(
     margin={'b':140,
             'l':80,
             'r':40,
-            't':120},
+            't':220},
     xaxis={'title':{'text':'<b>Year</b>',
                     'font_size':14},
            'tickfont_size':12,
@@ -64,7 +71,7 @@ fig.update_layout(
            'fixedrange':True,
            'showgrid':False,
            'zeroline':False},
-    yaxis={'title':{'text':'<b>Hourly Total</b>',
+    yaxis={'title':{'text':'<b>Hourly Total per Location</b>',
                     'font_size':14},
            'tickfont_size':12,
            'rangemode':'tozero',
@@ -100,9 +107,7 @@ fig.add_annotation(
 fig.write_html(path+'ped/pedcounts.html',
                include_plotlyjs='cdn',
                config={'displayModeBar':True,
-                       'displaylogo':False,
-                       'modeBarButtonsToRemove':['select',
-                                                 'lasso2d']})
+                       'displaylogo':False})
 
 
 
