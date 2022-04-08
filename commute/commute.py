@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 Travel Conditions and Trends Update for Commuting 
-Source: 2019 ACS 5-Year PUMS 
+Source: ACS 5-Year PUMS 
 """
 import pandas as pd
 import numpy as np
@@ -13,13 +13,13 @@ pio.renderers.default = 'browser'
 path = 'C:/Users/M_Free/Desktop/td-trends/commute/'
 # path = '/Users/Work/Desktop/GitHub/td-trends/commute/'
 # path = 'C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/commute/'
-local_path = 'C:/Users/M_Free/OneDrive - NYC O365 HOSTED/Projects/Conditions & Trends/Dec 2021/Input/'
-#local_path = '/Users/Work/OneDrive - NYC O365 HOSTED/Projects/Conditions & Trends/Dec 2021/Input/'
+local_path = 'C:/Users/M_Free/OneDrive - NYC O365 HOSTED/Projects/Conditions & Trends/Input/'
+#local_path = '/Users/Work/OneDrive - NYC O365 HOSTED/Projects/Conditions & Trends/Input/'
 
 # import ny, nj, ct, and pa pums files as one df
-file_list = ['csv_pny.csv', 
-             'csv_pct.csv', 
-             'csv_pnj.csv']
+file_list = ['PUMS 2015-2019/csv_pny.csv', 
+             'PUMS 2015-2019/csv_pct.csv', 
+             'PUMS 2015-2019/csv_pnj.csv']
 
 col_list = ['SERIALNO', 
             'ST', 
@@ -62,7 +62,7 @@ codes_df = pd.read_excel(local_path + 'puma_codes.xlsx', dtype = str)
 codes_dict = {}
 for col in codes_df.columns: 
         codes_dict[col] = codes_df[col].dropna().to_list()
-
+        
 #%% WORKERS LIVING IN NYC
 
 # create primary dataset for workers who live in nyc and work in nyc or the region
