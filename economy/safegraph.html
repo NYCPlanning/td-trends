@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title> Mastercard </title>
+    <title> SafeGraph </title>
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
     <script src="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js"></script>
     <link href="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css" rel="stylesheet" />
@@ -176,7 +176,7 @@
     <nav id="legend">
         <div class="container g-0">
             <div class="row g-0 justify-content-between" id="header">
-                <div class="col-auto"> Mastercard Transaction Count </div>
+                <div class="col-auto"> SafeGraph Device Count </div>
                 <div class="col-auto">
                     <i class="bi bi-chevron-down" id='chevron'></i>
                 </div>
@@ -251,7 +251,7 @@
             var layerContent = {
                 'sourceid': 'nadir', // source id
                 'sourcetype': 'geojson', // source type
-                'sourcedata': 'mastercard.geojson', // data source
+                'sourcedata': 'safegraph.geojson', // data source
                 'layerid': 'nadir', // layer id
                 'layertype': 'fill', // symbology type
                 'layername': '% of April 2019', // layer name for the legend
@@ -310,7 +310,8 @@
             // Add click event
             map1.on('click', 'nadir', function (e) {
                 var coordinates = e.lngLat; // get pointer coordinates
-                var description = "<b>Zipcode: </b><span>" + e.features[0].properties.zipcode + "</span><br>"; // description in the popup
+                var description = "<b>NTA Code: </b><span>" + e.features[0].properties.ntacode + "</span><br>"; // description in the popup
+                description += "<b>NTA Name: </b><span>" + e.features[0].properties.ntaname + "</span><br>";
                 description += "<b>April 2020 As Percentage of April 2019: </b><span>" + (Number(e.features[0].properties.nadir) * 100).toFixed(2) + "%</span><br>";
                 popup.setLngLat(coordinates).setHTML(description).addTo(map1); //add popup
             });
@@ -380,7 +381,7 @@
             style: 'mapbox://styles/mapbox/light-v10', // light base map
             hash: true, // make sure it's on to get the url with map view
             attributionControl: true, // show the credit bar
-            customAttribution: '<b> Data Sources: Mastercard</b>', // add overall credit to the beggining
+            customAttribution: '<b> Data Sources: SafeGraph</b>', // add overall credit to the beggining
             logoPosition: 'bottom-left', // no need to change 
             preserveDrawingBuffer: true, // make sure it's on to allow printing
             center: [-74.0197, 40.721], // testing to get the centroid of bounds
@@ -399,7 +400,7 @@
             var layerContent = {
                 'sourceid': 'recovery', // source id
                 'sourcetype': 'geojson', // source type
-                'sourcedata': 'mastercard.geojson', // data source
+                'sourcedata': 'safegraph.geojson', // data source
                 'layerid': 'recovery', // layer id
                 'layertype': 'fill', // symbology type
                 'layername': '% of April 2019', // layer name for the legend
@@ -457,7 +458,8 @@
             // Add click event
             map2.on('click', 'recovery', function (e) {
                 var coordinates = e.lngLat; // get pointer coordinates
-                var description = "<b>Zipcode: </b><span>" + e.features[0].properties.zipcode + "</span><br>"; // description in the popup
+                var description = "<b>NTA Code: </b><span>" + e.features[0].properties.ntacode + "</span><br>"; // description in the popup
+                description += "<b>NTA Name: </b><span>" + e.features[0].properties.ntaname + "</span><br>";
                 description += "<b>April 2021 As Percentage of April 2019: </b><span>" + (Number(e.features[0].properties.recovery) * 100).toFixed(2) + "%</span><br>";
                 popup.setLngLat(coordinates).setHTML(description).addTo(map1); //add popup
                 popup.setLngLat(coordinates).setHTML(description).addTo(map2); //add popup
