@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title> Mastercard </title>
+    <title> Mastercard & SafeGraph </title>
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
     <script src="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js"></script>
     <link href="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css" rel="stylesheet" />
@@ -46,7 +46,7 @@
             position: absolute;
             top: 1rem;
             left: 1rem;
-            width: 18rem;
+            width: 16rem;
             height: auto;
             max-height: 90%;
             padding-top: 1rem;
@@ -123,7 +123,7 @@
         #title1-nav {
             position: absolute;
             right: 50%;
-            top: 1rem;
+            bottom: 2.5rem;
         }
 
         #title1 {
@@ -146,7 +146,7 @@
         #title2-nav {
             position: absolute;
             left: 50%;
-            top: 1rem;
+            bottom: 2.5rem;
         }
 
         #title2 {
@@ -176,7 +176,7 @@
     <nav id="legend">
         <div class="container g-0">
             <div class="row g-0 justify-content-between" id="header">
-                <div class="col-auto"> Mastercard Transaction Count </div>
+                <div class="col-auto"> Mastercard & SafeGraph </div>
                 <div class="col-auto">
                     <i class="bi bi-chevron-down" id='chevron'></i>
                 </div>
@@ -190,14 +190,14 @@
     <nav id="title1-nav">
         <div class="container g-0">
             <div class="row g-0 justify-content-center">
-                <div class="col-auto" id="title1"> April 2020 </div>
+                <div class="col-auto" id="title1"> Mastercard Transaction Count </div>
             </div>
         </div>
     </nav>
     <nav id="title2-nav">
         <div class="container g-0">
             <div class="row g-0 justify-content-center">
-                <div class="col-auto" id="title2"> April 2021 </div>
+                <div class="col-auto" id="title2"> SafeGraph Device Count</div>
             </div>
         </div>
     </nav>
@@ -246,18 +246,18 @@
                 'bottom-left', // control position
             );
 
-            // Add nadir
+            // Add mastercard
             // Set layer contents
             var layerContent = {
-                'sourceid': 'nadir', // source id
+                'sourceid': 'mastercard', // source id
                 'sourcetype': 'geojson', // source type
                 'sourcedata': 'mastercard.geojson', // data source
-                'layerid': 'nadir', // layer id
+                'layerid': 'mastercard', // layer id
                 'layertype': 'fill', // symbology type
-                'layername': '% of April 2019', // layer name for the legend
+                'layername': 'April 2021 as % of April 2019', // layer name for the legend
                 'layervisibility': 'visible', // visibility of the layer
-                'layercolname': 'nadircat', // category column name
-                'layercat': ['>=120%', '100%~119%', '80%~99%', '60%~79%', '<60%'], // categories
+                'layercolname': 'recoverycat', // category column name
+                'layercat': ['>=140%', '120%~139%', '100%~119%', '80%~99%', '<80%'], // categories
                 'layercolor': ['rgba(174,199,232,1)', 'rgba(152,223,138,1)', 'rgba(219,219,141,1)', 'rgba(255,187,120,1)', 'rgba(255,152,150,1)'], // color for each category; use rgba
                 'layeroutlinecolor': 'rgba(255, 255, 255, 0.5)'
             };
@@ -306,25 +306,25 @@
             });
 
 
-            // Add nadir popup
+            // Add mastercard popup
             // Add click event
-            map1.on('click', 'nadir', function (e) {
+            map1.on('click', 'mastercard', function (e) {
                 var coordinates = e.lngLat; // get pointer coordinates
                 var description = "<b>Zipcode: </b><span>" + e.features[0].properties.zipcode + "</span><br>"; // description in the popup
-                description += "<b>April 2020 As Percentage of April 2019: </b><span>" + (Number(e.features[0].properties.nadir) * 100).toFixed(2) + "%</span><br>";
+                description += "<b>April 2021 as % of April 2019: </b><span>" + (Number(e.features[0].properties.nadir) * 100).toFixed(2) + "%</span><br>";
                 popup.setLngLat(coordinates).setHTML(description).addTo(map1); //add popup
             });
             // Add hover events
-            map1.on('mouseenter', 'nadir', function () {
+            map1.on('mouseenter', 'mastercard', function () {
                 map1.getCanvas().style.cursor = 'pointer'; // mouse becoming pointer
             });
-            map1.on('mouseleave', 'nadir', function () {
+            map1.on('mouseleave', 'nmastercardadir', function () {
                 map1.getCanvas().style.cursor = '';
             });
 
 
             // Add layer selector and legend
-            var layerOrder = ['nadir']; // set layer order in the legend
+            var layerOrder = ['mastercard']; // set layer order in the legend
             var layerContentListOrder = []; // create ordered layer content list
             for (var i = 0; i < layerOrder.length; i++) {
                 layerContentListOrder.push(layerContentList.filter(e => e.layerid == layerOrder[i])[0]);
@@ -380,7 +380,7 @@
             style: 'mapbox://styles/mapbox/light-v10', // light base map
             hash: true, // make sure it's on to get the url with map view
             attributionControl: true, // show the credit bar
-            customAttribution: '<b> Data Sources: Mastercard</b>', // add overall credit to the beggining
+            customAttribution: '<b> Data Sources: Mastercard; SafeGraph</b>', // add overall credit to the beggining
             logoPosition: 'bottom-left', // no need to change 
             preserveDrawingBuffer: true, // make sure it's on to allow printing
             center: [-74.0197, 40.721], // testing to get the centroid of bounds
@@ -394,18 +394,18 @@
 
             var layerContentList = []; // store all the layer contents
 
-            // Add recovery
+            // Add safegraph
             // Set layer contents
             var layerContent = {
-                'sourceid': 'recovery', // source id
+                'sourceid': 'safegraph', // source id
                 'sourcetype': 'geojson', // source type
-                'sourcedata': 'mastercard.geojson', // data source
-                'layerid': 'recovery', // layer id
+                'sourcedata': 'safegraph.geojson', // data source
+                'layerid': 'safegraph', // layer id
                 'layertype': 'fill', // symbology type
                 'layername': '% of April 2019', // layer name for the legend
                 'layervisibility': 'visible', // visibility of the layer
                 'layercolname': 'recoverycat', // category column name
-                'layercat': ['>=120%', '100%~119%', '80%~99%', '60%~79%', '<60%'], // categories
+                'layercat': ['>=140%', '120%~139%', '100%~119%', '80%~99%', '<80%'], // categories
                 'layercolor': ['rgba(174,199,232,1)', 'rgba(152,223,138,1)', 'rgba(219,219,141,1)', 'rgba(255,187,120,1)', 'rgba(255,152,150,1)'], // color for each category; use rgba
                 'layeroutlinecolor': 'rgba(255, 255, 255, 0.5)'
             };
@@ -455,17 +455,19 @@
 
             // Add recovery popup
             // Add click event
-            map2.on('click', 'recovery', function (e) {
+            map2.on('click', 'safegraph', function (e) {
                 var coordinates = e.lngLat; // get pointer coordinates
-                var description = "<b>Zipcode: </b><span>" + e.features[0].properties.zipcode + "</span><br>"; // description in the popup
-                description += "<b>April 2021 As Percentage of April 2019: </b><span>" + (Number(e.features[0].properties.recovery) * 100).toFixed(2) + "%</span><br>";
+                var description = "<b>NTA Code: </b><span>" + e.features[0].properties.ntacode + "</span><br>"; // description in the popup
+                description += "<b>NTA Name: </b><span>" + e.features[0].properties.ntaname + "</span><br>";
+                description += "<b>April 2021 as Percentage of April 2019: </b><span>" + (Number(e.features[0].properties.recovery) * 100).toFixed(2) + "%</span><br>";
+                popup.setLngLat(coordinates).setHTML(description).addTo(map1); //add popup
                 popup.setLngLat(coordinates).setHTML(description).addTo(map2); //add popup
             });
             // Add hover events
-            map2.on('mouseenter', 'recovery', function () {
+            map2.on('mouseenter', 'safegraph', function () {
                 map2.getCanvas().style.cursor = 'pointer'; // mouse becoming pointer
             });
-            map2.on('mouseleave', 'recovery', function () {
+            map2.on('mouseleave', 'safegraph', function () {
                 map2.getCanvas().style.cursor = '';
             });
 
