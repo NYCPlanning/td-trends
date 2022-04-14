@@ -41,7 +41,7 @@ for cat, color in cat_colors.items():
                                    hovertext = ['<b>'+cat+': </b>'+'{:.0%}'.format(x) for x in df[cat]]))
 
 fig.update_layout(template = 'plotly_white',
-                  title = {'text': '<b>Monthly Economy Trends During Pandemic</b>',
+                  title = {'text': '<b>Monthly Economic Trends During Pandemic</b>',
                            'font_size': 20,
                            'x': 0.5,
                            'xanchor':'center',
