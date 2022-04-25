@@ -8,13 +8,11 @@ import numpy as np
 import plotly.graph_objects as go
 import plotly.io as pio
 import plotly.subplots as ps
+import xlsxwriter
 
 pio.renderers.default = 'browser'
 path = 'C:/Users/M_Free/Desktop/td-trends/commute/'
-# path = '/Users/Work/Desktop/GitHub/td-trends/commute/'
-# path = 'C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/commute/'
-local_path = 'C:/Users/M_Free/OneDrive - NYC O365 HOSTED/Projects/Conditions & Trends/Input/'
-#local_path = '/Users/Work/OneDrive - NYC O365 HOSTED/Projects/Conditions & Trends/Input/'
+local_path = 'C:/Users/M_Free/OneDrive - NYC O365 HOSTED/Projects/Conditions & Trends/'
 
 # import ny, nj, ct, and pa pums files as one df
 file_list = ['PUMS 2015-2019/csv_pny.csv', 
@@ -35,7 +33,7 @@ col_list = ['SERIALNO',
 
 pums_list = []
 for file in file_list: 
-    df = pd.read_csv(local_path + file, 
+    df = pd.read_csv(local_path + 'Input/' + file, 
                      usecols = col_list, 
                      dtype = {'SERIALNO': str,
                               'ST': str, 
@@ -57,7 +55,7 @@ pums_df['STPUMA'] = pums_df['ST'] + pums_df['PUMA']
 pums_df['POWSPPUMA'] = pums_df['POWSP'] + pums_df['POWPUMA']
     
 # create dictionary with puma codes for nyc, the region and their subgeos
-codes_df = pd.read_excel(local_path + 'puma_codes.xlsx', dtype = str)
+codes_df = pd.read_excel(local_path + 'Input/puma_codes.xlsx', dtype = str)
 
 codes_dict = {}
 for col in codes_df.columns: 
@@ -1293,3 +1291,39 @@ fig
 #                                                   'lasso2d']})
 
 # https://nycplanning.github.io/td-trends/commute/annotations/tt_reg.html
+
+#%% Commuter Summary Tables
+
+# nyc live & work
+export_nyc_li = ['RES', 'POW', 'DEST', 'TM', 'TT', 'AMI', 'PWGTP']
+export_nyc_df = nyc_commuters[export_nyc_li].groupby(export_nyc_li[:6]).sum().reset_index()
+export_nyc_df = export_nyc_df.rename(columns = {'RES': 'Home Borough', 
+                                                'POW': 'Work Borough', 
+                                                'DEST': 'Destination',
+                                                'TM': 'Travel Mode',
+                                                'TT': 'Travel Time', 
+                                                'PWGTP': 'Number of People'})
+
+# nyc live & reg work
+export_nycreg_li = ['RES', 'TM', 'TT', 'AMI', 'PWGTP']
+export_nycreg_df = nyc_commuters.loc[nyc_commuters['POW'] == 'Region']
+export_nycreg_df = export_nycreg_df[export_nycreg_li].groupby(export_nycreg_li[:4]).sum().reset_index()
+export_nycreg_df = export_nycreg_df.rename(columns = {'RES': 'Home Borough', 
+                                                      'TM': 'Travel Mode',
+                                                      'TT': 'Travel Time', 
+                                                      'PWGTP': 'Number of People'})
+
+# reg live & nyc work
+export_reg_li = ['RES', 'POW', 'TM', 'TT', 'PWGTP']
+export_reg_df = reg_commuters[export_reg_li].groupby(export_reg_li[:4]).sum().reset_index()
+export_reg_df = export_reg_df.rename(columns = {'RES': 'Home Subregion', 
+                                                'POW': 'Work Borough', 
+                                                'TM': 'Travel Mode',
+                                                'TT': 'Travel Time', 
+                                                'PWGTP': 'Number of People'})
+
+# export as excel workbook
+with pd.ExcelWriter(local_path + 'Output/commuter_summaries.xlsx', engine = 'xlsxwriter') as writer: 
+    export_nyc_df.to_excel(writer, sheet_name = 'NYC Live & Work', index = False)
+    export_nycreg_df.to_excel(writer, sheet_name = 'NYC Live & Reg Work', index = False)
+    export_reg_df.to_excel(writer, sheet_name = 'Reg Live & NYC Work', index = False)
