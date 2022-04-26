@@ -1,4 +1,4 @@
-﻿month,borough,trip_type,route_id,period,average_speed
+﻿Month,borough,trip_type,route_id,period,average_speed
 2018-01,Manhattan,LCL/LTD,M14A,Off-Peak,4.871812125
 2018-01,Manhattan,LCL/LTD,M14A,Peak,4.491474839
 2018-01,Manhattan,LCL/LTD,M14D,Off-Peak,4.978402375
