@@ -10,10 +10,11 @@ path='C:/Users/Y_Ma2/Desktop/GITHUB/td-trends/economy/'
 path='C:/Users/mayij/Desktop/DOC/GITHUB/td-trends/economy/'
 
 
-cat_colors = {'NYC Office Jobs': 'rgba(114,158,206,0.8)',
-               'NYC Non-Office Jobs': 'rgba(103,191,92,0.8)',
-               'Office Usage': 'rgba(237,102,93,0.8)',             
-               'Times Square Pedestrian Counts': 'rgba(173,139,201,0.8)'}
+cat_colors = {'NYC Office Jobs': 'rgba(237,102,93,0.8)',
+               'NYC Non-Office Jobs': 'rgba(255,158,74,0.8)',
+               'Office Usage': 'rgba(103,191,92,0.8)',             
+               'Times Square Pedestrian Counts': 'rgba(173,139,201,0.8)',
+               'Subway Ridership':'rgba(114,158,206,0.8)'}
 
 df = pd.read_csv(path + 'economy.csv')
 df['Date']=[datetime.datetime.strptime(str(x)+'-01','%Y-%m-%d') for x in df['YearMonth']]
@@ -80,7 +81,7 @@ fig.update_layout(template = 'plotly_white',
                                 'bordercolor':'rgba(0,0,0,0.1)',
                                 'font_size': 14})
 
-fig.add_annotation(text = 'Data Source: <a href="https://dol.ny.gov/current-employment-statistics-0">NYS Department of Labor</a>; <a href="https://www.kastle.com/">Kastle Systems</a>; <a href="https://www.timessquarenyc.org/do-business/market-research-data/pedestrian-counts">Times Square Alliance</a>',
+fig.add_annotation(text = 'Data Source: <a href="https://dol.ny.gov/current-employment-statistics-0">NYS Department of Labor</a>; <a href="https://www.kastle.com/">Kastle Systems</a>; <a href="https://www.timessquarenyc.org/do-business/market-research-data/pedestrian-counts">Times Square Alliance</a>; <a href="https://new.mta.info/coronavirus/ridership">MTA</a>',
                     font_size = 14,
                     showarrow = False,
                     x = 1,
