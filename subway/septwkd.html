@@ -206,344 +206,350 @@
         'use strict';
 
         // Set MapBox token
-        mapboxgl.accessToken = 'pk.eyJ1Ijoia2trZGRkZXIiLCJhIjoiY205aGJ0bDRpMDQwZTJqcG1sZHN3Y2VjeCJ9.XjHUoaqF_nmAN_SsXvswVw'; // still need to find a way to store the token
-
-
-
-        // Initialize the map
-        var map1 = new mapboxgl.Map({ // creating a new map
-            container: 'map1', // same as the div id to place the map
-            style: 'mapbox://styles/mapbox/light-v10', // light base map
-            hash: true, // make sure it's on to get the url with map view
-            attributionControl: false, // show the credit bar
-            logoPosition: 'bottom-left', // no need to change 
-            preserveDrawingBuffer: true, // make sure it's on to allow printing
-            center: [-74.0197, 40.721], // testing to get the centroid of bounds
-            zoom: 10, // set the initial zoom of the map view
-        });
-
-
-
-
-        // Add layers
-        map1.on('load', function () {
-
-            var layerContentList = []; // store all the layer contents
-
-            // Add points
-            // Set layer contents
-            var layerContent = {
-                'sourceid': 'septwkd', // source id
-                'sourcetype': 'geojson', // source type
-                'sourcedata': 'septwkd.geojson', // data source
-                'layerid': 'septwkd20', // layer id
-                'layertype': 'circle', // symbology type
-                'layername': 'As % of 2019 Ridership​', // layer name for the legend
-                'layervisibility': 'visible', // visibility of the layer
-                'layercolname': 'Pct20Cat', // category column name
-                'layercat': ['>=60%', '50%~59%', '40%~49%', '30%~39%', '<30%'], // categories
-                'layercolor': ['rgba(113,55,0,1)', 'rgba(186,92,4,1)', 'rgba(226,117,15,1)', 'rgba(241,186,135,1)', 'rgba(249,227,207,1)'], // color for each category; use rgba
-                'layerradius': 3, // circle radius; change size based on zoom level
-                'layeroutlinecolor': 'rgba(255,255,255,0)', // outline color; can only be set to 1px width; to change the outline width, add another line layer
-            };
-
-            // Generate layer colors
-            var layerColor = ['match', ['get', layerContent['layercolname']]];
-            for (var i = 0; i < layerContent.layercat.length; i++) {
-                layerColor.push(layerContent.layercat[i]);
-                layerColor.push(layerContent.layercolor[i]);
-            };
-            layerColor.push('#000000');
-
-            // Add layer content to the overall layer content list
-            layerContentList.push(layerContent);
-
-            // Add data source
-            map1.addSource(layerContent['sourceid'], {
-                'type': layerContent['sourcetype'],
-                'data': layerContent['sourcedata'],
+        fetch('../../../config.json')
+            .then(response => response.json())
+            .then(config => {
+                const decodedToken = atob(config.mapboxToken);
+                mapboxgl.accessToken = decodedToken;
+        
+            // Initialize the map
+            var map1 = new mapboxgl.Map({ // creating a new map
+                container: 'map1', // same as the div id to place the map
+                style: 'mapbox://styles/mapbox/light-v10', // light base map
+                hash: true, // make sure it's on to get the url with map view
+                attributionControl: false, // show the credit bar
+                logoPosition: 'bottom-left', // no need to change 
+                preserveDrawingBuffer: true, // make sure it's on to allow printing
+                center: [-74.0197, 40.721], // testing to get the centroid of bounds
+                zoom: 10, // set the initial zoom of the map view
             });
-
-            // Add circle layer
-            map1.addLayer({
-                'id': layerContent['layerid'],
-                'type': layerContent['layertype'],
-                'source': layerContent['sourceid'],
-                'layout': {
-                    'visibility': layerContent['layervisibility'],
-                },
-                'paint': {
-                    'circle-color': layerColor,
-                    'circle-radius': layerContent['layerradius'],
-                },
-            });
-
-
-
-
-            // Add popup
-            var popup = new mapboxgl.Popup({
-                closeButton: true, // close button
-                closeOnClick: false, // close if click on map
-                closeOnMove: false, // close if move the map
-                anchor: 'bottom', // anchor of the popup
-                offset: 0, // offset from the feature
-                maxWidth: 'none', // max width of the popoup; 'none' to fit to the content                
-            });
-
-
-            // Add cplxrtoam popup
-            // Add click event
-            map1.on('click', 'septwkd20', function (e) {
-                var coordinates = e.features[0].geometry.coordinates.slice(); // get point coordinates
-                var description = "<b>Complex ID: </b><span>" + e.features[0].properties.CmplxID + "</span><br>"; // description in the popup
-                description += "<b>Borough: </b><span>" + e.features[0].properties.Boro + "</span><br>";
-                description += "<b>Complex Name: </b><span>" + e.features[0].properties.CmplxName + "</span><br>";
-                description += "<b>Routes: </b><span>" + e.features[0].properties.Routes + "</span><br>";
-                description += "<b>2019 September Weekday Ridership: </b><span>" + e.features[0].properties.Sept2019.toLocaleString() + "</span><br>";
-                description += "<b>2020 September Weekday Ridership: </b><span>" + e.features[0].properties.Sept2020.toLocaleString() + "</span><br>";
-                description += "<b>2021 September Weekday Ridership: </b><span>" + e.features[0].properties.Sept2021.toLocaleString() + "</span><br>";
-                description += "<b>2020 Ridership As Percentage of 2019 Ridership: </b><span>" + (Number(e.features[0].properties.Pct20) * 100).toFixed(2) + "%</span><br>";
-                description += "<b>2021 Ridership As Percentage of 2019 Ridership: </b><span>" + (Number(e.features[0].properties.Pct21) * 100).toFixed(2) + "%</span><br>";
-                popup.setLngLat(coordinates).setHTML(description).addTo(map1); //add popup
-            });
-            // Add hover events
-            map1.on('mouseenter', 'septwkd20', function () {
-                map1.getCanvas().style.cursor = 'pointer'; // mouse becoming pointer
-            });
-            map1.on('mouseleave', 'septwkd20', function () {
-                map1.getCanvas().style.cursor = '';
-            });
-
-
-            // Add layer selector and legend
-            var layerOrder = ['septwkd20']; // set layer order in the legend
-            var layerContentListOrder = []; // create ordered layer content list
-            for (var i = 0; i < layerOrder.length; i++) {
-                layerContentListOrder.push(layerContentList.filter(e => e.layerid == layerOrder[i])[0]);
-            };
-
-            var filterLegend = document.getElementById('legends');
-            for (var i = 0; i < layerContentListOrder.length; i++) {
-                // Create layer selector
-                var itemgroup1 = document.createElement('div'); // create level-1 item group
-                itemgroup1.className = 'itemgroup1';
-                var item1 = document.createElement('div'); // create level-1 item
-                item1.className = 'item1';
-                var label1 = document.createElement('label'); // create level-1 checkbox label
-                label1.className = 'item1-label';
-                label1.setAttribute('for', layerContentListOrder[i]['layerid']);
-                label1.textContent = layerContentListOrder[i]['layername'];
-                item1.appendChild(label1);
-                itemgroup1.appendChild(item1);
-
-                // Create legend selector
-                var itemgroup2 = document.createElement('div'); // create level-2 item group
-                itemgroup2.className = 'itemgroup2';
-                itemgroup2.id = layerContentListOrder[i]['layerid'] + '-cat';
-                for (var j = 0; j < layerContentListOrder[i]['layercat'].length; j++) {
-                    var item2 = document.createElement('div'); // create level-2 item
-                    item2.className = 'item2';
-                    var key2 = document.createElement('span'); // create level-2 key
-                    key2.className = 'key-' + layerContentListOrder[i]['layertype'];
-                    key2.style.backgroundColor = layerContentListOrder[i]['layercolor'][j];
-                    key2.style.borderColor = layerContentListOrder[i]['layeroutlinecolor'];
-                    key2.style.borderStyle = 'solid';
-                    key2.style.borderWidth = 'thin';
-                    var label2 = document.createElement('label'); // create level-2 label
-                    label2.className = 'item2-label';
-                    label2.setAttribute('for', layerContentListOrder[i]['layerid'] + '|' + layerContentListOrder[i]['layercolname'] + '|' + layerContentListOrder[i]['layercat'][j]);
-                    label2.textContent = layerContentListOrder[i]['layercat'][j];
-                    item2.appendChild(key2);
-                    item2.appendChild(label2);
-                    itemgroup2.appendChild(item2);
+    
+    
+    
+    
+            // Add layers
+            map1.on('load', function () {
+    
+                var layerContentList = []; // store all the layer contents
+    
+                // Add points
+                // Set layer contents
+                var layerContent = {
+                    'sourceid': 'septwkd', // source id
+                    'sourcetype': 'geojson', // source type
+                    'sourcedata': 'septwkd.geojson', // data source
+                    'layerid': 'septwkd20', // layer id
+                    'layertype': 'circle', // symbology type
+                    'layername': 'As % of 2019 Ridership​', // layer name for the legend
+                    'layervisibility': 'visible', // visibility of the layer
+                    'layercolname': 'Pct20Cat', // category column name
+                    'layercat': ['>=60%', '50%~59%', '40%~49%', '30%~39%', '<30%'], // categories
+                    'layercolor': ['rgba(113,55,0,1)', 'rgba(186,92,4,1)', 'rgba(226,117,15,1)', 'rgba(241,186,135,1)', 'rgba(249,227,207,1)'], // color for each category; use rgba
+                    'layerradius': 3, // circle radius; change size based on zoom level
+                    'layeroutlinecolor': 'rgba(255,255,255,0)', // outline color; can only be set to 1px width; to change the outline width, add another line layer
                 };
-                itemgroup1.appendChild(itemgroup2);
-                filterLegend.appendChild(itemgroup1);
-            };
-        });
-
-
-
-
-
-        // Initialize the map
-        var map2 = new mapboxgl.Map({ // creating a new map
-            container: 'map2', // same as the div id to place the map
-            style: 'mapbox://styles/mapbox/light-v10', // light base map
-            hash: true, // make sure it's on to get the url with map view
-            attributionControl: true, // show the credit bar
-            customAttribution: '<b> Data Sources: MTA</b>', // add overall credit to the beggining
-            logoPosition: 'bottom-left', // no need to change 
-            preserveDrawingBuffer: true, // make sure it's on to allow printing
-            center: [-74.0197, 40.721], // testing to get the centroid of bounds
-            zoom: 10, // set the initial zoom of the map view
-        });
-
-
-
-        // Add layers
-        map2.on('load', function () {
-
-            var layerContentList = []; // store all the layer contents
-
-            // Add full screen control
-            map2.addControl(new mapboxgl.FullscreenControl({
-                container: document.querySelector('body'),
-            }),
-                'bottom-left', // control position
-            );
-
-            // Add navigation control
-            map2.addControl(new mapboxgl.NavigationControl({
-                showCompass: true, // show compass
-                showZoom: true, // show zoom
-                visualizePitch: true, // show pitch
-            }),
-                'bottom-left', // control position
-            );
-
-
-
-            // Add points
-            // Set layer contents
-            var layerContent = {
-                'sourceid': 'septwkd', // source id
-                'sourcetype': 'geojson', // source type
-                'sourcedata': 'septwkd.geojson', // data source
-                'layerid': 'septwkd21', // layer id
-                'layertype': 'circle', // symbology type
-                'layername': 'As % of 2019 Ridership​', // layer name for the legend
-                'layervisibility': 'visible', // visibility of the layer
-                'layercolname': 'Pct21Cat', // category column name
-                'layercat': ['>=60%', '50%~59%', '40%~49%', '30%~39%', '<30%'], // categories
-                'layercolor': ['rgba(113,55,0,1)', 'rgba(186,92,4,1)', 'rgba(226,117,15,1)', 'rgba(241,186,135,1)', 'rgba(249,227,207,1)'], // color for each category; use rgba
-                'layeropacity': 1, // circle opacity
-                'layerradius': 3, // circle radius; change size based on zoom level
-                'layeroutlinecolor': 'rgba(255,255,255,0)', // outline color; can only be set to 1px width; to change the outline width, add another line layer
-            };
-
-            // Generate layer colors
-            var layerColor = ['match', ['get', layerContent['layercolname']]];
-            for (var i = 0; i < layerContent.layercat.length; i++) {
-                layerColor.push(layerContent.layercat[i]);
-                layerColor.push(layerContent.layercolor[i]);
-            };
-            layerColor.push('#000000');
-
-            // Add layer content to the overall layer content list
-            layerContentList.push(layerContent);
-
-            // Add data source
-            map2.addSource(layerContent['sourceid'], {
-                'type': layerContent['sourcetype'],
-                'data': layerContent['sourcedata'],
-            });
-
-            // Add circle layer
-            map2.addLayer({
-                'id': layerContent['layerid'],
-                'type': layerContent['layertype'],
-                'source': layerContent['sourceid'],
-                'layout': {
-                    'visibility': layerContent['layervisibility'],
-                },
-                'paint': {
-                    'circle-color': layerColor,
-                    'circle-opacity': layerContent['layeropacity'],
-                    'circle-radius': layerContent['layerradius'],
-                },
-            });
-
-
-
-
-            // Add popup
-            var popup = new mapboxgl.Popup({
-                closeButton: true, // close button
-                closeOnClick: false, // close if click on map
-                closeOnMove: false, // close if move the map
-                anchor: 'bottom', // anchor of the popup
-                offset: 0, // offset from the feature
-                maxWidth: 'none', // max width of the popoup; 'none' to fit to the content                
-            });
-
-            // Add cplxpmcp popup
-            // Add click event
-            map2.on('click', 'septwkd21', function (e) {
-                var coordinates = e.features[0].geometry.coordinates.slice(); // get point coordinates
-                var description = "<b>Complex ID: </b><span>" + e.features[0].properties.CmplxID + "</span><br>"; // description in the popup
-                description += "<b>Borough: </b><span>" + e.features[0].properties.Boro + "</span><br>";
-                description += "<b>Complex Name: </b><span>" + e.features[0].properties.CmplxName + "</span><br>";
-                description += "<b>Routes: </b><span>" + e.features[0].properties.Routes + "</span><br>";
-                description += "<b>2019 September Weekday Ridership: </b><span>" + e.features[0].properties.Sept2019.toLocaleString() + "</span><br>";
-                description += "<b>2020 September Weekday Ridership: </b><span>" + e.features[0].properties.Sept2020.toLocaleString() + "</span><br>";
-                description += "<b>2021 September Weekday Ridership: </b><span>" + e.features[0].properties.Sept2021.toLocaleString() + "</span><br>";
-                description += "<b>2020 Ridership As Percentage of 2019 Ridership: </b><span>" + (Number(e.features[0].properties.Pct20) * 100).toFixed(2) + "%</span><br>";
-                description += "<b>2021 Ridership As Percentage of 2019 Ridership: </b><span>" + (Number(e.features[0].properties.Pct21) * 100).toFixed(2) + "%</span><br>";
-                popup.setLngLat(coordinates).setHTML(description).addTo(map2); //add popup
-            });
-            // Add hover events
-            map2.on('mouseenter', 'septwkd21', function () {
-                map2.getCanvas().style.cursor = 'pointer'; // mouse becoming pointer
-            });
-            map2.on('mouseleave', 'septwkd21', function () {
-                map2.getCanvas().style.cursor = '';
-            });
-
-
-
-
-            // Synchronize the two maps
-            var disable = false;
-            map1.on("move", function () {
-                if (!disable) {
-                    var center = map1.getCenter();
-                    var zoom = map1.getZoom();
-                    var pitch = map1.getPitch();
-                    var bearing = map1.getBearing();
-
-                    disable = true;
-                    map2.setCenter(center);
-                    map2.setZoom(zoom);
-                    map2.setPitch(pitch);
-                    map2.setBearing(bearing);
-                    disable = false;
-                }
-            });
-
-            map2.on("move", function () {
-                if (!disable) {
-                    var center = map2.getCenter();
-                    var zoom = map2.getZoom();
-                    var pitch = map2.getPitch();
-                    var bearing = map2.getBearing();
-
-                    disable = true;
-                    map1.setCenter(center);
-                    map1.setZoom(zoom);
-                    map1.setPitch(pitch);
-                    map1.setBearing(bearing);
-                    disable = false;
-                }
-            });
-
-
-
-            // Set collapse event
-            var collapsevalue = 0;
-            header.addEventListener('click', function () {
-                if (collapsevalue === 0) {
-                    document.getElementById('legends').style.display = "none";
-                    document.getElementById('chevron').className = "bi bi-chevron-up";
-                    collapsevalue = 1;
-                } else {
-                    document.getElementById('legends').style.display = "block";
-                    document.getElementById('chevron').className = "bi bi-chevron-down";
-                    collapsevalue = 0;
+    
+                // Generate layer colors
+                var layerColor = ['match', ['get', layerContent['layercolname']]];
+                for (var i = 0; i < layerContent.layercat.length; i++) {
+                    layerColor.push(layerContent.layercat[i]);
+                    layerColor.push(layerContent.layercolor[i]);
+                };
+                layerColor.push('#000000');
+    
+                // Add layer content to the overall layer content list
+                layerContentList.push(layerContent);
+    
+                // Add data source
+                map1.addSource(layerContent['sourceid'], {
+                    'type': layerContent['sourcetype'],
+                    'data': layerContent['sourcedata'],
+                });
+    
+                // Add circle layer
+                map1.addLayer({
+                    'id': layerContent['layerid'],
+                    'type': layerContent['layertype'],
+                    'source': layerContent['sourceid'],
+                    'layout': {
+                        'visibility': layerContent['layervisibility'],
+                    },
+                    'paint': {
+                        'circle-color': layerColor,
+                        'circle-radius': layerContent['layerradius'],
+                    },
+                });
+    
+    
+    
+    
+                // Add popup
+                var popup = new mapboxgl.Popup({
+                    closeButton: true, // close button
+                    closeOnClick: false, // close if click on map
+                    closeOnMove: false, // close if move the map
+                    anchor: 'bottom', // anchor of the popup
+                    offset: 0, // offset from the feature
+                    maxWidth: 'none', // max width of the popoup; 'none' to fit to the content                
+                });
+    
+    
+                // Add cplxrtoam popup
+                // Add click event
+                map1.on('click', 'septwkd20', function (e) {
+                    var coordinates = e.features[0].geometry.coordinates.slice(); // get point coordinates
+                    var description = "<b>Complex ID: </b><span>" + e.features[0].properties.CmplxID + "</span><br>"; // description in the popup
+                    description += "<b>Borough: </b><span>" + e.features[0].properties.Boro + "</span><br>";
+                    description += "<b>Complex Name: </b><span>" + e.features[0].properties.CmplxName + "</span><br>";
+                    description += "<b>Routes: </b><span>" + e.features[0].properties.Routes + "</span><br>";
+                    description += "<b>2019 September Weekday Ridership: </b><span>" + e.features[0].properties.Sept2019.toLocaleString() + "</span><br>";
+                    description += "<b>2020 September Weekday Ridership: </b><span>" + e.features[0].properties.Sept2020.toLocaleString() + "</span><br>";
+                    description += "<b>2021 September Weekday Ridership: </b><span>" + e.features[0].properties.Sept2021.toLocaleString() + "</span><br>";
+                    description += "<b>2020 Ridership As Percentage of 2019 Ridership: </b><span>" + (Number(e.features[0].properties.Pct20) * 100).toFixed(2) + "%</span><br>";
+                    description += "<b>2021 Ridership As Percentage of 2019 Ridership: </b><span>" + (Number(e.features[0].properties.Pct21) * 100).toFixed(2) + "%</span><br>";
+                    popup.setLngLat(coordinates).setHTML(description).addTo(map1); //add popup
+                });
+                // Add hover events
+                map1.on('mouseenter', 'septwkd20', function () {
+                    map1.getCanvas().style.cursor = 'pointer'; // mouse becoming pointer
+                });
+                map1.on('mouseleave', 'septwkd20', function () {
+                    map1.getCanvas().style.cursor = '';
+                });
+    
+    
+                // Add layer selector and legend
+                var layerOrder = ['septwkd20']; // set layer order in the legend
+                var layerContentListOrder = []; // create ordered layer content list
+                for (var i = 0; i < layerOrder.length; i++) {
+                    layerContentListOrder.push(layerContentList.filter(e => e.layerid == layerOrder[i])[0]);
+                };
+    
+                var filterLegend = document.getElementById('legends');
+                for (var i = 0; i < layerContentListOrder.length; i++) {
+                    // Create layer selector
+                    var itemgroup1 = document.createElement('div'); // create level-1 item group
+                    itemgroup1.className = 'itemgroup1';
+                    var item1 = document.createElement('div'); // create level-1 item
+                    item1.className = 'item1';
+                    var label1 = document.createElement('label'); // create level-1 checkbox label
+                    label1.className = 'item1-label';
+                    label1.setAttribute('for', layerContentListOrder[i]['layerid']);
+                    label1.textContent = layerContentListOrder[i]['layername'];
+                    item1.appendChild(label1);
+                    itemgroup1.appendChild(item1);
+    
+                    // Create legend selector
+                    var itemgroup2 = document.createElement('div'); // create level-2 item group
+                    itemgroup2.className = 'itemgroup2';
+                    itemgroup2.id = layerContentListOrder[i]['layerid'] + '-cat';
+                    for (var j = 0; j < layerContentListOrder[i]['layercat'].length; j++) {
+                        var item2 = document.createElement('div'); // create level-2 item
+                        item2.className = 'item2';
+                        var key2 = document.createElement('span'); // create level-2 key
+                        key2.className = 'key-' + layerContentListOrder[i]['layertype'];
+                        key2.style.backgroundColor = layerContentListOrder[i]['layercolor'][j];
+                        key2.style.borderColor = layerContentListOrder[i]['layeroutlinecolor'];
+                        key2.style.borderStyle = 'solid';
+                        key2.style.borderWidth = 'thin';
+                        var label2 = document.createElement('label'); // create level-2 label
+                        label2.className = 'item2-label';
+                        label2.setAttribute('for', layerContentListOrder[i]['layerid'] + '|' + layerContentListOrder[i]['layercolname'] + '|' + layerContentListOrder[i]['layercat'][j]);
+                        label2.textContent = layerContentListOrder[i]['layercat'][j];
+                        item2.appendChild(key2);
+                        item2.appendChild(label2);
+                        itemgroup2.appendChild(item2);
+                    };
+                    itemgroup1.appendChild(itemgroup2);
+                    filterLegend.appendChild(itemgroup1);
                 };
             });
-        });
+    
+    
+    
+    
+    
+            // Initialize the map
+            var map2 = new mapboxgl.Map({ // creating a new map
+                container: 'map2', // same as the div id to place the map
+                style: 'mapbox://styles/mapbox/light-v10', // light base map
+                hash: true, // make sure it's on to get the url with map view
+                attributionControl: true, // show the credit bar
+                customAttribution: '<b> Data Sources: MTA</b>', // add overall credit to the beggining
+                logoPosition: 'bottom-left', // no need to change 
+                preserveDrawingBuffer: true, // make sure it's on to allow printing
+                center: [-74.0197, 40.721], // testing to get the centroid of bounds
+                zoom: 10, // set the initial zoom of the map view
+            });
+    
+    
+    
+            // Add layers
+            map2.on('load', function () {
+    
+                var layerContentList = []; // store all the layer contents
+    
+                // Add full screen control
+                map2.addControl(new mapboxgl.FullscreenControl({
+                    container: document.querySelector('body'),
+                }),
+                    'bottom-left', // control position
+                );
+    
+                // Add navigation control
+                map2.addControl(new mapboxgl.NavigationControl({
+                    showCompass: true, // show compass
+                    showZoom: true, // show zoom
+                    visualizePitch: true, // show pitch
+                }),
+                    'bottom-left', // control position
+                );
+    
+    
+    
+                // Add points
+                // Set layer contents
+                var layerContent = {
+                    'sourceid': 'septwkd', // source id
+                    'sourcetype': 'geojson', // source type
+                    'sourcedata': 'septwkd.geojson', // data source
+                    'layerid': 'septwkd21', // layer id
+                    'layertype': 'circle', // symbology type
+                    'layername': 'As % of 2019 Ridership​', // layer name for the legend
+                    'layervisibility': 'visible', // visibility of the layer
+                    'layercolname': 'Pct21Cat', // category column name
+                    'layercat': ['>=60%', '50%~59%', '40%~49%', '30%~39%', '<30%'], // categories
+                    'layercolor': ['rgba(113,55,0,1)', 'rgba(186,92,4,1)', 'rgba(226,117,15,1)', 'rgba(241,186,135,1)', 'rgba(249,227,207,1)'], // color for each category; use rgba
+                    'layeropacity': 1, // circle opacity
+                    'layerradius': 3, // circle radius; change size based on zoom level
+                    'layeroutlinecolor': 'rgba(255,255,255,0)', // outline color; can only be set to 1px width; to change the outline width, add another line layer
+                };
+    
+                // Generate layer colors
+                var layerColor = ['match', ['get', layerContent['layercolname']]];
+                for (var i = 0; i < layerContent.layercat.length; i++) {
+                    layerColor.push(layerContent.layercat[i]);
+                    layerColor.push(layerContent.layercolor[i]);
+                };
+                layerColor.push('#000000');
+    
+                // Add layer content to the overall layer content list
+                layerContentList.push(layerContent);
+    
+                // Add data source
+                map2.addSource(layerContent['sourceid'], {
+                    'type': layerContent['sourcetype'],
+                    'data': layerContent['sourcedata'],
+                });
+    
+                // Add circle layer
+                map2.addLayer({
+                    'id': layerContent['layerid'],
+                    'type': layerContent['layertype'],
+                    'source': layerContent['sourceid'],
+                    'layout': {
+                        'visibility': layerContent['layervisibility'],
+                    },
+                    'paint': {
+                        'circle-color': layerColor,
+                        'circle-opacity': layerContent['layeropacity'],
+                        'circle-radius': layerContent['layerradius'],
+                    },
+                });
+    
+    
+    
+    
+                // Add popup
+                var popup = new mapboxgl.Popup({
+                    closeButton: true, // close button
+                    closeOnClick: false, // close if click on map
+                    closeOnMove: false, // close if move the map
+                    anchor: 'bottom', // anchor of the popup
+                    offset: 0, // offset from the feature
+                    maxWidth: 'none', // max width of the popoup; 'none' to fit to the content                
+                });
+    
+                // Add cplxpmcp popup
+                // Add click event
+                map2.on('click', 'septwkd21', function (e) {
+                    var coordinates = e.features[0].geometry.coordinates.slice(); // get point coordinates
+                    var description = "<b>Complex ID: </b><span>" + e.features[0].properties.CmplxID + "</span><br>"; // description in the popup
+                    description += "<b>Borough: </b><span>" + e.features[0].properties.Boro + "</span><br>";
+                    description += "<b>Complex Name: </b><span>" + e.features[0].properties.CmplxName + "</span><br>";
+                    description += "<b>Routes: </b><span>" + e.features[0].properties.Routes + "</span><br>";
+                    description += "<b>2019 September Weekday Ridership: </b><span>" + e.features[0].properties.Sept2019.toLocaleString() + "</span><br>";
+                    description += "<b>2020 September Weekday Ridership: </b><span>" + e.features[0].properties.Sept2020.toLocaleString() + "</span><br>";
+                    description += "<b>2021 September Weekday Ridership: </b><span>" + e.features[0].properties.Sept2021.toLocaleString() + "</span><br>";
+                    description += "<b>2020 Ridership As Percentage of 2019 Ridership: </b><span>" + (Number(e.features[0].properties.Pct20) * 100).toFixed(2) + "%</span><br>";
+                    description += "<b>2021 Ridership As Percentage of 2019 Ridership: </b><span>" + (Number(e.features[0].properties.Pct21) * 100).toFixed(2) + "%</span><br>";
+                    popup.setLngLat(coordinates).setHTML(description).addTo(map2); //add popup
+                });
+                // Add hover events
+                map2.on('mouseenter', 'septwkd21', function () {
+                    map2.getCanvas().style.cursor = 'pointer'; // mouse becoming pointer
+                });
+                map2.on('mouseleave', 'septwkd21', function () {
+                    map2.getCanvas().style.cursor = '';
+                });
+    
+    
+    
+    
+                // Synchronize the two maps
+                var disable = false;
+                map1.on("move", function () {
+                    if (!disable) {
+                        var center = map1.getCenter();
+                        var zoom = map1.getZoom();
+                        var pitch = map1.getPitch();
+                        var bearing = map1.getBearing();
+    
+                        disable = true;
+                        map2.setCenter(center);
+                        map2.setZoom(zoom);
+                        map2.setPitch(pitch);
+                        map2.setBearing(bearing);
+                        disable = false;
+                    }
+                });
+    
+                map2.on("move", function () {
+                    if (!disable) {
+                        var center = map2.getCenter();
+                        var zoom = map2.getZoom();
+                        var pitch = map2.getPitch();
+                        var bearing = map2.getBearing();
+    
+                        disable = true;
+                        map1.setCenter(center);
+                        map1.setZoom(zoom);
+                        map1.setPitch(pitch);
+                        map1.setBearing(bearing);
+                        disable = false;
+                    }
+                });
+    
+    
+    
+                // Set collapse event
+                var collapsevalue = 0;
+                header.addEventListener('click', function () {
+                    if (collapsevalue === 0) {
+                        document.getElementById('legends').style.display = "none";
+                        document.getElementById('chevron').className = "bi bi-chevron-up";
+                        collapsevalue = 1;
+                    } else {
+                        document.getElementById('legends').style.display = "block";
+                        document.getElementById('chevron').className = "bi bi-chevron-down";
+                        collapsevalue = 0;
+                    };
+                });
+            });
+                            })
+          .catch(err => {
+            console.error('Failed to load config:', err);
+          });
     </script>
 
 </body>
