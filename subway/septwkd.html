@@ -206,7 +206,7 @@
         'use strict';
 
         // Set MapBox token
-        fetch('../../../config.json')
+        fetch('https://github.com/NYCPlanning/td-trends/config.json')
             .then(response => response.json())
             .then(config => {
                 const decodedToken = atob(config.mapboxToken);
