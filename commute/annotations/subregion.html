@@ -136,175 +136,181 @@
     <script>
         'use strict';
         // Set MapBox token
-        mapboxgl.accessToken = 'pk.eyJ1Ijoia2trZGRkZXIiLCJhIjoiY205aGJ0bDRpMDQwZTJqcG1sZHN3Y2VjeCJ9.XjHUoaqF_nmAN_SsXvswVw'; // still need to find a way to store the token
-
-
-
-        // Initialize the map
-        var map = new mapboxgl.Map({ // creating a new map
-            container: 'mainmap', // same as the div id to place the map
-            style: 'mapbox://styles/mapbox/light-v10', // light base map
-            hash: true, // make sure it's on to get the url with map view
-            attributionControl: true, // show the credit bar
-            customAttribution: '<b>Data Source: <a href="https://metroexplorer.planning.nyc.gov/welcome/intro#9/40.8159/-73.8693" target="blank">NYC DCP</a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/commute/annotations/subregion.geojson" target="blank">Download Map Data</a></b>', // add overall credit to the beggining
-            preserveDrawingBuffer: true, // make sure it's on to allow printing
-            center: [-74.0197, 40.721], // testing to get the centroid of bounds
-            zoom: 10, // set the initial zoom of the map view
-        });
-
-
-
-        // Add layers
-        map.on('load', function () {
-
-            var layerContentList = []; // store all the layer contents
-
-            // Add full screen control
-            map.addControl(new mapboxgl.FullscreenControl({
-                container: document.querySelector('body'),
-            }),
-                'bottom-left', // control position
-            );
-
-            // Add navigation control
-            map.addControl(new mapboxgl.NavigationControl({
-                showCompass: true, // show compass
-                showZoom: true, // show zoom
-                visualizePitch: true, // show pitch
-            }),
-                'bottom-left', // control position
-            );
-
-
-
-
-
-            // Add subregion
-            // Set layer contents
-            var layerContent = {
-                'sourceid': 'subregion', // source id
-                'sourcetype': 'geojson', // source type
-                'sourcedata': 'subregion.geojson', // data source
-                'layerid': 'subregion', // layer id
-                'layertype': 'fill', // symbology type
-                'layername': 'Polygon', // layer name for the legend
-                'layervisibility': 'visible', // visibility of the layer
-                'layercolname': 'name', // category column name
-                'layercat': ['New York City', 'Long Island', 'Lower Hudson Valley', 'Mid Hudson Valley', 'Inner New Jersey', 'Outer New Jersey', 'Southwest Connecticut'], // categories
-                'layercolor': ['rgba(31,119,180,1)', 'rgba(174,199,232,1)', 'rgba(23,190,207,1)', 'rgba(158,218,229,1)', 'rgba(188,189,34,1)', 'rgba(219,219,141,1)', 'rgba(247,182,210,1)'], // color for each category; use rgba
-                'layeroutlinecolor': 'rgba(255,255,255,0.5)', // outline color; can only be set to 1px width; to change the outline width, add another line layer
-            };
-
-            // Generate layer colors
-            var layerColor = ['match', ['get', layerContent['layercolname']]];
-            for (var i = 0; i < layerContent.layercat.length; i++) {
-                layerColor.push(layerContent.layercat[i]);
-                layerColor.push(layerContent.layercolor[i]);
-            };
-            layerColor.push('#000000');
-
-            // Add layer content to the overall layer content list
-            layerContentList.push(layerContent);
-
-            // Add data source
-            map.addSource(layerContent['sourceid'], {
-                'type': layerContent['sourcetype'],
-                'data': layerContent['sourcedata'],
+        fetch('../config.json')
+            .then(response => response.json())
+            .then(config => {
+                const decodedToken = atob(config.mapboxToken);
+                mapboxgl.accessToken = decodedToken;
+                
+            // Initialize the map
+            var map = new mapboxgl.Map({ // creating a new map
+                container: 'mainmap', // same as the div id to place the map
+                style: 'mapbox://styles/mapbox/light-v10', // light base map
+                hash: true, // make sure it's on to get the url with map view
+                attributionControl: true, // show the credit bar
+                customAttribution: '<b>Data Source: <a href="https://metroexplorer.planning.nyc.gov/welcome/intro#9/40.8159/-73.8693" target="blank">NYC DCP</a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/commute/annotations/subregion.geojson" target="blank">Download Map Data</a></b>', // add overall credit to the beggining
+                preserveDrawingBuffer: true, // make sure it's on to allow printing
+                center: [-74.0197, 40.721], // testing to get the centroid of bounds
+                zoom: 10, // set the initial zoom of the map view
             });
-
-            // Add fill layer
-            map.addLayer({
-                'id': layerContent['layerid'],
-                'type': layerContent['layertype'],
-                'source': layerContent['sourceid'],
-                'layout': {
-                    'visibility': layerContent['layervisibility'],
-                },
-                'paint': {
-                    'fill-color': layerColor,
-                    'fill-outline-color': layerContent['layeroutlinecolor'],
-                },
+    
+    
+    
+            // Add layers
+            map.on('load', function () {
+    
+                var layerContentList = []; // store all the layer contents
+    
+                // Add full screen control
+                map.addControl(new mapboxgl.FullscreenControl({
+                    container: document.querySelector('body'),
+                }),
+                    'bottom-left', // control position
+                );
+    
+                // Add navigation control
+                map.addControl(new mapboxgl.NavigationControl({
+                    showCompass: true, // show compass
+                    showZoom: true, // show zoom
+                    visualizePitch: true, // show pitch
+                }),
+                    'bottom-left', // control position
+                );
+    
+    
+    
+    
+    
+                // Add subregion
+                // Set layer contents
+                var layerContent = {
+                    'sourceid': 'subregion', // source id
+                    'sourcetype': 'geojson', // source type
+                    'sourcedata': 'subregion.geojson', // data source
+                    'layerid': 'subregion', // layer id
+                    'layertype': 'fill', // symbology type
+                    'layername': 'Polygon', // layer name for the legend
+                    'layervisibility': 'visible', // visibility of the layer
+                    'layercolname': 'name', // category column name
+                    'layercat': ['New York City', 'Long Island', 'Lower Hudson Valley', 'Mid Hudson Valley', 'Inner New Jersey', 'Outer New Jersey', 'Southwest Connecticut'], // categories
+                    'layercolor': ['rgba(31,119,180,1)', 'rgba(174,199,232,1)', 'rgba(23,190,207,1)', 'rgba(158,218,229,1)', 'rgba(188,189,34,1)', 'rgba(219,219,141,1)', 'rgba(247,182,210,1)'], // color for each category; use rgba
+                    'layeroutlinecolor': 'rgba(255,255,255,0.5)', // outline color; can only be set to 1px width; to change the outline width, add another line layer
+                };
+    
+                // Generate layer colors
+                var layerColor = ['match', ['get', layerContent['layercolname']]];
+                for (var i = 0; i < layerContent.layercat.length; i++) {
+                    layerColor.push(layerContent.layercat[i]);
+                    layerColor.push(layerContent.layercolor[i]);
+                };
+                layerColor.push('#000000');
+    
+                // Add layer content to the overall layer content list
+                layerContentList.push(layerContent);
+    
+                // Add data source
+                map.addSource(layerContent['sourceid'], {
+                    'type': layerContent['sourcetype'],
+                    'data': layerContent['sourcedata'],
+                });
+    
+                // Add fill layer
+                map.addLayer({
+                    'id': layerContent['layerid'],
+                    'type': layerContent['layertype'],
+                    'source': layerContent['sourceid'],
+                    'layout': {
+                        'visibility': layerContent['layervisibility'],
+                    },
+                    'paint': {
+                        'fill-color': layerColor,
+                        'fill-outline-color': layerContent['layeroutlinecolor'],
+                    },
+                });
+    
+    
+    
+                // Add subregion label
+                // Set layer contents
+                var layerContent = {
+                    'sourceid': 'subregionpt', // source id
+                    'sourcetype': 'geojson', // source type
+                    'sourcedata': 'subregionpt.geojson', // data source
+                    'layerid': 'subregion-label', // layer id
+                    'layertype': 'symbol', // symbology type
+                    'layername': 'Subregion Label', // layer name for the legend
+                    'layervisibility': 'visible', // visibility of the layer
+                    'layercolname': 'name', // category column name
+                    'layercat': [''], // categories
+                    'layerfield': ['get', 'name'], // categories
+                    'layeroverlap': false,
+                    'layeranchor': 'center',
+                    'layersize': 12,
+                    'layercolor': ['rgba(0,0,0,1)'], // color for each category; use rgba
+                };
+    
+                // Add layer content to the overall layer content list
+                layerContentList.push(layerContent);
+    
+                // Add data source
+                map.addSource(layerContent['sourceid'], {
+                    'type': layerContent['sourcetype'],
+                    'data': layerContent['sourcedata'],
+                });
+    
+                // Add label layer
+                map.addLayer({
+                    'id': layerContent['layerid'],
+                    'type': layerContent['layertype'],
+                    'source': layerContent['sourceid'],
+                    'layout': {
+                        'visibility': layerContent['layervisibility'],
+                        'text-field': layerContent['layerfield'],
+                        'text-size': layerContent['layersize'],
+                        'text-allow-overlap': layerContent['layeroverlap'],
+                        'text-anchor': layerContent['layeranchor'],
+                    },
+                    'paint': {
+                        'text-color': layerContent['layercolor'][0],
+                    },
+                });
+    
+    
+    
+    
+    
+                // Add popup
+                var popup = new mapboxgl.Popup({
+                    closeButton: true, // close button
+                    closeOnClick: false, // close if click on map
+                    closeOnMove: false, // close if move the map
+                    anchor: 'bottom', // anchor of the popup
+                    offset: 0, // offset from the feature
+                    maxWidth: 'none', // max width of the popoup; 'none' to fit to the content                
+                });
+    
+    
+    
+    
+                // Add subregion popup
+                // Add click event
+                map.on('click', 'subregion', function (e) {
+                    var coordinates = e.lngLat; // get pointer coordinates
+                    var description = "<b>Name: </b><span>" + e.features[0].properties.name + "</span><br>"; // description in the popup
+                    popup.setLngLat(coordinates).setHTML(description).addTo(map); //add popup
+                });
+                // Add hover events
+                map.on('mouseenter', 'subregion', function () {
+                    map.getCanvas().style.cursor = 'pointer'; // mouse becoming pointer
+                });
+                map.on('mouseleave', 'subregion', function () {
+                    map.getCanvas().style.cursor = '';
+                });
             });
-
-
-
-            // Add subregion label
-            // Set layer contents
-            var layerContent = {
-                'sourceid': 'subregionpt', // source id
-                'sourcetype': 'geojson', // source type
-                'sourcedata': 'subregionpt.geojson', // data source
-                'layerid': 'subregion-label', // layer id
-                'layertype': 'symbol', // symbology type
-                'layername': 'Subregion Label', // layer name for the legend
-                'layervisibility': 'visible', // visibility of the layer
-                'layercolname': 'name', // category column name
-                'layercat': [''], // categories
-                'layerfield': ['get', 'name'], // categories
-                'layeroverlap': false,
-                'layeranchor': 'center',
-                'layersize': 12,
-                'layercolor': ['rgba(0,0,0,1)'], // color for each category; use rgba
-            };
-
-            // Add layer content to the overall layer content list
-            layerContentList.push(layerContent);
-
-            // Add data source
-            map.addSource(layerContent['sourceid'], {
-                'type': layerContent['sourcetype'],
-                'data': layerContent['sourcedata'],
-            });
-
-            // Add label layer
-            map.addLayer({
-                'id': layerContent['layerid'],
-                'type': layerContent['layertype'],
-                'source': layerContent['sourceid'],
-                'layout': {
-                    'visibility': layerContent['layervisibility'],
-                    'text-field': layerContent['layerfield'],
-                    'text-size': layerContent['layersize'],
-                    'text-allow-overlap': layerContent['layeroverlap'],
-                    'text-anchor': layerContent['layeranchor'],
-                },
-                'paint': {
-                    'text-color': layerContent['layercolor'][0],
-                },
-            });
-
-
-
-
-
-            // Add popup
-            var popup = new mapboxgl.Popup({
-                closeButton: true, // close button
-                closeOnClick: false, // close if click on map
-                closeOnMove: false, // close if move the map
-                anchor: 'bottom', // anchor of the popup
-                offset: 0, // offset from the feature
-                maxWidth: 'none', // max width of the popoup; 'none' to fit to the content                
-            });
-
-
-
-
-            // Add subregion popup
-            // Add click event
-            map.on('click', 'subregion', function (e) {
-                var coordinates = e.lngLat; // get pointer coordinates
-                var description = "<b>Name: </b><span>" + e.features[0].properties.name + "</span><br>"; // description in the popup
-                popup.setLngLat(coordinates).setHTML(description).addTo(map); //add popup
-            });
-            // Add hover events
-            map.on('mouseenter', 'subregion', function () {
-                map.getCanvas().style.cursor = 'pointer'; // mouse becoming pointer
-            });
-            map.on('mouseleave', 'subregion', function () {
-                map.getCanvas().style.cursor = '';
-            });
-        });
+            })
+          .catch(err => {
+            console.error('Failed to load config:', err);
+          });
     </script>
 
 </body>
