@@ -521,317 +521,324 @@
 
             // Add map
             // Set MapBox token
-            mapboxgl.accessToken = 'pk.eyJ1Ijoia2trZGRkZXIiLCJhIjoiY205aGJ0bDRpMDQwZTJqcG1sZHN3Y2VjeCJ9.XjHUoaqF_nmAN_SsXvswVw'; // still need to find a way to store the token
-
-
-            // Initialize the map
-            var map = new mapboxgl.Map({ // creating a new map
-                container: 'map', // same as the div id to place the map
-                style: 'mapbox://styles/mapbox/light-v10', // light base map
-                hash: true, // make sure it's on to get the url with map view
-                attributionControl: true, // show the credit bar
-                customAttribution: '<b> Data Sources: <a href="https://new.mta.info/agency/new-york-city-transit/subway-bus-ridership-2020" target="blank">MTA</a></b> | <b><a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/subway/Historical.geojson" target="blank"> Download Map Data </a> </b>', // add overall credit to the beggining
-                preserveDrawingBuffer: true, // make sure it's on to allow printing
-                center: [-73.9469, 40.7121], // testing to get the centroid of bounds
-                zoom: 9.5, // set the initial zoom of the map view
-            });
-
-
-            // Add layers
-            map.on('load', function () {
-
-                var layerContentList = []; // store all the layer contents
-
-                // Add full screen control
-                map.addControl(new mapboxgl.FullscreenControl({
-                    container: document.querySelector('body'),
-                }),
-                    'bottom-left', // control position
-                );
-
-                // Add navigation control
-                map.addControl(new mapboxgl.NavigationControl({
-                    showCompass: true, // show compass
-                    showZoom: true, // show zoom
-                    visualizePitch: true, // show pitch
-                }),
-                    'bottom-left', // control position
-                );
-
-
-
-                // Add historical ridership
-                // Set layer contents
-                var layerContent = {
-                    'sourceid': 'historical', // source id
-                    'sourcetype': 'geojson', // source type
-                    'sourcedata': 'Historical.geojson', // data source
-                    'layerid': 'historical', // layer id
-                    'layertype': 'circle', // symbology type
-                    'layername': 'Annual Ridership', // layer name for the legend
-                    'layervisibility': 'visible', // visibility of the layer
-                    'layercolname': 'Y2020cat', // category column name
-                    'layercat': ['>=2.0M', '1.5M~1.9M', '1.0M~1.4M', '0.5M~0.9M', '<0.5M', 'NA'], // categories
-                    'layercolor': ['rgba(113,55,0,1)', 'rgba(186,92,4,1)', 'rgba(226,117,15,1)', 'rgba(241,186,135,1)', 'rgba(249,227,207,1)', 'rgba(0,0,0,0)'], // color for each category; use rgba
-                    'layersortkey': [5, 4, 3, 2, 1, 0], // drawing orders; higher value on top
-                    'layerradius': 3, // circle radius; change size based on zoom level
-                    'layeroutlinecolor': 'rgba(255,255,255,0)', // outline color; can only be set to 1px width; to change the outline width, add another line layer
-                };
-
-                // Generate layer colors
-                var layerColor = ['match', ['get', layerContent['layercolname']]];
-                for (var i = 0; i < layerContent.layercat.length; i++) {
-                    layerColor.push(layerContent.layercat[i]);
-                    layerColor.push(layerContent.layercolor[i]);
-                };
-                layerColor.push('#000000');
-
-                // Generate layer sort key
-                var layerSortKey = ['match', ['get', layerContent['layercolname']]];
-                for (var i = 0; i < layerContent.layercat.length; i++) {
-                    layerSortKey.push(layerContent.layercat[i]);
-                    layerSortKey.push(layerContent.layersortkey[i]);
-                };
-                layerSortKey.push(0);
-
-                // Add layer content to the overall layer content list
-                layerContentList.push(layerContent);
-
-                // Add data source
-                map.addSource(layerContent['sourceid'], {
-                    'type': layerContent['sourcetype'],
-                    'data': layerContent['sourcedata'],
+            fetch('../../../config.json')
+            .then(response => response.json())
+            .then(config => {
+                const decodedToken = atob(config.mapboxToken);
+                mapboxgl.accessToken = decodedToken;
+                
+                // Initialize the map
+                var map = new mapboxgl.Map({ // creating a new map
+                    container: 'map', // same as the div id to place the map
+                    style: 'mapbox://styles/mapbox/light-v10', // light base map
+                    hash: true, // make sure it's on to get the url with map view
+                    attributionControl: true, // show the credit bar
+                    customAttribution: '<b> Data Sources: <a href="https://new.mta.info/agency/new-york-city-transit/subway-bus-ridership-2020" target="blank">MTA</a></b> | <b><a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/subway/Historical.geojson" target="blank"> Download Map Data </a> </b>', // add overall credit to the beggining
+                    preserveDrawingBuffer: true, // make sure it's on to allow printing
+                    center: [-73.9469, 40.7121], // testing to get the centroid of bounds
+                    zoom: 9.5, // set the initial zoom of the map view
                 });
-
-                // Add circle layer
-                map.addLayer({
-                    'id': layerContent['layerid'],
-                    'type': layerContent['layertype'],
-                    'source': layerContent['sourceid'],
-                    'layout': {
-                        'visibility': layerContent['layervisibility'],
-                        'circle-sort-key': layerSortKey,
-                    },
-                    'paint': {
-                        'circle-color': layerColor,
-                        'circle-radius': layerContent['layerradius'],
-                    },
-                });
-
-
-
-                // Add popup
-                var popup = new mapboxgl.Popup({
-                    closeButton: true, // close button
-                    closeOnClick: false, // close if click on map
-                    closeOnMove: false, // close if move the map
-                    anchor: 'bottom', // anchor of the popup
-                    offset: 0, // offset from the feature
-                    maxWidth: 'none', // max width of the popoup; 'none' to fit to the content                    
-                });
-
-                // Add historical popup
-                // Add click event
-                function onClick(e) {
-                    var coordinates = e.features[0].geometry.coordinates.slice(); // get point coordinates
-                    var description = "<b>Complex ID: </b><span>" + e.features[0].properties.ComplexID + "</span><br>";// description in the popup
-                    description += "<b>Borough: </b><span>" + e.features[0].properties.Boro + "</span><br>";// description in the popup
-                    description += "<b>Station: </b><span>" + e.features[0].properties.Station + "</span><br>";// description in the popup
-                    description += "<b>Line: </b><span>" + e.features[0].properties.Line + "</span><br>";// description in the popup
-                    description += "<b>Opening Date: </b><span>" + e.features[0].properties.Opening + "</span><br>";// description in the popup
-                    description += "<b>Closing Date: </b><span>" + e.features[0].properties.Closing + "</span><br>";// description in the popup
-                    description += "<b>Annual Ridership: </b><span>" + e.features[0].properties['Y' + yearList[yearSelected]].toLocaleString() + "</span><br>";// description in the popup
-                    popup.setLngLat(coordinates).setHTML(description).addTo(map); //add popup
-                }
-                map.on('click', 'historical', onClick);
-                // Add hover events
-                map.on('mouseenter', 'historical', function () {
-                    map.getCanvas().style.cursor = 'pointer'; // mouse becoming pointer
-                });
-                map.on('mouseleave', 'historical', function () {
-                    map.getCanvas().style.cursor = '';
-                });
-
-
-
-                // Add layer selector and legend
-                var layerOrder = ['historical']; // set layer order in the legend
-                var layerContentListOrder = []; // create ordered layer content list
-                for (var i = 0; i < layerOrder.length; i++) {
-                    layerContentListOrder.push(layerContentList.filter(e => e.layerid == layerOrder[i])[0]);
-                };
-
-                var filterLegend = document.getElementById('legends');
-                for (var i = 0; i < layerContentListOrder.length; i++) {
-                    // Create layer selector
-                    var itemgroup1 = document.createElement('div'); // create level-1 item group
-                    itemgroup1.className = 'itemgroup1';
-
-                    // Create legend selector
-                    var itemgroup2 = document.createElement('div'); // create level-2 item group
-                    itemgroup2.className = 'itemgroup2';
-                    itemgroup2.id = layerContentListOrder[i]['layerid'] + '-cat';
-                    for (var j = 0; j < layerContentListOrder[i]['layercat'].length - 1; j++) {
-                        var item2 = document.createElement('div'); // create level-2 item
-                        item2.className = 'item2';
-                        var key2 = document.createElement('span'); // create level-2 key
-                        key2.className = 'key-' + layerContentListOrder[i]['layertype'];
-                        key2.style.backgroundColor = layerContentListOrder[i]['layercolor'][j];
-                        key2.style.borderColor = layerContentListOrder[i]['layeroutlinecolor'];
-                        key2.style.borderStyle = 'solid';
-                        key2.style.borderWidth = 'thin';
-                        var label2 = document.createElement('label'); // create level-2 label
-                        label2.className = 'item2-label';
-                        label2.setAttribute('for', layerContentListOrder[i]['layerid'] + '|' + layerContentListOrder[i]['layercolname'] + '|' + layerContentListOrder[i]['layercat'][j]);
-                        label2.textContent = layerContentListOrder[i]['layercat'][j];
-                        item2.appendChild(key2);
-                        item2.appendChild(label2);
-                        itemgroup2.appendChild(item2);
+    
+    
+                // Add layers
+                map.on('load', function () {
+    
+                    var layerContentList = []; // store all the layer contents
+    
+                    // Add full screen control
+                    map.addControl(new mapboxgl.FullscreenControl({
+                        container: document.querySelector('body'),
+                    }),
+                        'bottom-left', // control position
+                    );
+    
+                    // Add navigation control
+                    map.addControl(new mapboxgl.NavigationControl({
+                        showCompass: true, // show compass
+                        showZoom: true, // show zoom
+                        visualizePitch: true, // show pitch
+                    }),
+                        'bottom-left', // control position
+                    );
+    
+    
+    
+                    // Add historical ridership
+                    // Set layer contents
+                    var layerContent = {
+                        'sourceid': 'historical', // source id
+                        'sourcetype': 'geojson', // source type
+                        'sourcedata': 'Historical.geojson', // data source
+                        'layerid': 'historical', // layer id
+                        'layertype': 'circle', // symbology type
+                        'layername': 'Annual Ridership', // layer name for the legend
+                        'layervisibility': 'visible', // visibility of the layer
+                        'layercolname': 'Y2020cat', // category column name
+                        'layercat': ['>=2.0M', '1.5M~1.9M', '1.0M~1.4M', '0.5M~0.9M', '<0.5M', 'NA'], // categories
+                        'layercolor': ['rgba(113,55,0,1)', 'rgba(186,92,4,1)', 'rgba(226,117,15,1)', 'rgba(241,186,135,1)', 'rgba(249,227,207,1)', 'rgba(0,0,0,0)'], // color for each category; use rgba
+                        'layersortkey': [5, 4, 3, 2, 1, 0], // drawing orders; higher value on top
+                        'layerradius': 3, // circle radius; change size based on zoom level
+                        'layeroutlinecolor': 'rgba(255,255,255,0)', // outline color; can only be set to 1px width; to change the outline width, add another line layer
                     };
-                    itemgroup1.appendChild(itemgroup2);
-                    filterLegend.appendChild(itemgroup1);
-                };
-            });
-
-
-
-
-
-            // Set slider event
-            sliderbar.addEventListener('input', function () {
-                var yearSelected = document.getElementById('sliderbar').value;
-                document.getElementById('slideroutput').textContent = yearList[yearSelected];
-                var layercolname = 'Y' + yearList[yearSelected] + 'cat';
-                var layercat = ['>=2.0M', '1.5M~1.9M', '1.0M~1.4M', '0.5M~0.9M', '<0.5M', 'NA'];
-                var layercolor = ['rgba(113,55,0,1)', 'rgba(186,92,4,1)', 'rgba(226,117,15,1)', 'rgba(241,186,135,1)', 'rgba(249,227,207,1)', 'rgba(0,0,0,0)'];
-                var layerColor = ['match', ['get', layercolname]];
-                for (var i = 0; i < layercat.length; i++) {
-                    layerColor.push(layercat[i]);
-                    layerColor.push(layercolor[i]);
-                };
-                layerColor.push('#000000');
-                map.setPaintProperty('historical', 'circle-color', layerColor);
-
-                // Remove current popups
-                var popups = document.getElementsByClassName("mapboxgl-popup");
-                for (var i = 0; i < popups.length; i++) {
-                    popups[i].remove();
-                };
-
-                // Remove current popup click event
-                map.off('click', 'historical', onClick);
-
-                // Add new popup
-                // Add click event
-                function onClick(e) {
-                    var coordinates = e.features[0].geometry.coordinates.slice(); // get point coordinates
-                    var description = "<b>Complex ID: </b><span>" + e.features[0].properties.ComplexID + "</span><br>";// description in the popup
-                    description += "<b>Borough: </b><span>" + e.features[0].properties.Boro + "</span><br>";// description in the popup
-                    description += "<b>Station: </b><span>" + e.features[0].properties.Station + "</span><br>";// description in the popup
-                    description += "<b>Line: </b><span>" + e.features[0].properties.Line + "</span><br>";// description in the popup
-                    description += "<b>Opening Date: </b><span>" + e.features[0].properties.Opening + "</span><br>";// description in the popup
-                    description += "<b>Closing Date: </b><span>" + e.features[0].properties.Closing.toString() + "</span><br>";// description in the popup
-                    description += "<b>Annual Ridership: </b><span>" + e.features[0].properties['Y' + yearList[yearSelected]].toLocaleString() + "</span><br>";// description in the popup
-                    popup.setLngLat(coordinates).setHTML(description).addTo(map); //add popup
-                }
-                map.on('click', 'historical', onClick);
-
-                // Update vertical line
-                var update = {
-                    shapes: [{
-                        x0: yearSelected,
-                        x1: yearSelected,
-                        y0: 0,
-                        y1: 2200000000,
-                        line: {
-                            color: 'rgba(0,0,0,0.2',
-                            dash: 'dot',
-                            width: 2,
+    
+                    // Generate layer colors
+                    var layerColor = ['match', ['get', layerContent['layercolname']]];
+                    for (var i = 0; i < layerContent.layercat.length; i++) {
+                        layerColor.push(layerContent.layercat[i]);
+                        layerColor.push(layerContent.layercolor[i]);
+                    };
+                    layerColor.push('#000000');
+    
+                    // Generate layer sort key
+                    var layerSortKey = ['match', ['get', layerContent['layercolname']]];
+                    for (var i = 0; i < layerContent.layercat.length; i++) {
+                        layerSortKey.push(layerContent.layercat[i]);
+                        layerSortKey.push(layerContent.layersortkey[i]);
+                    };
+                    layerSortKey.push(0);
+    
+                    // Add layer content to the overall layer content list
+                    layerContentList.push(layerContent);
+    
+                    // Add data source
+                    map.addSource(layerContent['sourceid'], {
+                        'type': layerContent['sourcetype'],
+                        'data': layerContent['sourcedata'],
+                    });
+    
+                    // Add circle layer
+                    map.addLayer({
+                        'id': layerContent['layerid'],
+                        'type': layerContent['layertype'],
+                        'source': layerContent['sourceid'],
+                        'layout': {
+                            'visibility': layerContent['layervisibility'],
+                            'circle-sort-key': layerSortKey,
                         },
-                    }],
-                };
-                Plotly.relayout(chart, update)
-            });
-
-
-
-
-
-            // Set plotly click event
-            chart.on('plotly_click', function (data) {
-                var yearSelected = data['points'][0]['pointIndex'];
-                document.getElementById('sliderbar').value = yearSelected;
-                document.getElementById('slideroutput').textContent = yearList[yearSelected];
-                var layercolname = 'Y' + yearList[yearSelected] + 'cat';
-                var layercat = ['>=2.0M', '1.5M~1.9M', '1.0M~1.4M', '0.5M~0.9M', '<0.5M', 'NA'];
-                var layercolor = ['rgba(113,55,0,1)', 'rgba(186,92,4,1)', 'rgba(226,117,15,1)', 'rgba(241,186,135,1)', 'rgba(249,227,207,1)', 'rgba(0,0,0,0)'];
-                var layerColor = ['match', ['get', layercolname]];
-                for (var i = 0; i < layercat.length; i++) {
-                    layerColor.push(layercat[i]);
-                    layerColor.push(layercolor[i]);
-                };
-                layerColor.push('#000000');
-                map.setPaintProperty('historical', 'circle-color', layerColor);
-
-                // Remove current popups
-                var popups = document.getElementsByClassName("mapboxgl-popup");
-                for (var i = 0; i < popups.length; i++) {
-                    popups[i].remove();
-                };
-
-                // Remove current popup click event
-                map.off('click', 'historical', onClick);
-
-                // Add new popup
-                // Add click event
-                function onClick(e) {
-                    var coordinates = e.features[0].geometry.coordinates.slice(); // get point coordinates
-                    var description = "<b>Complex ID: </b><span>" + e.features[0].properties.ComplexID + "</span><br>";// description in the popup
-                    description += "<b>Borough: </b><span>" + e.features[0].properties.Boro + "</span><br>";// description in the popup
-                    description += "<b>Station: </b><span>" + e.features[0].properties.Station + "</span><br>";// description in the popup
-                    description += "<b>Line: </b><span>" + e.features[0].properties.Line + "</span><br>";// description in the popup
-                    description += "<b>Opening Date: </b><span>" + e.features[0].properties.Opening + "</span><br>";// description in the popup
-                    description += "<b>Closing Date: </b><span>" + e.features[0].properties.Closing.toString() + "</span><br>";// description in the popup
-                    description += "<b>Annual Ridership: </b><span>" + e.features[0].properties['Y' + yearList[yearSelected]].toLocaleString() + "</span><br>";// description in the popup
-                    popup.setLngLat(coordinates).setHTML(description).addTo(map); //add popup
-                }
-                map.on('click', 'historical', onClick);
-
-                // Update vertical line
-                var update = {
-                    shapes: [{
-                        x0: yearSelected,
-                        x1: yearSelected,
-                        y0: 0,
-                        y1: 2200000000,
-                        line: {
-                            color: 'rgba(0,0,0,0.2',
-                            dash: 'dot',
-                            width: 2,
+                        'paint': {
+                            'circle-color': layerColor,
+                            'circle-radius': layerContent['layerradius'],
                         },
-                    }],
-                };
-                Plotly.relayout(chart, update)
+                    });
+    
+    
+    
+                    // Add popup
+                    var popup = new mapboxgl.Popup({
+                        closeButton: true, // close button
+                        closeOnClick: false, // close if click on map
+                        closeOnMove: false, // close if move the map
+                        anchor: 'bottom', // anchor of the popup
+                        offset: 0, // offset from the feature
+                        maxWidth: 'none', // max width of the popoup; 'none' to fit to the content                    
+                    });
+    
+                    // Add historical popup
+                    // Add click event
+                    function onClick(e) {
+                        var coordinates = e.features[0].geometry.coordinates.slice(); // get point coordinates
+                        var description = "<b>Complex ID: </b><span>" + e.features[0].properties.ComplexID + "</span><br>";// description in the popup
+                        description += "<b>Borough: </b><span>" + e.features[0].properties.Boro + "</span><br>";// description in the popup
+                        description += "<b>Station: </b><span>" + e.features[0].properties.Station + "</span><br>";// description in the popup
+                        description += "<b>Line: </b><span>" + e.features[0].properties.Line + "</span><br>";// description in the popup
+                        description += "<b>Opening Date: </b><span>" + e.features[0].properties.Opening + "</span><br>";// description in the popup
+                        description += "<b>Closing Date: </b><span>" + e.features[0].properties.Closing + "</span><br>";// description in the popup
+                        description += "<b>Annual Ridership: </b><span>" + e.features[0].properties['Y' + yearList[yearSelected]].toLocaleString() + "</span><br>";// description in the popup
+                        popup.setLngLat(coordinates).setHTML(description).addTo(map); //add popup
+                    }
+                    map.on('click', 'historical', onClick);
+                    // Add hover events
+                    map.on('mouseenter', 'historical', function () {
+                        map.getCanvas().style.cursor = 'pointer'; // mouse becoming pointer
+                    });
+                    map.on('mouseleave', 'historical', function () {
+                        map.getCanvas().style.cursor = '';
+                    });
+    
+    
+    
+                    // Add layer selector and legend
+                    var layerOrder = ['historical']; // set layer order in the legend
+                    var layerContentListOrder = []; // create ordered layer content list
+                    for (var i = 0; i < layerOrder.length; i++) {
+                        layerContentListOrder.push(layerContentList.filter(e => e.layerid == layerOrder[i])[0]);
+                    };
+    
+                    var filterLegend = document.getElementById('legends');
+                    for (var i = 0; i < layerContentListOrder.length; i++) {
+                        // Create layer selector
+                        var itemgroup1 = document.createElement('div'); // create level-1 item group
+                        itemgroup1.className = 'itemgroup1';
+    
+                        // Create legend selector
+                        var itemgroup2 = document.createElement('div'); // create level-2 item group
+                        itemgroup2.className = 'itemgroup2';
+                        itemgroup2.id = layerContentListOrder[i]['layerid'] + '-cat';
+                        for (var j = 0; j < layerContentListOrder[i]['layercat'].length - 1; j++) {
+                            var item2 = document.createElement('div'); // create level-2 item
+                            item2.className = 'item2';
+                            var key2 = document.createElement('span'); // create level-2 key
+                            key2.className = 'key-' + layerContentListOrder[i]['layertype'];
+                            key2.style.backgroundColor = layerContentListOrder[i]['layercolor'][j];
+                            key2.style.borderColor = layerContentListOrder[i]['layeroutlinecolor'];
+                            key2.style.borderStyle = 'solid';
+                            key2.style.borderWidth = 'thin';
+                            var label2 = document.createElement('label'); // create level-2 label
+                            label2.className = 'item2-label';
+                            label2.setAttribute('for', layerContentListOrder[i]['layerid'] + '|' + layerContentListOrder[i]['layercolname'] + '|' + layerContentListOrder[i]['layercat'][j]);
+                            label2.textContent = layerContentListOrder[i]['layercat'][j];
+                            item2.appendChild(key2);
+                            item2.appendChild(label2);
+                            itemgroup2.appendChild(item2);
+                        };
+                        itemgroup1.appendChild(itemgroup2);
+                        filterLegend.appendChild(itemgroup1);
+                    };
+                });
+    
+    
+    
+    
+    
+                // Set slider event
+                sliderbar.addEventListener('input', function () {
+                    var yearSelected = document.getElementById('sliderbar').value;
+                    document.getElementById('slideroutput').textContent = yearList[yearSelected];
+                    var layercolname = 'Y' + yearList[yearSelected] + 'cat';
+                    var layercat = ['>=2.0M', '1.5M~1.9M', '1.0M~1.4M', '0.5M~0.9M', '<0.5M', 'NA'];
+                    var layercolor = ['rgba(113,55,0,1)', 'rgba(186,92,4,1)', 'rgba(226,117,15,1)', 'rgba(241,186,135,1)', 'rgba(249,227,207,1)', 'rgba(0,0,0,0)'];
+                    var layerColor = ['match', ['get', layercolname]];
+                    for (var i = 0; i < layercat.length; i++) {
+                        layerColor.push(layercat[i]);
+                        layerColor.push(layercolor[i]);
+                    };
+                    layerColor.push('#000000');
+                    map.setPaintProperty('historical', 'circle-color', layerColor);
+    
+                    // Remove current popups
+                    var popups = document.getElementsByClassName("mapboxgl-popup");
+                    for (var i = 0; i < popups.length; i++) {
+                        popups[i].remove();
+                    };
+    
+                    // Remove current popup click event
+                    map.off('click', 'historical', onClick);
+    
+                    // Add new popup
+                    // Add click event
+                    function onClick(e) {
+                        var coordinates = e.features[0].geometry.coordinates.slice(); // get point coordinates
+                        var description = "<b>Complex ID: </b><span>" + e.features[0].properties.ComplexID + "</span><br>";// description in the popup
+                        description += "<b>Borough: </b><span>" + e.features[0].properties.Boro + "</span><br>";// description in the popup
+                        description += "<b>Station: </b><span>" + e.features[0].properties.Station + "</span><br>";// description in the popup
+                        description += "<b>Line: </b><span>" + e.features[0].properties.Line + "</span><br>";// description in the popup
+                        description += "<b>Opening Date: </b><span>" + e.features[0].properties.Opening + "</span><br>";// description in the popup
+                        description += "<b>Closing Date: </b><span>" + e.features[0].properties.Closing.toString() + "</span><br>";// description in the popup
+                        description += "<b>Annual Ridership: </b><span>" + e.features[0].properties['Y' + yearList[yearSelected]].toLocaleString() + "</span><br>";// description in the popup
+                        popup.setLngLat(coordinates).setHTML(description).addTo(map); //add popup
+                    }
+                    map.on('click', 'historical', onClick);
+    
+                    // Update vertical line
+                    var update = {
+                        shapes: [{
+                            x0: yearSelected,
+                            x1: yearSelected,
+                            y0: 0,
+                            y1: 2200000000,
+                            line: {
+                                color: 'rgba(0,0,0,0.2',
+                                dash: 'dot',
+                                width: 2,
+                            },
+                        }],
+                    };
+                    Plotly.relayout(chart, update)
+                });
+    
+    
+    
+    
+    
+                // Set plotly click event
+                chart.on('plotly_click', function (data) {
+                    var yearSelected = data['points'][0]['pointIndex'];
+                    document.getElementById('sliderbar').value = yearSelected;
+                    document.getElementById('slideroutput').textContent = yearList[yearSelected];
+                    var layercolname = 'Y' + yearList[yearSelected] + 'cat';
+                    var layercat = ['>=2.0M', '1.5M~1.9M', '1.0M~1.4M', '0.5M~0.9M', '<0.5M', 'NA'];
+                    var layercolor = ['rgba(113,55,0,1)', 'rgba(186,92,4,1)', 'rgba(226,117,15,1)', 'rgba(241,186,135,1)', 'rgba(249,227,207,1)', 'rgba(0,0,0,0)'];
+                    var layerColor = ['match', ['get', layercolname]];
+                    for (var i = 0; i < layercat.length; i++) {
+                        layerColor.push(layercat[i]);
+                        layerColor.push(layercolor[i]);
+                    };
+                    layerColor.push('#000000');
+                    map.setPaintProperty('historical', 'circle-color', layerColor);
+    
+                    // Remove current popups
+                    var popups = document.getElementsByClassName("mapboxgl-popup");
+                    for (var i = 0; i < popups.length; i++) {
+                        popups[i].remove();
+                    };
+    
+                    // Remove current popup click event
+                    map.off('click', 'historical', onClick);
+    
+                    // Add new popup
+                    // Add click event
+                    function onClick(e) {
+                        var coordinates = e.features[0].geometry.coordinates.slice(); // get point coordinates
+                        var description = "<b>Complex ID: </b><span>" + e.features[0].properties.ComplexID + "</span><br>";// description in the popup
+                        description += "<b>Borough: </b><span>" + e.features[0].properties.Boro + "</span><br>";// description in the popup
+                        description += "<b>Station: </b><span>" + e.features[0].properties.Station + "</span><br>";// description in the popup
+                        description += "<b>Line: </b><span>" + e.features[0].properties.Line + "</span><br>";// description in the popup
+                        description += "<b>Opening Date: </b><span>" + e.features[0].properties.Opening + "</span><br>";// description in the popup
+                        description += "<b>Closing Date: </b><span>" + e.features[0].properties.Closing.toString() + "</span><br>";// description in the popup
+                        description += "<b>Annual Ridership: </b><span>" + e.features[0].properties['Y' + yearList[yearSelected]].toLocaleString() + "</span><br>";// description in the popup
+                        popup.setLngLat(coordinates).setHTML(description).addTo(map); //add popup
+                    }
+                    map.on('click', 'historical', onClick);
+    
+                    // Update vertical line
+                    var update = {
+                        shapes: [{
+                            x0: yearSelected,
+                            x1: yearSelected,
+                            y0: 0,
+                            y1: 2200000000,
+                            line: {
+                                color: 'rgba(0,0,0,0.2',
+                                dash: 'dot',
+                                width: 2,
+                            },
+                        }],
+                    };
+                    Plotly.relayout(chart, update)
+                });
             });
-        });
-
-
-
-
-
-        // Set collapse event
-        var collapsevalue = 0;
-        header.addEventListener('click', function () {
-            if (collapsevalue === 0) {
-                document.getElementById('legends').style.display = "none";
-                document.getElementById('chevron').className = "bi bi-chevron-up";
-                collapsevalue = 1;
-            } else {
-                document.getElementById('legends').style.display = "block";
-                document.getElementById('chevron').className = "bi bi-chevron-down";
-                collapsevalue = 0;
-            };
-        });
+    
+    
+    
+    
+    
+            // Set collapse event
+            var collapsevalue = 0;
+            header.addEventListener('click', function () {
+                if (collapsevalue === 0) {
+                    document.getElementById('legends').style.display = "none";
+                    document.getElementById('chevron').className = "bi bi-chevron-up";
+                    collapsevalue = 1;
+                } else {
+                    document.getElementById('legends').style.display = "block";
+                    document.getElementById('chevron').className = "bi bi-chevron-down";
+                    collapsevalue = 0;
+                };
+            });
+                        })
+          .catch(err => {
+            console.error('Failed to load config:', err);
+          });
     </script>
 
 </body>
