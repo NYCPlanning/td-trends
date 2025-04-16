@@ -139,254 +139,259 @@
     <script>
         'use strict';
         // Set MapBox token
-
-        mapboxgl.accessToken = 'pk.eyJ1Ijoia2trZGRkZXIiLCJhIjoiY205aGJ0bDRpMDQwZTJqcG1sZHN3Y2VjeCJ9.XjHUoaqF_nmAN_SsXvswVw'; // still need to find a way to store the token
-
-
-
-        // Initialize the map
-        var map = new mapboxgl.Map({ // creating a new map
-            container: 'mainmap', // same as the div id to place the map
-            style: 'mapbox://styles/mapbox/light-v10', // light base map
-            hash: true, // make sure it's on to get the url with map view
-            attributionControl: true, // show the credit bar
-            customAttribution: '<b>Data Source: <a href="https://www1.nyc.gov/html/dot/html/about/datafeeds.shtml#ferry" target="blank">NYC DOT</a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/ferry/ferryld.geojson" target="blank">Download Map Data</a></b>', // add overall credit to the beggining
-            preserveDrawingBuffer: true, // make sure it's on to allow printing
-            center: [-74.0197, 40.721], // testing to get the centroid of bounds
-            zoom: 10, // set the initial zoom of the map view
-        });
-
-
-
-        // Add layers
-        map.on('load', function () {
-
-            var layerContentList = []; // store all the layer contents
-
-            // Add full screen control
-            map.addControl(new mapboxgl.FullscreenControl({
-                container: document.querySelector('body'),
-            }),
-                'bottom-left', // control position
-            );
-
-            // Add navigation control
-            map.addControl(new mapboxgl.NavigationControl({
-                showCompass: true, // show compass
-                showZoom: true, // show zoom
-                visualizePitch: true, // show pitch
-            }),
-                'bottom-left', // control position
-            );
-
-
-
-
-
-            // Add ferry routes
-            // Set layer contents
-            var layerContent = {
-                'sourceid': 'ferryrt', // source id
-                'sourcetype': 'geojson', // source type
-                'sourcedata': 'ferryrt.geojson', // data source
-                'layerid': 'ferryrt', // layer id
-                'layertype': 'line', // symbology type
-                'layername': 'Ferry Route', // layer name for the legend
-                'layerlinecap': 'round', // line endings; butt/round/square
-                'layerlinejoin': 'round', // line joining; bevel/round/miter
-                'layervisibility': 'visible', // visibility of the layer
-                'layercat': [''], // categories
-                'layercolor': ['rgba(159,197,232,0.8)'], // color for each category; use rgba
-                'layerwidth': 3, // line width
-                'layeroutlinecolor': 'rgba(255,255,255,0)', // outline color; for legend only
-            };
-
-            // Add layer content to the overall layer content list
-            layerContentList.push(layerContent);
-
-            // Add data source
-            map.addSource(layerContent['sourceid'], {
-                'type': layerContent['sourcetype'],
-                'data': layerContent['sourcedata'],
+        fetch('https://nycplanning.github.io/td-trends/config.json')
+            .then(response => response.json())
+            .then(config => {
+                const decodedToken = atob(config.mapboxToken);
+                mapboxgl.accessToken = decodedToken;
+                
+            // Initialize the map
+            var map = new mapboxgl.Map({ // creating a new map
+                container: 'mainmap', // same as the div id to place the map
+                style: 'mapbox://styles/mapbox/light-v10', // light base map
+                hash: true, // make sure it's on to get the url with map view
+                attributionControl: true, // show the credit bar
+                customAttribution: '<b>Data Source: <a href="https://www1.nyc.gov/html/dot/html/about/datafeeds.shtml#ferry" target="blank">NYC DOT</a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/ferry/ferryld.geojson" target="blank">Download Map Data</a></b>', // add overall credit to the beggining
+                preserveDrawingBuffer: true, // make sure it's on to allow printing
+                center: [-74.0197, 40.721], // testing to get the centroid of bounds
+                zoom: 10, // set the initial zoom of the map view
             });
-
-            // Add line layer
-            map.addLayer({
-                'id': layerContent['layerid'],
-                'type': layerContent['layertype'],
-                'source': layerContent['sourceid'],
-                'layout': {
-                    'line-cap': layerContent['layerlinecap'],
-                    'line-join': layerContent['layerlinejoin'],
-                    'visibility': layerContent['layervisibility'],
-                },
-                'paint': {
-                    'line-color': layerContent['layercolor'][0],
-                    'line-width': layerContent['layerwidth'],
-                },
-            });
-
-
-
-
-            // Add points
-            // Set layer contents
-            var layerContent = {
-                'sourceid': 'ferryld', // source id
-                'sourcetype': 'geojson', // source type
-                'sourcedata': 'ferryld.geojson', // data source
-                'layerid': 'ferryld', // layer id
-                'layertype': 'circle', // symbology type
-                'layername': 'October 2021', // layer name for the legend
-                'layervisibility': 'visible', // visibility of the layer
-                'layercolname': 'cat', // category column name
-                'layercat': ['>500k', '100k~499k', '50k~99k', '10k~49k', '<10k'], // categories
-                'layercolor': ['rgba(113,55,0,1)', 'rgba(186,92,4,1)', 'rgba(226,117,15,1)', 'rgba(241,186,135,1)', 'rgba(249,227,207,1)'], // color for each category; use rgba
-                'layerradius': 5, // circle radius; change size based on zoom level
-                'layerstrokecolor': 'rgba(0,0,0,1)', // circle stroke color
-                'layerstrokeopacity': 0.5, // circle stroke opacity
-                'layerstrokewidth': 1, // circle stroke width
-                'layeroutlinecolor': 'rgba(255,255,255,0)',  // outline color; for legend purpose only
-            };
-
-            // Generate layer colors
-            var layerColor = ['match', ['get', layerContent['layercolname']]];
-            for (var i = 0; i < layerContent.layercat.length; i++) {
-                layerColor.push(layerContent.layercat[i]);
-                layerColor.push(layerContent.layercolor[i]);
-            };
-            layerColor.push('#000000');
-
-            // Add layer content to the overall layer content list
-            layerContentList.push(layerContent);
-
-            // Add data source
-            map.addSource(layerContent['sourceid'], {
-                'type': layerContent['sourcetype'],
-                'data': layerContent['sourcedata'],
-            });
-
-            // Add circle layer
-            map.addLayer({
-                'id': layerContent['layerid'],
-                'type': layerContent['layertype'],
-                'source': layerContent['sourceid'],
-                'layout': {
-                    'visibility': layerContent['layervisibility'],
-                },
-                'paint': {
-                    'circle-color': layerColor,
-                    'circle-radius': layerContent['layerradius'],
-                    'circle-stroke-color': layerContent['layerstrokecolor'],
-                    'circle-stroke-opacity': layerContent['layerstrokeopacity'],
-                    'circle-stroke-width': layerContent['layerstrokewidth'],
-                },
-            });
-
-
-
-
-
-
-            // Add popup
-            var popup = new mapboxgl.Popup({
-                closeButton: true, // close button
-                closeOnClick: false, // close if click on map
-                closeOnMove: false, // close if move the map
-                anchor: 'bottom', // anchor of the popup
-                offset: 0, // offset from the feature
-                maxWidth: 'none', // max width of the popoup; 'none' to fit to the content                
-            });
-
-
-
-
-            // Add ferryld popup
-            // Add click event
-            map.on('click', 'ferryld', function (e) {
-                var coordinates = e.features[0].geometry.coordinates.slice(); // get point coordinates
-                var description = "<b>Landing: </b><span>" + e.features[0].properties.Landing + "</span><br>"; // description in the popup
-                description += "<b>October 2021 Monthly Ridership: </b><span>" + e.features[0].properties.YM202110.toLocaleString() + "</span><br>";
-                popup.setLngLat(coordinates).setHTML(description).addTo(map); //add popup
-            });
-            // Add hover events
-            map.on('mouseenter', 'ferryld', function () {
-                map.getCanvas().style.cursor = 'pointer'; // mouse becoming pointer
-            });
-            map.on('mouseleave', 'ferryld', function () {
-                map.getCanvas().style.cursor = '';
-            });
-
-
-            // Add layer selector and legend
-            var layerOrder = ['ferryld', 'ferryrt']; // set layer order in the legend
-            var layerContentListOrder = []; // create ordered layer content list
-            for (var i = 0; i < layerOrder.length; i++) {
-                layerContentListOrder.push(layerContentList.filter(e => e.layerid == layerOrder[i])[0]);
-            };
-
-
-            var filterLegend = document.getElementById('legends');
-            for (var i = 0; i < layerContentListOrder.length; i++) {
-                // Create layer selector
-                var itemgroup1 = document.createElement('div'); // create level-1 item group
-                itemgroup1.className = 'itemgroup1';
-                var item1 = document.createElement('div'); // create level-1 item
-                item1.className = 'item1';
-                var label1 = document.createElement('label'); // create level-1 checkbox label
-                label1.className = 'item1-label';
-                label1.setAttribute('for', layerContentListOrder[i]['layerid']);
-                label1.textContent = layerContentListOrder[i]['layername'];
-                item1.appendChild(label1);
-                itemgroup1.appendChild(item1);
-
-                // Create legend selector
-                var itemgroup2 = document.createElement('div'); // create level-2 item group
-                itemgroup2.className = 'itemgroup2';
-                itemgroup2.id = layerContentListOrder[i]['layerid'] + '-cat';
-                if (layerContentListOrder[i]['layervisibility'] === 'visible') {
-                    itemgroup2.style.display = 'block';
-                } else {
-                    itemgroup2.style.display = 'none';
+    
+    
+    
+            // Add layers
+            map.on('load', function () {
+    
+                var layerContentList = []; // store all the layer contents
+    
+                // Add full screen control
+                map.addControl(new mapboxgl.FullscreenControl({
+                    container: document.querySelector('body'),
+                }),
+                    'bottom-left', // control position
+                );
+    
+                // Add navigation control
+                map.addControl(new mapboxgl.NavigationControl({
+                    showCompass: true, // show compass
+                    showZoom: true, // show zoom
+                    visualizePitch: true, // show pitch
+                }),
+                    'bottom-left', // control position
+                );
+    
+    
+    
+    
+    
+                // Add ferry routes
+                // Set layer contents
+                var layerContent = {
+                    'sourceid': 'ferryrt', // source id
+                    'sourcetype': 'geojson', // source type
+                    'sourcedata': 'ferryrt.geojson', // data source
+                    'layerid': 'ferryrt', // layer id
+                    'layertype': 'line', // symbology type
+                    'layername': 'Ferry Route', // layer name for the legend
+                    'layerlinecap': 'round', // line endings; butt/round/square
+                    'layerlinejoin': 'round', // line joining; bevel/round/miter
+                    'layervisibility': 'visible', // visibility of the layer
+                    'layercat': [''], // categories
+                    'layercolor': ['rgba(159,197,232,0.8)'], // color for each category; use rgba
+                    'layerwidth': 3, // line width
+                    'layeroutlinecolor': 'rgba(255,255,255,0)', // outline color; for legend only
                 };
-                for (var j = 0; j < layerContentListOrder[i]['layercat'].length; j++) {
-                    var item2 = document.createElement('div'); // create level-2 item
-                    item2.className = 'item2';
-                    var key2 = document.createElement('span'); // create level-2 key
-                    key2.className = 'key-' + layerContentListOrder[i]['layertype'];
-                    key2.style.backgroundColor = layerContentListOrder[i]['layercolor'][j];
-                    key2.style.borderColor = layerContentListOrder[i]['layeroutlinecolor'];
-                    key2.style.borderStyle = 'solid';
-                    key2.style.borderWidth = 'thin';
-                    var label2 = document.createElement('label'); // create level-2 label
-                    label2.className = 'item2-label';
-                    label2.setAttribute('for', layerContentListOrder[i]['layerid'] + '|' + layerContentListOrder[i]['layercolname'] + '|' + layerContentListOrder[i]['layercat'][j]);
-                    label2.textContent = layerContentListOrder[i]['layercat'][j];
-                    item2.appendChild(key2);
-                    item2.appendChild(label2);
-                    itemgroup2.appendChild(item2);
+    
+                // Add layer content to the overall layer content list
+                layerContentList.push(layerContent);
+    
+                // Add data source
+                map.addSource(layerContent['sourceid'], {
+                    'type': layerContent['sourcetype'],
+                    'data': layerContent['sourcedata'],
+                });
+    
+                // Add line layer
+                map.addLayer({
+                    'id': layerContent['layerid'],
+                    'type': layerContent['layertype'],
+                    'source': layerContent['sourceid'],
+                    'layout': {
+                        'line-cap': layerContent['layerlinecap'],
+                        'line-join': layerContent['layerlinejoin'],
+                        'visibility': layerContent['layervisibility'],
+                    },
+                    'paint': {
+                        'line-color': layerContent['layercolor'][0],
+                        'line-width': layerContent['layerwidth'],
+                    },
+                });
+    
+    
+    
+    
+                // Add points
+                // Set layer contents
+                var layerContent = {
+                    'sourceid': 'ferryld', // source id
+                    'sourcetype': 'geojson', // source type
+                    'sourcedata': 'ferryld.geojson', // data source
+                    'layerid': 'ferryld', // layer id
+                    'layertype': 'circle', // symbology type
+                    'layername': 'October 2021', // layer name for the legend
+                    'layervisibility': 'visible', // visibility of the layer
+                    'layercolname': 'cat', // category column name
+                    'layercat': ['>500k', '100k~499k', '50k~99k', '10k~49k', '<10k'], // categories
+                    'layercolor': ['rgba(113,55,0,1)', 'rgba(186,92,4,1)', 'rgba(226,117,15,1)', 'rgba(241,186,135,1)', 'rgba(249,227,207,1)'], // color for each category; use rgba
+                    'layerradius': 5, // circle radius; change size based on zoom level
+                    'layerstrokecolor': 'rgba(0,0,0,1)', // circle stroke color
+                    'layerstrokeopacity': 0.5, // circle stroke opacity
+                    'layerstrokewidth': 1, // circle stroke width
+                    'layeroutlinecolor': 'rgba(255,255,255,0)',  // outline color; for legend purpose only
                 };
-                itemgroup1.appendChild(itemgroup2);
-                filterLegend.appendChild(itemgroup1);
-            };
-
-
-
-
-            // Set collapse event
-            var collapsevalue = 0;
-            header.addEventListener('click', function () {
-                if (collapsevalue === 0) {
-                    document.getElementById('legends').style.display = "none";
-                    document.getElementById('chevron').className = "bi bi-chevron-up";
-                    collapsevalue = 1;
-                } else {
-                    document.getElementById('legends').style.display = "block";
-                    document.getElementById('chevron').className = "bi bi-chevron-down";
-                    collapsevalue = 0;
+    
+                // Generate layer colors
+                var layerColor = ['match', ['get', layerContent['layercolname']]];
+                for (var i = 0; i < layerContent.layercat.length; i++) {
+                    layerColor.push(layerContent.layercat[i]);
+                    layerColor.push(layerContent.layercolor[i]);
                 };
+                layerColor.push('#000000');
+    
+                // Add layer content to the overall layer content list
+                layerContentList.push(layerContent);
+    
+                // Add data source
+                map.addSource(layerContent['sourceid'], {
+                    'type': layerContent['sourcetype'],
+                    'data': layerContent['sourcedata'],
+                });
+    
+                // Add circle layer
+                map.addLayer({
+                    'id': layerContent['layerid'],
+                    'type': layerContent['layertype'],
+                    'source': layerContent['sourceid'],
+                    'layout': {
+                        'visibility': layerContent['layervisibility'],
+                    },
+                    'paint': {
+                        'circle-color': layerColor,
+                        'circle-radius': layerContent['layerradius'],
+                        'circle-stroke-color': layerContent['layerstrokecolor'],
+                        'circle-stroke-opacity': layerContent['layerstrokeopacity'],
+                        'circle-stroke-width': layerContent['layerstrokewidth'],
+                    },
+                });
+    
+    
+    
+    
+    
+    
+                // Add popup
+                var popup = new mapboxgl.Popup({
+                    closeButton: true, // close button
+                    closeOnClick: false, // close if click on map
+                    closeOnMove: false, // close if move the map
+                    anchor: 'bottom', // anchor of the popup
+                    offset: 0, // offset from the feature
+                    maxWidth: 'none', // max width of the popoup; 'none' to fit to the content                
+                });
+    
+    
+    
+    
+                // Add ferryld popup
+                // Add click event
+                map.on('click', 'ferryld', function (e) {
+                    var coordinates = e.features[0].geometry.coordinates.slice(); // get point coordinates
+                    var description = "<b>Landing: </b><span>" + e.features[0].properties.Landing + "</span><br>"; // description in the popup
+                    description += "<b>October 2021 Monthly Ridership: </b><span>" + e.features[0].properties.YM202110.toLocaleString() + "</span><br>";
+                    popup.setLngLat(coordinates).setHTML(description).addTo(map); //add popup
+                });
+                // Add hover events
+                map.on('mouseenter', 'ferryld', function () {
+                    map.getCanvas().style.cursor = 'pointer'; // mouse becoming pointer
+                });
+                map.on('mouseleave', 'ferryld', function () {
+                    map.getCanvas().style.cursor = '';
+                });
+    
+    
+                // Add layer selector and legend
+                var layerOrder = ['ferryld', 'ferryrt']; // set layer order in the legend
+                var layerContentListOrder = []; // create ordered layer content list
+                for (var i = 0; i < layerOrder.length; i++) {
+                    layerContentListOrder.push(layerContentList.filter(e => e.layerid == layerOrder[i])[0]);
+                };
+    
+    
+                var filterLegend = document.getElementById('legends');
+                for (var i = 0; i < layerContentListOrder.length; i++) {
+                    // Create layer selector
+                    var itemgroup1 = document.createElement('div'); // create level-1 item group
+                    itemgroup1.className = 'itemgroup1';
+                    var item1 = document.createElement('div'); // create level-1 item
+                    item1.className = 'item1';
+                    var label1 = document.createElement('label'); // create level-1 checkbox label
+                    label1.className = 'item1-label';
+                    label1.setAttribute('for', layerContentListOrder[i]['layerid']);
+                    label1.textContent = layerContentListOrder[i]['layername'];
+                    item1.appendChild(label1);
+                    itemgroup1.appendChild(item1);
+    
+                    // Create legend selector
+                    var itemgroup2 = document.createElement('div'); // create level-2 item group
+                    itemgroup2.className = 'itemgroup2';
+                    itemgroup2.id = layerContentListOrder[i]['layerid'] + '-cat';
+                    if (layerContentListOrder[i]['layervisibility'] === 'visible') {
+                        itemgroup2.style.display = 'block';
+                    } else {
+                        itemgroup2.style.display = 'none';
+                    };
+                    for (var j = 0; j < layerContentListOrder[i]['layercat'].length; j++) {
+                        var item2 = document.createElement('div'); // create level-2 item
+                        item2.className = 'item2';
+                        var key2 = document.createElement('span'); // create level-2 key
+                        key2.className = 'key-' + layerContentListOrder[i]['layertype'];
+                        key2.style.backgroundColor = layerContentListOrder[i]['layercolor'][j];
+                        key2.style.borderColor = layerContentListOrder[i]['layeroutlinecolor'];
+                        key2.style.borderStyle = 'solid';
+                        key2.style.borderWidth = 'thin';
+                        var label2 = document.createElement('label'); // create level-2 label
+                        label2.className = 'item2-label';
+                        label2.setAttribute('for', layerContentListOrder[i]['layerid'] + '|' + layerContentListOrder[i]['layercolname'] + '|' + layerContentListOrder[i]['layercat'][j]);
+                        label2.textContent = layerContentListOrder[i]['layercat'][j];
+                        item2.appendChild(key2);
+                        item2.appendChild(label2);
+                        itemgroup2.appendChild(item2);
+                    };
+                    itemgroup1.appendChild(itemgroup2);
+                    filterLegend.appendChild(itemgroup1);
+                };
+    
+    
+    
+    
+                // Set collapse event
+                var collapsevalue = 0;
+                header.addEventListener('click', function () {
+                    if (collapsevalue === 0) {
+                        document.getElementById('legends').style.display = "none";
+                        document.getElementById('chevron').className = "bi bi-chevron-up";
+                        collapsevalue = 1;
+                    } else {
+                        document.getElementById('legends').style.display = "block";
+                        document.getElementById('chevron').className = "bi bi-chevron-down";
+                        collapsevalue = 0;
+                    };
+                });
             });
-        });
+            })
+          .catch(err => {
+            console.error('Failed to load config:', err);
+          });
     </script>
 
 </body>
