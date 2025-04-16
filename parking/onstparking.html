@@ -230,294 +230,300 @@
     <script>
         'use strict';
         // Set MapBox token
-
-        mapboxgl.accessToken = 'pk.eyJ1Ijoia2trZGRkZXIiLCJhIjoiY205aGJ0bDRpMDQwZTJqcG1sZHN3Y2VjeCJ9.XjHUoaqF_nmAN_SsXvswVw'; // still need to find a way to store the token
-
-        var chosenLayer = document.getElementById('dow').value + document.getElementById('tod').value;
-        var chosenLayerFull = document.getElementById('dow').selectedOptions[0].textContent + ' ' + document.getElementById('tod').selectedOptions[0].textContent
-
-        // Initialize the map
-        var map = new mapboxgl.Map({ // creating a new map
-            container: 'mainmap', // same as the div id to place the map
-            style: 'mapbox://styles/mapbox/light-v10', // light base map
-            hash: true, // make sure it's on to get the url with map view
-            attributionControl: true, // show the credit bar
-            customAttribution: '<b>Data Source: <a href="https://data.cityofnewyork.us/Transportation/Parking-Regulation-Locations-and-Signs/xswq-wnv9" target="blank">NYC DOT</a>; <a href="https://github.com/NYCPlanning/td-parking/blob/master/onstparking/ONSTPARKING.pdf" target="blank">NYC DCP</a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/parking/onstparking.geojson" target="blank">Download Map Data</a></b>', // add overall credit to the beggining
-            preserveDrawingBuffer: true, // make sure it's on to allow printing
-            center: [-74.0197, 40.721], // testing to get the centroid of bounds
-            zoom: 10, // set the initial zoom of the map view
-        });
-
-
-
-        // Add layers
-        map.on('load', function () {
-
-            var layerContentList = []; // store all the layer contents
-
-            // Add full screen control
-            map.addControl(new mapboxgl.FullscreenControl({
-                container: document.querySelector('body'),
-            }),
-                'bottom-right', // control position
-            );
-
-            // Add navigation control
-            map.addControl(new mapboxgl.NavigationControl({
-                showCompass: true, // show compass
-                showZoom: true, // show zoom
-                visualizePitch: true, // show pitch
-            }),
-                'bottom-right', // control position
-            );
-
-
-
-            // Add onstparking
-            // Set layer contents
-            var layerContent = {
-                'sourceid': 'onstparking', // source id
-                'sourcetype': 'geojson', // source type
-                'sourcedata': 'onstparking.geojson', // data source
-                'layerid': 'onstparking', // layer id
-                'layertype': 'fill', // symbology type
-                'layername': 'Free / Metered Spaces', // layer name for the legend
-                'layervisibility': 'visible', // visibility of the layer
-                'layercolname': chosenLayer + 'cat', // category column name
-                'layercat': ['<=250', '251-500', '501-750', '751-1000', '>1000'], // categories
-                'layercolor': ['rgba(249,227,207,1)', 'rgba(241,186,135,1)', 'rgba(226,117,15,1)', 'rgba(186,92,4,1)', 'rgba(113,55,0,1)'], // color for each category; use rgba
-                'layeroutlinecolor': 'rgba(255, 255, 255, 0.2)',
-            };
-
-            // Generate layer colors
-            var layerColor = ['match', ['get', layerContent['layercolname']]];
-            for (var i = 0; i < layerContent.layercat.length; i++) {
-                layerColor.push(layerContent.layercat[i]);
-                layerColor.push(layerContent.layercolor[i]);
-            };
-            layerColor.push('#000000');
-
-            // Add layer content to the overall layer content list
-            layerContentList.push(layerContent);
-
-            // Add data source
-            map.addSource(layerContent['sourceid'], {
-                'type': layerContent['sourcetype'],
-                'data': layerContent['sourcedata'],
+        fetch('https://nycplanning.github.io/td-trends/config.json')
+            .then(response => response.json())
+            .then(config => {
+                const decodedToken = atob(config.mapboxToken);
+                mapboxgl.accessToken = decodedToken;
+                
+            var chosenLayer = document.getElementById('dow').value + document.getElementById('tod').value;
+            var chosenLayerFull = document.getElementById('dow').selectedOptions[0].textContent + ' ' + document.getElementById('tod').selectedOptions[0].textContent
+    
+            // Initialize the map
+            var map = new mapboxgl.Map({ // creating a new map
+                container: 'mainmap', // same as the div id to place the map
+                style: 'mapbox://styles/mapbox/light-v10', // light base map
+                hash: true, // make sure it's on to get the url with map view
+                attributionControl: true, // show the credit bar
+                customAttribution: '<b>Data Source: <a href="https://data.cityofnewyork.us/Transportation/Parking-Regulation-Locations-and-Signs/xswq-wnv9" target="blank">NYC DOT</a>; <a href="https://github.com/NYCPlanning/td-parking/blob/master/onstparking/ONSTPARKING.pdf" target="blank">NYC DCP</a> | <a href="https://raw.githubusercontent.com/NYCPlanning/td-trends/main/parking/onstparking.geojson" target="blank">Download Map Data</a></b>', // add overall credit to the beggining
+                preserveDrawingBuffer: true, // make sure it's on to allow printing
+                center: [-74.0197, 40.721], // testing to get the centroid of bounds
+                zoom: 10, // set the initial zoom of the map view
             });
-
-            // Add fill layer
-            map.addLayer({
-                'id': layerContent['layerid'],
-                'type': layerContent['layertype'],
-                'source': layerContent['sourceid'],
-                'layout': {
-                    'visibility': layerContent['layervisibility'],
-                },
-                'paint': {
-                    'fill-color': layerColor,
-                    'fill-outline-color': layerContent['layeroutlinecolor'],
-                },
-            });
-
-
-
-            // Add popup
-            var popup = new mapboxgl.Popup({
-                closeButton: true, // close button
-                closeOnClick: false, // close if click on map
-                closeOnMove: false, // close if move the map
-                anchor: 'bottom', // anchor of the popup
-                offset: 0, // offset from the feature
-                maxWidth: 'none', // max width of the popoup; 'none' to fit to the content                
-            });
-
-
-            // Add onstparking popup
-            // Add click event
-            function onClick(e) {
-                var coordinates = e.lngLat; // get pointer coordinates
-                var description = "<b>Census Tract: </b><span>" + e.features[0].properties.GEOID + "</span><br>";// description in the popup
-                description += "<b>" + chosenLayerFull + ": </b><span>" + e.features[0].properties[chosenLayer].toLocaleString() + "</span><br>";
-                popup.setLngLat(coordinates).setHTML(description).addTo(map); //add popup
-            }
-            map.on('click', 'onstparking', onClick);
-            // Add hover events
-            map.on('mouseenter', 'onstparking', function () {
-                map.getCanvas().style.cursor = 'pointer'; // mouse becoming pointer
-            });
-            map.on('mouseleave', 'onstparking', function () {
-                map.getCanvas().style.cursor = '';
-            });
-
-
-
-            // Add layer selector and legend
-            var layerOrder = ['onstparking']; // set layer order in the legend
-            var layerContentListOrder = []; // create ordered layer content list
-            for (var i = 0; i < layerOrder.length; i++) {
-                layerContentListOrder.push(layerContentList.filter(e => e.layerid == layerOrder[i])[0]);
-            };
-
-            var filterLegend = document.getElementById('legends');
-            for (var i = 0; i < layerContentListOrder.length; i++) {
-                // Create layer selector
-                var itemgroup1 = document.createElement('div'); // create level-1 item group
-                itemgroup1.className = 'itemgroup1';
-                var item1 = document.createElement('div'); // create level-1 item
-                item1.className = 'item1';
-                var label1 = document.createElement('label'); // create level-1 checkbox label
-                label1.className = 'item1-label';
-                label1.setAttribute('for', layerContentListOrder[i]['layerid']);
-                label1.textContent = layerContentListOrder[i]['layername'];
-                item1.appendChild(label1);
-                itemgroup1.appendChild(item1);
-
-                // Create legend selector
-                var itemgroup2 = document.createElement('div'); // create level-2 item group
-                itemgroup2.className = 'itemgroup2';
-                itemgroup2.id = layerContentListOrder[i]['layerid'] + '-cat';
-                if (layerContentListOrder[i]['layervisibility'] === 'visible') {
-                    itemgroup2.style.display = 'block';
-                } else {
-                    itemgroup2.style.display = 'none';
+    
+    
+    
+            // Add layers
+            map.on('load', function () {
+    
+                var layerContentList = []; // store all the layer contents
+    
+                // Add full screen control
+                map.addControl(new mapboxgl.FullscreenControl({
+                    container: document.querySelector('body'),
+                }),
+                    'bottom-right', // control position
+                );
+    
+                // Add navigation control
+                map.addControl(new mapboxgl.NavigationControl({
+                    showCompass: true, // show compass
+                    showZoom: true, // show zoom
+                    visualizePitch: true, // show pitch
+                }),
+                    'bottom-right', // control position
+                );
+    
+    
+    
+                // Add onstparking
+                // Set layer contents
+                var layerContent = {
+                    'sourceid': 'onstparking', // source id
+                    'sourcetype': 'geojson', // source type
+                    'sourcedata': 'onstparking.geojson', // data source
+                    'layerid': 'onstparking', // layer id
+                    'layertype': 'fill', // symbology type
+                    'layername': 'Free / Metered Spaces', // layer name for the legend
+                    'layervisibility': 'visible', // visibility of the layer
+                    'layercolname': chosenLayer + 'cat', // category column name
+                    'layercat': ['<=250', '251-500', '501-750', '751-1000', '>1000'], // categories
+                    'layercolor': ['rgba(249,227,207,1)', 'rgba(241,186,135,1)', 'rgba(226,117,15,1)', 'rgba(186,92,4,1)', 'rgba(113,55,0,1)'], // color for each category; use rgba
+                    'layeroutlinecolor': 'rgba(255, 255, 255, 0.2)',
                 };
-                for (var j = 0; j < layerContentListOrder[i]['layercat'].length; j++) {
-                    var item2 = document.createElement('div'); // create level-2 item
-                    item2.className = 'item2';
-                    var input2 = document.createElement('input'); // create level-2 checkbox
-                    input2.type = 'checkbox';
-                    input2.className = 'item2-input';
-                    input2.id = layerContentListOrder[i]['layerid'] + '|' + layerContentListOrder[i]['layercolname'] + '|' + layerContentListOrder[i]['layercat'][j];
-                    input2.checked = true;
-                    var key2 = document.createElement('span'); // create level-2 key
-                    key2.className = 'key-' + layerContentListOrder[i]['layertype'];
-                    key2.style.backgroundColor = layerContentListOrder[i]['layercolor'][j];
-                    key2.style.borderColor = layerContentListOrder[i]['layeroutlinecolor'];
-                    key2.style.borderStyle = 'solid';
-                    key2.style.borderWidth = 'thin';
-                    var label2 = document.createElement('label'); // create level-2 label
-                    label2.className = 'item2-label';
-                    label2.setAttribute('for', layerContentListOrder[i]['layerid'] + '|' + layerContentListOrder[i]['layercolname'] + '|' + layerContentListOrder[i]['layercat'][j]);
-                    label2.textContent = layerContentListOrder[i]['layercat'][j];
-                    item2.appendChild(input2);
-                    item2.appendChild(key2);
-                    item2.appendChild(label2);
-                    itemgroup2.appendChild(item2);
-
-                    // Create legend selector click event
-                    input2.addEventListener('click', function (e) {
-                        var clickedLayer = this.id.split('|')[0];
-                        var clickedLayerColname = this.id.split('|')[1];
-                        var catGroup = document.getElementById(clickedLayer + '-cat').getElementsByClassName('item2-input');
-                        var checkedFilter = ['any'];
-                        for (var k = 0; k < catGroup.length; k++) {
-                            if (catGroup[k]['checked'] === true) {
-                                checkedFilter.push(['==', clickedLayerColname, catGroup[k].id.split('|')[2]]);
+    
+                // Generate layer colors
+                var layerColor = ['match', ['get', layerContent['layercolname']]];
+                for (var i = 0; i < layerContent.layercat.length; i++) {
+                    layerColor.push(layerContent.layercat[i]);
+                    layerColor.push(layerContent.layercolor[i]);
+                };
+                layerColor.push('#000000');
+    
+                // Add layer content to the overall layer content list
+                layerContentList.push(layerContent);
+    
+                // Add data source
+                map.addSource(layerContent['sourceid'], {
+                    'type': layerContent['sourcetype'],
+                    'data': layerContent['sourcedata'],
+                });
+    
+                // Add fill layer
+                map.addLayer({
+                    'id': layerContent['layerid'],
+                    'type': layerContent['layertype'],
+                    'source': layerContent['sourceid'],
+                    'layout': {
+                        'visibility': layerContent['layervisibility'],
+                    },
+                    'paint': {
+                        'fill-color': layerColor,
+                        'fill-outline-color': layerContent['layeroutlinecolor'],
+                    },
+                });
+    
+    
+    
+                // Add popup
+                var popup = new mapboxgl.Popup({
+                    closeButton: true, // close button
+                    closeOnClick: false, // close if click on map
+                    closeOnMove: false, // close if move the map
+                    anchor: 'bottom', // anchor of the popup
+                    offset: 0, // offset from the feature
+                    maxWidth: 'none', // max width of the popoup; 'none' to fit to the content                
+                });
+    
+    
+                // Add onstparking popup
+                // Add click event
+                function onClick(e) {
+                    var coordinates = e.lngLat; // get pointer coordinates
+                    var description = "<b>Census Tract: </b><span>" + e.features[0].properties.GEOID + "</span><br>";// description in the popup
+                    description += "<b>" + chosenLayerFull + ": </b><span>" + e.features[0].properties[chosenLayer].toLocaleString() + "</span><br>";
+                    popup.setLngLat(coordinates).setHTML(description).addTo(map); //add popup
+                }
+                map.on('click', 'onstparking', onClick);
+                // Add hover events
+                map.on('mouseenter', 'onstparking', function () {
+                    map.getCanvas().style.cursor = 'pointer'; // mouse becoming pointer
+                });
+                map.on('mouseleave', 'onstparking', function () {
+                    map.getCanvas().style.cursor = '';
+                });
+    
+    
+    
+                // Add layer selector and legend
+                var layerOrder = ['onstparking']; // set layer order in the legend
+                var layerContentListOrder = []; // create ordered layer content list
+                for (var i = 0; i < layerOrder.length; i++) {
+                    layerContentListOrder.push(layerContentList.filter(e => e.layerid == layerOrder[i])[0]);
+                };
+    
+                var filterLegend = document.getElementById('legends');
+                for (var i = 0; i < layerContentListOrder.length; i++) {
+                    // Create layer selector
+                    var itemgroup1 = document.createElement('div'); // create level-1 item group
+                    itemgroup1.className = 'itemgroup1';
+                    var item1 = document.createElement('div'); // create level-1 item
+                    item1.className = 'item1';
+                    var label1 = document.createElement('label'); // create level-1 checkbox label
+                    label1.className = 'item1-label';
+                    label1.setAttribute('for', layerContentListOrder[i]['layerid']);
+                    label1.textContent = layerContentListOrder[i]['layername'];
+                    item1.appendChild(label1);
+                    itemgroup1.appendChild(item1);
+    
+                    // Create legend selector
+                    var itemgroup2 = document.createElement('div'); // create level-2 item group
+                    itemgroup2.className = 'itemgroup2';
+                    itemgroup2.id = layerContentListOrder[i]['layerid'] + '-cat';
+                    if (layerContentListOrder[i]['layervisibility'] === 'visible') {
+                        itemgroup2.style.display = 'block';
+                    } else {
+                        itemgroup2.style.display = 'none';
+                    };
+                    for (var j = 0; j < layerContentListOrder[i]['layercat'].length; j++) {
+                        var item2 = document.createElement('div'); // create level-2 item
+                        item2.className = 'item2';
+                        var input2 = document.createElement('input'); // create level-2 checkbox
+                        input2.type = 'checkbox';
+                        input2.className = 'item2-input';
+                        input2.id = layerContentListOrder[i]['layerid'] + '|' + layerContentListOrder[i]['layercolname'] + '|' + layerContentListOrder[i]['layercat'][j];
+                        input2.checked = true;
+                        var key2 = document.createElement('span'); // create level-2 key
+                        key2.className = 'key-' + layerContentListOrder[i]['layertype'];
+                        key2.style.backgroundColor = layerContentListOrder[i]['layercolor'][j];
+                        key2.style.borderColor = layerContentListOrder[i]['layeroutlinecolor'];
+                        key2.style.borderStyle = 'solid';
+                        key2.style.borderWidth = 'thin';
+                        var label2 = document.createElement('label'); // create level-2 label
+                        label2.className = 'item2-label';
+                        label2.setAttribute('for', layerContentListOrder[i]['layerid'] + '|' + layerContentListOrder[i]['layercolname'] + '|' + layerContentListOrder[i]['layercat'][j]);
+                        label2.textContent = layerContentListOrder[i]['layercat'][j];
+                        item2.appendChild(input2);
+                        item2.appendChild(key2);
+                        item2.appendChild(label2);
+                        itemgroup2.appendChild(item2);
+    
+                        // Create legend selector click event
+                        input2.addEventListener('click', function (e) {
+                            var clickedLayer = this.id.split('|')[0];
+                            var clickedLayerColname = this.id.split('|')[1];
+                            var catGroup = document.getElementById(clickedLayer + '-cat').getElementsByClassName('item2-input');
+                            var checkedFilter = ['any'];
+                            for (var k = 0; k < catGroup.length; k++) {
+                                if (catGroup[k]['checked'] === true) {
+                                    checkedFilter.push(['==', clickedLayerColname, catGroup[k].id.split('|')[2]]);
+                                };
                             };
-                        };
-                        map.setFilter(clickedLayer, checkedFilter);
-                    });
+                            map.setFilter(clickedLayer, checkedFilter);
+                        });
+                    };
+                    itemgroup1.appendChild(itemgroup2);
+                    filterLegend.appendChild(itemgroup1);
                 };
-                itemgroup1.appendChild(itemgroup2);
-                filterLegend.appendChild(itemgroup1);
-            };
-
-
-
-            // Set collapse event
-            var collapsevalue = 0;
-            header.addEventListener('click', function () {
-                if (collapsevalue === 0) {
-                    document.getElementById('dowselector').style.display = "none";
-                    document.getElementById('todselector').style.display = "none";
-                    document.getElementById('legends').style.display = "none";
-                    document.getElementById('chevron').className = "bi bi-chevron-up";
-                    collapsevalue = 1;
-                } else {
-                    document.getElementById('dowselector').style.display = "block";
-                    document.getElementById('todselector').style.display = "block";
-                    document.getElementById('legends').style.display = "block";
-                    document.getElementById('chevron').className = "bi bi-chevron-down";
-                    collapsevalue = 0;
-                };
+    
+    
+    
+                // Set collapse event
+                var collapsevalue = 0;
+                header.addEventListener('click', function () {
+                    if (collapsevalue === 0) {
+                        document.getElementById('dowselector').style.display = "none";
+                        document.getElementById('todselector').style.display = "none";
+                        document.getElementById('legends').style.display = "none";
+                        document.getElementById('chevron').className = "bi bi-chevron-up";
+                        collapsevalue = 1;
+                    } else {
+                        document.getElementById('dowselector').style.display = "block";
+                        document.getElementById('todselector').style.display = "block";
+                        document.getElementById('legends').style.display = "block";
+                        document.getElementById('chevron').className = "bi bi-chevron-down";
+                        collapsevalue = 0;
+                    };
+                });
+    
+    
+    
+                // Day of Week Event
+                dow.addEventListener('change', function () {
+                    var chosenLayer = document.getElementById('dow').value + document.getElementById('tod').value;
+                    var chosenLayerFull = document.getElementById('dow').selectedOptions[0].textContent + ' ' + document.getElementById('tod').selectedOptions[0].textContent
+    
+                    // Generate layer colors
+                    var layerColor = ['match', ['get', chosenLayer + 'cat']];
+                    for (var i = 0; i < layerContent.layercat.length; i++) {
+                        layerColor.push(layerContent.layercat[i]);
+                        layerColor.push(layerContent.layercolor[i]);
+                    };
+                    layerColor.push('#000000');
+    
+                    // Update fill color
+                    map.setPaintProperty('onstparking', 'fill-color', layerColor);
+    
+                    // Remove current popups
+                    var popups = document.getElementsByClassName("mapboxgl-popup");
+                    for (var i = 0; i < popups.length; i++) {
+                        popups[i].remove();
+                    };
+    
+                    // Remove current popup click event
+                    map.off('click', 'onstparking', onClick);
+    
+                    // Add new popup
+                    // Add click event
+                    function onClick(e) {
+                        var coordinates = e.lngLat; // get pointer coordinates
+                        var description = "<b>Census Tract: </b><span>" + e.features[0].properties.GEOID + "</span><br>";// description in the popup
+                        description += "<b>" + chosenLayerFull + ": </b><span>" + e.features[0].properties[chosenLayer].toLocaleString() + "</span><br>";
+                        popup.setLngLat(coordinates).setHTML(description).addTo(map); //add popup
+                    }
+                    map.on('click', 'onstparking', onClick);
+                });
+    
+                // Time of Day Event
+                tod.addEventListener('change', function () {
+                    var chosenLayer = document.getElementById('dow').value + document.getElementById('tod').value;
+                    var chosenLayerFull = document.getElementById('dow').selectedOptions[0].textContent + ' ' + document.getElementById('tod').selectedOptions[0].textContent
+    
+                    // Generate layer colors
+                    var layerColor = ['match', ['get', chosenLayer + 'cat']];
+                    for (var i = 0; i < layerContent.layercat.length; i++) {
+                        layerColor.push(layerContent.layercat[i]);
+                        layerColor.push(layerContent.layercolor[i]);
+                    };
+                    layerColor.push('#000000');
+    
+                    // Update fill color
+                    map.setPaintProperty('onstparking', 'fill-color', layerColor);
+    
+                    // Remove current popups
+                    var popups = document.getElementsByClassName("mapboxgl-popup");
+                    for (var i = 0; i < popups.length; i++) {
+                        popups[i].remove();
+                    };
+    
+                    // Remove current popup click event
+                    map.off('click', 'onstparking', onClick);
+    
+                    // Add new popup
+                    // Add click event
+                    function onClick(e) {
+                        var coordinates = e.lngLat; // get pointer coordinates
+                        var description = "<b>Census Tract: </b><span>" + e.features[0].properties.GEOID + "</span><br>";// description in the popup
+                        description += "<b>" + chosenLayerFull + ": </b><span>" + e.features[0].properties[chosenLayer].toLocaleString() + "</span><br>";
+                        popup.setLngLat(coordinates).setHTML(description).addTo(map); //add popup
+                    }
+                    map.on('click', 'onstparking', onClick);
+                });
             });
-
-
-
-            // Day of Week Event
-            dow.addEventListener('change', function () {
-                var chosenLayer = document.getElementById('dow').value + document.getElementById('tod').value;
-                var chosenLayerFull = document.getElementById('dow').selectedOptions[0].textContent + ' ' + document.getElementById('tod').selectedOptions[0].textContent
-
-                // Generate layer colors
-                var layerColor = ['match', ['get', chosenLayer + 'cat']];
-                for (var i = 0; i < layerContent.layercat.length; i++) {
-                    layerColor.push(layerContent.layercat[i]);
-                    layerColor.push(layerContent.layercolor[i]);
-                };
-                layerColor.push('#000000');
-
-                // Update fill color
-                map.setPaintProperty('onstparking', 'fill-color', layerColor);
-
-                // Remove current popups
-                var popups = document.getElementsByClassName("mapboxgl-popup");
-                for (var i = 0; i < popups.length; i++) {
-                    popups[i].remove();
-                };
-
-                // Remove current popup click event
-                map.off('click', 'onstparking', onClick);
-
-                // Add new popup
-                // Add click event
-                function onClick(e) {
-                    var coordinates = e.lngLat; // get pointer coordinates
-                    var description = "<b>Census Tract: </b><span>" + e.features[0].properties.GEOID + "</span><br>";// description in the popup
-                    description += "<b>" + chosenLayerFull + ": </b><span>" + e.features[0].properties[chosenLayer].toLocaleString() + "</span><br>";
-                    popup.setLngLat(coordinates).setHTML(description).addTo(map); //add popup
-                }
-                map.on('click', 'onstparking', onClick);
-            });
-
-            // Time of Day Event
-            tod.addEventListener('change', function () {
-                var chosenLayer = document.getElementById('dow').value + document.getElementById('tod').value;
-                var chosenLayerFull = document.getElementById('dow').selectedOptions[0].textContent + ' ' + document.getElementById('tod').selectedOptions[0].textContent
-
-                // Generate layer colors
-                var layerColor = ['match', ['get', chosenLayer + 'cat']];
-                for (var i = 0; i < layerContent.layercat.length; i++) {
-                    layerColor.push(layerContent.layercat[i]);
-                    layerColor.push(layerContent.layercolor[i]);
-                };
-                layerColor.push('#000000');
-
-                // Update fill color
-                map.setPaintProperty('onstparking', 'fill-color', layerColor);
-
-                // Remove current popups
-                var popups = document.getElementsByClassName("mapboxgl-popup");
-                for (var i = 0; i < popups.length; i++) {
-                    popups[i].remove();
-                };
-
-                // Remove current popup click event
-                map.off('click', 'onstparking', onClick);
-
-                // Add new popup
-                // Add click event
-                function onClick(e) {
-                    var coordinates = e.lngLat; // get pointer coordinates
-                    var description = "<b>Census Tract: </b><span>" + e.features[0].properties.GEOID + "</span><br>";// description in the popup
-                    description += "<b>" + chosenLayerFull + ": </b><span>" + e.features[0].properties[chosenLayer].toLocaleString() + "</span><br>";
-                    popup.setLngLat(coordinates).setHTML(description).addTo(map); //add popup
-                }
-                map.on('click', 'onstparking', onClick);
-            });
-        });
-
+          })
+          .catch(err => {
+            console.error('Failed to load config:', err);
+          });
     </script>
 
 </body>
