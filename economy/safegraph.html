@@ -206,325 +206,331 @@
         'use strict';
 
         // Set MapBox token
-        mapboxgl.accessToken = 'pk.eyJ1IjoibWF5aWp1biIsImEiOiJjaXg4ZmlyY20wMDBjMm9tcjI0bjQ0Z21zIn0.Io0XJ4JelN903V9HGo4TfQ'; // still need to find a way to store the token
-
-
-
-        // Initialize the map
-        var map1 = new mapboxgl.Map({ // creating a new map
-            container: 'map1', // same as the div id to place the map
-            style: 'mapbox://styles/mapbox/light-v10', // light base map
-            hash: true, // make sure it's on to get the url with map view
-            attributionControl: false, // show the credit bar
-            logoPosition: 'bottom-left', // no need to change 
-            preserveDrawingBuffer: true, // make sure it's on to allow printing
-            center: [-74.0197, 40.721], // testing to get the centroid of bounds
-            zoom: 10, // set the initial zoom of the map view
-        });
-
-
-
-
-        // Add layers
-        map1.on('load', function () {
-
-            var layerContentList = []; // store all the layer contents
-
-            // Add full screen control
-            map1.addControl(new mapboxgl.FullscreenControl({
-                container: document.querySelector('body'),
-            }),
-                'bottom-left', // control position
-            );
-
-            // Add navigation control
-            map1.addControl(new mapboxgl.NavigationControl({
-                showCompass: true, // show compass
-                showZoom: true, // show zoom
-                visualizePitch: true, // show pitch
-            }),
-                'bottom-left', // control position
-            );
-
-            // Add nadir
-            // Set layer contents
-            var layerContent = {
-                'sourceid': 'nadir', // source id
-                'sourcetype': 'geojson', // source type
-                'sourcedata': 'safegraph.geojson', // data source
-                'layerid': 'nadir', // layer id
-                'layertype': 'fill', // symbology type
-                'layername': '% of April 2019', // layer name for the legend
-                'layervisibility': 'visible', // visibility of the layer
-                'layercolname': 'nadircat', // category column name
-                'layercat': ['>=120%', '100%~119%', '80%~99%', '60%~79%', '<60%'], // categories
-                'layercolor': ['rgba(174,199,232,1)', 'rgba(152,223,138,1)', 'rgba(219,219,141,1)', 'rgba(255,187,120,1)', 'rgba(255,152,150,1)'], // color for each category; use rgba
-                'layeroutlinecolor': 'rgba(255, 255, 255, 0.5)'
-            };
-
-            // Generate layer colors
-            var layerColor = ['match', ['get', layerContent['layercolname']]];
-            for (var i = 0; i < layerContent.layercat.length; i++) {
-                layerColor.push(layerContent.layercat[i]);
-                layerColor.push(layerContent.layercolor[i]);
-            };
-            layerColor.push('#000000');
-
-            // Add layer content to the overall layer content list
-            layerContentList.push(layerContent);
-
-            // Add data source
-            map1.addSource(layerContent['sourceid'], {
-                'type': layerContent['sourcetype'],
-                'data': layerContent['sourcedata'],
+        fetch('https://nycplanning.github.io/td-trends/config.json')
+            .then(response => response.json())
+            .then(config => {
+                const decodedToken = atob(config.mapboxToken);
+                mapboxgl.accessToken = decodedToken;
+                
+            // Initialize the map
+            var map1 = new mapboxgl.Map({ // creating a new map
+                container: 'map1', // same as the div id to place the map
+                style: 'mapbox://styles/mapbox/light-v10', // light base map
+                hash: true, // make sure it's on to get the url with map view
+                attributionControl: false, // show the credit bar
+                logoPosition: 'bottom-left', // no need to change 
+                preserveDrawingBuffer: true, // make sure it's on to allow printing
+                center: [-74.0197, 40.721], // testing to get the centroid of bounds
+                zoom: 10, // set the initial zoom of the map view
             });
-
-            // Add fill layer
-            map1.addLayer({
-                'id': layerContent['layerid'],
-                'type': layerContent['layertype'],
-                'source': layerContent['sourceid'],
-                'layout': {
-                    'visibility': layerContent['layervisibility'],
-                },
-                'paint': {
-                    'fill-color': layerColor,
-                    'fill-outline-color': layerContent['layeroutlinecolor'],
-                },
-            });
-
-
-
-            // Add popup
-            var popup = new mapboxgl.Popup({
-                closeButton: true, // close button
-                closeOnClick: false, // close if click on map
-                closeOnMove: false, // close if move the map
-                anchor: 'bottom', // anchor of the popup
-                offset: 0, // offset from the feature
-                maxWidth: 'none', // max width of the popoup; 'none' to fit to the content                
-            });
-
-
-            // Add nadir popup
-            // Add click event
-            map1.on('click', 'nadir', function (e) {
-                var coordinates = e.lngLat; // get pointer coordinates
-                var description = "<b>NTA Code: </b><span>" + e.features[0].properties.ntacode + "</span><br>"; // description in the popup
-                description += "<b>NTA Name: </b><span>" + e.features[0].properties.ntaname + "</span><br>";
-                description += "<b>April 2020 As Percentage of April 2019: </b><span>" + (Number(e.features[0].properties.nadir) * 100).toFixed(2) + "%</span><br>";
-                popup.setLngLat(coordinates).setHTML(description).addTo(map1); //add popup
-            });
-            // Add hover events
-            map1.on('mouseenter', 'nadir', function () {
-                map1.getCanvas().style.cursor = 'pointer'; // mouse becoming pointer
-            });
-            map1.on('mouseleave', 'nadir', function () {
-                map1.getCanvas().style.cursor = '';
-            });
-
-
-            // Add layer selector and legend
-            var layerOrder = ['nadir']; // set layer order in the legend
-            var layerContentListOrder = []; // create ordered layer content list
-            for (var i = 0; i < layerOrder.length; i++) {
-                layerContentListOrder.push(layerContentList.filter(e => e.layerid == layerOrder[i])[0]);
-            };
-
-            var filterLegend = document.getElementById('legends');
-            for (var i = 0; i < layerContentListOrder.length; i++) {
-                // Create layer selector
-                var itemgroup1 = document.createElement('div'); // create level-1 item group
-                itemgroup1.className = 'itemgroup1';
-                var item1 = document.createElement('div'); // create level-1 item
-                item1.className = 'item1';
-                var label1 = document.createElement('label'); // create level-1 checkbox label
-                label1.className = 'item1-label';
-                label1.setAttribute('for', layerContentListOrder[i]['layerid']);
-                label1.textContent = layerContentListOrder[i]['layername'];
-                item1.appendChild(label1);
-                itemgroup1.appendChild(item1);
-
-                // Create legend selector
-                var itemgroup2 = document.createElement('div'); // create level-2 item group
-                itemgroup2.className = 'itemgroup2';
-                itemgroup2.id = layerContentListOrder[i]['layerid'] + '-cat';
-                for (var j = 0; j < layerContentListOrder[i]['layercat'].length; j++) {
-                    var item2 = document.createElement('div'); // create level-2 item
-                    item2.className = 'item2';
-                    var key2 = document.createElement('span'); // create level-2 key
-                    key2.className = 'key-' + layerContentListOrder[i]['layertype'];
-                    key2.style.backgroundColor = layerContentListOrder[i]['layercolor'][j];
-                    key2.style.borderColor = layerContentListOrder[i]['layeroutlinecolor'];
-                    key2.style.borderStyle = 'solid';
-                    key2.style.borderWidth = 'thin';
-                    var label2 = document.createElement('label'); // create level-2 label
-                    label2.className = 'item2-label';
-                    label2.setAttribute('for', layerContentListOrder[i]['layerid'] + '|' + layerContentListOrder[i]['layercolname'] + '|' + layerContentListOrder[i]['layercat'][j]);
-                    label2.textContent = layerContentListOrder[i]['layercat'][j];
-                    item2.appendChild(key2);
-                    item2.appendChild(label2);
-                    itemgroup2.appendChild(item2);
+    
+    
+    
+    
+            // Add layers
+            map1.on('load', function () {
+    
+                var layerContentList = []; // store all the layer contents
+    
+                // Add full screen control
+                map1.addControl(new mapboxgl.FullscreenControl({
+                    container: document.querySelector('body'),
+                }),
+                    'bottom-left', // control position
+                );
+    
+                // Add navigation control
+                map1.addControl(new mapboxgl.NavigationControl({
+                    showCompass: true, // show compass
+                    showZoom: true, // show zoom
+                    visualizePitch: true, // show pitch
+                }),
+                    'bottom-left', // control position
+                );
+    
+                // Add nadir
+                // Set layer contents
+                var layerContent = {
+                    'sourceid': 'nadir', // source id
+                    'sourcetype': 'geojson', // source type
+                    'sourcedata': 'safegraph.geojson', // data source
+                    'layerid': 'nadir', // layer id
+                    'layertype': 'fill', // symbology type
+                    'layername': '% of April 2019', // layer name for the legend
+                    'layervisibility': 'visible', // visibility of the layer
+                    'layercolname': 'nadircat', // category column name
+                    'layercat': ['>=120%', '100%~119%', '80%~99%', '60%~79%', '<60%'], // categories
+                    'layercolor': ['rgba(174,199,232,1)', 'rgba(152,223,138,1)', 'rgba(219,219,141,1)', 'rgba(255,187,120,1)', 'rgba(255,152,150,1)'], // color for each category; use rgba
+                    'layeroutlinecolor': 'rgba(255, 255, 255, 0.5)'
                 };
-                itemgroup1.appendChild(itemgroup2);
-                filterLegend.appendChild(itemgroup1);
-            };
-        });
-
-
-
-
-
-        // Initialize the map
-        var map2 = new mapboxgl.Map({ // creating a new map
-            container: 'map2', // same as the div id to place the map
-            style: 'mapbox://styles/mapbox/light-v10', // light base map
-            hash: true, // make sure it's on to get the url with map view
-            attributionControl: true, // show the credit bar
-            customAttribution: '<b> Data Sources: SafeGraph</b>', // add overall credit to the beggining
-            logoPosition: 'bottom-left', // no need to change 
-            preserveDrawingBuffer: true, // make sure it's on to allow printing
-            center: [-74.0197, 40.721], // testing to get the centroid of bounds
-            zoom: 10, // set the initial zoom of the map view
-        });
-
-
-
-        // Add layers
-        map2.on('load', function () {
-
-            var layerContentList = []; // store all the layer contents
-
-            // Add recovery
-            // Set layer contents
-            var layerContent = {
-                'sourceid': 'recovery', // source id
-                'sourcetype': 'geojson', // source type
-                'sourcedata': 'safegraph.geojson', // data source
-                'layerid': 'recovery', // layer id
-                'layertype': 'fill', // symbology type
-                'layername': '% of April 2019', // layer name for the legend
-                'layervisibility': 'visible', // visibility of the layer
-                'layercolname': 'recoverycat', // category column name
-                'layercat': ['>=120%', '100%~119%', '80%~99%', '60%~79%', '<60%'], // categories
-                'layercolor': ['rgba(174,199,232,1)', 'rgba(152,223,138,1)', 'rgba(219,219,141,1)', 'rgba(255,187,120,1)', 'rgba(255,152,150,1)'], // color for each category; use rgba
-                'layeroutlinecolor': 'rgba(255, 255, 255, 0.5)'
-            };
-
-            // Generate layer colors
-            var layerColor = ['match', ['get', layerContent['layercolname']]];
-            for (var i = 0; i < layerContent.layercat.length; i++) {
-                layerColor.push(layerContent.layercat[i]);
-                layerColor.push(layerContent.layercolor[i]);
-            };
-            layerColor.push('#000000');
-
-            // Add layer content to the overall layer content list
-            layerContentList.push(layerContent);
-
-            // Add data source
-            map2.addSource(layerContent['sourceid'], {
-                'type': layerContent['sourcetype'],
-                'data': layerContent['sourcedata'],
-            });
-
-            // Add fill layer
-            map2.addLayer({
-                'id': layerContent['layerid'],
-                'type': layerContent['layertype'],
-                'source': layerContent['sourceid'],
-                'layout': {
-                    'visibility': layerContent['layervisibility'],
-                },
-                'paint': {
-                    'fill-color': layerColor,
-                    'fill-outline-color': layerContent['layeroutlinecolor'],
-                },
-            });
-
-
-
-            // Add popup
-            var popup = new mapboxgl.Popup({
-                closeButton: true, // close button
-                closeOnClick: false, // close if click on map
-                closeOnMove: false, // close if move the map
-                anchor: 'bottom', // anchor of the popup
-                offset: 0, // offset from the feature
-                maxWidth: 'none', // max width of the popoup; 'none' to fit to the content                
-            });
-
-            // Add recovery popup
-            // Add click event
-            map2.on('click', 'recovery', function (e) {
-                var coordinates = e.lngLat; // get pointer coordinates
-                var description = "<b>NTA Code: </b><span>" + e.features[0].properties.ntacode + "</span><br>"; // description in the popup
-                description += "<b>NTA Name: </b><span>" + e.features[0].properties.ntaname + "</span><br>";
-                description += "<b>April 2021 As Percentage of April 2019: </b><span>" + (Number(e.features[0].properties.recovery) * 100).toFixed(2) + "%</span><br>";
-                popup.setLngLat(coordinates).setHTML(description).addTo(map1); //add popup
-                popup.setLngLat(coordinates).setHTML(description).addTo(map2); //add popup
-            });
-            // Add hover events
-            map2.on('mouseenter', 'recovery', function () {
-                map2.getCanvas().style.cursor = 'pointer'; // mouse becoming pointer
-            });
-            map2.on('mouseleave', 'recovery', function () {
-                map2.getCanvas().style.cursor = '';
-            });
-
-
-
-
-            // Synchronize the two maps
-            var disable = false;
-            map1.on("move", function () {
-                if (!disable) {
-                    var center = map1.getCenter();
-                    var zoom = map1.getZoom();
-                    var pitch = map1.getPitch();
-                    var bearing = map1.getBearing();
-
-                    disable = true;
-                    map2.setCenter(center);
-                    map2.setZoom(zoom);
-                    map2.setPitch(pitch);
-                    map2.setBearing(bearing);
-                    disable = false;
-                }
-            });
-
-            map2.on("move", function () {
-                if (!disable) {
-                    var center = map2.getCenter();
-                    var zoom = map2.getZoom();
-                    var pitch = map2.getPitch();
-                    var bearing = map2.getBearing();
-
-                    disable = true;
-                    map1.setCenter(center);
-                    map1.setZoom(zoom);
-                    map1.setPitch(pitch);
-                    map1.setBearing(bearing);
-                    disable = false;
-                }
-            });
-
-
-
-            // Set collapse event
-            var collapsevalue = 0;
-            header.addEventListener('click', function () {
-                if (collapsevalue === 0) {
-                    document.getElementById('legends').style.display = "none";
-                    document.getElementById('chevron').className = "bi bi-chevron-up";
-                    collapsevalue = 1;
-                } else {
-                    document.getElementById('legends').style.display = "block";
-                    document.getElementById('chevron').className = "bi bi-chevron-down";
-                    collapsevalue = 0;
+    
+                // Generate layer colors
+                var layerColor = ['match', ['get', layerContent['layercolname']]];
+                for (var i = 0; i < layerContent.layercat.length; i++) {
+                    layerColor.push(layerContent.layercat[i]);
+                    layerColor.push(layerContent.layercolor[i]);
+                };
+                layerColor.push('#000000');
+    
+                // Add layer content to the overall layer content list
+                layerContentList.push(layerContent);
+    
+                // Add data source
+                map1.addSource(layerContent['sourceid'], {
+                    'type': layerContent['sourcetype'],
+                    'data': layerContent['sourcedata'],
+                });
+    
+                // Add fill layer
+                map1.addLayer({
+                    'id': layerContent['layerid'],
+                    'type': layerContent['layertype'],
+                    'source': layerContent['sourceid'],
+                    'layout': {
+                        'visibility': layerContent['layervisibility'],
+                    },
+                    'paint': {
+                        'fill-color': layerColor,
+                        'fill-outline-color': layerContent['layeroutlinecolor'],
+                    },
+                });
+    
+    
+    
+                // Add popup
+                var popup = new mapboxgl.Popup({
+                    closeButton: true, // close button
+                    closeOnClick: false, // close if click on map
+                    closeOnMove: false, // close if move the map
+                    anchor: 'bottom', // anchor of the popup
+                    offset: 0, // offset from the feature
+                    maxWidth: 'none', // max width of the popoup; 'none' to fit to the content                
+                });
+    
+    
+                // Add nadir popup
+                // Add click event
+                map1.on('click', 'nadir', function (e) {
+                    var coordinates = e.lngLat; // get pointer coordinates
+                    var description = "<b>NTA Code: </b><span>" + e.features[0].properties.ntacode + "</span><br>"; // description in the popup
+                    description += "<b>NTA Name: </b><span>" + e.features[0].properties.ntaname + "</span><br>";
+                    description += "<b>April 2020 As Percentage of April 2019: </b><span>" + (Number(e.features[0].properties.nadir) * 100).toFixed(2) + "%</span><br>";
+                    popup.setLngLat(coordinates).setHTML(description).addTo(map1); //add popup
+                });
+                // Add hover events
+                map1.on('mouseenter', 'nadir', function () {
+                    map1.getCanvas().style.cursor = 'pointer'; // mouse becoming pointer
+                });
+                map1.on('mouseleave', 'nadir', function () {
+                    map1.getCanvas().style.cursor = '';
+                });
+    
+    
+                // Add layer selector and legend
+                var layerOrder = ['nadir']; // set layer order in the legend
+                var layerContentListOrder = []; // create ordered layer content list
+                for (var i = 0; i < layerOrder.length; i++) {
+                    layerContentListOrder.push(layerContentList.filter(e => e.layerid == layerOrder[i])[0]);
+                };
+    
+                var filterLegend = document.getElementById('legends');
+                for (var i = 0; i < layerContentListOrder.length; i++) {
+                    // Create layer selector
+                    var itemgroup1 = document.createElement('div'); // create level-1 item group
+                    itemgroup1.className = 'itemgroup1';
+                    var item1 = document.createElement('div'); // create level-1 item
+                    item1.className = 'item1';
+                    var label1 = document.createElement('label'); // create level-1 checkbox label
+                    label1.className = 'item1-label';
+                    label1.setAttribute('for', layerContentListOrder[i]['layerid']);
+                    label1.textContent = layerContentListOrder[i]['layername'];
+                    item1.appendChild(label1);
+                    itemgroup1.appendChild(item1);
+    
+                    // Create legend selector
+                    var itemgroup2 = document.createElement('div'); // create level-2 item group
+                    itemgroup2.className = 'itemgroup2';
+                    itemgroup2.id = layerContentListOrder[i]['layerid'] + '-cat';
+                    for (var j = 0; j < layerContentListOrder[i]['layercat'].length; j++) {
+                        var item2 = document.createElement('div'); // create level-2 item
+                        item2.className = 'item2';
+                        var key2 = document.createElement('span'); // create level-2 key
+                        key2.className = 'key-' + layerContentListOrder[i]['layertype'];
+                        key2.style.backgroundColor = layerContentListOrder[i]['layercolor'][j];
+                        key2.style.borderColor = layerContentListOrder[i]['layeroutlinecolor'];
+                        key2.style.borderStyle = 'solid';
+                        key2.style.borderWidth = 'thin';
+                        var label2 = document.createElement('label'); // create level-2 label
+                        label2.className = 'item2-label';
+                        label2.setAttribute('for', layerContentListOrder[i]['layerid'] + '|' + layerContentListOrder[i]['layercolname'] + '|' + layerContentListOrder[i]['layercat'][j]);
+                        label2.textContent = layerContentListOrder[i]['layercat'][j];
+                        item2.appendChild(key2);
+                        item2.appendChild(label2);
+                        itemgroup2.appendChild(item2);
+                    };
+                    itemgroup1.appendChild(itemgroup2);
+                    filterLegend.appendChild(itemgroup1);
                 };
             });
-        });
+    
+    
+    
+    
+    
+            // Initialize the map
+            var map2 = new mapboxgl.Map({ // creating a new map
+                container: 'map2', // same as the div id to place the map
+                style: 'mapbox://styles/mapbox/light-v10', // light base map
+                hash: true, // make sure it's on to get the url with map view
+                attributionControl: true, // show the credit bar
+                customAttribution: '<b> Data Sources: SafeGraph</b>', // add overall credit to the beggining
+                logoPosition: 'bottom-left', // no need to change 
+                preserveDrawingBuffer: true, // make sure it's on to allow printing
+                center: [-74.0197, 40.721], // testing to get the centroid of bounds
+                zoom: 10, // set the initial zoom of the map view
+            });
+    
+    
+    
+            // Add layers
+            map2.on('load', function () {
+    
+                var layerContentList = []; // store all the layer contents
+    
+                // Add recovery
+                // Set layer contents
+                var layerContent = {
+                    'sourceid': 'recovery', // source id
+                    'sourcetype': 'geojson', // source type
+                    'sourcedata': 'safegraph.geojson', // data source
+                    'layerid': 'recovery', // layer id
+                    'layertype': 'fill', // symbology type
+                    'layername': '% of April 2019', // layer name for the legend
+                    'layervisibility': 'visible', // visibility of the layer
+                    'layercolname': 'recoverycat', // category column name
+                    'layercat': ['>=120%', '100%~119%', '80%~99%', '60%~79%', '<60%'], // categories
+                    'layercolor': ['rgba(174,199,232,1)', 'rgba(152,223,138,1)', 'rgba(219,219,141,1)', 'rgba(255,187,120,1)', 'rgba(255,152,150,1)'], // color for each category; use rgba
+                    'layeroutlinecolor': 'rgba(255, 255, 255, 0.5)'
+                };
+    
+                // Generate layer colors
+                var layerColor = ['match', ['get', layerContent['layercolname']]];
+                for (var i = 0; i < layerContent.layercat.length; i++) {
+                    layerColor.push(layerContent.layercat[i]);
+                    layerColor.push(layerContent.layercolor[i]);
+                };
+                layerColor.push('#000000');
+    
+                // Add layer content to the overall layer content list
+                layerContentList.push(layerContent);
+    
+                // Add data source
+                map2.addSource(layerContent['sourceid'], {
+                    'type': layerContent['sourcetype'],
+                    'data': layerContent['sourcedata'],
+                });
+    
+                // Add fill layer
+                map2.addLayer({
+                    'id': layerContent['layerid'],
+                    'type': layerContent['layertype'],
+                    'source': layerContent['sourceid'],
+                    'layout': {
+                        'visibility': layerContent['layervisibility'],
+                    },
+                    'paint': {
+                        'fill-color': layerColor,
+                        'fill-outline-color': layerContent['layeroutlinecolor'],
+                    },
+                });
+    
+    
+    
+                // Add popup
+                var popup = new mapboxgl.Popup({
+                    closeButton: true, // close button
+                    closeOnClick: false, // close if click on map
+                    closeOnMove: false, // close if move the map
+                    anchor: 'bottom', // anchor of the popup
+                    offset: 0, // offset from the feature
+                    maxWidth: 'none', // max width of the popoup; 'none' to fit to the content                
+                });
+    
+                // Add recovery popup
+                // Add click event
+                map2.on('click', 'recovery', function (e) {
+                    var coordinates = e.lngLat; // get pointer coordinates
+                    var description = "<b>NTA Code: </b><span>" + e.features[0].properties.ntacode + "</span><br>"; // description in the popup
+                    description += "<b>NTA Name: </b><span>" + e.features[0].properties.ntaname + "</span><br>";
+                    description += "<b>April 2021 As Percentage of April 2019: </b><span>" + (Number(e.features[0].properties.recovery) * 100).toFixed(2) + "%</span><br>";
+                    popup.setLngLat(coordinates).setHTML(description).addTo(map1); //add popup
+                    popup.setLngLat(coordinates).setHTML(description).addTo(map2); //add popup
+                });
+                // Add hover events
+                map2.on('mouseenter', 'recovery', function () {
+                    map2.getCanvas().style.cursor = 'pointer'; // mouse becoming pointer
+                });
+                map2.on('mouseleave', 'recovery', function () {
+                    map2.getCanvas().style.cursor = '';
+                });
+    
+    
+    
+    
+                // Synchronize the two maps
+                var disable = false;
+                map1.on("move", function () {
+                    if (!disable) {
+                        var center = map1.getCenter();
+                        var zoom = map1.getZoom();
+                        var pitch = map1.getPitch();
+                        var bearing = map1.getBearing();
+    
+                        disable = true;
+                        map2.setCenter(center);
+                        map2.setZoom(zoom);
+                        map2.setPitch(pitch);
+                        map2.setBearing(bearing);
+                        disable = false;
+                    }
+                });
+    
+                map2.on("move", function () {
+                    if (!disable) {
+                        var center = map2.getCenter();
+                        var zoom = map2.getZoom();
+                        var pitch = map2.getPitch();
+                        var bearing = map2.getBearing();
+    
+                        disable = true;
+                        map1.setCenter(center);
+                        map1.setZoom(zoom);
+                        map1.setPitch(pitch);
+                        map1.setBearing(bearing);
+                        disable = false;
+                    }
+                });
+    
+    
+    
+                // Set collapse event
+                var collapsevalue = 0;
+                header.addEventListener('click', function () {
+                    if (collapsevalue === 0) {
+                        document.getElementById('legends').style.display = "none";
+                        document.getElementById('chevron').className = "bi bi-chevron-up";
+                        collapsevalue = 1;
+                    } else {
+                        document.getElementById('legends').style.display = "block";
+                        document.getElementById('chevron').className = "bi bi-chevron-down";
+                        collapsevalue = 0;
+                    };
+                });
+            });
+            })
+          .catch(err => {
+            console.error('Failed to load config:', err);
+          });
     </script>
 
 </body>
