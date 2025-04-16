@@ -521,7 +521,7 @@
 
             // Add map
             // Set MapBox token
-            fetch('/config.json')
+            fetch('../../config.json')
             .then(response => response.json())
             .then(config => {
                 const decodedToken = atob(config.mapboxToken);
